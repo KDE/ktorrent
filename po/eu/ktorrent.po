@@ -1,7 +1,7 @@
 # Translation for ktorrent.po to Euskara/Basque (eu).
 # Copyright (C) 2010-2025 This file is copyright:
 # This file is distributed under the same license as de ktorrent package.
-# SPDX-FileCopyrightText: 2023, 2024, 2025 KDE euskaratzeko proiekuko arduraduna <xalba@ni.eus>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 KDE euskaratzeko proiekuaren arduraduna <xalba@ni.eus>
 #
 # Translators:
 # Marcos  <marcos@euskalgnu.org>, 2006.
@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-19 00:42+0000\n"
-"PO-Revision-Date: 2025-03-05 18:56+0100\n"
+"PO-Revision-Date: 2025-05-26 17:07+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.2\n"
+"X-Generator: Lokalize 25.04.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -745,16 +745,13 @@ msgid "Error fetching tracker list"
 msgstr "Aztarnarien zerrenda ekartzeko errorea"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, fuzzy, kde-format
-#| msgid ""
-#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
-#| "reachable."
+#, kde-format
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
-"Mesedez, egiaztatu  «Ezarpena > Aurreratua > Aztarnari-zerrendaren URL»ko "
-"URLa irisgarria den."
+"Mesedez, egiaztatu  Ezarpena → Aurreratua → Aztarnari-zerrendaren URLa "
+"irisgarria den."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
@@ -2578,12 +2575,11 @@ msgstr "Aztarnari eskuragarriek abisuak ematen dituzte:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Color to use when all trackers reply the errors or not found."
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
-"Aztarnari guztiek erroreak edo ez aurkitua erantzuten dutenean erabili "
-"beharreko kolorea."
+"Aztarnari guztiek erroreekin erantzuten dutenean edo aurkitzen ez direnean "
+"erabili beharreko kolorea."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
@@ -4354,11 +4350,10 @@ msgid "Downloaded"
 msgstr "Deskargatuta"
 
 #: ktorrent/view/viewmodel.cpp:454
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "Deskargatze kopurua"
+msgstr "Saioa zama-jaitsi da"
 
 #: ktorrent/view/viewmodel.cpp:456
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4373,11 +4368,10 @@ msgid "Uploaded"
 msgstr "Kargatuta"
 
 #: ktorrent/view/viewmodel.cpp:460
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "Kargatuta"
+msgstr "Saioa zama-igo da"
 
 #: ktorrent/view/viewmodel.cpp:462
 #, kde-format
@@ -4448,10 +4442,9 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "Torrent-aren zenbat datu deskargatu ditugun"
 
 #: ktorrent/view/viewmodel.cpp:494
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "Torrent-aren zenbat datu deskargatu ditugun"
+msgstr "Saio honetan torrent-aren zenbat datu zama-jaitsi ditugu"
 
 #: ktorrent/view/viewmodel.cpp:496
 #, kde-format
@@ -4464,10 +4457,9 @@ msgid "How much data we have uploaded"
 msgstr "Kargatu duzun datu kopurua"
 
 #: ktorrent/view/viewmodel.cpp:500
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "Zenbat datu kargatu dizkiozun pare horri"
+msgstr "Saio honetan torrent-aren zenbat datu zama-igo ditugu"
 
 #: ktorrent/view/viewmodel.cpp:502
 #, kde-format
@@ -8364,12 +8356,7 @@ msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/>%2"
 
 #: plugins/syndication/feedwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid ""
-#| "    <html>    <body style=\"color:%4\">    <div style=\"border-style:"
-#| "solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">    "
-#| "<b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </"
-#| "body>    </html>    "
+#, kde-format
 msgctxt ""
 "Given string needs to be HTML parseable.%1 is title of RSS feed item.%2 is "
 "publishing date of RSS feed item.%3 is description given in RSS feed item.%4 "
@@ -8381,10 +8368,10 @@ msgid ""
 "padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
 "<p>%3</p>    </body>    </html>    "
 msgstr ""
-"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
-"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Titulua:"
-"</b> %1<br/>    <b>Data:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
-"html>    "
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; border-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>Titulua:</b> %1<br/>    <b>Data:</b> %2<br/>    </"
+"div>    <p>%3</p>    </body>    </html>    "
 
 #: plugins/syndication/feedwidget.cpp:186
 #, kde-format
