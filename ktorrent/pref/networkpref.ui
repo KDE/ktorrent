@@ -311,7 +311,7 @@
         <string>Let KTorrent calculate the recommended settings based upon the bandwidth you have available.</string>
        </property>
        <property name="text">
-        <string>Recommended Settings...</string>
+        <string>Recommended Settings…</string>
        </property>
       </widget>
      </item>

@@ -57,7 +57,7 @@ void ConvertThread::readInput()
     }
 
     Out(SYS_IPF | LOG_NOTICE) << "Loading " << txt_file << " ..." << endl;
-    dlg->message(i18n("Loading txt file..."));
+    dlg->message(i18n("Loading txt file…"));
 
     ulong source_size = source.size();
     QTextStream stream(&source);
@@ -143,7 +143,7 @@ void ConvertThread::writeOutput()
     }
 
     Out(SYS_IPF | LOG_NOTICE) << "Loading finished, starting conversion..." << endl;
-    dlg->message(i18n("Converting..."));
+    dlg->message(i18n("Converting…"));
 
     int i = 0;
     int tot = input.count();

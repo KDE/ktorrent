@@ -26,7 +26,7 @@ int main(int argc, char **argv)
                      QStringLiteral("1.0"),
                      i18n("KTorrent's UPnP test application"),
                      KAboutLicense::GPL,
-                     i18n("&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"),
+                     i18n("© 2005–2007 Joris Guisson and Ivan Vasic"),
                      QString(),
                      QStringLiteral("http://www.kde.org/applications/internet/ktorrent/"));
     KAboutData::setApplicationData(about);

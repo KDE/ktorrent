@@ -97,7 +97,7 @@ void IPBlockingPrefPage::downloadClicked()
 
     // block GUI so you cannot do stuff during conversion
     m_download->setEnabled(false);
-    m_status->setText(i18n("Status: Downloading and converting new block list..."));
+    m_status->setText(i18n("Status: Downloading and converting new block list…"));
     kcfg_useLevel1->setEnabled(false);
     kcfg_filterURL->setEnabled(false);
 

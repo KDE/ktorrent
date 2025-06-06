@@ -100,7 +100,7 @@ int main(int argc, char **argv)
                      QStringLiteral(VERSION),
                      i18n("Bittorrent client by KDE"),
                      KAboutLicense::GPL,
-                     i18nc("@info:credit", "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"),
+                     i18nc("@info:credit", "© 2005–2011 Joris Guisson and Ivan Vasic"),
                      QString(),
                      QStringLiteral("http://www.kde.org/applications/internet/ktorrent/"));
 

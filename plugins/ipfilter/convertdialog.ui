@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Converting...</string>
+   <string>Converting…</string>
   </property>
   <property name="modal">
    <bool>true</bool>

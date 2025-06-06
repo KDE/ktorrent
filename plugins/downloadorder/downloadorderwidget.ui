@@ -63,7 +63,7 @@
      <item>
       <widget class="QListView" name="m_order">
        <property name="toolTip">
-        <string>Order in which to download the files of a torrent. The file at the top will be downloaded first, followed by the second, then the third ...</string>
+        <string>Order in which to download the files of a torrent. The file at the top will be downloaded first, followed by the second, then the third…</string>
        </property>
       </widget>
      </item>
