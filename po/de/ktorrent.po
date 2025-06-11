@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n@prly.mozmail.com>
 # Patrick Trettenbrein <patrick.trettenbrein@kdemail.net>, 2005, 2006.
 # Stephan Johach <hunsum@gmx.de>, 2005.
 # Thomas Reitelbach <tr@erdfunkstelle.de>, 2005, 2006, 2007, 2008, 2010.
@@ -13,15 +14,15 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2023-08-14 21:55+0200\n"
-"Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
+"PO-Revision-Date: 2025-05-19 02:55+0200\n"
+"Last-Translator: Philipp Kiemle <l10n@prly.mozmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.11.70\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -751,6 +752,8 @@ msgid ""
 "Please check if the URL in Settings > Advanced > Tracker list URL is "
 "reachable."
 msgstr ""
+"Bitte überprüfen Sie, ob die unter „Einstellungen → Erweitert → Adresse der "
+"Tracker-Liste“ angegebene URL erreichbar ist."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
@@ -933,10 +936,9 @@ msgid "Create A Torrent"
 msgstr "Torrent erstellen"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:245
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "Es wird nur HTTP für Webseeds unterstützt."
+msgstr "Es wird ausschließlich HTTP(S) für Webseeds unterstützt."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:272
 #, kde-format
@@ -1453,13 +1455,13 @@ msgstr "Zurücksetzen"
 #: ktorrent/ipfilterwidget.ui:92
 #, kde-format
 msgid "Open..."
-msgstr "Öffnen ..."
+msgstr "Öffnen …"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
 #, kde-format
 msgid "Save As..."
-msgstr "Speichern unter ..."
+msgstr "Speichern unter …"
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -1653,10 +1655,11 @@ msgstr "Andreas Kling"
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
+# https://db-ip.com/
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1666,6 +1669,10 @@ msgid ""
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
+"Anbieter der IP-Country-Datenbank, die im InfoWidget-Modul verwendet wird.\n"
+"Die Daten sind lizensiert unter der Creative Commons Attribution 4.0\n"
+"International License https://creativecommons.org/licenses/by/4.0/.\n"
+"Flaggen stammen von http://flags.blogpotato.de/, danke auch an sie."
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -1675,7 +1682,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:135
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "Die maxminddb-Bibliothek, die für das InfoWidgetModul verwendet wird."
 
 #: ktorrent/main.cpp:136
 #, kde-format
@@ -2044,19 +2051,17 @@ msgstr "Fehlerkorrekturen, Aufräumen und Optimierungen"
 #: ktorrent/main.cpp:176
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "Portierung zu KF5"
+msgstr "Portierung zu KF6"
 
 #: ktorrent/main.cpp:180
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Alle aktivieren"
+msgstr "Protokoll aktivieren"
 
 #: ktorrent/main.cpp:182
 #, kde-format
@@ -2064,6 +2069,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Protokollierung über die Standardausgabe aktivieren. „--enable-logging” muss "
+"ebenfalls angegeben werden."
 
 #: ktorrent/main.cpp:183
 #, kde-format
@@ -2282,6 +2289,10 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
+"URL der zu verwendenden Trackerliste, wenn ein Torrent per Infohash "
+"hinzugefügt wird.\n"
+"INFO: Jeder Tracker muss in einer eigenen Zeile stehen. Leere Zeilen werden "
+"ignoriert."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2497,16 +2508,15 @@ msgstr "Farben"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_stalledTorrentColor)
 #: ktorrent/pref/colorpref.ui:19
-#, fuzzy, kde-format
-#| msgid "Decrease priority of torrents which are stalled for more than:"
+#, kde-format
 msgid "Color to use for torrents when they are stalled or checking data."
-msgstr "Priorität für Torrents herabsetzen, die länger still stehen als:"
+msgstr "Farbe für Torrents, die still stehen oder deren Daten geprüft werden."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTorrentColor)
 #: ktorrent/pref/colorpref.ui:26
 #, kde-format
 msgid "Color to use for torrents while seeding or downloading."
-msgstr ""
+msgstr "Farbe für seedende oder herunterladende Torrents."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
@@ -2518,7 +2528,7 @@ msgstr "Torrent läuft:"
 #: ktorrent/pref/colorpref.ui:40
 #, kde-format
 msgid "Torrent is stalled or checking data:"
-msgstr "Torrent ist angehalten oder Daten werden überprüft"
+msgstr "Torrent steht still oder Daten werden überprüft:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
@@ -2539,6 +2549,7 @@ msgid ""
 "Additionally highlight torrents based on the status of their trackers (if "
 "any)"
 msgstr ""
+"Torrents auch anhand deren Tracker-Status hervorheben (falls zutreffend)"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:72
@@ -2547,6 +2558,8 @@ msgid ""
 "Color to use when at least one tracker is connected and replied no errors or "
 "warnings."
 msgstr ""
+"Farbe, wenn mindestens ein Tracker verbunden ist und keine Fehler oder "
+"Warnungen geantwortet hat."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/colorpref.ui:79
@@ -2560,6 +2573,7 @@ msgstr "Einige der Tracker sind erreichbar:"
 msgid ""
 "Color to use when the best attempt to connect to tracker results in warning."
 msgstr ""
+"Farbe, wenn der beste Verbindungsversuch zum Tracker eine Warnung liefert."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/colorpref.ui:93
@@ -2571,7 +2585,7 @@ msgstr "Keiner der Tracker ist erreichbar:"
 #: ktorrent/pref/colorpref.ui:100
 #, kde-format
 msgid "Reachable trackers report warnings:"
-msgstr ""
+msgstr "Erreichbare Tracker liefern Warnungen:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
@@ -2583,7 +2597,7 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:114
 #, kde-format
 msgid "Trackers are timing out:"
-msgstr ""
+msgstr "Tracker mit Zeitüberschreitung:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_timeoutTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:121
@@ -2592,6 +2606,9 @@ msgid ""
 "Color to use when the best attempt to connect to tracker results in timeout. "
 "Connection will be attempted again later."
 msgstr ""
+"Farbe, wenn der beste Verbindungsversuch zu einem Tracker in einer "
+"Zeitüberschreitung endet. Später wird ein erneuter Verbindungsversuch "
+"unternommen."
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
@@ -2610,18 +2627,24 @@ msgstr "Gutes Verteilungsverhältnis:"
 #, kde-format
 msgid "Color to display share ratio below minimal good value."
 msgstr ""
+"Farbe, wenn das Verteilungsverhältnis unter dem minmal gewünschten "
+"Verhältnis liegt."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_goodShareRatioColor)
 #: ktorrent/pref/colorpref.ui:154
 #, kde-format
 msgid "Color to display share ratio above minimal good value."
 msgstr ""
+"Farbe, wenn das Verteilungsverhältnis über dem minmal gewünschten Verhältnis "
+"liegt."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:165
 #, kde-format
 msgid "Reset colors to their default values (other settings won't change)."
 msgstr ""
+"Farben auf Voreinstellungen zurücksetzen (andere Einstellungen werden nicht "
+"verändert)."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
@@ -2756,22 +2779,21 @@ msgstr "Alle Torrents ohne Nachfrage öffnen"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:149
-#, fuzzy, kde-format
-#| msgid ""
-#| "Prevent computer from going into a sleep state when torrents are running."
+#, kde-format
 msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
 msgstr ""
-"Verhindern, dass der Rechner in den Standby-Modus wechselt, wenn Torrents "
-"aktiv sind."
+"Verhindern, dass der Rechner in den Standby-Modus wechselt oder den "
+"Bildschirm sperrt, wenn Torrents aktiv sind."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
-#, fuzzy, kde-format
-#| msgid "Suppress sleep when torrents are running"
+#, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr "Standby-Modus unterdrücken, wenn Torrents aktiv sind"
+msgstr ""
+"Standby-Modus und automatische Bildschirmsperre unterdrücken, wenn Torrents "
+"aktiv sind"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:160
@@ -2929,12 +2951,7 @@ msgstr "Maximale Anzahl neuer Verbindungen:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
@@ -3009,16 +3026,13 @@ msgstr "Primäres Transportprotokoll"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
-"Das primär zu verwendende Protokoll, wenn eine Verbindung mit einer\n"
-"Gegenstelle hergestellt werden soll."
+"Das primär zu verwendende Protokoll. Wenn eine Verbindung mit einer "
+"Gegenstelle hergestellt werden soll, wird dieses Protokoll zuerst ausgewählt."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
@@ -3047,7 +3061,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:314
 #, kde-format
 msgid "Recommended Settings..."
-msgstr "Empfohlene Einstellungen ..."
+msgstr "Empfohlene Einstellungen …"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3429,16 +3443,14 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QLabel, label_2)
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_greenRatio)
 #: ktorrent/pref/qmpref.ui:248 ktorrent/pref/qmpref.ui:258
-#, fuzzy, kde-format
-#| msgid ""
-#| "Value at which the share ratio will be displayed with a green color. "
-#| "Lower ratios will be displayed in red."
+#, kde-format
 msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
-"Wert des Verteilungsverhältnisses, ab dem das Verteilungsverhältnis grün\n"
-"angezeigt wird. Kleinere Verteilungsverhältnisse werden rot angezeigt."
+"Wert, ab dem das Verteilungsverhältnis grün angezeigt wird. Kleinere "
+"Verteilungsverhältnisse werden rot angezeigt. Die Farben können in den "
+"Farbeinstellungen verändert werden."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
@@ -3960,16 +3972,14 @@ msgid "Torrent has been stopped.<br />"
 msgstr "Der Torrent wurde angehalten.<br />"
 
 #: ktorrent/trayicon.cpp:346
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "Geschwindigkeitsbegrenzung in KiB/s"
+msgstr "Upload-Geschwindigkeitsbegrenzung in KiB/s"
 
 #: ktorrent/trayicon.cpp:348
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "Geschwindigkeitsbegrenzung in KiB/s"
+msgstr "Download-Geschwindigkeitsbegrenzung in KiB/s"
 
 #: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -4156,7 +4166,7 @@ msgstr "Fehler:"
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, kde-format
 msgid "Filter..."
-msgstr "Filter ..."
+msgstr "Filter …"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4361,11 +4371,10 @@ msgid "Select a directory to move the data to."
 msgstr "Wählen Sie einen Ordner, in den die Daten verschoben werden sollen."
 
 #: ktorrent/view/viewdelegate.cpp:332
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1 %"
 
 #: ktorrent/view/viewmodel.cpp:440 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4936,23 +4945,20 @@ msgid "Warning: %1"
 msgstr "Achtung: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Heruntergeladene Blöcke:"
+msgstr "Heruntergeladene Blöcke"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Chunks not downloaded:"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Nicht heruntergeladene Blöcke:"
+msgstr "Zu herunterladende Blöcke"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Ausgenommen:"
+msgstr "Ausgenommene Blöcke"
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -5449,16 +5455,14 @@ msgid "Add Trackers"
 msgstr "Tracker hinzufügen"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Verfügbare Blöcke:"
+msgstr "Verfügbare Blöcke"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Verfügbare Blöcke:"
+msgstr "Nicht verfügbare Blöcke"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -5557,8 +5561,7 @@ msgid "Open With"
 msgstr "Öffnen mit"
 
 #: plugins/infowidget/fileview.cpp:116
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "Umbenennen"
@@ -5941,11 +5944,10 @@ msgid "No"
 msgstr "Nein"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1 %"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
@@ -6343,7 +6345,7 @@ msgstr "Alle deaktivieren"
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
 #, kde-format
 msgid "Converting..."
-msgstr "Umwandlung läuft ..."
+msgstr "Umwandlung läuft …"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6362,7 +6364,7 @@ msgstr "&Abbrechen"
 #: plugins/ipfilter/convertthread.cpp:60
 #, kde-format
 msgid "Loading txt file..."
-msgstr "Text-Datei wird geladen ..."
+msgstr "Text-Datei wird geladen …"
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6437,7 +6439,7 @@ msgstr "Status: Nicht geladen"
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
 #, kde-format
 msgid "Status: Downloading and converting new block list..."
-msgstr "Status: Neue Blockliste wird heruntergeladen und konvertiert ..."
+msgstr "Status: Neue Blockliste wird heruntergeladen und konvertiert …"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
@@ -7176,10 +7178,9 @@ msgstr "Suchen nach verlorenen Dateien"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
-#, fuzzy, kde-format
-#| msgid "Log widget position:"
+#, kde-format
 msgid "Widget position:"
-msgstr "Position der Protokollierung:"
+msgstr "Widget-Position:"
 
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
@@ -7881,13 +7882,12 @@ msgstr "Durchschnittlich verbundene Seeder pro laufenden Torrent"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
 msgid "Display"
-msgstr "Anzeige"
+msgstr "Erscheinungsbild"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AntiAliasing)
 #: plugins/stats/DisplaySettings.ui:910
@@ -7927,13 +7927,12 @@ msgid "(plugin reload is needed after change)"
 msgstr "(Modul muss nach einer Änderung erneut geladen werden)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
 msgid "Display"
-msgstr "Anzeige"
+msgstr "Erscheinungsbild"
 
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
@@ -7970,7 +7969,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
-msgstr "Als Bild speichern ..."
+msgstr "Als Bild speichern …"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:357
 #: plugins/stats/drawer/PlainChartDrawer.cc:309
@@ -7990,7 +7989,7 @@ msgstr "Zurücksetzen"
 #: plugins/stats/drawer/PlainChartDrawer.cc:330
 #, kde-format
 msgid "Select path to save image…"
-msgstr "Pfad zum Speichern des Bildes auswählen ..."
+msgstr "Pfad zum Speichern des Bildes auswählen …"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:330
