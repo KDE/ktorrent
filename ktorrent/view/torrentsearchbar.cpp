@@ -31,7 +31,7 @@ TorrentSearchBar::TorrentSearchBar(View *view, QWidget *parent)
 
     search_bar = new QLineEdit(this);
     search_bar->setClearButtonEnabled(true);
-    search_bar->setPlaceholderText(i18n("Filter…"));
+    search_bar->setPlaceholderText(i18nc("Noun", "Filter…"));
     connect(search_bar, &QLineEdit::textChanged, view, &View::setFilterString);
     connect(this, &TorrentSearchBar::filterBarShown, view, &View::setFilterString);
 
