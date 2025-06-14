@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2009-10-31 23:24+0900\n"
 "Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -1436,14 +1436,17 @@ msgstr "クリア"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, kde-format
-msgid "Open..."
-msgstr "開く..."
+#, fuzzy, kde-format
+#| msgctxt "Open file"
+#| msgid "Open"
+msgid "Open…"
+msgstr "開く"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, kde-format
-msgid "Save As..."
+#, fuzzy, kde-format
+#| msgid "Save As..."
+msgid "Save As…"
 msgstr "名前を付けて保存..."
 
 #. i18n: ectx: Menu (file)
@@ -1536,7 +1539,7 @@ msgstr "KDE のための BitTorrent クライアント"
 #, fuzzy, kde-format
 #| msgid "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "(C) 2005 - 2007 Joris Guisson, Ivan Vasic"
 
 #: ktorrent/main.cpp:110
@@ -2953,7 +2956,7 @@ msgstr "利用可能な帯域幅に基づいて KTorrent に推奨設定を計�
 #: ktorrent/pref/networkpref.ui:314
 #, fuzzy, kde-format
 #| msgid "Recommended Settings"
-msgid "Recommended Settings..."
+msgid "Recommended Settings…"
 msgstr "推奨設定"
 
 #: ktorrent/pref/proxypref.cpp:13
@@ -4064,7 +4067,8 @@ msgstr "エラー"
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, fuzzy, kde-format
 #| msgid "Filter"
-msgid "Filter..."
+msgctxt "Noun"
+msgid "Filter…"
 msgstr "フィルタ"
 
 #: ktorrent/view/view.cpp:133
@@ -4509,7 +4513,7 @@ msgstr "KTorrent の UPnP テスト用アプリケーション"
 #: ktupnptest/main.cpp:29
 #, fuzzy, kde-format
 #| msgid "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "(C) 2005 - 2007 Joris Guisson, Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
@@ -5397,10 +5401,13 @@ msgstr "検索エンジン"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Order in which to download the files of a torrent. The file at the top "
+#| "will be downloaded first, followed by the second, then the third ..."
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 "torrent のファイルをダウンロードする順序。一番上のファイルから順にダウンロー"
 "ドします。"
@@ -6304,8 +6311,9 @@ msgstr "すべて無効にする"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, kde-format
-msgid "Converting..."
+#, fuzzy, kde-format
+#| msgid "Converting..."
+msgid "Converting…"
 msgstr "変換中..."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -6323,8 +6331,9 @@ msgid "C&ancel"
 msgstr "キャンセル(&A)"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, kde-format
-msgid "Loading txt file..."
+#, fuzzy, kde-format
+#| msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr "txt ファイルを読み込み..."
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6398,8 +6407,9 @@ msgid "Status: Not loaded."
 msgstr "状態: 未ロード"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, kde-format
-msgid "Status: Downloading and converting new block list..."
+#, fuzzy, kde-format
+#| msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr "状態: 新しいブロックリストをダウンロードして変換中..."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -9070,6 +9080,19 @@ msgstr "再スキャン"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Open..."
+#~ msgstr "開く..."
+
+#, fuzzy
+#~| msgid "Recommended Settings"
+#~ msgid "Recommended Settings..."
+#~ msgstr "推奨設定"
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "Filter..."
+#~ msgstr "フィルタ"
 
 #~ msgid "Text encoding:"
 #~ msgstr "テキストのエンコーディング:"

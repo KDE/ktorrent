@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent(2)\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2022-02-15 11:09+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian\n"
@@ -1430,14 +1430,17 @@ msgstr "Curăță"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, kde-format
-msgid "Open..."
-msgstr "Deschide..."
+#, fuzzy, kde-format
+#| msgctxt "Open file"
+#| msgid "Open"
+msgid "Open…"
+msgstr "Deschide"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, kde-format
-msgid "Save As..."
+#, fuzzy, kde-format
+#| msgid "Save As..."
+msgid "Save As…"
 msgstr "Salvează ca..."
 
 #. i18n: ectx: Menu (file)
@@ -1525,7 +1528,7 @@ msgstr "Client Bittorrent de la KDE"
 #, fuzzy, kde-format
 #| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "(C) 2005 - 2011 Joris Guisson și Ivan Vasic"
 
 #: ktorrent/main.cpp:110
@@ -2951,7 +2954,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:314
 #, fuzzy, kde-format
 #| msgid "Recommended Settings"
-msgid "Recommended Settings..."
+msgid "Recommended Settings…"
 msgstr "Configurări recomandate"
 
 #: ktorrent/pref/proxypref.cpp:13
@@ -4068,7 +4071,8 @@ msgstr "Eroare: "
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, fuzzy, kde-format
 #| msgid "Filter"
-msgid "Filter..."
+msgctxt "Noun"
+msgid "Filter…"
 msgstr "Filtru"
 
 #: ktorrent/view/view.cpp:133
@@ -4504,9 +4508,9 @@ msgstr "Aplicația de test din KTorrent pentru UPnP"
 
 #: ktupnptest/main.cpp:29
 #, fuzzy, kde-format
-#| msgid "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
+#| msgid "(C) 2005 - 2008 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
+msgstr "(C) 2005 - 2008 Joris Guisson și Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5371,10 +5375,13 @@ msgstr "Motoare de căutare"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Order in which to download the files of a torrent. The file at the top "
+#| "will be downloaded first, followed by the second, then the third ..."
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 "Ordinea în care se descarcă fișierele unui torent. Fișierul din vîrf va fi "
 "primul descărcat, urmat de cel de-al doilea, apoi al treilea ..."
@@ -6282,8 +6289,9 @@ msgstr "Dezactivează tot"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, kde-format
-msgid "Converting..."
+#, fuzzy, kde-format
+#| msgid "Converting..."
+msgid "Converting…"
 msgstr "Se convertește..."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -6300,8 +6308,9 @@ msgid "C&ancel"
 msgstr "&Renunță"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, kde-format
-msgid "Loading txt file..."
+#, fuzzy, kde-format
+#| msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr "Se încarcă fișierul txt..."
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6377,8 +6386,9 @@ msgid "Status: Not loaded."
 msgstr "Stare: neîncărcat."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, kde-format
-msgid "Status: Downloading and converting new block list..."
+#, fuzzy, kde-format
+#| msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr "Stare: se descarcă și se convertește lista de blocuri noi..."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -9001,6 +9011,24 @@ msgstr "Recitire"
 msgid "ZeroConf"
 msgstr "ZeroConf"
 
+#~ msgid "Open..."
+#~ msgstr "Deschide..."
+
+#, fuzzy
+#~| msgid "Recommended Settings"
+#~ msgid "Recommended Settings..."
+#~ msgstr "Configurări recomandate"
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "Filter..."
+#~ msgstr "Filtru"
+
+#, fuzzy
+#~| msgid "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
+#~ msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#~ msgstr "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
+
 #~ msgid "Text encoding:"
 #~ msgstr "Codificare text:"
 
@@ -11606,9 +11634,6 @@ msgstr "ZeroConf"
 #~| msgid "UDP"
 #~ msgid "UTP"
 #~ msgstr "UDP"
-
-#~ msgid "(C) 2005 - 2008 Joris Guisson and Ivan Vasic"
-#~ msgstr "(C) 2005 - 2008 Joris Guisson și Ivan Vasic"
 
 #~ msgid ""
 #~ "Specified port (%1) is unavailable or in use by another application. "

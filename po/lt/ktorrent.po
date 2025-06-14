@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2024-02-02 23:26+0200\n"
 "Last-Translator: Andrius Štikonas <andrius@stikonas.eu>\n"
 "Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
@@ -1403,14 +1403,17 @@ msgstr "Valyti"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, kde-format
-msgid "Open..."
-msgstr "Atverti..."
+#, fuzzy, kde-format
+#| msgctxt "Open file"
+#| msgid "Open"
+msgid "Open…"
+msgstr "Atverti"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, kde-format
-msgid "Save As..."
+#, fuzzy, kde-format
+#| msgid "Save As..."
+msgid "Save As…"
 msgstr "Įrašyti kaip..."
 
 #. i18n: ectx: Menu (file)
@@ -1497,9 +1500,11 @@ msgid "Bittorrent client by KDE"
 msgstr "KDE Bittorrent klientas"
 
 #: ktorrent/main.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@info:credit"
+#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "(C) 2005–2011 Joris Guisson ir Ivan Vasic"
 
 #: ktorrent/main.cpp:110
@@ -2905,9 +2910,10 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, kde-format
-msgid "Recommended Settings..."
-msgstr "Siūlomos nuostatos..."
+#, fuzzy, kde-format
+#| msgid "Recommended Settings"
+msgid "Recommended Settings…"
+msgstr "Siūlomos nuostatos"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3978,7 +3984,8 @@ msgstr "Klaidos:"
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, fuzzy, kde-format
 #| msgid "Filter"
-msgid "Filter..."
+msgctxt "Noun"
+msgid "Filter…"
 msgstr "Filtras"
 
 #: ktorrent/view/view.cpp:133
@@ -4408,8 +4415,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "KTorrent UPnP testavimo programa"
 
 #: ktupnptest/main.cpp:29
-#, kde-format
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, fuzzy, kde-format
+#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "&copy; 2005 – 2007 Joris Guisson ir Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
@@ -5275,7 +5283,7 @@ msgstr "Ieškoti failų"
 #, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
@@ -6185,8 +6193,9 @@ msgstr "Išjungti visus"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, kde-format
-msgid "Converting..."
+#, fuzzy, kde-format
+#| msgid "Converting..."
+msgid "Converting…"
 msgstr "Konvertuojama..."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -6202,8 +6211,9 @@ msgid "C&ancel"
 msgstr "&Atšaukti"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, kde-format
-msgid "Loading txt file..."
+#, fuzzy, kde-format
+#| msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr "Įkeliamas txt failas..."
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6278,8 +6288,9 @@ msgid "Status: Not loaded."
 msgstr "Būsena: neįkelta."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, kde-format
-msgid "Status: Downloading and converting new block list..."
+#, fuzzy, kde-format
+#| msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr "Būsena: atsiunčiamas ir konvertuojamas naujas blokavimo sąrašas..."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -8768,6 +8779,17 @@ msgstr "Nuskaityti dar kartą"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
+
+#~ msgid "Open..."
+#~ msgstr "Atverti..."
+
+#~ msgid "Recommended Settings..."
+#~ msgstr "Siūlomos nuostatos..."
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "Filter..."
+#~ msgstr "Filtras"
 
 #~ msgid "Text encoding:"
 #~ msgstr "Teksto koduotė:"

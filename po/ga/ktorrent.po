@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network/ktorrent.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2007-08-07 07:02-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -1406,14 +1406,17 @@ msgstr "Glan"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, kde-format
-msgid "Open..."
-msgstr "Oscail..."
+#, fuzzy, kde-format
+#| msgctxt "Open file"
+#| msgid "Open"
+msgid "Open…"
+msgstr "Oscail"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, kde-format
-msgid "Save As..."
+#, fuzzy, kde-format
+#| msgid "Save As..."
+msgid "Save As…"
 msgstr "Sábháil Mar..."
 
 #. i18n: ectx: Menu (file)
@@ -1504,7 +1507,7 @@ msgstr "Cliant Bittorrent le haghaidh KDE"
 #, fuzzy, kde-format
 #| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "© 2005 - 2011 Joris Guisson agus Ivan Vasic"
 
 #: ktorrent/main.cpp:110
@@ -2917,7 +2920,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:314
 #, fuzzy, kde-format
 #| msgid "Torrent Settings"
-msgid "Recommended Settings..."
+msgid "Recommended Settings…"
 msgstr "Socruithe Torrent"
 
 #: ktorrent/pref/proxypref.cpp:13
@@ -4017,7 +4020,8 @@ msgstr "Earráidí:"
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, fuzzy, kde-format
 #| msgid "Filter"
-msgid "Filter..."
+msgctxt "Noun"
+msgid "Filter…"
 msgstr "Scagaire"
 
 #: ktorrent/view/view.cpp:133
@@ -4441,9 +4445,9 @@ msgstr "Feidhmchlár tástála UPnP le haghaidh KTorrent"
 
 #: ktupnptest/main.cpp:29
 #, fuzzy, kde-format
-#| msgid "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgstr "© 2005 - 2007 Joris Guisson and Ivan Vasic"
+#| msgid "(C) 2005 - 2008 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
+msgstr "© 2005 - 2008 Joris Guisson and Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5316,7 +5320,7 @@ msgstr "Cuardaigh comhaid"
 #, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
@@ -6243,8 +6247,9 @@ msgstr "Díchumasaigh Uile"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, kde-format
-msgid "Converting..."
+#, fuzzy, kde-format
+#| msgid "Converting..."
+msgid "Converting…"
 msgstr "Á Thiontú..."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -6262,8 +6267,9 @@ msgid "C&ancel"
 msgstr "Ce&alaigh"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, kde-format
-msgid "Loading txt file..."
+#, fuzzy, kde-format
+#| msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr "Téacschomhad á luchtú..."
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6338,7 +6344,7 @@ msgstr "Stádas: Gan luchtú."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
 #, kde-format
-msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -8819,6 +8825,24 @@ msgstr "Athscan"
 msgid "ZeroConf"
 msgstr "ZeroConf"
 
+#~ msgid "Open..."
+#~ msgstr "Oscail..."
+
+#, fuzzy
+#~| msgid "Torrent Settings"
+#~ msgid "Recommended Settings..."
+#~ msgstr "Socruithe Torrent"
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "Filter..."
+#~ msgstr "Scagaire"
+
+#, fuzzy
+#~| msgid "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
+#~ msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#~ msgstr "© 2005 - 2007 Joris Guisson and Ivan Vasic"
+
 #~ msgid "Text encoding:"
 #~ msgstr "Ionchódú téacs:"
 
@@ -10124,9 +10148,6 @@ msgstr "ZeroConf"
 
 #~ msgid "Disk Input/Output"
 #~ msgstr "Ionchur/Aschur Diosca"
-
-#~ msgid "(C) 2005 - 2008 Joris Guisson and Ivan Vasic"
-#~ msgstr "© 2005 - 2008 Joris Guisson and Ivan Vasic"
 
 #~ msgid ""
 #~ "Specified port (%1) is unavailable or in use by another application. "

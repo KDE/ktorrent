@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2025-05-19 13:27+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1446,14 +1446,17 @@ msgstr "Neteja"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, kde-format
-msgid "Open..."
-msgstr "Obri…"
+#, fuzzy, kde-format
+#| msgctxt "Open file"
+#| msgid "Open"
+msgid "Open…"
+msgstr "Obri"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, kde-format
-msgid "Save As..."
+#, fuzzy, kde-format
+#| msgid "Save As..."
+msgid "Save As…"
 msgstr "Anomena i guarda…"
 
 #. i18n: ectx: Menu (file)
@@ -1538,9 +1541,11 @@ msgid "Bittorrent client by KDE"
 msgstr "Client de Bittorrent, creat per la comunitat KDE"
 
 #: ktorrent/main.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@info:credit"
+#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "(C) 2005 - 2011 Joris Guisson i Ivan Vasic"
 
 #: ktorrent/main.cpp:110
@@ -3039,9 +3044,10 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, kde-format
-msgid "Recommended Settings..."
-msgstr "Configuració recomanada…"
+#, fuzzy, kde-format
+#| msgid "Recommended Settings"
+msgid "Recommended Settings…"
+msgstr "Configuració recomanada"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4134,9 +4140,11 @@ msgid "Errors:"
 msgstr "Errors:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, kde-format
-msgid "Filter..."
-msgstr "Filtre…"
+#, fuzzy, kde-format
+#| msgid "Filter"
+msgctxt "Noun"
+msgid "Filter…"
+msgstr "Filtre"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4565,8 +4573,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "Aplicació de proves d'UPnP de KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, kde-format
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, fuzzy, kde-format
+#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "&copy; 2005 - 2007 Joris Guisson i Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
@@ -5429,10 +5438,13 @@ msgstr "Busca fitxers"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Order in which to download the files of a torrent. The file at the top "
+#| "will be downloaded first, followed by the second, then the third ..."
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 "Ordre en què es baixaran els fitxers d'un torrent. El fitxer de dalt baixarà "
 "primer, seguit pel segon i després pel tercer…"
@@ -6320,8 +6332,9 @@ msgstr "Desactiva-ho tot"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, kde-format
-msgid "Converting..."
+#, fuzzy, kde-format
+#| msgid "Converting..."
+msgid "Converting…"
 msgstr "S'està convertint…"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -6339,8 +6352,9 @@ msgid "C&ancel"
 msgstr "C&ancel·la"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, kde-format
-msgid "Loading txt file..."
+#, fuzzy, kde-format
+#| msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr "S'està carregant el fitxer txt…"
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6414,8 +6428,9 @@ msgid "Status: Not loaded."
 msgstr "Estat: no carregat."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, kde-format
-msgid "Status: Downloading and converting new block list..."
+#, fuzzy, kde-format
+#| msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr "Estat: s'està baixant i convertint una llista de bloqueigs nova…"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -8956,3 +8971,12 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Open..."
+#~ msgstr "Obri…"
+
+#~ msgid "Recommended Settings..."
+#~ msgstr "Configuració recomanada…"
+
+#~ msgid "Filter..."
+#~ msgstr "Filtre…"

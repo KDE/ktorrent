@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2025-05-19 09:05+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -1408,14 +1408,17 @@ msgstr "ניקוי"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, kde-format
-msgid "Open..."
-msgstr "פתיחה…"
+#, fuzzy, kde-format
+#| msgctxt "Open file"
+#| msgid "Open"
+msgid "Open…"
+msgstr "פתיחה"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, kde-format
-msgid "Save As..."
+#, fuzzy, kde-format
+#| msgid "Save As..."
+msgid "Save As…"
 msgstr "שמירה בשם…"
 
 #. i18n: ectx: Menu (file)
@@ -1500,9 +1503,11 @@ msgid "Bittorrent client by KDE"
 msgstr "לקוח ביטורנט מבית KDE"
 
 #: ktorrent/main.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@info:credit"
+#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "(C) 2005 ‏- 2011 יורש גיסן ואיוון ואסיק"
 
 #: ktorrent/main.cpp:110
@@ -2937,9 +2942,10 @@ msgstr "לאפשר ל־KTorrent לחשב את ההגדרות המומלצות ב
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, kde-format
-msgid "Recommended Settings..."
-msgstr "הגדרות מומלצות…"
+#, fuzzy, kde-format
+#| msgid "Recommended Settings"
+msgid "Recommended Settings…"
+msgstr "הגדרות מומלצות"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4010,9 +4016,11 @@ msgid "Errors:"
 msgstr "שגיאות:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, kde-format
-msgid "Filter..."
-msgstr "סינון…"
+#, fuzzy, kde-format
+#| msgid "Filter"
+msgctxt "Noun"
+msgid "Filter…"
+msgstr "מסנן"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4428,8 +4436,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "יישום בדיקת UPnP של KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, kde-format
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, fuzzy, kde-format
+#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "&copy; 2005 ‏- 2007 יורש גיסן ואיוון ואסיק"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
@@ -5274,10 +5283,13 @@ msgstr "חיפוש קבצים"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Order in which to download the files of a torrent. The file at the top "
+#| "will be downloaded first, followed by the second, then the third ..."
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 "הסדר בו להוריד את הקבצים בטורנט. הקובץ שלמעלה ירד ראשון, השני אחריו, ואז "
 "השלישי וכן הלאה…"
@@ -6151,8 +6163,9 @@ msgstr "השבתה של הכול"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, kde-format
-msgid "Converting..."
+#, fuzzy, kde-format
+#| msgid "Converting..."
+msgid "Converting…"
 msgstr "מתבצעת המרה…"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -6168,8 +6181,9 @@ msgid "C&ancel"
 msgstr "בי&טול"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, kde-format
-msgid "Loading txt file..."
+#, fuzzy, kde-format
+#| msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr "טעינה מקובץ טקסט…"
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6242,8 +6256,9 @@ msgid "Status: Not loaded."
 msgstr "מצב: לא טעון."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, kde-format
-msgid "Status: Downloading and converting new block list..."
+#, fuzzy, kde-format
+#| msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr "מצב: מתבצעת הורדה והמרה של רשימת חסימה חדשה…"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -8762,6 +8777,15 @@ msgstr "סריקה מחדש"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Open..."
+#~ msgstr "פתיחה…"
+
+#~ msgid "Recommended Settings..."
+#~ msgstr "הגדרות מומלצות…"
+
+#~ msgid "Filter..."
+#~ msgstr "סינון…"
 
 #~ msgid "Text encoding:"
 #~ msgstr "קידוד טקסט:"

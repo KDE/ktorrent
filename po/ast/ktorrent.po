@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2024-03-27 23:39+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: Asturian <alministradores@softastur.org>\n"
@@ -1363,13 +1363,13 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
 #, kde-format
-msgid "Open..."
+msgid "Open…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
 #, kde-format
-msgid "Save As..."
+msgid "Save As…"
 msgstr ""
 
 #. i18n: ectx: Menu (file)
@@ -1456,7 +1456,7 @@ msgstr ""
 #: ktorrent/main.cpp:103
 #, kde-format
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr ""
 
 #: ktorrent/main.cpp:110
@@ -2826,7 +2826,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
 #, kde-format
-msgid "Recommended Settings..."
+msgid "Recommended Settings…"
 msgstr ""
 
 #: ktorrent/pref/proxypref.cpp:13
@@ -3843,7 +3843,8 @@ msgstr ""
 
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, kde-format
-msgid "Filter..."
+msgctxt "Noun"
+msgid "Filter…"
 msgstr ""
 
 #: ktorrent/view/view.cpp:133
@@ -4260,7 +4261,7 @@ msgstr ""
 
 #: ktupnptest/main.cpp:29
 #, kde-format
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
@@ -5096,7 +5097,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
@@ -5954,7 +5955,7 @@ msgstr ""
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
 #, kde-format
-msgid "Converting..."
+msgid "Converting…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -5971,7 +5972,7 @@ msgstr ""
 
 #: plugins/ipfilter/convertthread.cpp:60
 #, kde-format
-msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr ""
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6042,7 +6043,7 @@ msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
 #, kde-format
-msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175

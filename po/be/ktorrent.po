@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2007-12-09 18:13+0200\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -1415,14 +1415,16 @@ msgstr "Ачысціць"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, kde-format
-msgid "Open..."
-msgstr "Адкрыць..."
+#, fuzzy, kde-format
+#| msgid "Open"
+msgid "Open…"
+msgstr "Адкрыць"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, kde-format
-msgid "Save As..."
+#, fuzzy, kde-format
+#| msgid "Save As..."
+msgid "Save As…"
 msgstr "Запісаць як..."
 
 #. i18n: ectx: Menu (file)
@@ -1513,7 +1515,7 @@ msgstr ""
 #: ktorrent/main.cpp:103
 #, kde-format
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr ""
 
 #: ktorrent/main.cpp:110
@@ -2901,7 +2903,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:314
 #, fuzzy, kde-format
 #| msgid "KTorrent"
-msgid "Recommended Settings..."
+msgid "Recommended Settings…"
 msgstr "KTorrent"
 
 #: ktorrent/pref/proxypref.cpp:13
@@ -3961,7 +3963,8 @@ msgstr "Памылка: "
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, fuzzy, kde-format
 #| msgid "File"
-msgid "Filter..."
+msgctxt "Noun"
+msgid "Filter…"
 msgstr "Файл"
 
 #: ktorrent/view/view.cpp:133
@@ -4396,7 +4399,7 @@ msgstr ""
 
 #: ktupnptest/main.cpp:29
 #, kde-format
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
@@ -5276,7 +5279,7 @@ msgstr "Шукаць:"
 #, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
@@ -6186,9 +6189,10 @@ msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, kde-format
-msgid "Converting..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Connections"
+msgid "Converting…"
+msgstr "Злучэнні"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6204,7 +6208,7 @@ msgstr "&Скасаваць"
 
 #: plugins/ipfilter/convertthread.cpp:60
 #, kde-format
-msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr ""
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6276,7 +6280,7 @@ msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
 #, kde-format
-msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -8778,6 +8782,19 @@ msgstr "Выдаліць"
 msgid "ZeroConf"
 msgstr ""
 
+#~ msgid "Open..."
+#~ msgstr "Адкрыць..."
+
+#, fuzzy
+#~| msgid "KTorrent"
+#~ msgid "Recommended Settings..."
+#~ msgstr "KTorrent"
+
+#, fuzzy
+#~| msgid "File"
+#~ msgid "Filter..."
+#~ msgstr "Файл"
+
 #, fuzzy
 #~| msgid "Display"
 #~ msgctxt "@title:window"
@@ -9114,11 +9131,6 @@ msgstr ""
 #, fuzzy
 #~| msgid "Connections"
 #~ msgid "Connected"
-#~ msgstr "Злучэнні"
-
-#, fuzzy
-#~| msgid "Connections"
-#~ msgid "Connecting"
 #~ msgstr "Злучэнні"
 
 #, fuzzy

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2012-07-04 08:46+0700\n"
 "Last-Translator: Sophea <sophea@khmeros.info>\n"
 "Language-Team: Khmer <>\n"
@@ -1431,14 +1431,17 @@ msgstr "សម្អាត"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, kde-format
-msgid "Open..."
-msgstr "បើក​..."
+#, fuzzy, kde-format
+#| msgctxt "Open file"
+#| msgid "Open"
+msgid "Open…"
+msgstr "បើក"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, kde-format
-msgid "Save As..."
+#, fuzzy, kde-format
+#| msgid "Save As..."
+msgid "Save As…"
 msgstr "រក្សាទុក​ជា..."
 
 #. i18n: ectx: Menu (file)
@@ -1528,7 +1531,7 @@ msgstr "ម៉ាស៊ីន​ភ្ញៀវ Bittorrent សម្រាប់
 #, fuzzy, kde-format
 #| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៥ - ២០១០ Joris Guisson និង​ Ivan Vasic"
 
 #: ktorrent/main.cpp:110
@@ -2997,9 +3000,10 @@ msgstr "អនុញ្ញាត​ឲ្យ KTorrent គណនា​ការ�
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, kde-format
-msgid "Recommended Settings..."
-msgstr "ការ​កំណត់​ដែល​បាន​ផ្ដល់​អនុសាសន៍..."
+#, fuzzy, kde-format
+#| msgid "Recommended Settings"
+msgid "Recommended Settings…"
+msgstr "ការ​កំណត់​ដែល​ផ្ដល់​អនុសាសន៍"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4079,7 +4083,8 @@ msgstr "កំហុស ៖"
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, fuzzy, kde-format
 #| msgid "Filter"
-msgid "Filter..."
+msgctxt "Noun"
+msgid "Filter…"
 msgstr "តម្រង​"
 
 #: ktorrent/view/view.cpp:133
@@ -4509,7 +4514,7 @@ msgstr "កម្មវិធី​សាកល្បង UPnP របស់ KTorr
 #: ktupnptest/main.cpp:29
 #, fuzzy, kde-format
 #| msgid "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៥ - ២០០៧ ដោយ Joris Guisson និង Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
@@ -5366,10 +5371,13 @@ msgstr "ស្វែងរក​ឯកសារ"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Order in which to download the files of a torrent. The file at the top "
+#| "will be downloaded first, followed by the second, then the third ..."
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 "លំដាប់​ដែល​ត្រូវ​ទាញ​យក​ឯកសារ​របស់​ torrent ។ ឯកសារ​នៅ​កំពូល​នឹង​ត្រូវ​បានទាញ​យ​ក​មុន បន្ទាប់​មក​ទី ២ និង​ទី "
 "៣..."
@@ -6244,8 +6252,9 @@ msgstr "មិន​អនុញ្ញាត​ទាំងអស់​"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, kde-format
-msgid "Converting..."
+#, fuzzy, kde-format
+#| msgid "Converting..."
+msgid "Converting…"
 msgstr "កំពុង​​​បម្លែង..."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -6261,8 +6270,9 @@ msgid "C&ancel"
 msgstr "បោះបង់"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, kde-format
-msgid "Loading txt file..."
+#, fuzzy, kde-format
+#| msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr "កំពុង​ផ្ទុក​ឯកសារ​ txt..."
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6334,8 +6344,9 @@ msgid "Status: Not loaded."
 msgstr "ស្ថានភាព​ ៖ មិន​បាន​ផ្ទុក​ ។"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, kde-format
-msgid "Status: Downloading and converting new block list..."
+#, fuzzy, kde-format
+#| msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr "ស្ថានភាព ៖ កំពុង​ទាញ​យក និង​បម្លែង​បញ្ជី​ប្លុក​ថ្មី..."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -8908,6 +8919,17 @@ msgstr "វិភាគ​ឡើង​វិញ"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Open..."
+#~ msgstr "បើក​..."
+
+#~ msgid "Recommended Settings..."
+#~ msgstr "ការ​កំណត់​ដែល​បាន​ផ្ដល់​អនុសាសន៍..."
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "Filter..."
+#~ msgstr "តម្រង​"
 
 #~ msgid "Text encoding:"
 #~ msgstr "ការ​អ៊ិនកូដ​អត្ថបទ ៖"

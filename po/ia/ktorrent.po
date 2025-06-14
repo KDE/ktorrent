@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2025-05-27 12:31+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -1362,14 +1362,17 @@ msgstr "Netta"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, kde-format
-msgid "Open..."
-msgstr "Aperi..."
+#, fuzzy, kde-format
+#| msgctxt "Open file"
+#| msgid "Open"
+msgid "Open…"
+msgstr "Aperi"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, kde-format
-msgid "Save As..."
+#, fuzzy, kde-format
+#| msgid "Save As..."
+msgid "Save As…"
 msgstr "Salveguarda como..."
 
 #. i18n: ectx: Menu (file)
@@ -1456,7 +1459,7 @@ msgstr ""
 #: ktorrent/main.cpp:103
 #, kde-format
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr ""
 
 #: ktorrent/main.cpp:110
@@ -2826,7 +2829,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
 #, kde-format
-msgid "Recommended Settings..."
+msgid "Recommended Settings…"
 msgstr ""
 
 #: ktorrent/pref/proxypref.cpp:13
@@ -3842,9 +3845,11 @@ msgid "Errors:"
 msgstr "Errores:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, kde-format
-msgid "Filter..."
-msgstr "Filtrar..."
+#, fuzzy, kde-format
+#| msgid "Filter"
+msgctxt "Noun"
+msgid "Filter…"
+msgstr "Filtro"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4260,7 +4265,7 @@ msgstr ""
 
 #: ktupnptest/main.cpp:29
 #, kde-format
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
@@ -5096,7 +5101,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
@@ -5960,7 +5965,7 @@ msgstr "Dishabilita toto"
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
 #, kde-format
-msgid "Converting..."
+msgid "Converting…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -5977,7 +5982,7 @@ msgstr "C&ancella "
 
 #: plugins/ipfilter/convertthread.cpp:60
 #, kde-format
-msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr ""
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6048,7 +6053,7 @@ msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
 #, kde-format
-msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -8460,6 +8465,12 @@ msgstr "Re-examina"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "Open..."
+#~ msgstr "Aperi..."
+
+#~ msgid "Filter..."
+#~ msgstr "Filtrar..."
 
 #~ msgid "Text encoding:"
 #~ msgstr "Codifica de texto:"

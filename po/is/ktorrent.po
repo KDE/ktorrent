@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-19 00:42+0000\n"
+"POT-Creation-Date: 2025-06-14 00:42+0000\n"
 "PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -1389,13 +1389,13 @@ msgstr "Hreinsa"
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
 #, fuzzy, kde-format
-msgid "Open..."
-msgstr "Opna..."
+msgid "Open…"
+msgstr "Opna"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
 #, fuzzy, kde-format
-msgid "Save As..."
+msgid "Save As…"
 msgstr "Vista sem..."
 
 #. i18n: ectx: Menu (file)
@@ -1482,7 +1482,7 @@ msgstr "Bittorrent fyrir KDE"
 #: ktorrent/main.cpp:103
 #, fuzzy, kde-format
 msgctxt "@info:credit"
-msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "C og"
 
 #: ktorrent/main.cpp:110
@@ -2852,7 +2852,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
 #, fuzzy, kde-format
-msgid "Recommended Settings..."
+msgid "Recommended Settings…"
 msgstr "Stillingar"
 
 #: ktorrent/pref/proxypref.cpp:13
@@ -3887,7 +3887,8 @@ msgstr "Villa"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
 #, fuzzy, kde-format
-msgid "Filter..."
+msgctxt "Noun"
+msgid "Filter…"
 msgstr "Sía"
 
 #: ktorrent/view/view.cpp:133
@@ -4307,7 +4308,7 @@ msgstr "s"
 
 #: ktupnptest/main.cpp:29
 #, fuzzy, kde-format
-msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "C og"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
@@ -5144,7 +5145,7 @@ msgstr "Leitarvélar"
 #, fuzzy, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
-"be downloaded first, followed by the second, then the third ..."
+"be downloaded first, followed by the second, then the third…"
 msgstr "Uppröðun \" til af a toppur 1. 2. 3.."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
@@ -6027,7 +6028,7 @@ msgstr "Slökkva á Allt"
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
 #, fuzzy, kde-format
-msgid "Converting..."
+msgid "Converting…"
 msgstr "Umbreyting..."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
@@ -6043,8 +6044,9 @@ msgid "C&ancel"
 msgstr "Hætt&a við"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, kde-format
-msgid "Loading txt file..."
+#, fuzzy, kde-format
+#| msgid "Loading txt file..."
+msgid "Loading txt file…"
 msgstr "Hleð inn textaskrá..."
 
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6115,7 +6117,7 @@ msgstr "Staða: Ekki hlaðið."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
 #, fuzzy, kde-format
-msgid "Status: Downloading and converting new block list..."
+msgid "Status: Downloading and converting new block list…"
 msgstr "Staða Sæki og nýtt."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
@@ -8615,6 +8617,18 @@ msgstr "Skanna aftur"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#, fuzzy
+#~ msgid "Open..."
+#~ msgstr "Opna..."
+
+#, fuzzy
+#~ msgid "Recommended Settings..."
+#~ msgstr "Stillingar"
+
+#, fuzzy
+#~ msgid "Filter..."
+#~ msgstr "Sía"
 
 #, fuzzy
 #~ msgid "Text encoding:"
