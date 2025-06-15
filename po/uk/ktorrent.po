@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-14 00:42+0000\n"
-"PO-Revision-Date: 2025-05-19 09:08+0300\n"
+"PO-Revision-Date: 2025-06-14 20:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1440,16 +1440,13 @@ msgstr "Очистити"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Відкрити"
+msgstr "Відкрити…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
 msgstr "Зберегти як…"
 
@@ -1535,9 +1532,7 @@ msgid "Bittorrent client by KDE"
 msgstr "Клієнт Bittorrent від KDE"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "© Joris Guisson і Ivan Vasic, 2005–2011"
@@ -3039,10 +3034,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Рекомендовані параметри"
+msgstr "Рекомендовані параметри…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4146,11 +4140,10 @@ msgid "Errors:"
 msgstr "Помилки:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Фільтр"
+msgstr "Фільтрувати…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4580,8 +4573,7 @@ msgid "KTorrent's UPnP test application"
 msgstr "Програма для UPnP-перевірки для KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "© Joris Guisson і Ivan Vasic, 2005–2007"
 
@@ -5451,10 +5443,7 @@ msgstr "Шукати файли"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
@@ -6344,8 +6333,7 @@ msgstr "Вимкнути всі"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
 msgstr "Перетворення…"
 
@@ -6363,8 +6351,7 @@ msgid "C&ancel"
 msgstr "&Скасувати"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
 msgstr "Завантаження текстового файла…"
 
@@ -6441,8 +6428,7 @@ msgid "Status: Not loaded."
 msgstr "Стан: не завантажено."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
 msgstr "Стан: Триває отримання і перетворення нового списку блоків…"
 

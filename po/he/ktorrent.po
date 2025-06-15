@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-14 00:42+0000\n"
-"PO-Revision-Date: 2025-05-19 09:05+0300\n"
+"PO-Revision-Date: 2025-06-14 06:49+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1408,16 +1408,13 @@ msgstr "ניקוי"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "פתיחה"
+msgstr "פתיחה…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
 msgstr "שמירה בשם…"
 
@@ -1503,12 +1500,10 @@ msgid "Bittorrent client by KDE"
 msgstr "לקוח ביטורנט מבית KDE"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 ‏- 2011 יורש גיסן ואיוון ואסיק"
+msgstr "© 2005 ‏- 2011 יורש גיסן ואיוון ואסיק"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -2942,10 +2937,9 @@ msgstr "לאפשר ל־KTorrent לחשב את ההגדרות המומלצות ב
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "הגדרות מומלצות"
+msgstr "הגדרות מומלצות…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4016,11 +4010,10 @@ msgid "Errors:"
 msgstr "שגיאות:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "מסנן"
+msgstr "סינון…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4436,10 +4429,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "יישום בדיקת UPnP של KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "&copy; 2005 ‏- 2007 יורש גיסן ואיוון ואסיק"
+msgstr "© 2005 ‏- 2007 יורש גיסן ואיוון ואסיק"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5283,16 +5275,13 @@ msgstr "חיפוש קבצים"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
 msgstr ""
 "הסדר בו להוריד את הקבצים בטורנט. הקובץ שלמעלה ירד ראשון, השני אחריו, ואז "
-"השלישי וכן הלאה…"
+"השלישי…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -6163,8 +6152,7 @@ msgstr "השבתה של הכול"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
 msgstr "מתבצעת המרה…"
 
@@ -6181,10 +6169,9 @@ msgid "C&ancel"
 msgstr "בי&טול"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "טעינה מקובץ טקסט…"
+msgstr "קובץ טקסט נטען…"
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6256,8 +6243,7 @@ msgid "Status: Not loaded."
 msgstr "מצב: לא טעון."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
 msgstr "מצב: מתבצעת הורדה והמרה של רשימת חסימה חדשה…"
 

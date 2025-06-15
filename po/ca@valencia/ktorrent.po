@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-14 00:42+0000\n"
-"PO-Revision-Date: 2025-05-19 13:27+0200\n"
+"PO-Revision-Date: 2025-06-14 11:07+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -1446,16 +1446,13 @@ msgstr "Neteja"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Obri"
+msgstr "Obri…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
 msgstr "Anomena i guarda…"
 
@@ -1541,12 +1538,10 @@ msgid "Bittorrent client by KDE"
 msgstr "Client de Bittorrent, creat per la comunitat KDE"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2011 Joris Guisson i Ivan Vasic"
+msgstr "© 2005–2011 Joris Guisson i Ivan Vasic"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -3044,10 +3039,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Configuració recomanada"
+msgstr "Configuració recomanada…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3391,7 +3385,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:198
 #, kde-format
 msgid "Default maximum share ratio:"
-msgstr "Ràtio màxima de compartició per defecte:"
+msgstr "Ràtio màxima de compartició predeterminada:"
 
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_maxRatio)
 #: ktorrent/pref/qmpref.ui:206
@@ -3413,7 +3407,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:222
 #, kde-format
 msgid "Default maximum seed time:"
-msgstr "Temps màxim de sembrat per defecte:"
+msgstr "Temps màxim de sembrat predeterminat:"
 
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_maxSeedTime)
 #: ktorrent/pref/qmpref.ui:229
@@ -4140,11 +4134,10 @@ msgid "Errors:"
 msgstr "Errors:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Filtre"
+msgstr "Filtre…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4573,10 +4566,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "Aplicació de proves d'UPnP de KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "&copy; 2005 - 2007 Joris Guisson i Ivan Vasic"
+msgstr "© 2005–2007 Joris Guisson i Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5438,10 +5430,7 @@ msgstr "Busca fitxers"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
@@ -6332,8 +6321,7 @@ msgstr "Desactiva-ho tot"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
 msgstr "S'està convertint…"
 
@@ -6352,8 +6340,7 @@ msgid "C&ancel"
 msgstr "C&ancel·la"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
 msgstr "S'està carregant el fitxer txt…"
 
@@ -6428,8 +6415,7 @@ msgid "Status: Not loaded."
 msgstr "Estat: no carregat."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
 msgstr "Estat: s'està baixant i convertint una llista de bloqueigs nova…"
 
@@ -8971,12 +8957,3 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Open..."
-#~ msgstr "Obri…"
-
-#~ msgid "Recommended Settings..."
-#~ msgstr "Configuració recomanada…"
-
-#~ msgid "Filter..."
-#~ msgstr "Filtre…"

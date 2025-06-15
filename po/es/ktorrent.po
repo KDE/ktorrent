@@ -14,14 +14,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-14 00:42+0000\n"
-"PO-Revision-Date: 2025-06-09 02:14+0100\n"
+"PO-Revision-Date: 2025-06-15 00:47+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Lokalize 25.04.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1454,16 +1454,13 @@ msgstr "Borrar"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Abrir"
+msgstr "Abrir…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
 msgstr "Guardar como…"
 
@@ -1549,9 +1546,7 @@ msgid "Bittorrent client by KDE"
 msgstr "Cliente de Bittorrent de KDE"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "© 2005 - 2011 Joris Guisson e Ivan Vasic"
@@ -3060,10 +3055,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Preferencias recomendadas"
+msgstr "Preferencias recomendadas…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4157,11 +4151,10 @@ msgid "Errors:"
 msgstr "Errores:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Filtro"
+msgstr "Filtro…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4590,10 +4583,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "Aplicación de prueba de UPnP de KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "&copy; 2005 - 2007 Joris Guisson y Ivan Vasic"
+msgstr "© 2005 - 2007 Joris Guisson y Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5453,10 +5445,7 @@ msgstr "Buscar archivos"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
@@ -6348,8 +6337,7 @@ msgstr "Desactivar todo"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
 msgstr "Convirtiendo…"
 
@@ -6368,8 +6356,7 @@ msgid "C&ancel"
 msgstr "C&ancelar"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
 msgstr "Cargando el archivo txt…"
 
@@ -6444,8 +6431,7 @@ msgid "Status: Not loaded."
 msgstr "Estado: No cargado."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
 msgstr "Estado: Descargando y convirtiendo la nueva lista de bloques…"
 
@@ -8983,12 +8969,3 @@ msgstr "Explorar de nuevo"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Open..."
-#~ msgstr "Abrir…"
-
-#~ msgid "Recommended Settings..."
-#~ msgstr "Preferencias recomendadas…"
-
-#~ msgid "Filter..."
-#~ msgstr "Filtro…"
