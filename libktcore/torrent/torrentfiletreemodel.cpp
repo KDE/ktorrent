@@ -657,16 +657,14 @@ void TorrentFileTreeModel::loadExpandedState(QSortFilterProxyModel *pm, QTreeVie
         return;
 
     BDecoder dec(state, false, 0);
-    BNode *n = nullptr;
     try {
-        n = dec.decode();
-        if (n && n->getType() == BNode::DICT) {
-            root->loadExpandedState(index(0, 0, QModelIndex()), this, pm, tv, n);
+        const std::unique_ptr<BDictNode> dict = dec.decodeDict();
+        if (dict) {
+            root->loadExpandedState(index(0, 0, QModelIndex()), this, pm, tv, dict.get());
         }
     } catch (bt::Error &err) {
         Out(SYS_GEN | LOG_DEBUG) << "Failed to load expanded state" << endl;
     }
-    delete n;
 }
 
 bt::TorrentFileInterface *TorrentFileTreeModel::indexToFile(const QModelIndex &idx)

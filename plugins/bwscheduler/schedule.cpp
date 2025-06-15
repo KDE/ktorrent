@@ -118,11 +118,10 @@ void Schedule::load(const QString &file)
 
     QByteArray data = fptr.readAll();
     BDecoder dec(data, false, 0);
-    BNode *node = nullptr;
+    std::unique_ptr<BNode> node = nullptr;
     try {
         node = dec.decode();
     } catch (bt::Error &err) {
-        delete node;
         Out(SYS_SCD | LOG_NOTICE) << "Decoding " << file << " failed : " << err.toString() << endl;
         throw bt::Error(i18n("The file %1 is corrupted or not a proper KTorrent schedule file.", file));
     }
@@ -134,9 +133,9 @@ void Schedule::load(const QString &file)
 
     if (node->getType() == BNode::LIST) {
         // Old format
-        parseItems((BListNode *)node);
+        parseItems(static_cast<BListNode *>(node.get()));
     } else if (node->getType() == BNode::DICT) {
-        BDictNode *dict = (BDictNode *)node;
+        BDictNode *dict = static_cast<BDictNode *>(node.get());
         BListNode *items = dict->getList(QByteArrayLiteral("items"));
         if (items)
             parseItems(items);
@@ -147,8 +146,6 @@ void Schedule::load(const QString &file)
             enabled = true;
         }
     }
-
-    delete node;
 }
 
 void Schedule::parseItems(BListNode *items)

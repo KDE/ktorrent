@@ -217,18 +217,17 @@ void GroupManager::loadGroups()
         return;
     }
 
-    bt::BNode *n = nullptr;
     try {
         Uint32 fs = bt::FileSize(fn);
         QByteArray data(fs, 0);
         fptr.read(data.data(), fs);
 
         BDecoder dec(data, false);
-        n = dec.decode();
-        if (!n || n->getType() != bt::BNode::LIST)
+        const std::unique_ptr<BListNode> n = dec.decodeList();
+        if (!n)
             throw bt::Error(QStringLiteral("groups file corrupt"));
 
-        BListNode *ln = (BListNode *)n;
+        BListNode *ln = n.get();
         for (Uint32 i = 0; i < ln->getNumChildren(); i++) {
             BDictNode *dn = ln->getDict(i);
             if (!dn)
@@ -251,11 +250,8 @@ void GroupManager::loadGroups()
                 delete g;
         }
 
-        delete n;
     } catch (bt::Error &err) {
         bt::Out(SYS_GEN | LOG_DEBUG) << "Error : " << err.toString() << endl;
-        delete n;
-        return;
     }
 }
 

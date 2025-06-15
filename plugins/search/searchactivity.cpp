@@ -126,9 +126,8 @@ void SearchActivity::loadCurrentSearches()
 
     QByteArray data = fptr.readAll();
     bt::BDecoder dec(data, false, 0);
-    bt::BListNode *search_list = nullptr;
     try {
-        search_list = dec.decodeList();
+        const std::unique_ptr<bt::BListNode> search_list = dec.decodeList();
         if (!search_list)
             throw bt::Error(QStringLiteral("Invalid current searches"));
 
@@ -145,10 +144,7 @@ void SearchActivity::loadCurrentSearches()
             SearchWidget *search = newSearchWidget(text);
             search->restore(url, text, sbtext, engine);
         }
-
-        delete search_list;
     } catch (...) {
-        delete search_list;
     }
 
     if (searches.count() == 0) {

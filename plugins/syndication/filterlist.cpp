@@ -63,15 +63,8 @@ void FilterList::loadFilters(const QString &file)
 
     QByteArray data = fptr.readAll();
     BDecoder dec(data, false);
-    BNode *n = nullptr;
     try {
-        n = dec.decode();
-        if (!n || n->getType() != BNode::LIST) {
-            delete n;
-            return;
-        }
-
-        BListNode *ln = (BListNode *)n;
+        const std::unique_ptr<BListNode> ln = dec.decodeList();
         for (Uint32 i = 0; i < ln->getNumChildren(); i++) {
             BDictNode *dict = ln->getDict(i);
             if (dict) {
@@ -85,7 +78,5 @@ void FilterList::loadFilters(const QString &file)
     } catch (bt::Error &err) {
         Out(SYS_SYN | LOG_DEBUG) << "Failed to parse " << file << " : " << err.toString() << endl;
     }
-
-    delete n;
 }
 }

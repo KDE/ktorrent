@@ -163,14 +163,13 @@ void ShutdownRuleSet::load(const QString &file)
 
     QByteArray data = fptr.readAll();
     BDecoder dec(data, false);
-    BNode *node = nullptr;
     try {
         clear();
-        node = dec.decode();
-        if (!node || node->getType() != BNode::LIST)
+        const std::unique_ptr<BListNode> list = dec.decodeList();
+        if (!list)
             throw bt::Error(QStringLiteral("Toplevel node not a list"));
 
-        BListNode *const l = (BListNode *)node;
+        BListNode *const l = list.get();
         Uint32 i = 0;
         for (; i < l->getNumChildren(); ++i) {
             if (l->getChild(i)->getType() != BNode::DICT)
@@ -205,8 +204,6 @@ void ShutdownRuleSet::load(const QString &file)
     } catch (bt::Error &err) {
         Out(SYS_GEN | LOG_DEBUG) << "Failed to parse " << file << " : " << err.toString() << endl;
     }
-
-    delete node;
 }
 
 bt::TorrentInterface *ShutdownRuleSet::torrentForHash(const QByteArray &hash)

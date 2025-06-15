@@ -131,13 +131,10 @@ void Feed::load(FilterList *filter_list)
 
     QByteArray data = fptr.readAll();
     BDecoder dec(data, false);
-    BNode *n = dec.decode();
-    if (!n || n->getType() != BNode::DICT) {
-        delete n;
+    const std::unique_ptr<BDictNode> dict = dec.decodeDict();
+    if (!dict) {
         return;
     }
-
-    BDictNode *dict = (BDictNode *)n;
 
     try {
         url = QUrl(dict->getString("url"));
@@ -182,13 +179,11 @@ void Feed::load(FilterList *filter_list)
             }
         }
     } catch (...) {
-        delete n;
         throw;
     }
 
     Out(SYS_SYN | LOG_DEBUG) << "Loaded feed from " << file << " : " << endl;
     status = OK;
-    delete n;
 
     if (bt::Exists(dir + QStringLiteral("feed.xml")))
         loadFromDisk();

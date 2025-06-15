@@ -60,10 +60,9 @@ bool TorrentLoadQueue::validateTorrent(const QUrl &url, QByteArray &data)
         data = fptr.readAll();
 
         bt::BDecoder dec(data, false);
-        bt::BNode *n = dec.decode();
+        const std::unique_ptr<bt::BNode> n = dec.decode();
         if (n) {
             // valid node, so file is complete
-            delete n;
             return true;
         } else {
             // decoding failed so incomplete

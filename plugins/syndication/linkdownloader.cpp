@@ -102,11 +102,9 @@ bool LinkDownloader::isTorrent(const QByteArray &data) const
     bool ret = false;
     try {
         BDecoder decoder(data, false);
-        BNode *node = decoder.decode();
+        const std::unique_ptr<BNode> node = decoder.decode();
         if (node)
             ret = true;
-
-        delete node;
     } catch (...) {
         ret = false;
     }

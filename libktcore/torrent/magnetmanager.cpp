@@ -354,13 +354,12 @@ void MagnetManager::loadMagnets(const QString &file)
         return;
 
     BDecoder decoder(magnet_data, 0, false);
-    BNode *node = nullptr;
     try {
-        node = decoder.decode();
-        if (!node || node->getType() != BNode::LIST)
+        const std::unique_ptr<BListNode> node = decoder.decodeList();
+        if (!node)
             throw Error(QStringLiteral("Corrupted magnet file"));
 
-        BListNode *ml = (BListNode *)node;
+        BListNode *ml = node.get();
         for (Uint32 i = 0; i < ml->getNumChildren(); i++) {
             BDictNode *dict = ml->getDict(i);
             MagnetLink mlink(dict->getString(QByteArrayLiteral("magnet")));
@@ -380,7 +379,6 @@ void MagnetManager::loadMagnets(const QString &file)
     } catch (Error &err) {
         Out(SYS_GEN | LOG_NOTICE) << "Failed to load " << file << " : " << err.toString() << endl;
     }
-    delete node;
 }
 
 void MagnetManager::saveMagnets(const QString &file)
