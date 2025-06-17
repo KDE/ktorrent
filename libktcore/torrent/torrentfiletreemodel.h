@@ -15,7 +15,7 @@ class QSortFilterProxyModel;
 namespace bt
 {
 class BEncoder;
-class BNode;
+class BDictNode;
 }
 
 namespace kt
@@ -68,9 +68,9 @@ protected:
          * @param real_model The real model that owns this Node
          * @param pm Proxy model of the view
          * @param tv The QTreeView
-         * @param enc The BEncoded node that refers to this Node's expansion state
+         * @param dict The BEncoded node that refers to this Node's expansion state
          */
-        void loadExpandedState(const QModelIndex &index, TorrentFileTreeModel *real_model, QSortFilterProxyModel *pm, QTreeView *tv, bt::BNode *node) const;
+        void loadExpandedState(const QModelIndex &index, TorrentFileTreeModel *real_model, QSortFilterProxyModel *pm, QTreeView *tv, bt::BDictNode *dict) const;
     };
 
 public:

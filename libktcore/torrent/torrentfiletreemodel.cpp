@@ -242,12 +242,11 @@ void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex &index,
                                                    TorrentFileTreeModel *real_model,
                                                    QSortFilterProxyModel *pm,
                                                    QTreeView *tv,
-                                                   BNode *n) const
+                                                   BDictNode *dict) const
 {
     if (file)
         return;
 
-    BDictNode *dict = dynamic_cast<BDictNode *>(n);
     if (!dict)
         return;
 
