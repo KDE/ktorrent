@@ -1210,7 +1210,7 @@ void Core::onMetadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &d
 {
     QByteArray tmp;
     BEncoderBufferOutput *out = new BEncoderBufferOutput(tmp);
-    BEncoder enc(out);
+    BEncoder enc{std::unique_ptr<BEncoderBufferOutput>(out)};
     enc.beginDict();
     QList<QUrl> trs = mlink.trackers();
     if (trs.count()) {

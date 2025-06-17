@@ -239,7 +239,7 @@ QString DBusTorrent::torDir() const
 QByteArray DBusTorrent::stats() const
 {
     QByteArray ret;
-    BEncoder enc(new BEncoderBufferOutput(ret));
+    BEncoder enc(std::make_unique<BEncoderBufferOutput>(ret));
     const TorrentStats &s = ti->getStats();
     enc.beginDict();
     enc.write(QByteArrayLiteral("imported_bytes"), s.imported_bytes);

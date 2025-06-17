@@ -133,7 +133,7 @@ void ShutdownRuleSet::save(const QString &file)
         return;
     }
 
-    BEncoder enc(new BEncoderFileOutput(&fptr));
+    BEncoder enc(std::make_unique<BEncoderFileOutput>(&fptr));
     enc.beginList();
     for (QList<ShutdownRule>::iterator i = rules.begin(); i != rules.end(); i++) {
         enc.beginDict();

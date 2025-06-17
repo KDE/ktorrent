@@ -644,7 +644,7 @@ QByteArray TorrentFileTreeModel::saveExpandedState(QSortFilterProxyModel *pm, QT
         return QByteArray();
 
     QByteArray data;
-    BEncoder enc(new BEncoderBufferOutput(data));
+    BEncoder enc(std::make_unique<BEncoderBufferOutput>(data));
     enc.beginDict();
     root->saveExpandedState(index(0, 0, QModelIndex()), this, pm, tv, &enc);
     enc.end();
