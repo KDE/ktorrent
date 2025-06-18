@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-14 00:42+0000\n"
-"PO-Revision-Date: 2025-05-19 16:27+0200\n"
+"PO-Revision-Date: 2025-06-16 13:24+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.04.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1449,18 +1449,15 @@ msgstr "Wissen"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Openen"
+msgstr "Openen…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
-msgstr "Opslaan als..."
+msgstr "Opslaan als…"
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -1544,12 +1541,10 @@ msgid "Bittorrent client by KDE"
 msgstr "BitTorrent-programma door KDE"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2011 Joris Guisson en Ivan Vasic"
+msgstr "© 2005–2011 Joris Guisson en Ivan Vasic"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -3047,10 +3042,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Aanbevolen instellingen"
+msgstr "Aanbevolen instellingen…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4141,11 +4135,10 @@ msgid "Errors:"
 msgstr "Fouten: "
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Filter"
+msgstr "Filteren…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4575,10 +4568,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "UPnP-testprogramma voor KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "(C) 2005 - 2008 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2008 Joris Guisson en Ivan Vasic"
+msgstr "© 2005–2007 Joris Guisson en Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5439,17 +5431,14 @@ msgstr "In bestanden zoeken"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
 msgstr ""
 "Volgorde in welke bestanden van een torrent gedownload zullen worden. Het "
 "bestand aan de top zal eerst gedownload worden, opgevolgd door de tweede, "
-"dan de derde ..."
+"dan de derde…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -6339,10 +6328,9 @@ msgstr "Alles uitschakelen"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
-msgstr "Converteren..."
+msgstr "Converteren…"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6359,10 +6347,9 @@ msgid "C&ancel"
 msgstr "&Annuleren"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "txt-bestand wordt geladen..."
+msgstr "txt-bestand wordt geladen…"
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6435,10 +6422,9 @@ msgid "Status: Not loaded."
 msgstr "Status: niet geladen."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
-msgstr "Status: downloaden en nieuwe bloklijst wordt geconverteerd..."
+msgstr "Status: downloaden en nieuwe bloklijst wordt geconverteerd…"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
