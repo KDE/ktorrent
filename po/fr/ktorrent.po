@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-14 00:42+0000\n"
-"PO-Revision-Date: 2025-05-20 09:39+0200\n"
+"PO-Revision-Date: 2025-06-17 14:27+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.04.2\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -1515,16 +1515,13 @@ msgstr "Effacer"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Ouvrir"
+msgstr "Ouvrir…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
 msgstr "Enregistrer sous…"
 
@@ -1610,12 +1607,10 @@ msgid "Bittorrent client by KDE"
 msgstr "Client BitTorrent par KDE"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2011 Joris Guisson et Ivan Vasic"
+msgstr "© 2005 - 2011 Joris Guisson et Ivan Vasic"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -3147,10 +3142,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Paramètres recommandés"
+msgstr "Configuration recommandée..."
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4282,11 +4276,10 @@ msgid "Errors:"
 msgstr "Erreurs : "
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Filtre"
+msgstr "Filtrer…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4732,10 +4725,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "L'application de test UPnP de KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "(C) 2005 - 2008 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2008 Joris Guisson et Ivan Vasic"
+msgstr "© 2005 - 2007 Joris Guisson et Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5646,16 +5638,14 @@ msgstr "Rechercher des fichiers"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
 msgstr ""
-"Ordre dans lequel télécharger les fichiers d'un torrent. Le fichier tout en "
-"haut sera téléchargé en premier, puis le second, puis le troisième..."
+"Ordre dans lequel effectuer le téléchargement des fichiers d'un torrent. Le "
+"fichier tout en haut sera téléchargé en premier, puis le second, puis le "
+"troisième..."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -6580,10 +6570,9 @@ msgstr "Désactiver tout"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
-msgstr "Conversion..."
+msgstr "Conversion en cours..."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6600,10 +6589,9 @@ msgid "C&ancel"
 msgstr "A&nnuler"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "Charge le fichier txt..."
+msgstr "Chargement du fichier de texte..."
 
 # unreviewed-context
 #: plugins/ipfilter/convertthread.cpp:131
@@ -6683,10 +6671,10 @@ msgstr "État : non démarré."
 
 # unreviewed-context
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
-msgstr "État : télécharge et convertit la nouvelle liste de blocs..."
+msgstr ""
+"État : téléchargement et conversion de la nouvelle liste de blocs en cours..."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format

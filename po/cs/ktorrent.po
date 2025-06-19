@@ -1425,18 +1425,15 @@ msgstr "Vyčistit"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Otevřít"
+msgstr "Otevřít…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
-msgstr "Uložit jako..."
+msgstr "Uložit jako…"
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
