@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-14 00:42+0000\n"
+"POT-Creation-Date: 2025-06-22 00:43+0000\n"
 "PO-Revision-Date: 2025-05-03 11:36+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -3497,7 +3497,7 @@ msgstr "Fjern magnet"
 msgid "Order"
 msgstr "Rekkjefølgje"
 
-#: ktorrent/tools/queuemanagermodel.cpp:180 ktorrent/view/viewmodel.cpp:450
+#: ktorrent/tools/queuemanagermodel.cpp:180 ktorrent/view/viewmodel.cpp:471
 #: plugins/downloadorder/downloadorderdialog.cpp:70
 #, kde-format
 msgid "Name"
@@ -4186,144 +4186,156 @@ msgctxt "Progress bar percentage label"
 msgid "%1%"
 msgstr "%1 %"
 
-#: ktorrent/view/viewmodel.cpp:452 plugins/infowidget/peerviewmodel.cpp:315
+#: ktorrent/view/viewmodel.cpp:182
+#, kde-format
+msgctxt "1h 20m ago"
+msgid "%1 ago"
+msgstr ""
+
+#: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
 msgid "Downloaded"
 msgstr "Lasta ned"
 
-#: ktorrent/view/viewmodel.cpp:454
+#: ktorrent/view/viewmodel.cpp:475
 #, fuzzy, kde-format
 #| msgid "Times Downloaded"
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
 msgstr "Gongar lasta ned"
 
-#: ktorrent/view/viewmodel.cpp:456
+#: ktorrent/view/viewmodel.cpp:477
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
 #: libktcore/torrent/torrentfiletreemodel.cpp:359
 #, kde-format
 msgid "Size"
 msgstr "Storleik"
 
-#: ktorrent/view/viewmodel.cpp:458 plugins/infowidget/peerviewmodel.cpp:317
+#: ktorrent/view/viewmodel.cpp:479 plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
 msgid "Uploaded"
 msgstr "Lasta opp"
 
-#: ktorrent/view/viewmodel.cpp:460
+#: ktorrent/view/viewmodel.cpp:481
 #, fuzzy, kde-format
 #| msgid "Uploaded"
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
 msgstr "Lasta opp"
 
-#: ktorrent/view/viewmodel.cpp:462
+#: ktorrent/view/viewmodel.cpp:483
 #, kde-format
 msgctxt "Bytes left to downloaded"
 msgid "Left"
 msgstr "Står att"
 
-#: ktorrent/view/viewmodel.cpp:464
+#: ktorrent/view/viewmodel.cpp:485
 #: plugins/infowidget/chunkdownloadmodel.cpp:195
 #: plugins/infowidget/peerviewmodel.cpp:297
 #, kde-format
 msgid "Down Speed"
 msgstr "Nedlastingsfart"
 
-#: ktorrent/view/viewmodel.cpp:466 plugins/infowidget/peerviewmodel.cpp:299
+#: ktorrent/view/viewmodel.cpp:487 plugins/infowidget/peerviewmodel.cpp:299
 #, kde-format
 msgid "Up Speed"
 msgstr "Opplastingsfart"
 
-#: ktorrent/view/viewmodel.cpp:468
+#: ktorrent/view/viewmodel.cpp:489
 #, kde-format
 msgid "Time Left"
 msgstr "Tid att"
 
-#: ktorrent/view/viewmodel.cpp:470 plugins/infowidget/trackermodel.cpp:125
+#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/trackermodel.cpp:125
 #, kde-format
 msgid "Seeders"
 msgstr "Delarar"
 
-#: ktorrent/view/viewmodel.cpp:472 plugins/infowidget/trackermodel.cpp:127
+#: ktorrent/view/viewmodel.cpp:493 plugins/infowidget/trackermodel.cpp:127
 #, kde-format
 msgid "Leechers"
 msgstr "Nedlastarar"
 
-#: ktorrent/view/viewmodel.cpp:475
+#: ktorrent/view/viewmodel.cpp:496
 #, no-c-format, kde-format
 msgid "% Complete"
 msgstr "% ferdig"
 
-#: ktorrent/view/viewmodel.cpp:477
+#: ktorrent/view/viewmodel.cpp:498
 #, kde-format
 msgid "Share Ratio"
 msgstr "Deleforhold"
 
-#: ktorrent/view/viewmodel.cpp:479
+#: ktorrent/view/viewmodel.cpp:500
 #, kde-format
 msgid "Time Downloaded"
 msgstr "Tid lasta ned"
 
-#: ktorrent/view/viewmodel.cpp:481
+#: ktorrent/view/viewmodel.cpp:502
 #, kde-format
 msgid "Time Seeded"
 msgstr "Tid lasta opp"
 
-#: ktorrent/view/viewmodel.cpp:483
+#: ktorrent/view/viewmodel.cpp:504
 #, kde-format
 msgid "Location"
 msgstr "Plassering"
 
-#: ktorrent/view/viewmodel.cpp:485
+#: ktorrent/view/viewmodel.cpp:506
 #, kde-format
 msgid "Added"
 msgstr "Lagd til"
 
-#: ktorrent/view/viewmodel.cpp:492
+#: ktorrent/view/viewmodel.cpp:508
+#, fuzzy, kde-format
+#| msgid "Separate activity"
+msgid "Last Activity"
+msgstr "Særskild aktivitet"
+
+#: ktorrent/view/viewmodel.cpp:515
 #, kde-format
 msgid "How much data we have downloaded of the torrent"
 msgstr "Kor mykje data av torrenten er lasta ned"
 
-#: ktorrent/view/viewmodel.cpp:494
+#: ktorrent/view/viewmodel.cpp:517
 #, fuzzy, kde-format
 #| msgid "How much data we have downloaded of the torrent"
 msgid "How much data we have downloaded of the torrent this session"
 msgstr "Kor mykje data av torrenten er lasta ned"
 
-#: ktorrent/view/viewmodel.cpp:496
+#: ktorrent/view/viewmodel.cpp:519
 #, kde-format
 msgid "Total size of the torrent, excluded files are not included"
 msgstr "Total storleik på torrenten (ekskluderte filer er ikkje tekne med)"
 
-#: ktorrent/view/viewmodel.cpp:498
+#: ktorrent/view/viewmodel.cpp:521
 #, kde-format
 msgid "How much data we have uploaded"
 msgstr "Kor mykje data som er lasta opp"
 
-#: ktorrent/view/viewmodel.cpp:500
+#: ktorrent/view/viewmodel.cpp:523
 #, fuzzy, kde-format
 #| msgid "How much data we have uploaded to this peer"
 msgid "How much data we have uploaded this session"
 msgstr "Kor mykje data du har lasta opp til denne deltakaren"
 
-#: ktorrent/view/viewmodel.cpp:502
+#: ktorrent/view/viewmodel.cpp:525
 #, kde-format
 msgid "How much data left to download"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:504
+#: ktorrent/view/viewmodel.cpp:527
 #, kde-format
 msgid "Current download speed"
 msgstr "Gjeldande nedlastingsfart"
 
-#: ktorrent/view/viewmodel.cpp:506
+#: ktorrent/view/viewmodel.cpp:529
 #, kde-format
 msgid "Current upload speed"
 msgstr "Gjeldande opplastingsfart"
 
-#: ktorrent/view/viewmodel.cpp:508
+#: ktorrent/view/viewmodel.cpp:531
 #, kde-format
 msgid ""
 "How much time is left before the torrent is finished or before the maximum "
@@ -4332,7 +4344,7 @@ msgstr ""
 "Kor mykje tid det er att før torrenten er ferdig nedlasta eller før høgste "
 "deleforhold er nådd, viss det er slått på"
 
-#: ktorrent/view/viewmodel.cpp:510
+#: ktorrent/view/viewmodel.cpp:533
 #, kde-format
 msgid ""
 "How many seeders we are connected to (How many seeders there are according "
@@ -4341,7 +4353,7 @@ msgstr ""
 "Kor mange delarar me er kopla til (av kor mange delarar det er ifølgje "
 "deltakarsentralen)"
 
-#: ktorrent/view/viewmodel.cpp:512
+#: ktorrent/view/viewmodel.cpp:535
 #, kde-format
 msgid ""
 "How many leechers we are connected to (How many leechers there are according "
@@ -4350,7 +4362,7 @@ msgstr ""
 "Kor mange nedlastarar me er kopla til (av kor mange nedlastarar det er "
 "ifølgje deltakarsentralen)"
 
-#: ktorrent/view/viewmodel.cpp:515
+#: ktorrent/view/viewmodel.cpp:538
 #, kde-format
 msgid ""
 "The percentage of data we have of the whole torrent, not including excluded "
@@ -4359,7 +4371,7 @@ msgstr ""
 "Kor mange prosent av heile torrenten som er lasta ned (ekskluderte filer er "
 "ikkje tekne med)"
 
-#: ktorrent/view/viewmodel.cpp:517
+#: ktorrent/view/viewmodel.cpp:540
 #, kde-format
 msgid ""
 "Share ratio is the number of bytes uploaded divided by the number of bytes "
@@ -4368,32 +4380,37 @@ msgstr ""
 "Deleforholdet er talet på byte som er opplasta delt på talet på bytes som er "
 "nedlasta"
 
-#: ktorrent/view/viewmodel.cpp:519
+#: ktorrent/view/viewmodel.cpp:542
 #, kde-format
 msgid "How long we have been downloading the torrent"
 msgstr "Kor lenge nedlastinga av torrenten har pågått"
 
-#: ktorrent/view/viewmodel.cpp:521
+#: ktorrent/view/viewmodel.cpp:544
 #, kde-format
 msgid "How long we have been seeding the torrent"
 msgstr "Kor lenge delinga av torrenten har pågått"
 
-#: ktorrent/view/viewmodel.cpp:523
+#: ktorrent/view/viewmodel.cpp:546
 #, kde-format
 msgid "The location of the torrent's data on disk"
 msgstr "Kvar dataa i torrenten er plassert på disken"
 
-#: ktorrent/view/viewmodel.cpp:525
+#: ktorrent/view/viewmodel.cpp:548
 #, kde-format
 msgid "When this torrent was added"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:567
+#: ktorrent/view/viewmodel.cpp:550
+#, kde-format
+msgid "Time since last download or upload activity"
+msgstr ""
+
+#: ktorrent/view/viewmodel.cpp:592
 #, kde-format
 msgid "%1<br>Url: <b>%2</b>"
 msgstr "%1<br/>Adresse: <b>%2</b>"
 
-#: ktorrent/view/viewmodel.cpp:573
+#: ktorrent/view/viewmodel.cpp:598
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr ""
@@ -8702,9 +8719,3 @@ msgstr "Sjekk på nytt"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Open..."
-#~ msgstr "Opna …"
-
-#~ msgid "Recommended Settings..."
-#~ msgstr "Tilrådde innstillingar …"
