@@ -8898,10 +8898,3 @@ msgstr "Ново сканиране"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
-
-#~ msgid "Text encoding:"
-#~ msgstr "Кодировка на текста:"
-
-#~ msgctxt "@title:window"
-#~ msgid "Display"
-#~ msgstr "Показване"
