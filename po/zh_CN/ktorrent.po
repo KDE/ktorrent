@@ -4265,10 +4265,9 @@ msgid "Added"
 msgstr "已添加"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "独立的活动"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format

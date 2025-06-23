@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-22 00:43+0000\n"
-"PO-Revision-Date: 2025-06-14 20:41+0300\n"
+"PO-Revision-Date: 2025-06-22 10:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4358,7 +4358,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "%1 тому"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4454,10 +4454,9 @@ msgid "Added"
 msgstr "Додано"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "Окреме вікно"
+msgstr "Останні дії"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4567,7 +4566,7 @@ msgstr "Час, коли було додано цей торент"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Час з моменту останніх дій з отримання або вивантаження даних"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format

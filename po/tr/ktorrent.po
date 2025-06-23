@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-22 00:43+0000\n"
-"PO-Revision-Date: 2025-06-14 17:19+0300\n"
+"PO-Revision-Date: 2025-06-22 09:18+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4308,7 +4308,7 @@ msgstr "%​%1"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "%1 önce"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4404,10 +4404,9 @@ msgid "Added"
 msgstr "Eklendi"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "Etkinlikleri ayır"
+msgstr "Son Etkinlik"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4510,7 +4509,7 @@ msgstr "Torrent ne zaman eklendi"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Son indirme veya yükleme etkinliğinden bu yana geçen zaman"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format

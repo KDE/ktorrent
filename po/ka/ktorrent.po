@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-22 00:43+0000\n"
-"PO-Revision-Date: 2025-06-14 05:21+0200\n"
+"PO-Revision-Date: 2025-06-22 04:57+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -4308,7 +4308,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "%1-ის წინ"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4404,10 +4404,9 @@ msgid "Added"
 msgstr "დამატებულია"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "აქტივობის განცალკევება"
+msgstr "ბოლო აქტივობა"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4515,7 +4514,7 @@ msgstr "როდის დაემატა ტორენტი"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "დრო ბოლო გადმოწერა/ატვირთვის აქტივობიდან"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format

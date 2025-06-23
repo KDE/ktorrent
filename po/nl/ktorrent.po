@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-22 00:43+0000\n"
-"PO-Revision-Date: 2025-06-16 13:24+0200\n"
+"PO-Revision-Date: 2025-06-22 15:49+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -4352,7 +4352,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "%1 geleden"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4448,10 +4448,9 @@ msgid "Added"
 msgstr "Toegevoegd"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "Activiteit scheiden"
+msgstr "Laatste activiteit"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4562,7 +4561,7 @@ msgstr "Wanneer deze torrent is toegevoegd"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Tijd sinds laatste download- of upload-activiteit"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format
