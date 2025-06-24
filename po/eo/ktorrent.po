@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:43+0000\n"
+"POT-Creation-Date: 2025-06-24 00:42+0000\n"
 "PO-Revision-Date: 2025-03-15 10:38+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -4328,7 +4328,7 @@ msgstr "Tempoj Elŝutitaj"
 
 #: ktorrent/view/viewmodel.cpp:477
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
-#: libktcore/torrent/torrentfiletreemodel.cpp:359
+#: libktcore/torrent/torrentfiletreemodel.cpp:358
 #, kde-format
 msgid "Size"
 msgstr "Grando"
@@ -5032,7 +5032,7 @@ msgid "Error stopping torrent %1: %2"
 msgstr "Eraro ĉesigante torenton %1: %2"
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
-#: libktcore/torrent/torrentfiletreemodel.cpp:357
+#: libktcore/torrent/torrentfiletreemodel.cpp:356
 #, kde-format
 msgid "File"
 msgstr "Dosiero"
@@ -5234,13 +5234,13 @@ msgstr "Agordi konektolimojn"
 msgid "Bandwidth Schedule"
 msgstr "Horaro de Kapacito"
 
-#: plugins/bwscheduler/schedule.cpp:114 plugins/bwscheduler/schedule.cpp:230
+#: plugins/bwscheduler/schedule.cpp:114 plugins/bwscheduler/schedule.cpp:227
 #, kde-format
 msgid "Cannot open file %1: %2"
 msgstr "Ne povas malfermi dosieron %1: %2"
 
 # FUZZY MATCH (The file %1 is corrupted or not a proper KTorrent schedule file. / The file %1 is corrupted or not a proper KTorrent schedule file !)
-#: plugins/bwscheduler/schedule.cpp:127 plugins/bwscheduler/schedule.cpp:132
+#: plugins/bwscheduler/schedule.cpp:126 plugins/bwscheduler/schedule.cpp:131
 #, kde-format
 msgid "The file %1 is corrupted or not a proper KTorrent schedule file."
 msgstr "La dosiero %1 aŭ estas malbona aŭ ne estas KTorrent-horara dosiero !"
@@ -6557,7 +6557,7 @@ msgid "All"
 msgstr "Ĉiuj"
 
 #: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:471
+#: plugins/syndication/ktfeed.cpp:466
 #, kde-format
 msgid "None"
 msgstr "Neniu"
@@ -7002,9 +7002,9 @@ msgid "Scan directories recursively."
 msgstr "Skani dosierujojn rekursie."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
+#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:140
-#: plugins/scanfolder/torrentloadqueue.cpp:143
+#: plugins/scanfolder/torrentloadqueue.cpp:142
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"
@@ -7234,7 +7234,7 @@ msgctxt "plugin name"
 msgid "Search"
 msgstr "Serĉi"
 
-#: plugins/search/searchactivity.cpp:215
+#: plugins/search/searchactivity.cpp:211
 #, kde-format
 msgid "Search for %1"
 msgstr "Serĉi %1"
@@ -7462,7 +7462,7 @@ msgstr "Konservi %1 al"
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:127
-#: plugins/shutdown/shutdownruleset.cpp:242
+#: plugins/shutdown/shutdownruleset.cpp:239
 #, kde-format
 msgid "Shutdown"
 msgstr "Sistemfermi"
@@ -7480,19 +7480,19 @@ msgid "Configure Shutdown"
 msgstr "Agordi Malŝalton"
 
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:131
-#: plugins/shutdown/shutdownruleset.cpp:245
+#: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Lock"
 msgstr "Ŝlosi"
 
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:135
-#: plugins/shutdown/shutdownruleset.cpp:248
+#: plugins/shutdown/shutdownruleset.cpp:245
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "Dormi (halteti al RAM)"
 
 #: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
-#: plugins/shutdown/shutdownruleset.cpp:251
+#: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "Pasivumigi (halteti al disko)"
@@ -7556,37 +7556,37 @@ msgstr "Malŝalto Ebligita"
 msgid "Configure Shutdown"
 msgstr "Agordi Malŝalton"
 
-#: plugins/shutdown/shutdownruleset.cpp:236
+#: plugins/shutdown/shutdownruleset.cpp:233
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "Aŭtomata haltigo ne aktiva"
 
-#: plugins/shutdown/shutdownruleset.cpp:256
+#: plugins/shutdown/shutdownruleset.cpp:253
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr "kiam ĉiuj jenaj eventoj okazis:<br/><br/>"
 
-#: plugins/shutdown/shutdownruleset.cpp:258
+#: plugins/shutdown/shutdownruleset.cpp:255
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr "kiam okazas unu el la sekvaj eventoj:<br/><br/>"
 
-#: plugins/shutdown/shutdownruleset.cpp:328
+#: plugins/shutdown/shutdownruleset.cpp:325
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "<b>Ĉiuj torentoj</b> finas elŝutadon"
 
-#: plugins/shutdown/shutdownruleset.cpp:330
+#: plugins/shutdown/shutdownruleset.cpp:327
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "<b>Ĉiuj torentoj</b> finas semado"
 
-#: plugins/shutdown/shutdownruleset.cpp:332
+#: plugins/shutdown/shutdownruleset.cpp:329
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "<b>%1</b> finas elŝutadon"
 
-#: plugins/shutdown/shutdownruleset.cpp:334
+#: plugins/shutdown/shutdownruleset.cpp:331
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "<b>%1</b> finas semado"
@@ -8720,37 +8720,37 @@ msgstr "Testo"
 msgid "filter on feed:"
 msgstr "filtrilo sur feed:"
 
-#: plugins/syndication/ktfeed.cpp:448
+#: plugins/syndication/ktfeed.cpp:443
 #, kde-format
 msgid "Aborted"
 msgstr "Abortita"
 
-#: plugins/syndication/ktfeed.cpp:450
+#: plugins/syndication/ktfeed.cpp:445
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "Temp-elĉerpo dum elŝuto de fluo"
 
-#: plugins/syndication/ktfeed.cpp:452
+#: plugins/syndication/ktfeed.cpp:447
 #, kde-format
 msgid "Unknown hostname"
 msgstr "Nekonata gastiga nomo"
 
-#: plugins/syndication/ktfeed.cpp:454
+#: plugins/syndication/ktfeed.cpp:449
 #, kde-format
 msgid "File not found"
 msgstr "Dosiero ne trovita"
 
-#: plugins/syndication/ktfeed.cpp:456
+#: plugins/syndication/ktfeed.cpp:451
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "Eraro de Nekonata Retriever"
 
-#: plugins/syndication/ktfeed.cpp:460
+#: plugins/syndication/ktfeed.cpp:455
 #, kde-format
 msgid "Invalid feed data"
 msgstr "Nevalidaj nutraĵdatenoj"
 
-#: plugins/syndication/ktfeed.cpp:462
+#: plugins/syndication/ktfeed.cpp:457
 #, kde-format
 msgid "Success"
 msgstr "Sukceso"
@@ -8761,7 +8761,7 @@ msgstr "Sukceso"
 msgid "Syndication Toolbar"
 msgstr "Sindikata Ilobreto"
 
-#: plugins/syndication/linkdownloader.cpp:173
+#: plugins/syndication/linkdownloader.cpp:171
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "Ne eblis trovi validan ligilon al torento ĉe %1"

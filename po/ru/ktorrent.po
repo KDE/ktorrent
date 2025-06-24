@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:43+0000\n"
+"POT-Creation-Date: 2025-06-24 00:42+0000\n"
 "PO-Revision-Date: 2025-03-25 14:29+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -4360,7 +4360,7 @@ msgstr "Загружено раз"
 
 #: ktorrent/view/viewmodel.cpp:477
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
-#: libktcore/torrent/torrentfiletreemodel.cpp:359
+#: libktcore/torrent/torrentfiletreemodel.cpp:358
 #, kde-format
 msgid "Size"
 msgstr "Размер"
@@ -5060,7 +5060,7 @@ msgid "Error stopping torrent %1: %2"
 msgstr "Ошибка при остановке торрента %1: %2"
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
-#: libktcore/torrent/torrentfiletreemodel.cpp:357
+#: libktcore/torrent/torrentfiletreemodel.cpp:356
 #, kde-format
 msgid "File"
 msgstr "Файл"
@@ -5261,12 +5261,12 @@ msgstr "Ограничение соединений"
 msgid "Bandwidth Schedule"
 msgstr "Расписание загрузок"
 
-#: plugins/bwscheduler/schedule.cpp:114 plugins/bwscheduler/schedule.cpp:230
+#: plugins/bwscheduler/schedule.cpp:114 plugins/bwscheduler/schedule.cpp:227
 #, kde-format
 msgid "Cannot open file %1: %2"
 msgstr "Не удаётся открыть файл %1: %2"
 
-#: plugins/bwscheduler/schedule.cpp:127 plugins/bwscheduler/schedule.cpp:132
+#: plugins/bwscheduler/schedule.cpp:126 plugins/bwscheduler/schedule.cpp:131
 #, kde-format
 msgid "The file %1 is corrupted or not a proper KTorrent schedule file."
 msgstr "Файл %1 повреждён или не является файлом расписания KTorrent."
@@ -6573,7 +6573,7 @@ msgid "All"
 msgstr "Все"
 
 #: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:471
+#: plugins/syndication/ktfeed.cpp:466
 #, kde-format
 msgid "None"
 msgstr "Ничего"
@@ -7018,9 +7018,9 @@ msgid "Scan directories recursively."
 msgstr "Рекурсивное сканирование каталогов."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
+#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:140
-#: plugins/scanfolder/torrentloadqueue.cpp:143
+#: plugins/scanfolder/torrentloadqueue.cpp:142
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"
@@ -7249,7 +7249,7 @@ msgctxt "plugin name"
 msgid "Search"
 msgstr "Поиск"
 
-#: plugins/search/searchactivity.cpp:215
+#: plugins/search/searchactivity.cpp:211
 #, kde-format
 msgid "Search for %1"
 msgstr "Поиск %1"
@@ -7480,7 +7480,7 @@ msgstr "Выбор папки для сохранения %1"
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:127
-#: plugins/shutdown/shutdownruleset.cpp:242
+#: plugins/shutdown/shutdownruleset.cpp:239
 #, kde-format
 msgid "Shutdown"
 msgstr "Завершение работы"
@@ -7499,21 +7499,21 @@ msgstr "Настройка автоматического завершения �
 
 # shutdown-method
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:131
-#: plugins/shutdown/shutdownruleset.cpp:245
+#: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Lock"
 msgstr "Заблокировать"
 
 # shutdown-method
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:135
-#: plugins/shutdown/shutdownruleset.cpp:248
+#: plugins/shutdown/shutdownruleset.cpp:245
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "Спящий режим"
 
 # shutdown-method
 #: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
-#: plugins/shutdown/shutdownruleset.cpp:251
+#: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "Гибернация"
@@ -7578,38 +7578,38 @@ msgstr "Завершение работы включено"
 msgid "Configure Shutdown"
 msgstr "Настроить автоматическое завершение работы"
 
-#: plugins/shutdown/shutdownruleset.cpp:236
+#: plugins/shutdown/shutdownruleset.cpp:233
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "Автоматическое завершение работы не используется"
 
 # Всплывающая подсказка для кнопки "Завершение работы": "Завершение работы [эта строка]" --aspotashev
-#: plugins/shutdown/shutdownruleset.cpp:256
+#: plugins/shutdown/shutdownruleset.cpp:253
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr " при выполнении всех перечисленных условий:<br/><br/>"
 
-#: plugins/shutdown/shutdownruleset.cpp:258
+#: plugins/shutdown/shutdownruleset.cpp:255
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr " при выполнении одного из перечисленных условий:<br/><br/>"
 
-#: plugins/shutdown/shutdownruleset.cpp:328
+#: plugins/shutdown/shutdownruleset.cpp:325
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "завершена загрузка <b>всех торрентов</b>"
 
-#: plugins/shutdown/shutdownruleset.cpp:330
+#: plugins/shutdown/shutdownruleset.cpp:327
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "завершена отдача <b>всех торрентов</b>"
 
-#: plugins/shutdown/shutdownruleset.cpp:332
+#: plugins/shutdown/shutdownruleset.cpp:329
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "завершена загрузка <b>%1</b>"
 
-#: plugins/shutdown/shutdownruleset.cpp:334
+#: plugins/shutdown/shutdownruleset.cpp:331
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "завершена отдача <b>%1</b>"
@@ -8757,37 +8757,37 @@ msgstr "Проверка"
 msgid "filter on feed:"
 msgstr "фильтр для ленты:"
 
-#: plugins/syndication/ktfeed.cpp:448
+#: plugins/syndication/ktfeed.cpp:443
 #, kde-format
 msgid "Aborted"
 msgstr "Прервано"
 
-#: plugins/syndication/ktfeed.cpp:450
+#: plugins/syndication/ktfeed.cpp:445
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "Истекло время ожидания при попытке обновления ленты новостей"
 
-#: plugins/syndication/ktfeed.cpp:452
+#: plugins/syndication/ktfeed.cpp:447
 #, kde-format
 msgid "Unknown hostname"
 msgstr "Неизвестное имя узла"
 
-#: plugins/syndication/ktfeed.cpp:454
+#: plugins/syndication/ktfeed.cpp:449
 #, kde-format
 msgid "File not found"
 msgstr "Файл не найден"
 
-#: plugins/syndication/ktfeed.cpp:456
+#: plugins/syndication/ktfeed.cpp:451
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "Неизвестная ошибка при получении ленты новостей"
 
-#: plugins/syndication/ktfeed.cpp:460
+#: plugins/syndication/ktfeed.cpp:455
 #, kde-format
 msgid "Invalid feed data"
 msgstr "Недопустимые данные ленты новостей"
 
-#: plugins/syndication/ktfeed.cpp:462
+#: plugins/syndication/ktfeed.cpp:457
 #, kde-format
 msgid "Success"
 msgstr "Готово"
@@ -8798,7 +8798,7 @@ msgstr "Готово"
 msgid "Syndication Toolbar"
 msgstr "Панель новостных лент"
 
-#: plugins/syndication/linkdownloader.cpp:173
+#: plugins/syndication/linkdownloader.cpp:171
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "Не найдено допустимой ссылки на торрент в %1"

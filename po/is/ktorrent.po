@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:43+0000\n"
+"POT-Creation-Date: 2025-06-24 00:42+0000\n"
 "PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -4118,7 +4118,7 @@ msgstr "Fjöldi niðurhala"
 
 #: ktorrent/view/viewmodel.cpp:477
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
-#: libktcore/torrent/torrentfiletreemodel.cpp:359
+#: libktcore/torrent/torrentfiletreemodel.cpp:358
 #, fuzzy, kde-format
 msgid "Size"
 msgstr "Stærð"
@@ -4790,7 +4790,7 @@ msgid "Error stopping torrent %1: %2"
 msgstr "Villa 2"
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
-#: libktcore/torrent/torrentfiletreemodel.cpp:357
+#: libktcore/torrent/torrentfiletreemodel.cpp:356
 #, fuzzy, kde-format
 msgid "File"
 msgstr "Skrá"
@@ -4989,12 +4989,12 @@ msgstr "Setja"
 msgid "Bandwidth Schedule"
 msgstr "Bandvíddarstýring"
 
-#: plugins/bwscheduler/schedule.cpp:114 plugins/bwscheduler/schedule.cpp:230
+#: plugins/bwscheduler/schedule.cpp:114 plugins/bwscheduler/schedule.cpp:227
 #, fuzzy, kde-format
 msgid "Cannot open file %1: %2"
 msgstr "Gat ekki opnað skrá %1: %2"
 
-#: plugins/bwscheduler/schedule.cpp:127 plugins/bwscheduler/schedule.cpp:132
+#: plugins/bwscheduler/schedule.cpp:126 plugins/bwscheduler/schedule.cpp:131
 #, fuzzy, kde-format
 msgid "The file %1 is corrupted or not a proper KTorrent schedule file."
 msgstr "er eða ekki a."
@@ -6292,7 +6292,7 @@ msgid "All"
 msgstr "Allt"
 
 #: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:471
+#: plugins/syndication/ktfeed.cpp:466
 #, fuzzy, kde-format
 msgid "None"
 msgstr "Ekkert"
@@ -6739,9 +6739,9 @@ msgid "Scan directories recursively."
 msgstr "Leita."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
+#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:140
-#: plugins/scanfolder/torrentloadqueue.cpp:143
+#: plugins/scanfolder/torrentloadqueue.cpp:142
 #, fuzzy, kde-format
 #| msgid "loaded"
 msgctxt "folder name part"
@@ -6966,7 +6966,7 @@ msgctxt "plugin name"
 msgid "Search"
 msgstr "Leita"
 
-#: plugins/search/searchactivity.cpp:215
+#: plugins/search/searchactivity.cpp:211
 #, kde-format
 msgid "Search for %1"
 msgstr "Leita eftir %1"
@@ -7193,7 +7193,7 @@ msgstr ""
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:127
-#: plugins/shutdown/shutdownruleset.cpp:242
+#: plugins/shutdown/shutdownruleset.cpp:239
 #, fuzzy, kde-format
 msgid "Shutdown"
 msgstr "Slökkva"
@@ -7211,19 +7211,19 @@ msgid "Configure Shutdown"
 msgstr "Stilla Slökkva"
 
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:131
-#: plugins/shutdown/shutdownruleset.cpp:245
+#: plugins/shutdown/shutdownruleset.cpp:242
 #, fuzzy, kde-format
 msgid "Lock"
 msgstr "Læsa"
 
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:135
-#: plugins/shutdown/shutdownruleset.cpp:248
+#: plugins/shutdown/shutdownruleset.cpp:245
 #, fuzzy, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "Svæfa (setja í bið í RAM)"
 
 #: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
-#: plugins/shutdown/shutdownruleset.cpp:251
+#: plugins/shutdown/shutdownruleset.cpp:248
 #, fuzzy, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "Leggja í dvala (setja í bið á diski)"
@@ -7285,37 +7285,37 @@ msgstr "Slökkva Virkt"
 msgid "Configure Shutdown"
 msgstr "Stilla Slökkva"
 
-#: plugins/shutdown/shutdownruleset.cpp:236
+#: plugins/shutdown/shutdownruleset.cpp:233
 #, fuzzy, kde-format
 msgid "Automatic shutdown not active"
 msgstr "Sjálfvirk Uppfæra"
 
-#: plugins/shutdown/shutdownruleset.cpp:256
+#: plugins/shutdown/shutdownruleset.cpp:253
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr ""
 
-#: plugins/shutdown/shutdownruleset.cpp:258
+#: plugins/shutdown/shutdownruleset.cpp:255
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr ""
 
-#: plugins/shutdown/shutdownruleset.cpp:328
+#: plugins/shutdown/shutdownruleset.cpp:325
 #, fuzzy, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "allir yfirborð"
 
-#: plugins/shutdown/shutdownruleset.cpp:330
+#: plugins/shutdown/shutdownruleset.cpp:327
 #, fuzzy, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "allir yfirborð"
 
-#: plugins/shutdown/shutdownruleset.cpp:332
+#: plugins/shutdown/shutdownruleset.cpp:329
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr ""
 
-#: plugins/shutdown/shutdownruleset.cpp:334
+#: plugins/shutdown/shutdownruleset.cpp:331
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr ""
@@ -8426,38 +8426,38 @@ msgstr "Prófa"
 msgid "filter on feed:"
 msgstr "sía á:"
 
-#: plugins/syndication/ktfeed.cpp:448
+#: plugins/syndication/ktfeed.cpp:443
 #, kde-format
 msgid "Aborted"
 msgstr ""
 
-#: plugins/syndication/ktfeed.cpp:450
+#: plugins/syndication/ktfeed.cpp:445
 #, fuzzy, kde-format
 msgid "Timeout when downloading feed"
 msgstr "Virkja er búið"
 
-#: plugins/syndication/ktfeed.cpp:452
+#: plugins/syndication/ktfeed.cpp:447
 #, fuzzy, kde-format
 #| msgid "Unknown"
 msgid "Unknown hostname"
 msgstr "Óþekkt"
 
-#: plugins/syndication/ktfeed.cpp:454
+#: plugins/syndication/ktfeed.cpp:449
 #, kde-format
 msgid "File not found"
 msgstr ""
 
-#: plugins/syndication/ktfeed.cpp:456
+#: plugins/syndication/ktfeed.cpp:451
 #, kde-format
 msgid "Unknown retriever error"
 msgstr ""
 
-#: plugins/syndication/ktfeed.cpp:460
+#: plugins/syndication/ktfeed.cpp:455
 #, fuzzy, kde-format
 msgid "Invalid feed data"
 msgstr "Ógilt."
 
-#: plugins/syndication/ktfeed.cpp:462
+#: plugins/syndication/ktfeed.cpp:457
 #, kde-format
 msgid "Success"
 msgstr ""
@@ -8468,7 +8468,7 @@ msgstr ""
 msgid "Syndication Toolbar"
 msgstr "Tækjaslá"
 
-#: plugins/syndication/linkdownloader.cpp:173
+#: plugins/syndication/linkdownloader.cpp:171
 #, fuzzy, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "ekki a tengill til a á 1"
