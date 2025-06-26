@@ -4169,7 +4169,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "%1 前"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4267,7 +4267,7 @@ msgstr "已添加"
 #: ktorrent/view/viewmodel.cpp:508
 #, kde-format
 msgid "Last Activity"
-msgstr ""
+msgstr "最近活动"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4367,7 +4367,7 @@ msgstr "添加此种子时"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "最近一次下载或上传活动后经过的时间"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format
