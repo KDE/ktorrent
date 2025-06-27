@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-24 00:42+0000\n"
-"PO-Revision-Date: 2025-06-14 17:20+0400\n"
+"PO-Revision-Date: 2025-06-26 10:21+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -4251,7 +4251,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "منذ %1"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4347,10 +4347,9 @@ msgid "Added"
 msgstr "أضيف في"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "افصل النشاط"
+msgstr "أخر نشاط"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4452,7 +4451,7 @@ msgstr "متى أضيف هذا السيل"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "الوقت منذ آخر نشاط تنزيل أو تحميل"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format

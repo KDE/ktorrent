@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-24 00:42+0000\n"
-"PO-Revision-Date: 2025-05-26 17:07+0200\n"
+"PO-Revision-Date: 2025-06-26 16:27+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.04.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -1359,7 +1359,7 @@ msgstr "IPetarako iragazkia"
 #: ktorrent/gui.cpp:388
 #, kde-format
 msgid "Show the list of blocked IP addresses"
-msgstr "Erakutsi blokeatutako IP helbideen zerrenda"
+msgstr "Erakutsi oztopatutako IP helbideen zerrenda"
 
 #: ktorrent/gui.cpp:393
 #, kde-format
@@ -1446,16 +1446,13 @@ msgstr "Garbitu"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Ireki"
+msgstr "Ireki…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
 msgstr "Gorde honela..."
 
@@ -1541,12 +1538,10 @@ msgid "Bittorrent client by KDE"
 msgstr "KDEren bittorrent-en bezeroa"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2011 Joris Guisson eta Ivan Vasic"
+msgstr "© 2005 - 2011 Joris Guisson eta Ivan Vasic"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -2946,9 +2941,9 @@ msgid ""
 "<p>If you are having trouble with ktorrent blocking other internet traffic, "
 "try setting this number a bit lower.</p>"
 msgstr ""
-"<p>KTorrent, gehienez, aldi berean ezartzen saiatuko den irteera-konexio "
+"<p>KTorrent aldi bereant, gehienez, ezartzen saiatuko den irteerako konexio "
 "kopurua.</p>\n"
-"<p>«Ktorrent»ek Interneteko beste trafikoa oztopatzen duelako arazoa baduzu, "
+"<p>Ktorrent-ek Interneteko beste trafikoa oztopatzen duelako arazoa baduzu, "
 "saiatu zenbaki horren balioa pixka bat txikiagoa ezartzen.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
@@ -3045,10 +3040,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Ezarpen gomendatuak"
+msgstr "Ezarpen gomendatuak…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4137,11 +4131,10 @@ msgid "Errors:"
 msgstr "Erroreak:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Iragazkia"
+msgstr "Iragazkia..."
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4355,13 +4348,13 @@ msgstr "%%1"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "duela %1"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
 msgid "Downloaded"
-msgstr "Deskargatuta"
+msgstr "Zama-jaitsita"
 
 #: ktorrent/view/viewmodel.cpp:475
 #, kde-format
@@ -4451,10 +4444,9 @@ msgid "Added"
 msgstr "Gehituta"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "Jarduera bereizia"
+msgstr "Azken jarduera"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4564,7 +4556,7 @@ msgstr "Torrent hori gehitu zen unea"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Azken zama-jaiste edo -igotze jardueratik igarotako denbora"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format
@@ -4587,10 +4579,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "KTorrent-en UPnP probako aplikazioa"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "&copy; 2005 - 2007 Joris Guisson eta Ivan Vasic"
+msgstr "© 2005 - 2007 Joris Guisson eta Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5448,17 +5439,13 @@ msgstr "Bilatu fitxategiak"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
 msgstr ""
-"Torrent bateko fitxategiak zer ordenatan deskargatu behar diren. Zerrendako "
-"lehen fitxategia deskargatuko da lehenbizi, eta, gero, bigarrena, "
-"hirugarrena..."
+"Torrent bateko fitxategiak zama-jaisteko hurrenkera. Gaineko fitxategi "
+"aurrena zama-jaitsiko da, ondoren bigarrena, gero hirugarrena..."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -6339,8 +6326,7 @@ msgstr "Desgaitu guztiak"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
 msgstr "Bihurtzen..."
 
@@ -6349,7 +6335,7 @@ msgstr "Bihurtzen..."
 #, kde-format
 msgid "Converting block list to KTorrent format. This might take some time."
 msgstr ""
-"Blokeatuen zerrenda KTorrent formatura bihurtzen ari da. Baliteke denbora "
+"Oztopatuen zerrenda KTorrent formatura bihurtzen ari da. Baliteke denbora "
 "pixka bat behar izatea."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
@@ -6359,10 +6345,9 @@ msgid "C&ancel"
 msgstr "&Utzi"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "txt fitxategia kargatzen..."
+msgstr "txt fitxategia zamatzen..."
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6402,15 +6387,15 @@ msgstr ""
 #: plugins/ipfilter/downloadandconvertjob.cpp:197
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
-msgstr "Ezin da aurkitu blokeatuen zerrenda %1 zip fitxategian."
+msgstr "Ezin da oztopo-zerrenda aurkitu %1 zip fitxategian."
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:199
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"
 msgstr ""
-"IP iragazkiaren eguneraketa automatikoak huts egin du: ezin da aurkitu\n"
-"blokeatuen zerrenda %1 zip fitxategian"
+"IP iragazkiaren eguneratze automatikoak huts egin du: ezin da aurkitu oztopo-"
+"zerrenda %1 zip fitxategian"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:27
 #, kde-format
@@ -6435,10 +6420,9 @@ msgid "Status: Not loaded."
 msgstr "Egoera: kargatu gabe."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
-msgstr "Egoera: blokeatuen zerrenda berria kargatzen eta bihurtzen..."
+msgstr "Egoera: oztopo-zerrenda berria zama-jaisten eta bihurtzen..."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
@@ -6459,7 +6443,7 @@ msgstr "Inoiz ez"
 #: plugins/ipfilter/ipblockingprefpage.ui:14
 #, kde-format
 msgid "IPBlocking Preferences"
-msgstr "IPak blokeatzeko hobespenak"
+msgstr "IPak oztopatzeko hobespenak"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: plugins/ipfilter/ipblockingprefpage.ui:23
@@ -7530,7 +7514,7 @@ msgstr "Itzaltzea konfiguratu"
 #: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Lock"
-msgstr "Blokeatu"
+msgstr "Giltzatu"
 
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:135
 #: plugins/shutdown/shutdownruleset.cpp:245
