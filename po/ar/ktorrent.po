@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-05 00:43+0000\n"
-"PO-Revision-Date: 2025-05-17 17:58+0400\n"
+"PO-Revision-Date: 2025-06-28 17:13+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -6790,12 +6790,12 @@ msgstr "أظهر الملفات غير المكتملة"
 #: plugins/mediaplayer/mediaview.cpp:89 plugins/syndication/feedwidget.ui:124
 #, kde-format
 msgid "Refresh"
-msgstr "أنعش"
+msgstr "حدّث"
 
 #: plugins/mediaplayer/mediaview.cpp:90
 #, kde-format
 msgid "Refresh media files"
-msgstr "أنعش ملفات الوسائط"
+msgstr "حدّث ملفات الوسائط"
 
 #: plugins/mediaplayer/mediaview.cpp:94
 #, kde-format
@@ -8257,13 +8257,13 @@ msgstr "المرشّحات النشطة:"
 #: plugins/syndication/feedwidget.ui:131
 #, kde-format
 msgid "Refresh every:"
-msgstr "أنعش كل:"
+msgstr "حدّث كل:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, m_refresh_rate)
 #: plugins/syndication/feedwidget.ui:138
 #, kde-format
 msgid "Time between automatic refreshes of the feed."
-msgstr "الوقت بين الإنعاشات التلقائية للتلقيم."
+msgstr "الوقت بين التحديثات التلقائية للتلقيم."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_refresh_rate)
 #: plugins/syndication/feedwidget.ui:141
