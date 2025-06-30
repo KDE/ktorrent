@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-24 00:42+0000\n"
-"PO-Revision-Date: 2025-06-22 09:18+0300\n"
+"PO-Revision-Date: 2025-06-29 17:46+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3721,7 +3721,7 @@ msgstr "Tüm kuyruğa alınmamış torrenleri göster"
 #: ktorrent/torrentactivity.cpp:93
 #, kde-format
 msgid "Widget to manage the torrent queue"
-msgstr "Torrent kuyruğunu yönetmek için bir parçacık"
+msgstr "Torrent kuyruğunu yönetmek için araç takımı"
 
 #: ktorrent/torrentactivity.cpp:96
 #, kde-format
@@ -6611,7 +6611,7 @@ msgstr "Günlük kayıtları için zengin metin kullan"
 #: plugins/logviewer/logprefwidget.ui:54
 #, kde-format
 msgid "Log widget position:"
-msgstr "Günlük kaydı gerecinin konumu:"
+msgstr "Günlük araç takımının konumu:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ScanForLostFilesWidgetPosition)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_logWidgetPosition)
@@ -6627,7 +6627,7 @@ msgstr "Etkinlikleri ayır"
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:38
 #, kde-format
 msgid "Dockable widget"
-msgstr "Rıhtımlanabilir parçacık"
+msgstr "Rıhtımlanabilir araç takımı"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ScanForLostFilesWidgetPosition)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_logWidgetPosition)
@@ -7832,13 +7832,13 @@ msgstr "Arka plan ızgarası kullan"
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Widget type:"
-msgstr "Parçacık tipi:"
+msgstr "Araç takımı türü:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_WidgetType)
 #: plugins/stats/DisplaySettings.ui:940
 #, kde-format
 msgid "Native"
-msgstr "Orijinal"
+msgstr "Yerel"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_WidgetType)
 #: plugins/stats/DisplaySettings.ui:945
@@ -7878,7 +7878,7 @@ msgid ""
 "underline'>Legend:</h1><ul type='square'>"
 msgstr ""
 "<h1 align='center' style='font-size: large; text-decoration: "
-"underline'>Gösterge:</h1><ul type='square'>"
+"underline'>Lejant:</h1><ul type='square'>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:313
 #: plugins/stats/drawer/PlainChartDrawer.cc:495
@@ -8130,7 +8130,7 @@ msgstr "Çirkin gri arka plan ızgarası kullanılsın mı?"
 #: plugins/stats/ktstatsplugin.kcfg:175
 #, kde-format
 msgid "Type of widget used for chart drawing"
-msgstr "Çizelge çizimi için kullanılacak araç takımı"
+msgstr "Grafik çizimi için kullanılacak araç takımı"
 
 #. i18n: ectx: property (title), widget (QGroupBox, UpdateGbw)
 #: plugins/stats/Settings.ui:19
