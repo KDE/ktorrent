@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-24 00:42+0000\n"
-"PO-Revision-Date: 2025-06-19 22:17+0900\n"
+"PO-Revision-Date: 2025-07-01 19:37+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -4184,7 +4184,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "%1 前"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4280,10 +4280,9 @@ msgid "Added"
 msgstr "已增加"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "分離活動"
+msgstr "最後活動"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4383,7 +4382,7 @@ msgstr "當此 torrent 已被新增時"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "最後下載或上傳活動以來的時間"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format
