@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-24 00:42+0000\n"
-"PO-Revision-Date: 2025-03-15 09:27+0200\n"
+"PO-Revision-Date: 2025-07-07 21:22+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -738,10 +738,7 @@ msgid "Error fetching tracker list"
 msgstr "Virhe luettaessa seurantapalvelinluetteloa"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, fuzzy, kde-format
-#| msgid ""
-#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
-#| "reachable."
+#, kde-format
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
@@ -1441,16 +1438,13 @@ msgstr "Tyhjennä"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Avaa"
+msgstr "Avaa…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
 msgstr "Tallenna nimellä…"
 
@@ -1538,9 +1532,7 @@ msgid "Bittorrent client by KDE"
 msgstr "KDE:n BitTorrent-ohjelma"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "© 2005–2011 Joris Guisson ja Ivan Vasic"
@@ -2560,12 +2552,11 @@ msgstr "Tavoitettavissa olevat seurantapalvelimet varoittavat:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Color to use when all trackers reply the errors or not found."
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
-"Väri, jota käytetään, kun kaikki seurantapalvelimet vastaavat virheellisesti "
-"tai niitä ei löydy."
+"Käytettävä väri, kun kaikki seurantapalvelimet vastaavat virheellisesti tai "
+"niitä ei löydy."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
@@ -3011,10 +3002,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Suositusasetukset"
+msgstr "Suositusasetukset…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4094,11 +4084,10 @@ msgid "Errors:"
 msgstr "Virhe"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Suodatin"
+msgstr "Suodatin…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4311,7 +4300,7 @@ msgstr "%1 %"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "%1 sitten"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4320,11 +4309,10 @@ msgid "Downloaded"
 msgstr "Ladattu"
 
 #: ktorrent/view/viewmodel.cpp:475
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "Latauskerrat"
+msgstr "Istunnon lataukset"
 
 #: ktorrent/view/viewmodel.cpp:477
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4339,11 +4327,10 @@ msgid "Uploaded"
 msgstr "Lähetetty"
 
 #: ktorrent/view/viewmodel.cpp:481
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "Lähetetty"
+msgstr "Istunnon lähetykset"
 
 #: ktorrent/view/viewmodel.cpp:483
 #, kde-format
@@ -4409,10 +4396,9 @@ msgid "Added"
 msgstr "Lisätty"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "Erillinen näkymä"
+msgstr "Viimeisin toiminta"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4420,10 +4406,9 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "Paljonko torrentin datasta on ladattu"
 
 #: ktorrent/view/viewmodel.cpp:517
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "Paljonko torrentin datasta on ladattu"
+msgstr "Paljonko torrentin datasta on tässä istunnossa ladattu"
 
 #: ktorrent/view/viewmodel.cpp:519
 #, kde-format
@@ -4436,10 +4421,9 @@ msgid "How much data we have uploaded"
 msgstr "Paljonko dataa on lähetetty"
 
 #: ktorrent/view/viewmodel.cpp:523
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "Paljonko dataa on lähetetty tälle käyttäjälle"
+msgstr "Paljonko dataa on tässä istunnossa lähetetty"
 
 #: ktorrent/view/viewmodel.cpp:525
 #, kde-format
@@ -4523,7 +4507,7 @@ msgstr "Kun tämä torrent lisättiin"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Aika viime lataus- tai lähetystoiminnasta"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format
@@ -4546,8 +4530,7 @@ msgid "KTorrent's UPnP test application"
 msgstr "KTorrentin UPnP-testisovellus"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "© 2005–2007 Joris Guisson ja Ivan Vasic"
 
@@ -5406,10 +5389,7 @@ msgstr "Etsi tiedostoista"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
@@ -6292,8 +6272,7 @@ msgstr "Poista kaikki käytöstä"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
 msgstr "Muunnetaan…"
 
@@ -6311,8 +6290,7 @@ msgid "C&ancel"
 msgstr "&Peru"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
 msgstr "Ladataan txt-tiedostoa…"
 
@@ -6387,8 +6365,7 @@ msgid "Status: Not loaded."
 msgstr "Tila: Ei ladattu."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
 msgstr "Tila: Ladataan ja muunnetaan uutta estoluetteloa…"
 
@@ -8332,12 +8309,7 @@ msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/>%2"
 
 #: plugins/syndication/feedwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid ""
-#| "    <html>    <body style=\"color:%4\">    <div style=\"border-style:"
-#| "solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">    "
-#| "<b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </"
-#| "body>    </html>    "
+#, kde-format
 msgctxt ""
 "Given string needs to be HTML parseable.%1 is title of RSS feed item.%2 is "
 "publishing date of RSS feed item.%3 is description given in RSS feed item.%4 "
@@ -8349,10 +8321,10 @@ msgid ""
 "padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
 "<p>%3</p>    </body>    </html>    "
 msgstr ""
-"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
-"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Nimi:</"
-"b> %1<br/>    <b>Päivä:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
-"html>    "
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; border-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>Otsikko:</b> %1<br/>    <b>Päiväys:</b> %2<br/>    </"
+"div>    <p>%3</p>    </body>    </html>    "
 
 #: plugins/syndication/feedwidget.cpp:186
 #, kde-format
