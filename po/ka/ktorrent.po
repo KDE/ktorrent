@@ -1161,7 +1161,7 @@ msgstr ""
 #: ktorrent/groups/grouppolicydlg.ui:35 ktorrent/pref/generalpref.ui:40
 #, kde-format
 msgid "Default save location:"
-msgstr "შენახვის ნაგულისხმები მდებარეობა:"
+msgstr "შენახვის ნაგულისხმევი მდებარეობა:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_move_on_completion_enabled)
 #: ktorrent/groups/grouppolicydlg.ui:49
