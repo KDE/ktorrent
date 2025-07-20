@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-24 00:42+0000\n"
-"PO-Revision-Date: 2025-06-10 23:08+0200\n"
+"PO-Revision-Date: 2025-07-20 01:44+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -1419,18 +1419,15 @@ msgstr "초기화"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "열기"
+msgstr "열기…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
-msgstr "다른 이름으로 저장..."
+msgstr "다른 이름으로 저장…"
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -1514,12 +1511,10 @@ msgid "Bittorrent client by KDE"
 msgstr "KDE의 비트토렌트 클라이언트"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+msgstr "© 2005–2011 Joris Guisson and Ivan Vasic"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -2966,10 +2961,9 @@ msgstr "KTorrent가 사용 가능한 대역폭 값을 최적화하도록 합니�
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "추천 설정"
+msgstr "추천 설정…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4034,11 +4028,10 @@ msgid "Errors:"
 msgstr "오류:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "필터"
+msgstr "필터…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4250,7 +4243,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "%1 전"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4346,10 +4339,9 @@ msgid "Added"
 msgstr "추가한 날짜"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "분리된 활동"
+msgstr "마지막 활동"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4457,7 +4449,7 @@ msgstr "토렌트가 언제 추가되었는지를 나타냅니다."
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "마지막 다운로드 및 업로드 활동 이후 지난 시간"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format
@@ -4480,10 +4472,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "KTorrent의 UPnP 테스트 앱"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+msgstr "© 2005–2007 Joris Guisson and Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5328,10 +5319,7 @@ msgstr "파일 검색"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
@@ -6209,10 +6197,9 @@ msgstr "모두 비활성화"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
-msgstr "변환 중..."
+msgstr "변환 중…"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6227,10 +6214,9 @@ msgid "C&ancel"
 msgstr "취소(&A)"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "txt 파일 불러오는 중..."
+msgstr "txt 파일 불러오는 중…"
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6301,10 +6287,9 @@ msgid "Status: Not loaded."
 msgstr "상태: 불러온 데이터 없음."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
-msgstr "상태: 새 차단 리스트 다운로드 및 변환 중..."
+msgstr "상태: 새 차단 리스트 다운로드 및 변환 중…"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
