@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-24 00:42+0000\n"
-"PO-Revision-Date: 2025-06-28 17:13+0400\n"
+"PO-Revision-Date: 2025-08-03 14:05+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -2121,10 +2121,10 @@ msgstr ""
 "<p><span style=\" font-weight:600;\">ملاحظة:</span> كلما كان هذا أقل، كلما "
 "زاد استخدام وحدة المعالجة المركزية. يمكن أن يؤدي ضبطه على قيمة عالية إلى "
 "سرعات أقل في مواقف النطاق الترددي العالي. </p>\n"
-"<p>على سبيل المثال، في شبكة محلية بسرعة 100 ميجابت في الثانية، إذا قمت "
-"بتعيين حد 3000 كيلوبايت في الثانية، فقد لا تصل إلى هذه السرعة بالفعل عندما "
-"تكون هذه القيمة مرتفعة للغاية. بدون حد، يمكنك بسهولة الحصول على سرعة أعلى من "
-"3000 كيلوبايت في الثانية على شبكة محلية.</p>"
+"<p>على سبيل المثال، في شبكة محلية بسرعة 100 ميغابت في الثانية، إذا عينت حد "
+"3000 كيلوبايت في الثانية، فقد لا تصل إلى هذه السرعة بالفعل عندما تكون هذه "
+"القيمة مرتفعة للغاية. بلا حد، يمكنك بسهولة الحصول على سرعة أعلى من 3000 "
+"كيلوبايت في الثانية على شبكة محلية.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
@@ -2249,7 +2249,7 @@ msgstr ""
 "حلّ اسم المضيف لكل نظير. سيؤدي هذا إلى عرض اسم المضيف لكل نظير بدلاً من عنوان "
 "الانترنت. \n"
 "\n"
-"يمكن تعطيله إذا كنت لا تحب حركة المرور الإضافية التي يولدها على الشبكة"
+"يمكن تعطيله إذا كنت لا تحب حركة السر الإضافية التي يولدها على الشبكة"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:307
@@ -2690,13 +2690,13 @@ msgstr "افتح كل السيول سكونيًّا"
 msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
-msgstr "امنع الحاسوب من حالة النوم أو قفل الشاشة أثناء عمل السيول."
+msgstr "امنع الحاسوب من وضع التعليق أو قفل الشاشة أثناء عمل السيول."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
 #, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr "اكبت النوم وأقفل الشاشة آليا أثناء عمل السيول"
+msgstr "اكبت وضع التلعيق وأقفل الشاشة آليا أثناء عمل السيول"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:160
@@ -2886,7 +2886,7 @@ msgid ""
 "The µTorrent transport protocol runs over UDP and is optimized to not "
 "interfere with other traffic, while still using up all unused bandwidth."
 msgstr ""
-"يعمل ميفاق النقل μTorrent عبر UDP وهو محسن بحيث لا يتداخل مع حركة المرور "
+"يعمل ميفاق النقل μTorrent عبر UDP وهو محسن بحيث لا يتداخل مع حركة السر "
 "الأخرى، مع الاستمرار في استخدام كامل السرعة غير المستخدمة."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_utpEnabled)
@@ -3081,7 +3081,7 @@ msgstr ""
 #: ktorrent/pref/proxypref.ui:159
 #, kde-format
 msgid "Username and password required"
-msgstr "اسم المستخدم وكلمة المرور مطلوبان"
+msgstr "اسم المستخدم وكلمة السر مطلوبان"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/proxypref.ui:170
@@ -4627,13 +4627,13 @@ msgstr "كلّ الملفات"
 #: libktcore/ktorrent.kcfg:10
 #, kde-format
 msgid "Maximum number of downloads (0 = no limit)"
-msgstr "العدد الأقصى للتنزيلات (0 = بدون حدود)"
+msgstr "العدد الأقصى للتنزيلات (0 = بلا حدود)"
 
 #. i18n: ectx: label, entry (maxSeeds), group (downloads)
 #: libktcore/ktorrent.kcfg:15
 #, kde-format
 msgid "Maximum number of seeds (0 = no limit)"
-msgstr "العدد الأقصى للتزويدات (0 = بدون حدود)"
+msgstr "العدد الأقصى للتزويدات (0 = بلا حدود)"
 
 #. i18n: ectx: label, entry (startDownloadsOnLowDiskSpace), group (downloads)
 #: libktcore/ktorrent.kcfg:20
@@ -5762,19 +5762,19 @@ msgstr "اللون لاستخدامه لملفات الأولوية الأخير
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:10
 #, kde-format
 msgid "Show peer view tab in main window"
-msgstr "أظهر لسان عرض الندّ في النافذة الرئيسية"
+msgstr "أظهر لسان عرض الندّ في النافذة الرئيسة"
 
 #. i18n: ectx: label, entry (showChunkView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:14
 #, kde-format
 msgid "Show chunk download view tab in main window"
-msgstr "أظهر لسان عرض تنزيل الكتلة في النافذة الرئيسية"
+msgstr "أظهر لسان عرض تنزيل الكتلة في النافذة الرئيسة"
 
 #. i18n: ectx: label, entry (showTrackersView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:18
 #, kde-format
 msgid "Show trackers view tab in main window"
-msgstr "أظهر لسان عرض المتتبّعين في النافذة الرئيسية"
+msgstr "أظهر لسان عرض المتتبّعين في النافذة الرئيسة"
 
 #: plugins/infowidget/peerview.cpp:43
 #, kde-format
@@ -7042,7 +7042,7 @@ msgstr "البحث عن الملفات المفقودة"
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
-msgstr "امسح"
+msgstr "امحُ"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
@@ -7156,7 +7156,7 @@ msgstr "تفضيلات البحث"
 #: plugins/search/searchpref.ui:34
 #, kde-format
 msgid "Clear the search history combo boxes."
-msgstr "امسح مربعات التحرير والسرد الخاصة بسجل البحث."
+msgstr "امحُ مربعات التحرير والسرد الخاصة بسجل البحث."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_clear_history)
 #: plugins/search/searchpref.ui:37
