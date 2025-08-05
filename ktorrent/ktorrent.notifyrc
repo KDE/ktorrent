@@ -640,7 +640,7 @@ Action=Sound|Popup
 
 [Event/DHTNotEnabled]
 Name=DHT is not enabled
-Name[ar]=‏DHT ليس مفعّلًا
+Name[ar]=‏DHT ليس ممكّنًا
 Name[bg]=Не е включено DHT
 Name[bs]=DHT nije uključen
 Name[ca]=El DHT no està actiu
