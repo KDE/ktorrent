@@ -645,7 +645,7 @@
       <li xml:lang="zh-CN">支持协议加密 (兼容 Azureus)</li>
       <li xml:lang="zh-TW">支援協定加密（與 Azureus 相容）</li>
       <li>Support for creating trackerless torrents</li>
-      <li xml:lang="ar">دعم لإنشاء ملفات تورنت بدون تعقب</li>
+      <li xml:lang="ar">دعم لإنشاء ملفات تورنت دون تعقب</li>
       <li xml:lang="bg">Възможност за създаване на торенти без координиращи сървъри</li>
       <li xml:lang="ca">Suport per a la creació de torrents sense seguidors</li>
       <li xml:lang="ca-valencia">Suport per a la creació de torrent sense seguidors</li>
