@@ -729,7 +729,7 @@
       <li xml:lang="zh-CN">支持分布式哈希表 (DHT，主线版本)</li>
       <li xml:lang="zh-TW">支援分散式雜湊表（DHT，Mainline 版本）</li>
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
-      <li xml:lang="ar">دعم UPnP لإعادة توجيه المنافذ تلقائيًا على شبكة LAN مع مضيفين معينين ديناميكيًا</li>
+      <li xml:lang="ar">دعم UPnP لإعادة توجيه المنافذ آليًّا على شبكة LAN مع مضيفين معينين ديناميكيًا</li>
       <li xml:lang="bg">Поддръжка на UPnP за автоматично пренасочване на портове в локална мрежа с динамично зададени хостове</li>
       <li xml:lang="ca">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica de màquines</li>
       <li xml:lang="ca-valencia">Suport per a UPnP per a desviar automàticament els ports de la LAN amb assignació dinàmica d'amfitrions</li>
