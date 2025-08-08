@@ -20,8 +20,11 @@
     ],
     "cleanup": [
         "/include",
+        "/lib/*.a",
+        "/lib/*.la",
         "/lib/cmake",
         "/lib/pkgconfig",
+        "/share/app-info",
         "/share/man"
     ],
     "modules": [
