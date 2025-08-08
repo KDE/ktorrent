@@ -337,8 +337,6 @@ void MagnetManager::update()
 {
     for (DownloadSlot *slot : std::as_const(usedDownloadingSlots))
         magnetQueue.at(slot->getMagnetIndex())->update();
-
-    Q_EMIT updateQueue(0, usedDownloadingSlots.size());
 }
 
 void MagnetManager::loadMagnets(const QString &file)
