@@ -20,3 +20,8 @@ ecm_add_test(${groupTreeModelTest_SOURCES}
     TEST_NAME "groupTreeModelTest"
     LINK_LIBRARIES Qt::Test ktcore
 )
+
+ecm_add_test(magnetmanagertest.cpp
+    TEST_NAME "magnetManagerTest"
+    LINK_LIBRARIES Qt::Test ktcore
+)
