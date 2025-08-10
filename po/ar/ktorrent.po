@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-14 00:42+0000\n"
-"PO-Revision-Date: 2025-08-04 18:33+0400\n"
+"PO-Revision-Date: 2025-08-09 21:59+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -80,12 +80,12 @@ msgstr "أعد المحاولة"
 #: ktorrent/core.cpp:1038
 #, kde-format
 msgid "Storage volume %1 is not mounted"
-msgstr "وسيط التخزين %1 غير مضموم"
+msgstr "جهاز التخزين %1 غير مضموم"
 
 #: ktorrent/core.cpp:1040
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
-msgstr "وسيطات التخزين %1 غير مضمومة"
+msgstr "جهاز التخزين %1 غير مضمومة"
 
 #: ktorrent/core.cpp:1051
 #, kde-format
@@ -1440,7 +1440,7 @@ msgstr "ا&عرض"
 #: ktorrent/ktorrentui.rc:25
 #, kde-format
 msgid "Main"
-msgstr "الرئيسي"
+msgstr "الرئيسية"
 
 #. i18n: ectx: Menu (Torrents)
 #. i18n: ectx: ToolBar (TorrentsToolBar)
@@ -1872,7 +1872,7 @@ msgstr "طقم أيقونات جديد"
 #: ktorrent/main.cpp:162
 #, kde-format
 msgid "Aaron J. Seigo"
-msgstr "Aaron J. Seigo"
+msgstr "آرون ج. سيجو"
 
 #: ktorrent/main.cpp:162
 #, kde-format
@@ -2925,8 +2925,8 @@ msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
 msgstr ""
-"ميفاق النقل الأساسي المطلوب استخدامه، عند محاولة إعداد اتصال مع نظير، يتم "
-"اختيار هذا الميفاق أولاً."
+"ميفاق النقل الأساسي المطلوب استخدامه، عند محاولة إعداد اتصال مع نظير، سيُختار "
+"هذا الميفاق أولاً."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
@@ -2958,7 +2958,7 @@ msgstr "الإعدادات المستحسنة…"
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
 msgid "Proxy"
-msgstr "الوسيط"
+msgstr "الوكيل"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: ktorrent/pref/proxypref.ui:17
@@ -2970,55 +2970,55 @@ msgstr "HTTP"
 #: ktorrent/pref/proxypref.ui:23
 #, kde-format
 msgid "Use the HTTP proxy settings configured in the settings of KDE."
-msgstr "استخدم إعدادات وسيط HTTP المضبوطة في إعدادات كِيدِي."
+msgstr "استخدم إعدادات وكيل HTTP المضبوطة في إعدادات كِيدِي."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKDEProxySettings)
 #: ktorrent/pref/proxypref.ui:26
 #, kde-format
 msgid "Use KDE proxy settings"
-msgstr "استخدم إعدادات وسيط كِيدِي"
+msgstr "استخدم إعدادات وكيل كِيدِي"
 
 #. i18n: ectx: property (text), widget (QLabel, label_10)
 #: ktorrent/pref/proxypref.ui:35
 #, kde-format
 msgid "Proxy:"
-msgstr "الوسيط:"
+msgstr "الوكيل:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_httpProxy)
 #: ktorrent/pref/proxypref.ui:42
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
-msgstr "عنوان IP أو اسم مضيف وسيط HTTP لاستخدامه. "
+msgstr "عنوان IP أو اسم مضيف وكيل HTTP لاستخدامه. "
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
 #, kde-format
 msgid "Port of the HTTP proxy."
-msgstr "منفذ وسيط HTTP."
+msgstr "منفذ وكيل HTTP."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useProxyForWebSeeds)
 #: ktorrent/pref/proxypref.ui:74
 #, kde-format
 msgid "Whether or not to use the HTTP proxy for webseed connections."
-msgstr "لاستخدام أو عدم استخدام وسيط HTTP لاتصالات مُزوِّد الوِب."
+msgstr "لاستخدام أو عدم استخدام وكيل HTTP لاتصالات مُزوِّد الوِب."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useProxyForWebSeeds)
 #: ktorrent/pref/proxypref.ui:77
 #, kde-format
 msgid "Use proxy for webseed connections"
-msgstr "استخدم وسيط لاتصالات مُزوِّد الوِب"
+msgstr "استخدم وكيل لاتصالات مُزوِّد الوِب"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useProxyForTracker)
 #: ktorrent/pref/proxypref.ui:84
 #, kde-format
 msgid "Whether or not to use the HTTP proxy for tracker connections."
-msgstr "لاستخدام أو عدم استخدام وسيط HTTP لاتصالات المتتبّع."
+msgstr "لاستخدام أو عدم استخدام وكيل HTTP لاتصالات المتتبّع."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useProxyForTracker)
 #: ktorrent/pref/proxypref.ui:87
 #, kde-format
 msgid "Use proxy for tracker connections"
-msgstr "استخدم وسيط لاتصالات المتتبّع"
+msgstr "استخدم وكيل لاتصالات المتتبّع"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/pref/proxypref.ui:97
@@ -3034,7 +3034,7 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Note: </span>This is not used for "
 "tracker connections</p>"
 msgstr ""
-"<p>استخدم وسيط SOCKS لاتصالات بِت‌تورنت.</p>\n"
+"<p>استخدم وكيل SOCKS لاتصالات بِت‌تورنت.</p>\n"
 "<p><span style=\" font-weight:600;\">ملاحظة: </span>هذا لا يُستخدم لاتصالات "
 "المتتبّع</p>"
 
@@ -3042,7 +3042,7 @@ msgstr ""
 #: ktorrent/pref/proxypref.ui:107
 #, kde-format
 msgid "Use a SOCKS proxy server:"
-msgstr "استخدم خادم وسيط SOCKS:"
+msgstr "استخدم خادم وكيل SOCKS:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: ktorrent/pref/proxypref.ui:116
@@ -3075,7 +3075,7 @@ msgid ""
 "If the SOCKS server requires authentication via a username and a password, "
 "enable this box."
 msgstr ""
-"إن كان خادم SOCKS يتطلب استيثاق عبر اسم مستخدم وكلمة مرور، مكّن هذا المربع."
+"إن كان خادم SOCKS يتطلب استيثاق عبر اسم مستخدم وكلمة سر، فمكّن هذا المربع."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_socksUsePassword)
 #: ktorrent/pref/proxypref.ui:159
@@ -3093,7 +3093,7 @@ msgstr "اسم المستخدم:"
 #: ktorrent/pref/proxypref.ui:177
 #, kde-format
 msgid "Username for the SOCKS proxy server."
-msgstr "اسم مستخدم خادم وسيط SOCKS."
+msgstr "اسم مستخدم خادم وكيل SOCKS."
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: ktorrent/pref/proxypref.ui:184
@@ -3105,7 +3105,7 @@ msgstr "كلمة السر:"
 #: ktorrent/pref/proxypref.ui:191
 #, kde-format
 msgid "Password for the SOCKS proxy server."
-msgstr "كلمة مرور خادم وسيط SOCKS."
+msgstr "كلمة سر خادم وكيل SOCKS."
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
@@ -7204,7 +7204,7 @@ msgstr "افتح البحوث في متصفح خارجي"
 #: plugins/search/searchpref.ui:89
 #, kde-format
 msgid "Whether or not to use the HTTP proxy settings for search."
-msgstr "هل سيتم استخدام إعدادات وكيل HTTP للبحث أم لا."
+msgstr "إذا كان سيستخدم إعدادات وكيل HTTP للبحث أم لا."
 
 #. i18n: ectx: property (toolTip), widget (QRadioButton, kcfg_useDefaultBrowser)
 #: plugins/search/searchpref.ui:99
