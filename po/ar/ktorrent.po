@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-24 00:42+0000\n"
-"PO-Revision-Date: 2025-08-09 21:59+0400\n"
+"PO-Revision-Date: 2025-08-13 21:51+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1877,7 +1877,7 @@ msgstr "آرون ج. سيجو"
 #: ktorrent/main.cpp:162
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
-msgstr "دعم السحب والإفلات لبريمج البلازما"
+msgstr "السحب والإفلات لبريمج البلازما"
 
 #: ktorrent/main.cpp:163
 #, kde-format
@@ -1907,7 +1907,7 @@ msgstr "ليو تروباخ"
 #: ktorrent/main.cpp:165
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
-msgstr "رقعة لإضافة دعم مجالات عنوان IP في حواري مرشّح عنوان IP"
+msgstr "رقعة لإضافة نطاقات عنوان IP في حواري مرشّح عنوان IP"
 
 #: ktorrent/main.cpp:166
 #, kde-format
@@ -1967,7 +1967,7 @@ msgstr "ريكس ديتر"
 #: ktorrent/main.cpp:171
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
-msgstr "إضافة دعم لنوع mimetype x-scheme-handler/magnet"
+msgstr "إضافة التعامل لنوع mimetype x-scheme-handler/magnet"
 
 #: ktorrent/main.cpp:172
 #, kde-format
@@ -2375,8 +2375,8 @@ msgid ""
 "disabled. If you want to connect to those peers, you need to have this "
 "option enabled."
 msgstr ""
-"لا تدعم جميع الأجهزة التعمية، وقد قام بعض الأشخاص بتعطيل التعمية. إذا كنت "
-"تريد الاتصال بهؤلاء العملاء، فيجب عليك تمكين هذا الخيار."
+"لا تتيح جميع الأجهزة التعمية، وقد عطل بعض الأشخاص التعمية. إذا كنت تريد "
+"الاتصال بهؤلاء العملاء، فيجب عليك تمكين هذا الخيار."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_allowUnencryptedConnections)
 #. i18n: ectx: label, entry (allowUnencryptedConnections), group (downloads)
@@ -2904,7 +2904,7 @@ msgid ""
 "µTP."
 msgstr ""
 "لا تستخدم TCP لاتصالات بِت‌تورنت، استخدم فقط ميفاق µTP. يمكن أن يقدّم هذا سرعات "
-"أقل. اعرف أن ليس جميع عملاء بِت‌تورنت يدعمون µTP."
+"أقل. ليس جميع عملاء بِت‌تورنت يتيحون µTP."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_onlyUseUtp)
 #: ktorrent/pref/networkpref.ui:245
@@ -4777,7 +4777,7 @@ msgstr "فترة تحديث واجهة المستخدم الرسومية"
 #: libktcore/ktorrent.kcfg:137
 #, kde-format
 msgid "Support for DHT"
-msgstr "دعم DHT"
+msgstr "التعامل مع DHT"
 
 #. i18n: ectx: label, entry (dhtPort), group (downloads)
 #: libktcore/ktorrent.kcfg:141
@@ -7295,7 +7295,7 @@ msgid ""
 "manually. The URL should contain {searchTerms}, ktorrent will replace this "
 "by the thing you are searching for."
 msgstr ""
-"%1 لا يدعم Opensearch، عليك إدخال عنوان URL للبحث يدويًّا. على عنوان URL "
+"%1 لا يوفر Opensearch، عليك إدخال عنوان URL للبحث يدويًّا. على عنوان URL "
 "احتواء {searchTerms}، سيستبدل سيولك هذا بالشيء الذي تبحث عنه."
 
 #: plugins/search/searchprefpage.cpp:127
@@ -8544,7 +8544,7 @@ msgid ""
 "\n"
 "Will download seasons 1, 3, 4, 5, 6 and 9"
 msgstr ""
-"حدّد الأجزاء لتنزيلها، يمكن فصل الأجزاء المتعدّدة بِـ , ، ويمكنك استخدام "
+"حدّد الأجزاء لتنزيلها، يمكن فصل الأجزاء المتعدّدة بِـ ,، ويمكنك استخدام "
 "المجالات بإضافة -\n"
 "\n"
 "كمثال: ‎1, 3-6, 9\n"
@@ -8568,7 +8568,7 @@ msgid ""
 "\n"
 "Will download episodes 1, 3, 4, 5, 6 and 9"
 msgstr ""
-"حدّد الحلقات لتنزيلها، يمكن فصل الحلقات المتعدّدة بِـ , ، ويمكنك استخدام "
+"حدّد الحلقات لتنزيلها، يمكن فصل الحلقات المتعدّدة بِـ ,، ويمكنك استخدام "
 "المجالات بإضافة -\n"
 "\n"
 "كمثال: ‎1, 3-6, 9\n"
