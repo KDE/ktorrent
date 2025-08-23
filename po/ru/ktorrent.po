@@ -1,7 +1,7 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2024 Alexander Yavorsky <kekcuha@gmail.com>
+# SPDX-FileCopyrightText: 2024, 2025 Alexander Yavorsky <kekcuha@gmail.com>
 # Nick Shaforostoff <shaforostoff@kde.ru>, 2007, 2008, 2009.
 # Evgeniy Ivanov <powerfox@kde.ru>, 2008.
 # Artem Sereda <overmind88@gmail.com>, 2008, 2009, 2010.
@@ -17,16 +17,16 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-24 00:42+0000\n"
-"PO-Revision-Date: 2025-03-25 14:29+0300\n"
-"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
-"Language-Team: Basealt Translation Team\n"
+"PO-Revision-Date: 2025-08-22 18:20+0300\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.08.0\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -36,14 +36,14 @@ msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 "Николай Шафоростов,Евгений Иванов,Артём Середа,Александр Поташев,Мария "
-"Шикунова,Олеся Герасименко"
+"Шикунова,Олеся Герасименко,Александр Яворский"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "shaforostoff@kde.ru,powerfox@kde.ru,overmind88@gmail.com,aspotashev@gmail."
-"com,translation-team@basealt.ru,translation-team@basealt.ru"
+"com,translation-team@basealt.ru,translation-team@basealt.ru,kekcuha@gmail.com"
 
 #: ktorrent/core.cpp:147
 #, kde-format
@@ -742,15 +742,12 @@ msgid "Error fetching tracker list"
 msgstr "Не удалось получить список трекеров"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, fuzzy, kde-format
-#| msgid ""
-#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
-#| "reachable."
+#, kde-format
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
-"Проверьте правильность ссылки, указанной в меню Настройка > Дополнительно > "
+"Проверьте правильность ссылки, указанной в меню Настройка → Дополнительно → "
 "Адрес списка трекеров."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
@@ -1449,18 +1446,15 @@ msgstr "Очистить"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Открыть"
+msgstr "Открыть…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
-msgstr "Сохранить как..."
+msgstr "Сохранить как…"
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -1545,9 +1539,7 @@ msgid "Bittorrent client by KDE"
 msgstr "Клиент BitTorrent от KDE"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "© Joris Guisson и Ivan Vasic, 2005–2011"
@@ -2579,8 +2571,7 @@ msgstr "Доступные трекеры сообщают о предупреж
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Color to use when all trackers reply the errors or not found."
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
 "Цвет, который используется, когда все трекеры возвращают ошибки или "
@@ -3035,10 +3026,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Рекомендованные параметры"
+msgstr "Рекомендованные параметры…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4126,11 +4116,10 @@ msgid "Errors:"
 msgstr "Ошибки:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Фильтр"
+msgstr "Фильтр…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4343,7 +4332,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "%1 назад"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4352,11 +4341,10 @@ msgid "Downloaded"
 msgstr "Загружено"
 
 #: ktorrent/view/viewmodel.cpp:475
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "Загружено раз"
+msgstr "Загружено за сеанс"
 
 #: ktorrent/view/viewmodel.cpp:477
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4371,11 +4359,10 @@ msgid "Uploaded"
 msgstr "Отдано"
 
 #: ktorrent/view/viewmodel.cpp:481
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "Отдано"
+msgstr "Отдано за сеанс"
 
 #: ktorrent/view/viewmodel.cpp:483
 #, kde-format
@@ -4441,10 +4428,9 @@ msgid "Added"
 msgstr "Добавлен"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "Отдельно на панели"
+msgstr "Последняя активность"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4452,10 +4438,9 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "Сколько загружено данных из торрента"
 
 #: ktorrent/view/viewmodel.cpp:517
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "Сколько загружено данных из торрента"
+msgstr "Сколько загружено данных из торрента в текущем сеансе"
 
 #: ktorrent/view/viewmodel.cpp:519
 #, kde-format
@@ -4468,10 +4453,9 @@ msgid "How much data we have uploaded"
 msgstr "Сколько данных было отдано"
 
 #: ktorrent/view/viewmodel.cpp:523
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "Сколько данных было отдано этому пиру"
+msgstr "Сколько данных было отдано в текущем сеансе"
 
 #: ktorrent/view/viewmodel.cpp:525
 #, kde-format
@@ -4551,7 +4535,7 @@ msgstr "Когда был добавлен этот торрент"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Сколько прошло времени от последнего скачивания или передачи"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format
@@ -4574,8 +4558,7 @@ msgid "KTorrent's UPnP test application"
 msgstr "Тестовое приложение для KTorrent UPnP"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "© Joris Guisson, Ivan Vasic, 2005-2007"
 
@@ -5432,16 +5415,13 @@ msgstr "Поиск файлов"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
 msgstr ""
 "Порядок загрузки файлов из торрента. Файл, находящийся выше будет загружен "
-"первым, затем второй, потом третий..."
+"первым, затем второй, потом третий…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -6316,10 +6296,9 @@ msgstr "Отключить все"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
-msgstr "Преобразование..."
+msgstr "Преобразование…"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6336,10 +6315,9 @@ msgid "C&ancel"
 msgstr "Отменить"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "Загрузка текстового файла..."
+msgstr "Загрузка текстового файла…"
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6410,10 +6388,9 @@ msgid "Status: Not loaded."
 msgstr "Статус: Не загружен."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
-msgstr "Статус: Загрузка и преобразование нового списка блокировок..."
+msgstr "Статус: Загрузка и преобразование нового списка блокировок…"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
@@ -8365,12 +8342,7 @@ msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/>%2"
 
 #: plugins/syndication/feedwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid ""
-#| "    <html>    <body style=\"color:%4\">    <div style=\"border-style:"
-#| "solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">    "
-#| "<b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </"
-#| "body>    </html>    "
+#, kde-format
 msgctxt ""
 "Given string needs to be HTML parseable.%1 is title of RSS feed item.%2 is "
 "publishing date of RSS feed item.%3 is description given in RSS feed item.%4 "
@@ -8382,10 +8354,10 @@ msgid ""
 "padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
 "<p>%3</p>    </body>    </html>    "
 msgstr ""
-"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
-"border-width:1px; border-color:%4; margin:5px; padding:5px\">    "
-"<b>Заголовок:</b> %1<br/>    <b>Дата:</b> %2<br/>    </div>    <p>%3</p>    "
-"</body>    </html>    "
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; border-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>Заголовок:</b> %1<br/>    <b>Дата:</b> %2<br/>    </"
+"div>    <p>%3</p>    </body>    </html>    "
 
 #: plugins/syndication/feedwidget.cpp:186
 #, kde-format
