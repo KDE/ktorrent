@@ -66,6 +66,10 @@ parts:
     plugin: cmake
     source: .
     source-type: local
+    build-packages:
+      - libpulse0
+    stage-packages:
+      - libpulse0
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
@@ -116,4 +120,3 @@ parts:
       for snap in "core24" "kf6-core24"; do
           cd "/snap/$snap/current" && find . -type f,l -exec rm -rf "${CRAFT_PRIME}/{}" \;
       done
-
