@@ -736,16 +736,11 @@ msgid "Error fetching tracker list"
 msgstr "Chyba při stahování seznamu trackerů"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
-#, fuzzy, kde-format
-#| msgid ""
-#| "Please check if the URL in Settings > Advanced > Tracker list URL is "
-#| "reachable."
+#, kde-format
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
-"Prosím zkontrolujte zda je dosažitelné URL v Nastavení > Pokročilé > Seznam "
-"URL trackerů."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
@@ -1517,12 +1512,10 @@ msgid "Bittorrent client by KDE"
 msgstr "BitTorrent klient od KDE"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2011 Joris Guisson a Ivan Vasic"
+msgstr ""
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -2520,10 +2513,9 @@ msgstr "Dosažitelné trackery hlásí varování:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Color to use for torrents with error status."
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
-msgstr "Barva určená pro torrenty s chybovým stavem."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
@@ -2962,10 +2954,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Doporučené nastavení"
+msgstr ""
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -4037,11 +4028,10 @@ msgid "Errors:"
 msgstr "Chyby:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Filtr"
+msgstr ""
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4264,11 +4254,10 @@ msgid "Downloaded"
 msgstr "Staženo"
 
 #: ktorrent/view/viewmodel.cpp:475
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "Počet stažení"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:477
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4283,11 +4272,10 @@ msgid "Uploaded"
 msgstr "Odesláno"
 
 #: ktorrent/view/viewmodel.cpp:481
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "Odesláno"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:483
 #, kde-format
@@ -4353,10 +4341,9 @@ msgid "Added"
 msgstr "Přidáno"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "Oddělit aktivity"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4364,10 +4351,9 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "Kolik dat torrentu už bylo staženo"
 
 #: ktorrent/view/viewmodel.cpp:517
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "Kolik dat torrentu už bylo staženo"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:519
 #, kde-format
@@ -4380,10 +4366,9 @@ msgid "How much data we have uploaded"
 msgstr "Kolik dat bylo odesláno"
 
 #: ktorrent/view/viewmodel.cpp:523
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "Kolik dat jsme tomuto protějšku odeslali"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:525
 #, kde-format
@@ -4487,10 +4472,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "Aplikace KTorrentu pro testování UPnP"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "&copy; 2005 - 2007 Joris Guisson a Ivan Vasic"
+msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5344,16 +5328,11 @@ msgstr "Hledat soubory"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
 msgstr ""
-"Pořadí, v němž se mají stahovat soubory torrentu. Soubor nahoře bude stažený "
-"první, následovaný druhým, potom třetím ..."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -6230,10 +6209,9 @@ msgstr "Zakázat vše"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
-msgstr "Převádí se..."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6248,10 +6226,9 @@ msgid "C&ancel"
 msgstr "Z&rušit"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "Načítá se soubor txt..."
+msgstr ""
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6323,10 +6300,9 @@ msgid "Status: Not loaded."
 msgstr "Stav: nenačten."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
-msgstr "Stav: stahování a převádění seznamu nových bloků..."
+msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:175
 #, kde-format
@@ -6500,29 +6476,7 @@ msgstr "Prohlížeč záznamů"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_logging_flags)
 #: plugins/logviewer/logprefwidget.ui:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "Double click on the log level to alter it. The possible levels are :\n"
-#| "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#| "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#| "\"></p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">All: </span>All messages are shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Important: </span>Only important messages are shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Notice: </span>Only notice and important messages are "
-#| "shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Debug: </span>Debug, notice and important messages are "
-#| "shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">None:</span> No messages are shown</p>"
+#, kde-format
 msgid ""
 "<html>Double click on the log level to alter it. The possible levels are:\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
@@ -6546,28 +6500,6 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">None:</span> No messages are shown</p></html>"
 msgstr ""
-"Poklepejte na úroveň záznamu, přejete-li si jej změnit. Dvě možné úrovně "
-"jsou:\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
-"p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Vše: </span>Všechny zprávy jsou zobrazeny</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Důležité: </span>Pouze důležité zprávy jsou zobrazeny</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Upozornění: </span>Pouze upozornění a důležité zprávy jsou "
-"zobrazeny</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Ladění: </span>Ladění,  upozornění a důležité zprávy jsou "
-"zobrazeny</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Nic:</span> Žádné zprávy nejsou ukázány</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:42
@@ -8285,12 +8217,7 @@ msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/>%2"
 
 #: plugins/syndication/feedwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid ""
-#| "    <html>    <body style=\"color:%4\">    <div style=\"border-style:"
-#| "solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">    "
-#| "<b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </"
-#| "body>    </html>    "
+#, kde-format
 msgctxt ""
 "Given string needs to be HTML parseable.%1 is title of RSS feed item.%2 is "
 "publishing date of RSS feed item.%3 is description given in RSS feed item.%4 "
@@ -8302,10 +8229,6 @@ msgid ""
 "padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
 "<p>%3</p>    </body>    </html>    "
 msgstr ""
-"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
-"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Titul:</"
-"b> %1<br/>    <b>Datum:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
-"html>    "
 
 #: plugins/syndication/feedwidget.cpp:186
 #, kde-format
@@ -8877,12 +8800,3 @@ msgstr "Znovu projít"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Open..."
-#~ msgstr "Otevřít..."
-
-#~ msgid "Recommended Settings..."
-#~ msgstr "Doporučené nastavení..."
-
-#~ msgid "Filter..."
-#~ msgstr "Filtr..."
