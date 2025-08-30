@@ -143,7 +143,7 @@ void SpdTabPage::gatherPeersSpeed(Plugin* pPlug)
 
         const bt::PeerManager* p_mgr = tctl->getPeerMgr();
 
-        const QList<bt::Peer::Ptr> ppl = p_mgr->getPeers();
+        const QList<bt::Peer *> ppl = p_mgr->getPeers();
 
         for (const auto &peer : ppl) {
             const bt::PeerInterface::Stats p_stats = peer->getStats();
