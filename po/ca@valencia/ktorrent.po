@@ -334,7 +334,7 @@ msgid ""
 msgstr ""
 "Obrint el torrent <b>%1</b>, es compartirà un o més fitxers amb els torrent "
 "següents. Els torrent no estan autoritzats a escriure en els mateixos "
-"fitxers. Seleccioneu una ubicació diferent."
+"fitxers. Trieu una ubicació diferent."
 
 #: ktorrent/dialogs/fileselectdlg.cpp:406 ktorrent/dialogs/pastedialog.cpp:61
 #: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
@@ -392,7 +392,7 @@ msgstr "Neteja l'historial"
 #: ktorrent/dialogs/fileselectdlg.ui:14
 #, kde-format
 msgid "Select Which Files You Want to Download"
-msgstr "Seleccioneu quins fitxers voleu baixar"
+msgstr "Trieu quins fitxers voleu baixar"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #. i18n: ectx: property (text), widget (QCheckBox, m_use_custom_download_location)
@@ -612,7 +612,7 @@ msgstr "Dades:"
 #: ktorrent/dialogs/importdialog.ui:70
 #, kde-format
 msgid "Select the torrent file and the data which belongs with it."
-msgstr "Seleccioneu el fitxer torrent i les dades que hi pertanyen."
+msgstr "Trieu el fitxer torrent i les dades que hi pertanyen."
 
 #. i18n: ectx: property (format), widget (QProgressBar, progress_bar)
 #. i18n: ectx: property (format), widget (QProgressBar, m_progress)
@@ -642,7 +642,7 @@ msgstr "C&ancel·la"
 #: ktorrent/dialogs/missingfilesdlg.cpp:115
 #, kde-format
 msgid "Select the directory where the data now is."
-msgstr "Selecciona el directori a on es troben ara les dades."
+msgstr "Tria el directori a on es troben ara les dades."
 
 #: ktorrent/dialogs/missingfilesdlg.cpp:88
 #, kde-format
@@ -712,14 +712,13 @@ msgstr "No els baixes"
 #, kde-format
 msgid "The files have been moved to another location, select the new location."
 msgstr ""
-"Els fitxers s'han mogut cap a una altra ubicació, seleccioneu la ubicació "
-"nova."
+"Els fitxers s'han mogut cap a una altra ubicació, trieu la ubicació nova."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_select_new)
 #: ktorrent/dialogs/missingfilesdlg.ui:57
 #, kde-format
 msgid "Select New Location"
-msgstr "Seleccioneu una ubicació nova"
+msgstr "Trieu una ubicació nova"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_cancel)
 #: ktorrent/dialogs/missingfilesdlg.ui:77
@@ -959,7 +958,7 @@ msgstr "Heu d'afegir almenys un node."
 #: ktorrent/dialogs/torrentcreatordlg.cpp:340
 #, kde-format
 msgid "Choose a file to save the torrent"
-msgstr "Seleccioneu un fitxer per a guardar el torrent"
+msgstr "Trieu un fitxer per a guardar el torrent"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, TorrentCreatorDlg)
 #: ktorrent/dialogs/torrentcreatordlg.ui:14
@@ -977,13 +976,13 @@ msgstr "El fitxer o directori del qual voleu crear un torrent:"
 #: ktorrent/dialogs/torrentcreatordlg.ui:44
 #, kde-format
 msgid "Select Directory"
-msgstr "Seleccioneu un directori"
+msgstr "Trieu un directori"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectFile)
 #: ktorrent/dialogs/torrentcreatordlg.ui:51
 #, kde-format
 msgid "Select File"
-msgstr "Seleccioneu un fitxer"
+msgstr "Trieu un fitxer"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/torrentcreatordlg.ui:71
@@ -4339,7 +4338,7 @@ msgstr "Elimina el torrent"
 #: plugins/infowidget/fileview.cpp:391
 #, kde-format
 msgid "Select a directory to move the data to."
-msgstr "Seleccioneu un directori cap a on s'han de moure les dades."
+msgstr "Trieu un directori cap a on s'han de moure les dades."
 
 #: ktorrent/view/viewdelegate.cpp:332
 #, kde-format
@@ -7189,7 +7188,7 @@ msgstr "Explora"
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
 #, kde-format
 msgid "Select folder:"
-msgstr "Seleccioneu una carpeta:"
+msgstr "Trieu una carpeta:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:101
@@ -7984,7 +7983,7 @@ msgstr "Reinicia"
 #: plugins/stats/drawer/PlainChartDrawer.cc:330
 #, kde-format
 msgid "Select path to save image…"
-msgstr "Seleccioneu el camí per a guardar la imatge…"
+msgstr "Tria el camí per a guardar la imatge…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:330
