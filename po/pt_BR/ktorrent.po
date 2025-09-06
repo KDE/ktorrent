@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-14 00:42+0000\n"
-"PO-Revision-Date: 2025-08-19 11:21-0300\n"
+"PO-Revision-Date: 2025-09-05 10:21-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -1830,7 +1830,7 @@ msgstr "Stefan Monov"
 #: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to hide menu bar"
-msgstr "Correção para esconder a barra de menus"
+msgstr "Correção para ocultar a barra de menus"
 
 #: ktorrent/main.cpp:154
 #, kde-format
@@ -7508,7 +7508,7 @@ msgstr "Desligar"
 #: plugins/shutdown/ktorrent_shutdownui.rc:12
 #, kde-format
 msgid "Shutdown Toolbar"
-msgstr "Barra de Ferramentas de Desligamento"
+msgstr "Barra de desligamento"
 
 #: plugins/shutdown/shutdowndlg.cpp:23
 #, kde-format
@@ -8800,7 +8800,7 @@ msgstr "Sucesso"
 #: plugins/syndication/ktorrent_syndicationui.rc:5
 #, kde-format
 msgid "Syndication Toolbar"
-msgstr "Barra de Ferramentas de Publicação"
+msgstr "Barra de ferramentas de publicação"
 
 #: plugins/syndication/linkdownloader.cpp:171
 #, kde-format
