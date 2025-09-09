@@ -35,7 +35,6 @@
                 "Name[sv]": "Joris Guisson",
                 "Name[tr]": "Joris Guisson",
                 "Name[uk]": "Joris Guisson",
-                "Name[x-test]": "xxJoris Guissonxx",
                 "Name[zh_CN]": "Joris Guisson",
                 "Name[zh_TW]": "Joris Guisson"
             }
@@ -72,7 +71,6 @@
         "Description[sv]": "Låter dig stänga av datorn när dataflöden är klara",
         "Description[tr]": "Torrentler bittiği zaman bilgisayarınızın otomatik olarak kapanmasına izin verir",
         "Description[uk]": "Надає вам змогу вимкнути комп’ютер після завершення отримання торента",
-        "Description[x-test]": "xxAllows you to shutdown your computer when torrents finishxx",
         "Description[zh_CN]": "允许您在种子完成时关闭计算机",
         "Description[zh_TW]": "允許在 torrents 完成後關閉電腦",
         "EnabledByDefault": false,
@@ -133,7 +131,6 @@
         "Name[tr]": "Kapat",
         "Name[ug]": "تاقا",
         "Name[uk]": "Вимкнути",
-        "Name[x-test]": "xxShutdownxx",
         "Name[zh_CN]": "关机",
         "Name[zh_TW]": "關機",
         "Version": "0.1",
