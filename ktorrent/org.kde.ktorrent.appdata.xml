@@ -49,7 +49,6 @@
   <name xml:lang="sv">Ktorrent</name>
   <name xml:lang="tr">K Torrent</name>
   <name xml:lang="uk">KTorrent</name>
-  <name xml:lang="x-test">xxKTorrentxx</name>
   <name xml:lang="zh-CN">KTorrent</name>
   <name xml:lang="zh-TW">KTorrent</name>
   <summary>BitTorrent Client</summary>
@@ -93,7 +92,6 @@
   <summary xml:lang="sv">Dataflödesprogram</summary>
   <summary xml:lang="tr">BitTorrent İstemcisi</summary>
   <summary xml:lang="uk">Клієнт BitTorrent</summary>
-  <summary xml:lang="x-test">xxBitTorrent Clientxx</summary>
   <summary xml:lang="zh-CN">BitTorrent 客户端</summary>
   <summary xml:lang="zh-TW">BitTorrent 用戶端</summary>
   <description>
@@ -139,7 +137,6 @@
     <p xml:lang="sv">Ktorrent är ett dataflödesprogram av KDE som låter dig ladda ner filer med protokollet BitTorrent. Det möjliggör att hantera flera dataflöden samtidigt och levereras med utökade funktioner som gör det till en fullfjädrad klient för BitTorrent.</p>
     <p xml:lang="tr">K Torrent, KDE tarafından geliştirilen, BitTorrent protokolünü kullanarak dosyaları indirmenize izin veren bir BitTorrent uygulamasıdır. Aynı anda birden fazla torrent çalıştırabilmenizi ve BitTorrent için tam özellikli bir istemci yapabilmeniz için genişletilmiş özellikler ile birlikte geliştirilmiştir.</p>
     <p xml:lang="uk">KTorrent — програма для обміну даними торентів, створена розробниками KDE, за допомогою якої ви можете отримувати і розповсюджувати дані на основі протоколу BitTorrent. Ця програма надає вам змогу одночасно обмінюватися даними декількох торентів. Також передбачено додаткові можливості, які роблять програму повноцінною клієнтською частиною для обміну даними BitTorrent.</p>
-    <p xml:lang="x-test">xxKTorrent is a BitTorrent application by KDE which allows you to download files using the BitTorrent protocol. It enables you to run multiple torrents at the same time and comes with extended features to make it a full-featured client for BitTorrent.xx</p>
     <p xml:lang="zh-CN">KTorrent 是 KDE 提供的 BT 下载应用。支持同时运行多个种子，并具有多种扩展特性，是一个全功能的 BT 客户端。</p>
     <p xml:lang="zh-TW">KTorrent 是來自 KDE 的 BitTorrent 應用程式，讓您透過 BitTorrent 協定下載檔案。它讓您同時執行多個 torrent，並且包含許多功能，讓它成為一個功能完整的 BitTorrent 用戶端。</p>
     <p>Features:</p>
@@ -183,7 +180,6 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
-    <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
@@ -226,7 +222,6 @@
       <li xml:lang="sv">Köa dataflöden</li>
       <li xml:lang="tr">Torrent kuyruğu</li>
       <li xml:lang="uk">Черга торентів</li>
-      <li xml:lang="x-test">xxQueuing of torrentsxx</li>
       <li xml:lang="zh-CN">队列种子</li>
       <li xml:lang="zh-TW">torrent 佇列</li>
       <li>Global and per torrent speed limits</li>
@@ -267,7 +262,6 @@
       <li xml:lang="sv">Hastighetsbegränsningar, allmänna och per dataflöde</li>
       <li xml:lang="tr">Global ve torrent başına hız sınırı</li>
       <li xml:lang="uk">Обмеження на швидкість на загальному рівні і для окремих торентів</li>
-      <li xml:lang="x-test">xxGlobal and per torrent speed limitsxx</li>
       <li xml:lang="zh-CN">全局限速和单个种子限速</li>
       <li xml:lang="zh-TW">全域以及個別 torrent 的速度限制</li>
       <li>Previewing of certain file types, build in (video and audio)</li>
@@ -308,7 +302,6 @@
       <li xml:lang="sv">Förhandsgranskning av vissa filtyper inbyggd (video och ljud)</li>
       <li xml:lang="tr">Belirli dosya türleri için önizleme (video ve ses)</li>
       <li xml:lang="uk">Перегляд даних файлів деяких типів, вбудований (відео і звукові дані)</li>
-      <li xml:lang="x-test">xxPreviewing of certain file types, build in (video and audio)xx</li>
       <li xml:lang="zh-CN">内置的文件预览功能 (视频和音频)</li>
       <li xml:lang="zh-TW">某些檔案類型的預覽，內建（影片與音效）</li>
       <li>Importing of partially or fully downloaded files</li>
@@ -349,7 +342,6 @@
       <li xml:lang="sv">Import av partiellt eller fullständigt nerladdade filer</li>
       <li xml:lang="tr">Kısımsal veya tam indirilmiş dosyaları içe aktarma</li>
       <li xml:lang="uk">Імпортування частково або повністю звантажених файлів</li>
-      <li xml:lang="x-test">xxImporting of partially or fully downloaded filesxx</li>
       <li xml:lang="zh-CN">导入部分或完全下载的文件</li>
       <li xml:lang="zh-TW">部分或完全下載的檔案的匯入</li>
       <li>File prioritization for multi-file torrents</li>
@@ -390,7 +382,6 @@
       <li xml:lang="sv">Filprioritering för dataflöden med flera filer</li>
       <li xml:lang="tr">Birden çok dosya barındıran torrentler için dosya önceliklendirme</li>
       <li xml:lang="uk">Визначення пріоритетів файлів у торентах, які складаються з декількох файлів</li>
-      <li xml:lang="x-test">xxFile prioritization for multi-file torrentsxx</li>
       <li xml:lang="zh-CN">多文件种子设定文件优先级</li>
       <li xml:lang="zh-TW">多檔 torrent 的檔案優先權安排</li>
       <li>Selective downloading for multi-file torrents</li>
@@ -431,7 +422,6 @@
       <li xml:lang="sv">Selektiv nerladdning för dataflöden med flera filer</li>
       <li xml:lang="tr">Birden çok dosya barındıran torrentler için seçimli indirme</li>
       <li xml:lang="uk">Вибіркове отримання даних торентів, які складаються з декількох файлів</li>
-      <li xml:lang="x-test">xxSelective downloading for multi-file torrentsxx</li>
       <li xml:lang="zh-CN">多文件种子可选下载指定文件</li>
       <li xml:lang="zh-TW">選擇下載多檔 torrent 的一部分</li>
       <li>Kick/ban peers with an additional IP Filter dialog for list/edit purposes</li>
@@ -472,7 +462,6 @@
       <li xml:lang="sv">Sparka ut eller förbjud deltagare med en ytterligare IP-filtreringsdialogruta i listnings- och redigeringssyfte</li>
       <li xml:lang="tr">Listeleme/Düzenleme amaçları için ek bir IP Süzgeci penceresi ile eşleri kovma/engelleme</li>
       <li xml:lang="uk">Викидання/Блокування вузлів за допомогою додаткового діалогового вікна фільтрування за IP (список і редагування записів)</li>
-      <li xml:lang="x-test">xxKick/ban peers with an additional IP Filter dialog for list/edit purposesxx</li>
       <li xml:lang="zh-CN">踢掉/屏蔽对等点，并可以用 IP 过滤器查看和编辑列表</li>
       <li xml:lang="zh-TW">用清單/編輯用的 IP 位址過濾對話框來踢出/封鎖端點</li>
       <li>UDP tracker support</li>
@@ -515,7 +504,6 @@
       <li xml:lang="sv">Stöd för UDP-spårare</li>
       <li xml:lang="tr">UDP izleyici desteği</li>
       <li xml:lang="uk">Підтримка координування UDP</li>
-      <li xml:lang="x-test">xxUDP tracker supportxx</li>
       <li xml:lang="zh-CN">支持 UDP tracker</li>
       <li xml:lang="zh-TW">支援 UDP tracker</li>
       <li>Support for private trackers and torrents</li>
@@ -557,7 +545,6 @@
       <li xml:lang="sv">Stöd för privata spårare och dataflöden</li>
       <li xml:lang="tr">Özel izleyici ve torrent desteği</li>
       <li xml:lang="uk">Підтримка приватних координаторів та торентів</li>
-      <li xml:lang="x-test">xxSupport for private trackers and torrentsxx</li>
       <li xml:lang="zh-CN">支持私有 tracker 和种子</li>
       <li xml:lang="zh-TW">支援私密 tracker 和種子檔</li>
       <li>Support for µTorrent's peer exchange</li>
@@ -599,7 +586,6 @@
       <li xml:lang="sv">Stöd för µTorrents utbyte mellan deltagare</li>
       <li xml:lang="tr">µTorrent eş değişimi desteği</li>
       <li xml:lang="uk">Підтримка обміну вузлами у форматі µTorrent</li>
-      <li xml:lang="x-test">xxSupport for µTorrent's peer exchangexx</li>
       <li xml:lang="zh-CN">支持 µTorrent 对等点交换</li>
       <li xml:lang="zh-TW">支援 µTorrent 的端點交換</li>
       <li>Support for protocol encryption (compatible with Azureus)</li>
@@ -641,7 +627,6 @@
       <li xml:lang="sv">Stöd för protokollkryptering (kompatibel med Azureus)</li>
       <li xml:lang="tr">Protok şifreleme desteği (Azureus ile uyumlu)</li>
       <li xml:lang="uk">Підтримка шифрування даних протоколів (сумісна з Azureus)</li>
-      <li xml:lang="x-test">xxSupport for protocol encryption (compatible with Azureus)xx</li>
       <li xml:lang="zh-CN">支持协议加密 (兼容 Azureus)</li>
       <li xml:lang="zh-TW">支援協定加密（與 Azureus 相容）</li>
       <li>Support for creating trackerless torrents</li>
@@ -683,7 +668,6 @@
       <li xml:lang="sv">Stöd för att skapa dataflöden utan spårare</li>
       <li xml:lang="tr">İzleyicisiz torrentler için destek</li>
       <li xml:lang="uk">Підтримка створення торентів без координації</li>
-      <li xml:lang="x-test">xxSupport for creating trackerless torrentsxx</li>
       <li xml:lang="zh-CN">支持创建无 tracker 种子</li>
       <li xml:lang="zh-TW">支援建立無 tracker 的 torrent</li>
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
@@ -725,7 +709,6 @@
       <li xml:lang="sv">Stöd för distribuerade kondensattabeller (DHT, huvudversionen)</li>
       <li xml:lang="tr">Dağıtılmış özet tabloları için destek (DHT, Ana sürümü)</li>
       <li xml:lang="uk">Підтримка розподілених таблиць хешів (distributed hash tables або DHT, основної версії)</li>
-      <li xml:lang="x-test">xxSupport for distributed hash tables (DHT, the Mainline version)xx</li>
       <li xml:lang="zh-CN">支持分布式哈希表 (DHT，主线版本)</li>
       <li xml:lang="zh-TW">支援分散式雜湊表（DHT，Mainline 版本）</li>
       <li>Support for UPnP to automatically forward ports on a LAN with dynamic assigned hosts</li>
@@ -767,7 +750,6 @@
       <li xml:lang="sv">Stöd för UPnP för att automatiskt vidarebefordra portar på ett lokalt nätverk med dynamiskt tilldelade värddatorer</li>
       <li xml:lang="tr">Dinamik olarak atanmış makineler ile LAN üzerinde otomatik kapı yönlendirme için UPnP desteği</li>
       <li xml:lang="uk">Підтримка UPnP з метою автоматичного переспрямування портів у локальній мережі з динамічним призначенням назв вузлів</li>
-      <li xml:lang="x-test">xxSupport for UPnP to automatically forward ports on a LAN with dynamic assigned hostsxx</li>
       <li xml:lang="zh-CN">支持 UPnP 局域网自动转发端口的动态主机名</li>
       <li xml:lang="zh-TW">支援 UPnP 來在動態指派主機的區域網路中自動轉遞連接埠</li>
       <li>Support for webseeds</li>
@@ -810,7 +792,6 @@
       <li xml:lang="sv">Stöd för webberbjudanden</li>
       <li xml:lang="tr">Web beslemeleri için destek</li>
       <li xml:lang="uk">Підтримка вебпоширення</li>
-      <li xml:lang="x-test">xxSupport for webseedsxx</li>
       <li xml:lang="zh-CN">支持 Webseed</li>
       <li xml:lang="zh-TW">支援 webseed 網路種子</li>
       <li>System tray integration</li>
@@ -853,7 +834,6 @@
       <li xml:lang="sv">Integrering med systembricka</li>
       <li xml:lang="tr">Sistem tepsisi tümleştirmesi</li>
       <li xml:lang="uk">Можливість роботи у системному лотку</li>
-      <li xml:lang="x-test">xxSystem tray integrationxx</li>
       <li xml:lang="zh-CN">系统托盘整合</li>
       <li xml:lang="zh-TW">系統匣整合</li>
       <li>Tracker authentication support</li>
@@ -895,7 +875,6 @@
       <li xml:lang="sv">Stöd för behörighetskontroll av spårare</li>
       <li xml:lang="tr">İzleyici kimlik doğrulama desteği</li>
       <li xml:lang="uk">Підтримка розпізнавання для координації</li>
-      <li xml:lang="x-test">xxTracker authentication supportxx</li>
       <li xml:lang="zh-CN">支持 tracker 认证</li>
       <li xml:lang="zh-TW">tracker 認證支援</li>
       <li>Connection through a proxy</li>
@@ -938,7 +917,6 @@
       <li xml:lang="sv">Anslutning via en proxy</li>
       <li xml:lang="tr">Vekil sunucu üzerinden bağlantı</li>
       <li xml:lang="uk">Встановлення з’єднання крізь проксі-сервер</li>
-      <li xml:lang="x-test">xxConnection through a proxyxx</li>
       <li xml:lang="zh-CN">通过代理连接</li>
       <li xml:lang="zh-TW">透過網路代理伺服器的連線</li>
     </ul>
@@ -980,7 +958,6 @@
     <p xml:lang="sv">Förutom inbyggd funktionalitet, finns några insticksprogram tillgängliga för Ktorrent.</p>
     <p xml:lang="tr">Yerleşik işlevlere ek olarak, K Torrent için kullanılabilen bazı eklentiler de bulunmaktadır.</p>
     <p xml:lang="uk">Окрім вбудованих функціональних можливостей, у KTorrent передбачено розширення можливостей за допомогою додатків.</p>
-    <p xml:lang="x-test">xxIn addition to the built-in functionalities, there are some plugins available for KTorrent.xx</p>
     <p xml:lang="zh-CN">除了一些内置的功能，KTorrent 还有一些插件可用。</p>
     <p xml:lang="zh-TW">除了內建功能以外，KTorrent 也有一些可用的外掛程式。</p>
   </description>
