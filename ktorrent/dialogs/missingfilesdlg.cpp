@@ -122,7 +122,7 @@ void MissingFilesDlg::selectNewPressed()
             KRecentDirs::add(recentDirClass, dir);
 
         QString old = tc->getDataDir();
-        tc->changeOutputDir(dir, 0);
+        tc->changeOutputDir(dir);
         QStringList dummy;
         if (tc->hasMissingFiles(dummy)) {
             if (KMessageBox::questionTwoActions(
@@ -136,7 +136,7 @@ void MissingFilesDlg::selectNewPressed()
                 ret = NEW_LOCATION_SELECTED;
                 accept();
             } else
-                tc->changeOutputDir(old, 0);
+                tc->changeOutputDir(old);
         } else {
             ret = NEW_LOCATION_SELECTED;
             accept();

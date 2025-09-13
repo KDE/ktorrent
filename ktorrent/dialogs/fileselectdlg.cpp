@@ -296,7 +296,7 @@ void FileSelectDlg::accept()
     if (tc->getStats().multi_file_torrent && tld != tc->getStats().torrent_name)
         tc->changeOutputDir(dn + tld, bt::TorrentInterface::FULL_PATH);
     else if (dn != ddir)
-        tc->changeOutputDir(dn, 0);
+        tc->changeOutputDir(dn);
 
     QStringList conflicting;
     if (qman->checkFileConflicts(tc, conflicting)) {
