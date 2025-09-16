@@ -628,7 +628,7 @@ msgstr "Seleccione el archivo torrent y los datos que le pertenezcan."
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr "%p%"
+msgstr "%p %"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -3584,7 +3584,7 @@ msgstr "DHT: %1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr "%p%"
+msgstr "%p %"
 
 #: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
@@ -4362,7 +4362,7 @@ msgstr "Seleccione un directorio al que mover los datos."
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: ktorrent/view/viewmodel.cpp:182
 #, kde-format
@@ -5964,7 +5964,7 @@ msgstr "No"
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: plugins/infowidget/peerviewmodel.cpp:121
 #, kde-format
