@@ -70,7 +70,7 @@ public:
     virtual QByteArray saveExpandedState(QSortFilterProxyModel *pm, QTreeView *tv);
 
     /**
-     * Retore the expanded state of the tree.in a QTreeView
+     * Restore the expanded state of the tree.in a QTreeView
      * @param pm Proxy model of the view
      * @param tv The QTreeView
      * @param state The encoded expanded state

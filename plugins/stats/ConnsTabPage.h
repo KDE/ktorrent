@@ -47,12 +47,12 @@ private:
 
     /** \brief Leechers in swarms dataset UUID
 
-    Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
+    Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings change
     */
     const QUuid pmLhrSwnUuid;
     /** \brief Seeds in swarms dataset UUID
 
-    Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings chage
+    Used for identification whether this dataset is already shown on the chart and if it needs to be removed or added on settings change
     */
     const QUuid pmSesSwnUuid;
 

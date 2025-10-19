@@ -32,7 +32,7 @@ public:
      * be created.
      * @param file Filename
      * @param mode Mode (READ, WRITE or RW)
-     * @return true upon succes
+     * @return true upon success
      */
     bool open(const QString &file, QIODevice::OpenModeFlag mode);
 

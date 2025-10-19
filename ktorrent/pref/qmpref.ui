@@ -156,7 +156,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string comment="@title:group Options regarging Seeding">Seeding</string>
+      <string comment="@title:group Options regarding Seeding">Seeding</string>
      </property>
      <layout class="QGridLayout" name="gl">
       <item row="0" column="0" colspan="2">

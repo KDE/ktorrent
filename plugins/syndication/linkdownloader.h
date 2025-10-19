@@ -28,7 +28,7 @@ public:
     LinkDownloader(const QUrl &url, CoreInterface *core, bool verbose, const QString &group, const QString &location, const QString &move_on_completion);
     ~LinkDownloader();
 
-    /// Start the download proces
+    /// Start the download process
     void start();
 
     void downloadFinished(KJob *j);

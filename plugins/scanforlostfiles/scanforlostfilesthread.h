@@ -17,7 +17,7 @@ class CoreInterface;
  * ScanForLostFiles working thread. It:
  * 1. Lists the folder content with QDirIterator
  * 2. Lists the files that belongs to torrents
- * 3. Substracts the results of 2nd step from results of 1st step
+ * 3. Subtracts the results of 2nd step from results of 1st step
  * 4. Returns resulting file tree as a set of filepaths by emitting filterReady signal
  */
 

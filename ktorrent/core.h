@@ -156,7 +156,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     /**
-     * TorrentCore torrents have beed updated. Stats are changed.
+     * TorrentCore torrents have been updated. Stats are changed.
      **/
     void statsUpdated();
 

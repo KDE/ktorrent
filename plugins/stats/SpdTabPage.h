@@ -58,15 +58,15 @@ public Q_SLOTS:
 
 private:
     /** \brief Gathers dl speeds data
-     \ param  pP kt::Plugin interfac*e *
+     \param pP kt::Plugin interface
      */
     void gatherDownloadSpeed(Plugin *pP);
     /** \brief Gathers peers speeds data
-     \ param  pP kt::Plugin interfac*e *
+     \param pP kt::Plugin interface
      */
     void gatherPeersSpeed(Plugin *pP);
     /** \brief Gathers Ul speeds data
-     \ param  pP kt::Plugin interfac*e *
+     \param pP kt::Plugin interface
      */
     void gatherUploadSpeed(Plugin *pP);
 

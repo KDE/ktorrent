@@ -160,7 +160,7 @@ public:
     /// Function generating legend string
     virtual QString makeLegendString() = 0;
 
-    /** \brief Function settng a legend
+    /** \brief Function setting a legend
     \param rL Legend's text
     */
     virtual void setLegend(const QString &rL) = 0;

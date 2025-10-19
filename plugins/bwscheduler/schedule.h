@@ -103,7 +103,7 @@ public:
     /**
      * Add a ScheduleItem to the schedule
      * @param item The ScheduleItem
-     * @return true upon succes, false otherwise (probably conflicts with other items)
+     * @return true upon success, false otherwise (probably conflicts with other items)
      */
     bool addItem(ScheduleItem *item);
 

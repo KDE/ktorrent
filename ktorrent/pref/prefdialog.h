@@ -22,7 +22,7 @@ class PrefPageScrollArea;
 
 /**
  * KTorrent's preferences dialog, this uses the new KConfigDialog class which should make our live much easier.
- * In order for this to work properly the widgets have to be named kcfg_FOO where FOO is a somehting out of our settings class.
+ * In order for this to work properly the widgets have to be named kcfg_FOO where FOO is a something out of our settings class.
  *
  * The use of KConfigDialog should deprecate PrefPageInterface.
  * */

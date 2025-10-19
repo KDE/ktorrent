@@ -122,7 +122,7 @@ GUI::~GUI()
 bool GUI::event(QEvent *e)
 {
     if (e->type() == QEvent::DeferredDelete) {
-        // HACK to prevent ktorrent from crashing on logout/shotdown (when launched e.g. via alt+f2)
+        // HACK to prevent ktorrent from crashing on logout/shutdown (when launched e.g. via alt+f2)
         delete core;
         core = nullptr;
         return true;

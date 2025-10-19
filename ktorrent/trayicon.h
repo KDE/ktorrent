@@ -61,7 +61,7 @@ public:
     void setAssociatedWindow(QWindow *window);
 
 private:
-    void showPassivePopup(const QString &msg, const QString &titile);
+    void showPassivePopup(const QString &msg, const QString &title);
 
 private Q_SLOTS:
     /**

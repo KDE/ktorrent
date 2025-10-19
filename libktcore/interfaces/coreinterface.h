@@ -204,12 +204,12 @@ public:
     virtual void loadExistingTorrent(const QString &tor_dir) = 0;
 
     /**
-     * Sets global suspended state for all torrents (QueueManager) and stopps all torrents.
+     * Sets global suspended state for all torrents (QueueManager) and stops all torrents.
      * No torrents will be automatically started/stopped.
      */
     virtual void setSuspendedState(bool suspend) = 0;
 
-    /// Gets the globla suspended state
+    /// Gets the global suspended state
     virtual bool getSuspendedState() = 0;
 
     /// Get the QueueManager
@@ -260,7 +260,7 @@ Q_SIGNALS:
     void torrentStoppedByError(bt::TorrentInterface *tc, QString msg);
 
     /**
-     * Signal emmitted when the settings have been changed in the settings dialog.
+     * Signal emitted when the settings have been changed in the settings dialog.
      * Plugins interested in this should update their internal states.
      * */
     void settingsChanged();

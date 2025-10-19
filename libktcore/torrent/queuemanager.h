@@ -186,7 +186,7 @@ public:
     /**
      * Requested by each TorrentControl during its update to
      * get permission on saving Stats file to disk. May be
-     * overriden to balance I/O operations.
+     * overridden to balance I/O operations.
      * @param tc Pointer to TorrentControl instance
      * @return true if file save is permitted, false otherwise
      */
@@ -212,7 +212,7 @@ public:
     void setKeepSeeding(bool ks);
 
     /**
-     * Sets global suspended state for QueueManager and stopps all running torrents.
+     * Sets global suspended state for QueueManager and stops all running torrents.
      * No torrents will be automatically started/stopped with QM.
      */
     void setSuspendedState(bool suspend);

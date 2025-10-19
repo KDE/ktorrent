@@ -39,7 +39,7 @@ public:
     /**
      * Add a directory to scan.
      * @param url Directory
-     * @param recursive Whether or not to scan resursively
+     * @param recursive Whether or not to scan recursively
      */
     void addDirectory(const QUrl &url, bool recursive);
 
