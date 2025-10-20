@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-14 00:42+0000\n"
+"POT-Creation-Date: 2025-10-20 00:42+0000\n"
 "PO-Revision-Date: 2024-09-19 17:43+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3383,8 +3383,10 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, kde-format
-msgctxt "@title:group Options regarging Seeding"
+#, fuzzy, kde-format
+#| msgctxt "@title:group Options regarging Seeding"
+#| msgid "Seeding"
+msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
 msgstr "Προσφορά πηγών"
 

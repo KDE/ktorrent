@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-14 00:42+0000\n"
+"POT-Creation-Date: 2025-10-20 00:42+0000\n"
 "PO-Revision-Date: 2013-09-08 07:04+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -3128,10 +3128,11 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, kde-format
-msgctxt "@title:group Options regarging Seeding"
+#, fuzzy, kde-format
+#| msgid "Pending"
+msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
-msgstr ""
+msgstr "كۈتۈۋاتىدۇ"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_keepSeeding)
 #: ktorrent/pref/qmpref.ui:165

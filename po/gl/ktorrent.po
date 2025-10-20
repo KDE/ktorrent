@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-14 00:42+0000\n"
+"POT-Creation-Date: 2025-10-20 00:42+0000\n"
 "PO-Revision-Date: 2025-06-22 11:39+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -3333,8 +3333,10 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, kde-format
-msgctxt "@title:group Options regarging Seeding"
+#, fuzzy, kde-format
+#| msgctxt "@title:group Options regarging Seeding"
+#| msgid "Seeding"
+msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
 msgstr "Espallamento"
 
