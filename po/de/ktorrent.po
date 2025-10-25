@@ -1548,12 +1548,10 @@ msgid "Bittorrent client by KDE"
 msgstr "Ein BitTorrent-Programm von KDE"
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr "Copyright © 2005–2011 Joris Guisson und Ivan Vasic"
+msgstr "© 2005–2011 Joris Guisson und Ivan Vasic"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -4620,10 +4618,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "UPnP-Testanwendung von KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "(C) 2005 - 2008 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "(C) 2005 - 2008 Joris Guisson und Ivan Vasic"
+msgstr "© 2005–2007 Joris Guisson und Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
