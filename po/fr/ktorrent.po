@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-20 00:42+0000\n"
-"PO-Revision-Date: 2025-07-16 09:44+0200\n"
+"PO-Revision-Date: 2025-10-21 07:54+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.80\n"
+"X-Generator: Lokalize 25.08.2\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -2021,7 +2021,7 @@ msgstr "Leo Trubach"
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr ""
-"Correctif pour prendre en charge les plages d'IP dans la boîte de dialogue "
+"Correctif pour prendre en charge les plages d'IP dans la boite de dialogue "
 "des filtres d'IP"
 
 #: ktorrent/main.cpp:166
@@ -2797,7 +2797,7 @@ msgstr "Copier les fichiers torrents vers : "
 #: ktorrent/pref/generalpref.ui:91
 #, kde-format
 msgid "System Tray Icon"
-msgstr "Icône de la boîte à miniatures"
+msgstr "Icône de la boite à miniatures"
 
 # msgid "Show system tray popup messages"
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
@@ -2805,19 +2805,19 @@ msgstr "Icône de la boîte à miniatures"
 #, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
 msgstr ""
-"Décider ou non de toujours minimiser dans la boîte à miniatures au démarrage."
+"Décider ou non de toujours minimiser dans la boite à miniatures au démarrage."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr "Toujours minimiser dans la boîte à miniatures au démarrage."
+msgstr "Toujours minimiser dans la boite à miniatures au démarrage."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
 #, kde-format
 msgid "Whether or not to show system tray popup messages."
-msgstr "Afficher ou non les messages notifications de la boîte à miniatures."
+msgstr "Afficher ou non les messages notifications de la boite à miniatures."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:113
@@ -3455,9 +3455,7 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, fuzzy, kde-format
-#| msgctxt "@title:group Options regarging Seeding"
-#| msgid "Seeding"
+#, kde-format
 msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
 msgstr "Partage"
@@ -3947,7 +3945,7 @@ msgstr "Filtrer les torrents"
 #: ktorrent/torrentactivity.cpp:134
 #, kde-format
 msgid "Filter torrents based on filter string"
-msgstr "Filtrer les torrents par des chaînes de filtrage"
+msgstr "Filtrer les torrents par des chaines de filtrage"
 
 #: ktorrent/trayicon.cpp:89
 #, kde-format
@@ -4955,7 +4953,7 @@ msgstr "Ratio de partage maximal (0 = pas de limite)"
 #: libktcore/ktorrent.kcfg:66
 #, kde-format
 msgid "Show a system tray icon"
-msgstr "Afficher une icône dans la boîte à miniatures"
+msgstr "Afficher une icône dans la boite à miniatures"
 
 #. i18n: ectx: label, entry (showTotalSpeedInTitle), group (downloads)
 #: libktcore/ktorrent.kcfg:70
@@ -4967,7 +4965,7 @@ msgstr "Afficher une vitesse totale dans la barre de titre"
 #: libktcore/ktorrent.kcfg:74
 #, kde-format
 msgid "Show speed bar in tray icon"
-msgstr "Afficher la barre de vitesse dans la boîte à miniatures"
+msgstr "Afficher la barre de vitesse dans la boite à miniatures"
 
 #. i18n: ectx: label, entry (downloadBandwidth), group (downloads)
 #: libktcore/ktorrent.kcfg:78
@@ -4985,7 +4983,7 @@ msgstr "Bande passante d'envoi (en Kio/s) :"
 #: libktcore/ktorrent.kcfg:90
 #, kde-format
 msgid "Always minimize to system tray on startup."
-msgstr "Toujours minimiser dans la boîte à miniatures au démarrage."
+msgstr "Toujours minimiser dans la boite à miniatures au démarrage."
 
 #. i18n: ectx: label, entry (showPopups), group (downloads)
 #: libktcore/ktorrent.kcfg:94
@@ -8803,7 +8801,7 @@ msgstr "Nom :"
 #: plugins/syndication/filtereditor.ui:38
 #, kde-format
 msgid "String Matching"
-msgstr "Correspondance de chaîne"
+msgstr "Correspondance de chaine"
 
 #. i18n: ectx: property (toolTip), widget (KEditListWidget, m_word_matches)
 #. i18n: ectx: property (toolTip), widget (KEditListWidget, m_exclusion_patterns)
@@ -8868,7 +8866,7 @@ msgid ""
 "the *.torrent will match any item which ends in .torrent. </p>"
 msgstr ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">La chaîne à trouver dans "
+"right:0px; -qt-block-indent:0; text-indent:0px;\">La chaine à trouver dans "
 "le titre d'un élément. La syntaxe avec des jokers simples est acceptée :</"
 "p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
@@ -8935,7 +8933,7 @@ msgid ""
 "By default strings will use wildcard matching. If you want to use regular "
 "expressions, this needs to be enabled."
 msgstr ""
-"Par défaut, les chaînes utiliseront les correspondances de jokers. Si vous "
+"Par défaut, les chaines utiliseront les correspondances de jokers. Si vous "
 "voulez utiliser des expressions rationnelles, il faut activer ceci."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_reg_exp_syntax)
@@ -8944,13 +8942,13 @@ msgstr ""
 #: plugins/syndication/filtereditor.ui:146
 #, kde-format
 msgid "Strings are regular expressions"
-msgstr "Les chaînes sont des expressions rationnelles"
+msgstr "Les chaines sont des expressions rationnelles"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_all_words_must_match)
 #: plugins/syndication/filtereditor.ui:88
 #, kde-format
 msgid "Item must match all strings to be included"
-msgstr "L'élément doit correspondre à toutes les chaînes pour être inclus"
+msgstr "L'élément doit correspondre à toutes les chaines pour être inclus"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_match_case_sensitive)
 #. i18n: ectx: property (text), widget (QCheckBox, m_exclusion_case_sensitive)
@@ -8971,7 +8969,7 @@ msgstr "Motifs d'exclusion"
 #, kde-format
 msgid "Item must match all strings to be excluded"
 msgstr ""
-"Les éléments doivent correspondre à toutes les chaînes pour être exclus"
+"Les éléments doivent correspondre à toutes les chaines pour être exclus"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #: plugins/syndication/filtereditor.ui:168
