@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/ktorrent/ktorrent.pot\n"
-"X-Crowdin-File-ID: 48662\n"
+"X-Crowdin-File: /kf6-stable/messages/ktorrent/ktorrent.pot\n"
+"X-Crowdin-File-ID: 50198\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3194,9 +3194,7 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, fuzzy, kde-format
-#| msgctxt "@title:group Options regarging Seeding"
-#| msgid "Seeding"
+#, kde-format
 msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
 msgstr "做种"
