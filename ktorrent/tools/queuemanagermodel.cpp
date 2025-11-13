@@ -352,6 +352,7 @@ void QueueManagerModel::moveUp(int row, int count)
     if (row <= 0 || row > qman->count())
         return;
 
+    beginResetModel();
     for (int i = 0; i < count; i++) {
         swapItems(row + i, row + i - 1);
     }
@@ -368,6 +369,7 @@ void QueueManagerModel::moveDown(int row, int count)
     if (row < 0 || row >= qman->count() - 1)
         return;
 
+    beginResetModel();
     for (int i = count - 1; i >= 0; i--) {
         swapItems(row + i, row + i + 1);
     }
@@ -384,6 +386,7 @@ void QueueManagerModel::moveTop(int row, int count)
     if (row < 0 || row >= qman->count())
         return;
 
+    beginResetModel();
     while (row > 0) {
         for (int i = 0; i < count; i++) {
             swapItems(row + i, row + i - 1);
@@ -403,6 +406,7 @@ void QueueManagerModel::moveBottom(int row, int count)
     if (row < 0 || row >= qman->count())
         return;
 
+    beginResetModel();
     while (row + count < queue.count()) {
         for (int i = count - 1; i >= 0; i--) {
             swapItems(row + i, row + i + 1);
@@ -462,9 +466,10 @@ void QueueManagerModel::update()
 
 QModelIndex QueueManagerModel::find(const QString &text)
 {
+    beginResetModel();
     search_text = text;
+    endResetModel();
     if (text.isEmpty()) {
-        endResetModel();
         return QModelIndex();
     }
 
@@ -472,13 +477,11 @@ QModelIndex QueueManagerModel::find(const QString &text)
     for (const Item &i : std::as_const(queue)) {
         bt::TorrentInterface *tc = i.tc;
         if (tc->getDisplayName().contains(text, Qt::CaseInsensitive)) {
-            endResetModel();
             return index(idx, 0);
         }
         idx++;
     }
 
-    endResetModel();
     return QModelIndex();
 }
 
