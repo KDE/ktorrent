@@ -136,14 +136,21 @@ public:
     ///  Get the number of torrents not running.
     virtual bt::Uint32 getNumTorrentsNotRunning() const = 0;
 
+    enum LoadOption {
+        Default = 0x0,
+        Silently = 0x1
+    };
+    Q_DECLARE_FLAGS(LoadOptions, LoadOption)
+
     /**
      * Load a torrent file. Pops up an error dialog
      * if something goes wrong. Will ask the user for a save location, or use
      * the default.
      * @param url The torrent file
      * @param group Group to add torrent to
+     * @param options Flags for loading the torrent
      */
-    virtual void load(const QUrl &url, const QString &group) = 0;
+    virtual void load(const QUrl &url, const QString &group, LoadOptions options = LoadOption::Default) = 0;
 
     /**
      * Load a torrent file. Pops up an error dialog
@@ -152,6 +159,7 @@ public:
      * @param url The torrent file
      * @param group Group to add torrent to
      */
+    [[deprecated]]
     virtual void loadSilently(const QUrl &url, const QString &group) = 0;
 
     /**
@@ -160,9 +168,11 @@ public:
      * @param url URL of the torrent
      * @param group Group to use
      * @param savedir Directory to save to
+     * @param options Flags for loading the torrent
      * @return The loaded TorrentInterface or 0 on failure
      */
-    virtual bt::TorrentInterface *load(const QByteArray &data, const QUrl &url, const QString &group, const QString &savedir) = 0;
+    virtual bt::TorrentInterface *
+    load(const QByteArray &data, const QUrl &url, const QString &group, const QString &savedir, LoadOptions options = LoadOption::Default) = 0;
 
     /**
      * Load a torrent using a byte array silently
@@ -172,6 +182,7 @@ public:
      * @param savedir Directory to save to
      * @return The loaded TorrentInterface or 0 on failure
      */
+    [[deprecated]]
     virtual bt::TorrentInterface *loadSilently(const QByteArray &data, const QUrl &url, const QString &group, const QString &savedir) = 0;
 
     /**

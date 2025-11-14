@@ -152,7 +152,7 @@ void DBus::load(const QString &url, const QString &group)
 
 void DBus::loadSilently(const QString &url, const QString &group)
 {
-    core->loadSilently(QFile::exists(url) ? QUrl::fromLocalFile(url) : QUrl(url), group);
+    core->load(QFile::exists(url) ? QUrl::fromLocalFile(url) : QUrl(url), group, CoreInterface::LoadOption::Silently);
 }
 
 QStringList DBus::groups() const

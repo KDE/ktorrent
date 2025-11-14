@@ -73,11 +73,11 @@ void LinkDownloader::downloadFinished(KJob *j)
     }
 
     if (isTorrent(job->data())) {
-        bt::TorrentInterface *tc = nullptr;
-        if (verbose)
-            tc = core->load(job->data(), url, group, location);
-        else
-            tc = core->loadSilently(job->data(), url, group, location);
+        CoreInterface::LoadOptions options = CoreInterface::LoadOption::Default;
+        if (!verbose) {
+            options |= CoreInterface::LoadOption::Silently;
+        }
+        bt::TorrentInterface *tc = core->load(job->data(), url, group, location, options);
 
         if (tc && !move_on_completion.isEmpty())
             tc->setMoveWhenCompletedDir(move_on_completion);
@@ -196,11 +196,11 @@ void LinkDownloader::torrentDownloadFinished(KJob *j)
         } else
             tryTorrentLinks();
     } else if (isTorrent(job->data())) {
-        bt::TorrentInterface *tc = nullptr;
-        if (verbose)
-            tc = core->load(job->data(), link_url, group, location);
-        else
-            tc = core->loadSilently(job->data(), link_url, group, location);
+        CoreInterface::LoadOptions options = CoreInterface::LoadOption::Default;
+        if (!verbose) {
+            options |= CoreInterface::LoadOption::Silently;
+        }
+        bt::TorrentInterface *tc = core->load(job->data(), link_url, group, location, options);
 
         if (tc && !move_on_completion.isEmpty())
             tc->setMoveWhenCompletedDir(move_on_completion);

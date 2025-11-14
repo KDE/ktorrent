@@ -244,7 +244,7 @@ void GUI::load(const QUrl &url)
 
 void GUI::loadSilently(const QUrl &url)
 {
-    core->loadSilently(url, QString());
+    core->load(url, QString(), CoreInterface::LoadOption::Silently);
 }
 
 void GUI::createTorrent()

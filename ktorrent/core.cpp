@@ -312,8 +312,9 @@ bool Core::init(TorrentControl *tc, const QString &group, const QString &locatio
     return true;
 }
 
-bt::TorrentInterface *Core::loadFromData(const QByteArray &data, const QString &dir, const QString &group, bool silently, const QUrl &url)
+bt::TorrentInterface *Core::loadFromData(const QByteArray &data, const QString &dir, const QString &group, LoadOptions options, const QUrl &url)
 {
+    bool silently = options.testFlag(CoreInterface::LoadOption::Silently);
     QString tdir = findNewTorrentDir();
     TorrentControl *tc = nullptr;
     try {
@@ -345,17 +346,18 @@ bt::TorrentInterface *Core::loadFromData(const QByteArray &data, const QString &
     return nullptr;
 }
 
-bt::TorrentInterface *Core::loadFromFile(const QString &target, const QString &dir, const QString &group, bool silently)
+bt::TorrentInterface *Core::loadFromFile(const QString &target, const QString &dir, const QString &group, LoadOptions options)
 {
     try {
         QByteArray data = bt::LoadFile(target);
-        return loadFromData(data, dir, group, silently, QUrl::fromLocalFile(target));
+        return loadFromData(data, dir, group, options, QUrl::fromLocalFile(target));
     } catch (bt::Error &err) {
         bt::Out(SYS_GEN | LOG_IMPORTANT) << err.toString() << endl;
-        if (!silently)
-            gui->errorMsg(err.toString());
-        else
+        if (options.testFlag(CoreInterface::LoadOption::Silently)) {
             Q_EMIT canNotLoadSilently(err.toString());
+        } else {
+            gui->errorMsg(err.toString());
+        }
         return nullptr;
     }
 }
@@ -380,25 +382,30 @@ void Core::downloadFinished(KJob *job)
 
         QString dir = locationHint(group);
         if (dir != QString())
-            loadFromData(j->data(), dir, group, false, j->url());
+            loadFromData(j->data(), dir, group, CoreInterface::LoadOption::Default, j->url());
     }
 }
 
-void Core::load(const QUrl &url, const QString &group)
+void Core::load(const QUrl &url, const QString &group, LoadOptions loadOptions)
 {
+    bool silently = loadOptions.testFlag(CoreInterface::LoadOption::Silently);
     if (url.scheme() == QLatin1String("magnet")) {
         MagnetLinkLoadOptions options;
-        options.silently = false;
+        options.silently = silently;
         options.group = group;
         load(bt::MagnetLink(url), options);
     } else if (url.isLocalFile()) {
         QString path = url.toLocalFile();
         QString dir = locationHint(group);
         if (dir != QString())
-            loadFromFile(path, dir, group, false);
+            loadFromFile(path, dir, group, loadOptions);
     } else {
         KIO::Job *j = KIO::storedGet(url);
-        connect(j, &KIO::Job::result, this, &Core::downloadFinished);
+        if (silently) {
+            connect(j, &KIO::Job::result, this, &Core::downloadFinishedSilently);
+        } else {
+            connect(j, &KIO::Job::result, this, &Core::downloadFinished);
+        }
         if (!group.isEmpty())
             add_to_groups.insert(url, group);
     }
@@ -435,58 +442,34 @@ void Core::downloadFinishedSilently(KJob *job)
         }
 
         if (dir != QString())
-            loadFromData(j->data(), dir, group, true, j->url());
+            loadFromData(j->data(), dir, group, CoreInterface::LoadOption::Silently, j->url());
     }
 }
 
 void Core::loadSilently(const QUrl &url, const QString &group)
 {
-    if (url.scheme() == QLatin1String("magnet")) {
-        MagnetLinkLoadOptions options;
-        options.silently = true;
-        options.group = group;
-        load(bt::MagnetLink(url), options);
-    } else if (url.isLocalFile()) {
-        QString path = url.toLocalFile();
-        QString dir = locationHint(group);
-
-        if (dir != QString())
-            loadFromFile(path, dir, group, true);
-    } else {
-        // download to a random file in tmp
-        KIO::Job *j = KIO::storedGet(url);
-        connect(j, &KIO::Job::result, this, &Core::downloadFinishedSilently);
-        if (!group.isEmpty())
-            add_to_groups.insert(url, group);
-    }
+    return load(url, group, CoreInterface::LoadOption::Silently);
 }
 
-bt::TorrentInterface *Core::load(const QByteArray &data, const QUrl &url, const QString &group, const QString &savedir)
+bt::TorrentInterface *Core::load(const QByteArray &data, const QUrl &url, const QString &group, const QString &savedir, LoadOptions options)
 {
     QString dir;
-    if (savedir.isEmpty() || !bt::Exists(savedir))
+    if (savedir.isEmpty() || !bt::Exists(savedir)) {
         dir = locationHint(group);
-    else
+    } else {
         dir = savedir;
+    }
 
-    if (dir != QString())
-        return loadFromData(data, dir, group, false, url);
-    else
+    if (!dir.isEmpty()) {
+        return loadFromData(data, dir, group, options, url);
+    } else {
         return nullptr;
+    }
 }
 
 bt::TorrentInterface *Core::loadSilently(const QByteArray &data, const QUrl &url, const QString &group, const QString &savedir)
 {
-    QString dir;
-    if (savedir.isEmpty() || !bt::Exists(savedir))
-        dir = locationHint(group);
-    else
-        dir = savedir;
-
-    if (dir != QString())
-        return loadFromData(data, dir, group, true, url);
-    else
-        return nullptr;
+    return load(data, url, group, savedir, LoadOption::Silently);
 }
 
 void Core::start(bt::TorrentInterface *tc)
@@ -1233,11 +1216,11 @@ void Core::onMetadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &d
 
     QUrl url(mlink.toString());
 
-    bt::TorrentInterface *tc = nullptr;
-    if (options.silently)
-        tc = loadSilently(tmp, url, options.group, options.location);
-    else
-        tc = load(tmp, url, options.group, options.location);
+    CoreInterface::LoadOptions loadOptions = CoreInterface::LoadOption::Default;
+    if (options.silently) {
+        loadOptions |= CoreInterface::LoadOption::Silently;
+    }
+    bt::TorrentInterface *tc = load(tmp, url, options.group, options.location, loadOptions);
 
     if (tc && !options.move_on_completion.isEmpty())
         tc->setMoveWhenCompletedDir(options.move_on_completion);

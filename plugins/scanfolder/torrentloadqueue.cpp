@@ -107,10 +107,11 @@ void TorrentLoadQueue::load(const QUrl &url, const QByteArray &data)
     if (ScanFolderPluginSettings::addToGroup())
         group = ScanFolderPluginSettings::group();
 
-    if (ScanFolderPluginSettings::openSilently())
-        core->loadSilently(data, url, group, QString());
-    else
-        core->load(data, url, group, QString());
+    CoreInterface::LoadOptions options = CoreInterface::LoadOption::Default;
+    if (ScanFolderPluginSettings::openSilently()) {
+        options |= CoreInterface::LoadOption::Silently;
+    }
+    core->load(data, url, group, QString(), options);
 
     loadingFinished(url);
 }
@@ -150,6 +151,6 @@ void TorrentLoadQueue::loadingFinished(const QUrl &url)
         break;
     }
 }
-}
+} // namespace kt
 
 #include "moc_torrentloadqueue.cpp"

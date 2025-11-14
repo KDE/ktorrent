@@ -125,13 +125,10 @@ void PasteDialog::accept()
 
     if (url.isValid()) {
         QString group;
-        if (m_groups->currentIndex() > 0)
+        if (m_groups->currentIndex() > 0) {
             group = m_groups->currentText();
-
-        if (m_silently->isChecked())
-            m_core->loadSilently(url, group);
-        else
-            m_core->load(url, group);
+        }
+        m_core->load(url, group, m_silently->isChecked() ? CoreInterface::LoadOption::Silently : CoreInterface::LoadOption::Default);
         QDialog::accept();
     } else {
         KMessageBox::error(this, i18n("Invalid URL: %1", m_url->text()));

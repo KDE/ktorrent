@@ -47,9 +47,15 @@ public:
     bool changePort(bt::Uint16 port) override;
     bt::Uint32 getNumTorrentsRunning() const override;
     bt::Uint32 getNumTorrentsNotRunning() const override;
-    void load(const QUrl &url, const QString &group) override;
-    bt::TorrentInterface *load(const QByteArray &data, const QUrl &url, const QString &group, const QString &savedir) override;
+    void load(const QUrl &url, const QString &group, CoreInterface::LoadOptions options = LoadOption::Default) override;
+    bt::TorrentInterface *load(const QByteArray &data,
+                               const QUrl &url,
+                               const QString &group,
+                               const QString &savedir,
+                               CoreInterface::LoadOptions options = LoadOption::Default) override;
+    [[deprecated]]
     void loadSilently(const QUrl &url, const QString &group) override;
+    [[deprecated]]
     bt::TorrentInterface *loadSilently(const QByteArray &data, const QUrl &url, const QString &group, const QString &savedir) override;
     void load(const bt::MagnetLink &mlink, const MagnetLinkLoadOptions &options) override;
     QString findNewTorrentDir() const override;
@@ -224,8 +230,8 @@ private:
     void startServers();
     void startTCPServer(bt::Uint16 port);
     bool startUTPServer(bt::Uint16 port);
-    bt::TorrentInterface *loadFromFile(const QString &file, const QString &dir, const QString &group, bool silently);
-    bt::TorrentInterface *loadFromData(const QByteArray &data, const QString &dir, const QString &group, bool silently, const QUrl &url);
+    bt::TorrentInterface *loadFromFile(const QString &file, const QString &dir, const QString &group, CoreInterface::LoadOptions options);
+    bt::TorrentInterface *loadFromData(const QByteArray &data, const QString &dir, const QString &group, CoreInterface::LoadOptions options, const QUrl &url);
 
 public:
     void loadTorrents();
