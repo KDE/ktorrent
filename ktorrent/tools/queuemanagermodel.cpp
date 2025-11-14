@@ -466,9 +466,13 @@ void QueueManagerModel::update()
 
 QModelIndex QueueManagerModel::find(const QString &text)
 {
-    beginResetModel();
     search_text = text;
-    endResetModel();
+    const int row_count = rowCount(QModelIndex());
+    const int column_count = columnCount(QModelIndex());
+    if ((row_count < 1) || (column_count < 1)) {
+        return QModelIndex();
+    }
+    Q_EMIT dataChanged(index(0, 0), index(row_count - 1, column_count - 1), {Qt::FontRole});
     if (text.isEmpty()) {
         return QModelIndex();
     }
