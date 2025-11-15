@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-20 00:42+0000\n"
+"POT-Creation-Date: 2025-11-15 00:41+0000\n"
 "PO-Revision-Date: 2025-10-20 09:09+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -64,17 +64,17 @@ msgstr ""
 "torrents següents. Els torrents no estan autoritzats a escriure en els "
 "mateixos fitxers."
 
-#: ktorrent/core.cpp:850
+#: ktorrent/core.cpp:833
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "El KTorrent està treballant amb un o més torrents"
 
-#: ktorrent/core.cpp:935
+#: ktorrent/core.cpp:918
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "No s'ha pogut crear el torrent: %1"
 
-#: ktorrent/core.cpp:1031
+#: ktorrent/core.cpp:1014
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -83,22 +83,22 @@ msgstr ""
 "Un o més volums d'emmagatzematge no estan muntats. Per tal d'iniciar aquest "
 "torrent, han d'estar muntats."
 
-#: ktorrent/core.cpp:1032
+#: ktorrent/core.cpp:1015
 #, kde-format
 msgid "Retry"
 msgstr "Torna a intentar-ho"
 
-#: ktorrent/core.cpp:1038
+#: ktorrent/core.cpp:1021
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "El volum d'emmagatzematge %1 no està muntat"
 
-#: ktorrent/core.cpp:1040
+#: ktorrent/core.cpp:1023
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "Els volums d'emmagatzematge %1 no estan muntats"
 
-#: ktorrent/core.cpp:1051
+#: ktorrent/core.cpp:1034
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -107,22 +107,22 @@ msgstr ""
 "Falten alguns fitxers de dades del torrent «%1». \n"
 "Voleu tornar-los a crear, o no els voleu baixar?"
 
-#: ktorrent/core.cpp:1059 ktorrent/core.cpp:1067 ktorrent/core.cpp:1077
+#: ktorrent/core.cpp:1042 ktorrent/core.cpp:1050 ktorrent/core.cpp:1060
 #, kde-format
 msgid "Data files are missing"
 msgstr "Falten els fitxers de dades"
 
-#: ktorrent/core.cpp:1066
+#: ktorrent/core.cpp:1049
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "No s'han pogut desseleccionar els fitxers que falten: %1"
 
-#: ktorrent/core.cpp:1076
+#: ktorrent/core.cpp:1059
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "No s'han pogut tornar a crear els fitxers que falten: %1"
 
-#: ktorrent/core.cpp:1086
+#: ktorrent/core.cpp:1069
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -131,22 +131,22 @@ msgstr ""
 "Falta el fitxer on s'han desat les dades del torrent «%1».\n"
 "Voleu tornar-lo a crear?"
 
-#: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
+#: ktorrent/core.cpp:1076 ktorrent/core.cpp:1083
 #, kde-format
 msgid "Data file is missing"
 msgstr "Falta el fitxer de dades"
 
-#: ktorrent/core.cpp:1099
+#: ktorrent/core.cpp:1082
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "No s'ha pogut tornar a crear el fitxer de dades: %1"
 
-#: ktorrent/core.cpp:1200
+#: ktorrent/core.cpp:1183
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "Enllaç magnet de bittorrent no vàlid: %1"
 
-#: ktorrent/core.cpp:1203
+#: ktorrent/core.cpp:1186
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
@@ -752,7 +752,7 @@ msgstr ""
 "Comproveu si es pot accedir a l'URL que hi ha a Arranjament → Avançat → URL "
 "de la llista de seguidors."
 
-#: ktorrent/dialogs/pastedialog.cpp:137
+#: ktorrent/dialogs/pastedialog.cpp:134
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
@@ -7028,9 +7028,9 @@ msgid "Scan directories recursively."
 msgstr "Explora els directoris recursivament."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
-#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:142
+#: plugins/scanfolder/torrentloadqueue.cpp:140
+#: plugins/scanfolder/torrentloadqueue.cpp:143
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"

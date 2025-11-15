@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-20 00:42+0000\n"
+"POT-Creation-Date: 2025-11-15 00:41+0000\n"
 "PO-Revision-Date: 2025-11-13 21:49+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -57,39 +57,39 @@ msgstr ""
 "Torrent <b>%1</b> 與以下的 torrent 有一個以上的共同的檔案。但是它們不允許寫入"
 "相同的檔案。"
 
-#: ktorrent/core.cpp:850
+#: ktorrent/core.cpp:833
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "KTorrent 目前正執行一個以上的 torrent"
 
-#: ktorrent/core.cpp:935
+#: ktorrent/core.cpp:918
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "無法建立 torrent: %1 "
 
-#: ktorrent/core.cpp:1031
+#: ktorrent/core.cpp:1014
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
 "they need to be mounted."
 msgstr "有一個以上的儲存裝置未被掛載。要啟動此 torrent，必須先將它們掛載上來。"
 
-#: ktorrent/core.cpp:1032
+#: ktorrent/core.cpp:1015
 #, kde-format
 msgid "Retry"
 msgstr "重試"
 
-#: ktorrent/core.cpp:1038
+#: ktorrent/core.cpp:1021
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "儲存裝置 %1 未掛載"
 
-#: ktorrent/core.cpp:1040
+#: ktorrent/core.cpp:1023
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "這些儲存裝置 %1 未掛載"
 
-#: ktorrent/core.cpp:1051
+#: ktorrent/core.cpp:1034
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -98,22 +98,22 @@ msgstr ""
 "有一些 torrent %1 的資料檔遺失。\n"
 "您要重新建立它們，還是不要再下載了？"
 
-#: ktorrent/core.cpp:1059 ktorrent/core.cpp:1067 ktorrent/core.cpp:1077
+#: ktorrent/core.cpp:1042 ktorrent/core.cpp:1050 ktorrent/core.cpp:1060
 #, kde-format
 msgid "Data files are missing"
 msgstr "資料檔遺失"
 
-#: ktorrent/core.cpp:1066
+#: ktorrent/core.cpp:1049
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "無法取消選擇遺失的檔案：%1"
 
-#: ktorrent/core.cpp:1076
+#: ktorrent/core.cpp:1059
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "無法重建缺少的檔案：%1"
 
-#: ktorrent/core.cpp:1086
+#: ktorrent/core.cpp:1069
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -122,22 +122,22 @@ msgstr ""
 "Torrent %1 儲存的資料檔案已遺失。\n"
 "您要重建它嗎？"
 
-#: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
+#: ktorrent/core.cpp:1076 ktorrent/core.cpp:1083
 #, kde-format
 msgid "Data file is missing"
 msgstr "資料檔已遺失"
 
-#: ktorrent/core.cpp:1099
+#: ktorrent/core.cpp:1082
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "無法重新建立資料檔：%1"
 
-#: ktorrent/core.cpp:1200
+#: ktorrent/core.cpp:1183
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "無效的 magnet bittorrent 連結：%1"
 
-#: ktorrent/core.cpp:1203
+#: ktorrent/core.cpp:1186
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
@@ -718,7 +718,7 @@ msgid ""
 "reachable."
 msgstr "請檢查「設定 → 進階 → Tracker 列表網址」所設定的網址是否可連線。"
 
-#: ktorrent/dialogs/pastedialog.cpp:137
+#: ktorrent/dialogs/pastedialog.cpp:134
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
@@ -6804,9 +6804,9 @@ msgid "Scan directories recursively."
 msgstr "遞迴掃描目錄。"
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
-#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:142
+#: plugins/scanfolder/torrentloadqueue.cpp:140
+#: plugins/scanfolder/torrentloadqueue.cpp:143
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"

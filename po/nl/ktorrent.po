@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-20 00:42+0000\n"
+"POT-Creation-Date: 2025-11-15 00:41+0000\n"
 "PO-Revision-Date: 2025-10-21 00:04+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -61,17 +61,17 @@ msgstr ""
 "volgende torrents. Het is torrents niet toegestaan naar meer dan één bestand "
 "te schrijven."
 
-#: ktorrent/core.cpp:850
+#: ktorrent/core.cpp:833
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "KTorrent draait nu één of meerdere torrents"
 
-#: ktorrent/core.cpp:935
+#: ktorrent/core.cpp:918
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "De torrent %1 kan niet worden aangemaakt."
 
-#: ktorrent/core.cpp:1031
+#: ktorrent/core.cpp:1014
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -80,22 +80,22 @@ msgstr ""
 "Een of meer opslagmedia zijn niet aangekoppeld. Om deze torrent te starten "
 "moeten ze aangekoppeld worden."
 
-#: ktorrent/core.cpp:1032
+#: ktorrent/core.cpp:1015
 #, kde-format
 msgid "Retry"
 msgstr "Opnieuw proberen"
 
-#: ktorrent/core.cpp:1038
+#: ktorrent/core.cpp:1021
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "Opslagvolume %1 is niet aangekoppeld"
 
-#: ktorrent/core.cpp:1040
+#: ktorrent/core.cpp:1023
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "Opslagvolumes %1 zijn niet aangekoppeld"
 
-#: ktorrent/core.cpp:1051
+#: ktorrent/core.cpp:1034
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -104,22 +104,22 @@ msgstr ""
 "Er ontbreken één of meer gegevensbestanden in de torrent \"%1\".\n"
 "Wilt u deze bestanden opnieuw aanmaken, of wilt u deze niet downloaden?"
 
-#: ktorrent/core.cpp:1059 ktorrent/core.cpp:1067 ktorrent/core.cpp:1077
+#: ktorrent/core.cpp:1042 ktorrent/core.cpp:1050 ktorrent/core.cpp:1060
 #, kde-format
 msgid "Data files are missing"
 msgstr "Bestandsgegevens ontbreken"
 
-#: ktorrent/core.cpp:1066
+#: ktorrent/core.cpp:1049
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "Kan geen ontbrekende bestanden deselecteren: %1"
 
-#: ktorrent/core.cpp:1076
+#: ktorrent/core.cpp:1059
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "Kan de ontbrekende bestanden niet opnieuw aanmaken: %1"
 
-#: ktorrent/core.cpp:1086
+#: ktorrent/core.cpp:1069
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -129,22 +129,22 @@ msgstr ""
 "ontbreekt.\n"
 "Wilt u dit bestand opnieuw aanmaken?"
 
-#: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
+#: ktorrent/core.cpp:1076 ktorrent/core.cpp:1083
 #, kde-format
 msgid "Data file is missing"
 msgstr "Bestand ontbreekt"
 
-#: ktorrent/core.cpp:1099
+#: ktorrent/core.cpp:1082
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "Kan het bestand %1 niet opnieuw aanmaken."
 
-#: ktorrent/core.cpp:1200
+#: ktorrent/core.cpp:1183
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "Ongeldige magneet-bittorrent-koppeling: %1"
 
-#: ktorrent/core.cpp:1203
+#: ktorrent/core.cpp:1186
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
@@ -752,7 +752,7 @@ msgstr ""
 "Controleren of de URL in Instellingen → Geavanceerd → URL van trackerlijst "
 "bereikbaar is."
 
-#: ktorrent/dialogs/pastedialog.cpp:137
+#: ktorrent/dialogs/pastedialog.cpp:134
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
@@ -7049,9 +7049,9 @@ msgid "Scan directories recursively."
 msgstr "Mappen recursief scannen."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
-#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:142
+#: plugins/scanfolder/torrentloadqueue.cpp:140
+#: plugins/scanfolder/torrentloadqueue.cpp:143
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"

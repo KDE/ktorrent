@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-20 00:42+0000\n"
+"POT-Creation-Date: 2025-11-15 00:41+0000\n"
 "PO-Revision-Date: 2025-11-11 18:47+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -64,17 +64,17 @@ msgstr ""
 "Atverot torentu<b>%1</b>, tas dalītos ar vienu vai vairākām datnēm ar šiem "
 "torentiem. Torentiem nav atļauts rakstīt vienā un tajā pašā datnē. "
 
-#: ktorrent/core.cpp:850
+#: ktorrent/core.cpp:833
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "„KTorrent“ ir aktīvs viens vai vairāki torenti"
 
-#: ktorrent/core.cpp:935
+#: ktorrent/core.cpp:918
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "Nevar izveidot torentu: %1"
 
-#: ktorrent/core.cpp:1031
+#: ktorrent/core.cpp:1014
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -83,22 +83,22 @@ msgstr ""
 "Nav piemontēts viens vai vairāki krātuves sējumi. Lai sāktu šo torenti, tie "
 "ir jāpiemontē."
 
-#: ktorrent/core.cpp:1032
+#: ktorrent/core.cpp:1015
 #, kde-format
 msgid "Retry"
 msgstr "Mēģināt vēlreiz"
 
-#: ktorrent/core.cpp:1038
+#: ktorrent/core.cpp:1021
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "Krātuves sējums „%1“ nav piemontēts"
 
-#: ktorrent/core.cpp:1040
+#: ktorrent/core.cpp:1023
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "Krātuves sējumi „%1“ nav piemontēti"
 
-#: ktorrent/core.cpp:1051
+#: ktorrent/core.cpp:1034
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -107,22 +107,22 @@ msgstr ""
 "Trūkst vairāku torentā „%1“ norādīto datņu. \n"
 "Vai vēlaties tās izveidot no jauna, vai arī nelejupielādēt?"
 
-#: ktorrent/core.cpp:1059 ktorrent/core.cpp:1067 ktorrent/core.cpp:1077
+#: ktorrent/core.cpp:1042 ktorrent/core.cpp:1050 ktorrent/core.cpp:1060
 #, kde-format
 msgid "Data files are missing"
 msgstr "Trūkst datņu"
 
-#: ktorrent/core.cpp:1066
+#: ktorrent/core.cpp:1049
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "Neizdodas noņemt trūkstošās datnes: %1"
 
-#: ktorrent/core.cpp:1076
+#: ktorrent/core.cpp:1059
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "Neizdodas no jauna izveidot trūkstošās datnes: %1"
 
-#: ktorrent/core.cpp:1086
+#: ktorrent/core.cpp:1069
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -131,22 +131,22 @@ msgstr ""
 "Datne, kurā ir saglabāti torenta „%1“ dati, ir pazudusi. \n"
 "Vai vēlaties to atjaunot?"
 
-#: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
+#: ktorrent/core.cpp:1076 ktorrent/core.cpp:1083
 #, kde-format
 msgid "Data file is missing"
 msgstr "Pazudusi datne"
 
-#: ktorrent/core.cpp:1099
+#: ktorrent/core.cpp:1082
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "Neizdodas izveidot datni: %1"
 
-#: ktorrent/core.cpp:1200
+#: ktorrent/core.cpp:1183
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "Nederīga „Magnet“ torenta saite: %1"
 
-#: ktorrent/core.cpp:1203
+#: ktorrent/core.cpp:1186
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
@@ -741,7 +741,7 @@ msgstr ""
 "Pārbaudiet, vai ir sasniedzama adrese, kas ir norādīta „Iestatījumi“ → "
 "„Paplašināti“ → „Sekotāju saraksts“."
 
-#: ktorrent/dialogs/pastedialog.cpp:137
+#: ktorrent/dialogs/pastedialog.cpp:134
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
@@ -6949,9 +6949,9 @@ msgid "Scan directories recursively."
 msgstr "Skenēt mapes rekursīvi."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
-#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:142
+#: plugins/scanfolder/torrentloadqueue.cpp:140
+#: plugins/scanfolder/torrentloadqueue.cpp:143
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"

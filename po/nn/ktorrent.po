@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-20 00:42+0000\n"
+"POT-Creation-Date: 2025-11-15 00:41+0000\n"
 "PO-Revision-Date: 2025-05-03 11:36+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -57,17 +57,17 @@ msgstr ""
 "Torrenten <b>%1</b> vil bruka ein eller fleire filer som òg vert brukt av "
 "følgjande torrentar. Torrentar kan ikkje skriva til dei same filene."
 
-#: ktorrent/core.cpp:850
+#: ktorrent/core.cpp:833
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "KTorrent køyrer éin eller fleire torrentar"
 
-#: ktorrent/core.cpp:935
+#: ktorrent/core.cpp:918
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "Klarte ikkje laga torrent: %1"
 
-#: ktorrent/core.cpp:1031
+#: ktorrent/core.cpp:1014
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -76,23 +76,23 @@ msgstr ""
 "Eit eller fleire lagringsområde er ikkje montert. Du må montera dei for å "
 "starta denne torrenten."
 
-#: ktorrent/core.cpp:1032
+#: ktorrent/core.cpp:1015
 #, kde-format
 msgid "Retry"
 msgstr "Prøv på nytt"
 
 # «Monterte» eller «montert»? Er «monterte» eit adjektiv her?
-#: ktorrent/core.cpp:1038
+#: ktorrent/core.cpp:1021
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "Lagringsområdet %1 er ikkje montert"
 
-#: ktorrent/core.cpp:1040
+#: ktorrent/core.cpp:1023
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "Lagringsområda %1 er ikkje monterte"
 
-#: ktorrent/core.cpp:1051
+#: ktorrent/core.cpp:1034
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -101,22 +101,22 @@ msgstr ""
 "Manglar fleire datafiler til torrenten «%1».\n"
 "Ønskjer du byggja dei opp på nytt, eller vil du ikkje lasta dei ned?"
 
-#: ktorrent/core.cpp:1059 ktorrent/core.cpp:1067 ktorrent/core.cpp:1077
+#: ktorrent/core.cpp:1042 ktorrent/core.cpp:1050 ktorrent/core.cpp:1060
 #, kde-format
 msgid "Data files are missing"
 msgstr "Manglar datafiler"
 
-#: ktorrent/core.cpp:1066
+#: ktorrent/core.cpp:1049
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "Kan ikkje fjerna merking frå manglande filer: %1"
 
-#: ktorrent/core.cpp:1076
+#: ktorrent/core.cpp:1059
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "Kan ikkje byggja opp att manglande filer: %1"
 
-#: ktorrent/core.cpp:1086
+#: ktorrent/core.cpp:1069
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -125,22 +125,22 @@ msgstr ""
 "Fila som inneheld data for torrenten «%1» manglar.\n"
 "Vil du byggja ho opp att?"
 
-#: ktorrent/core.cpp:1093 ktorrent/core.cpp:1100
+#: ktorrent/core.cpp:1076 ktorrent/core.cpp:1083
 #, kde-format
 msgid "Data file is missing"
 msgstr "Manglar datafil"
 
-#: ktorrent/core.cpp:1099
+#: ktorrent/core.cpp:1082
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "Kan ikkje byggja opp att datafil: %1"
 
-#: ktorrent/core.cpp:1200
+#: ktorrent/core.cpp:1183
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "Ugyldig magnet-lenkje: %1"
 
-#: ktorrent/core.cpp:1203
+#: ktorrent/core.cpp:1186
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
@@ -740,7 +740,7 @@ msgid ""
 "reachable."
 msgstr ""
 
-#: ktorrent/dialogs/pastedialog.cpp:137
+#: ktorrent/dialogs/pastedialog.cpp:134
 #: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
 #, kde-format
 msgid "Invalid URL: %1"
@@ -6860,9 +6860,9 @@ msgid "Scan directories recursively."
 msgstr "Søk òg gjennom undermapper."
 
 #: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
-#: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:142
+#: plugins/scanfolder/torrentloadqueue.cpp:140
+#: plugins/scanfolder/torrentloadqueue.cpp:143
 #, kde-format
 msgctxt "folder name part"
 msgid "loaded"
