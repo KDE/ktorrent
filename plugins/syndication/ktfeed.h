@@ -7,6 +7,7 @@
 #ifndef KTFEED_H
 #define KTFEED_H
 
+#include <QDateTime>
 #include <QMap>
 #include <QSet>
 #include <QTimer>
@@ -110,6 +111,9 @@ public:
         return status;
     }
 
+    /// Get the time at which the feed last successfully downloaded
+    QDateTime getLastUpdated() const;
+
     /// Get the tile of the feed
     QString title() const;
 
@@ -195,6 +199,7 @@ private:
     QString dir;
     QTimer update_timer;
     Status status;
+    QDateTime last_successful_update;
     QList<Filter *> filters;
     QSet<QString> loaded;
     QMap<Filter *, QList<SeasonEpisodeItem>> downloaded_se_items;

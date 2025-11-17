@@ -71,6 +71,11 @@ void Feed::parseUrl(const QString &feed_url)
         url = QUrl(feed_url);
 }
 
+QDateTime Feed::getLastUpdated() const
+{
+    return last_successful_update;
+}
+
 void Feed::save()
 {
     QString file = dir + QStringLiteral("info");
@@ -207,6 +212,7 @@ void Feed::loadingComplete(Syndication::Loader *loader, Syndication::FeedPtr fee
     this->feed = feed;
     update_timer.start(refresh_rate * 60 * 1000);
     this->status = OK;
+    this->last_successful_update = QDateTime::currentDateTime();
 
     // refresh cache of feed_items_ids
     feed_items_id.clear();

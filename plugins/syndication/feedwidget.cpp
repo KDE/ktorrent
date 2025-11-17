@@ -218,6 +218,9 @@ void FeedWidget::updated()
     switch (feed->feedStatus()) {
     case Feed::OK:
         m_status->setText(i18n("<b>OK</b>"));
+        m_feed_last_updated->setText(ki18nc("@info:label, %1 is the date-time an RSS feed was updated", "Last Updated:\n%1")
+                                         .subs(QLocale().toString(feed->getLastUpdated(), QLocale::ShortFormat))
+                                         .toString());
         break;
     case Feed::UNLOADED:
         m_status->setText(i18n("<b>Not Loaded</b>"));
