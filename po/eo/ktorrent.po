@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-18 00:43+0000\n"
 "PO-Revision-Date: 2025-03-15 10:38+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -6559,7 +6559,7 @@ msgid "All"
 msgstr "Ĉiuj"
 
 #: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:466
+#: plugins/syndication/ktfeed.cpp:472
 #, kde-format
 msgid "None"
 msgstr "Neniu"
@@ -8391,17 +8391,26 @@ msgstr "Enigi la novan aŭtentikigkuketon"
 msgid "<b>OK</b>"
 msgstr "<b>Bone</b>"
 
-#: plugins/syndication/feedwidget.cpp:223
+#: plugins/syndication/feedwidget.cpp:221
+#, fuzzy, kde-format
+#| msgid "Last updated:"
+msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
+msgid ""
+"Last Updated:\n"
+"%1"
+msgstr "Laste ĝisdatigita:"
+
+#: plugins/syndication/feedwidget.cpp:226
 #, kde-format
 msgid "<b>Not Loaded</b>"
 msgstr "<b>Ne Ŝargita</b>"
 
-#: plugins/syndication/feedwidget.cpp:226
+#: plugins/syndication/feedwidget.cpp:229
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
 msgstr "<b>Elŝuto malsukcesis: %1</b>"
 
-#: plugins/syndication/feedwidget.cpp:229
+#: plugins/syndication/feedwidget.cpp:232
 #, kde-format
 msgid "<b>Downloading</b>"
 msgstr "<b>Elŝuto</b>"
@@ -8418,32 +8427,38 @@ msgstr "Stato:"
 msgid "Active Filters:"
 msgstr "Aktivaj Filtriloj:"
 
-#. i18n: ectx: property (text), widget (QLabel, label_3)
+#. i18n: ectx: property (text), widget (QLabel, label_refresh_rate)
 #: plugins/syndication/feedwidget.ui:131
 #, kde-format
 msgid "Refresh every:"
 msgstr "Refreŝigi ĉiun:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, m_refresh_rate)
-#: plugins/syndication/feedwidget.ui:138
+#: plugins/syndication/feedwidget.ui:141
 #, kde-format
 msgid "Time between automatic refreshes of the feed."
 msgstr "Tempo inter aŭtomataj refreŝigoj de la feed."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_refresh_rate)
-#: plugins/syndication/feedwidget.ui:141
+#: plugins/syndication/feedwidget.ui:144
 #, kde-format
 msgid " minutes"
 msgstr " minutoj"
 
+#. i18n: ectx: property (toolTip), widget (QLabel, m_feed_last_updated)
+#: plugins/syndication/feedwidget.ui:160
+#, kde-format
+msgid "Last successful update of the selected feed"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
-#: plugins/syndication/feedwidget.ui:170
+#: plugins/syndication/feedwidget.ui:183
 #, kde-format
 msgid "Cookies"
 msgstr "Kuketoj"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_filters)
-#: plugins/syndication/feedwidget.ui:177
+#: plugins/syndication/feedwidget.ui:190
 #, kde-format
 msgid "Filters"
 msgstr "Filtrilo"
@@ -8744,37 +8759,37 @@ msgstr "Testo"
 msgid "filter on feed:"
 msgstr "filtrilo sur feed:"
 
-#: plugins/syndication/ktfeed.cpp:443
+#: plugins/syndication/ktfeed.cpp:449
 #, kde-format
 msgid "Aborted"
 msgstr "Abortita"
 
-#: plugins/syndication/ktfeed.cpp:445
+#: plugins/syndication/ktfeed.cpp:451
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "Temp-elĉerpo dum elŝuto de fluo"
 
-#: plugins/syndication/ktfeed.cpp:447
+#: plugins/syndication/ktfeed.cpp:453
 #, kde-format
 msgid "Unknown hostname"
 msgstr "Nekonata gastiga nomo"
 
-#: plugins/syndication/ktfeed.cpp:449
+#: plugins/syndication/ktfeed.cpp:455
 #, kde-format
 msgid "File not found"
 msgstr "Dosiero ne trovita"
 
-#: plugins/syndication/ktfeed.cpp:451
+#: plugins/syndication/ktfeed.cpp:457
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "Eraro de Nekonata Retriever"
 
-#: plugins/syndication/ktfeed.cpp:455
+#: plugins/syndication/ktfeed.cpp:461
 #, kde-format
 msgid "Invalid feed data"
 msgstr "Nevalidaj nutraĵdatenoj"
 
-#: plugins/syndication/ktfeed.cpp:457
+#: plugins/syndication/ktfeed.cpp:463
 #, kde-format
 msgid "Success"
 msgstr "Sukceso"

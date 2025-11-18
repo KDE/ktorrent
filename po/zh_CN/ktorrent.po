@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-18 00:43+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -6348,7 +6348,7 @@ msgid "All"
 msgstr "全部"
 
 #: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:466
+#: plugins/syndication/ktfeed.cpp:472
 #, kde-format
 msgid "None"
 msgstr "无"
@@ -8138,17 +8138,26 @@ msgstr "输入新认证 Cookie"
 msgid "<b>OK</b>"
 msgstr "<b>确定</b>"
 
-#: plugins/syndication/feedwidget.cpp:223
+#: plugins/syndication/feedwidget.cpp:221
+#, fuzzy, kde-format
+#| msgid "Last updated:"
+msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
+msgid ""
+"Last Updated:\n"
+"%1"
+msgstr "上次更新于："
+
+#: plugins/syndication/feedwidget.cpp:226
 #, kde-format
 msgid "<b>Not Loaded</b>"
 msgstr "<b>未加载</b>"
 
-#: plugins/syndication/feedwidget.cpp:226
+#: plugins/syndication/feedwidget.cpp:229
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
 msgstr "<b>下载失败：%1</b>"
 
-#: plugins/syndication/feedwidget.cpp:229
+#: plugins/syndication/feedwidget.cpp:232
 #, kde-format
 msgid "<b>Downloading</b>"
 msgstr "<b>正在下载</b>"
@@ -8165,32 +8174,38 @@ msgstr "状态："
 msgid "Active Filters:"
 msgstr "活动过滤器："
 
-#. i18n: ectx: property (text), widget (QLabel, label_3)
+#. i18n: ectx: property (text), widget (QLabel, label_refresh_rate)
 #: plugins/syndication/feedwidget.ui:131
 #, kde-format
 msgid "Refresh every:"
 msgstr "刷新间隔："
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, m_refresh_rate)
-#: plugins/syndication/feedwidget.ui:138
+#: plugins/syndication/feedwidget.ui:141
 #, kde-format
 msgid "Time between automatic refreshes of the feed."
 msgstr "订阅的自动刷新间隔。"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_refresh_rate)
-#: plugins/syndication/feedwidget.ui:141
+#: plugins/syndication/feedwidget.ui:144
 #, kde-format
 msgid " minutes"
 msgstr " 分钟"
 
+#. i18n: ectx: property (toolTip), widget (QLabel, m_feed_last_updated)
+#: plugins/syndication/feedwidget.ui:160
+#, kde-format
+msgid "Last successful update of the selected feed"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
-#: plugins/syndication/feedwidget.ui:170
+#: plugins/syndication/feedwidget.ui:183
 #, kde-format
 msgid "Cookies"
 msgstr "Cookie"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_filters)
-#: plugins/syndication/feedwidget.ui:177
+#: plugins/syndication/feedwidget.ui:190
 #, kde-format
 msgid "Filters"
 msgstr "过滤器"
@@ -8485,37 +8500,37 @@ msgstr "测试"
 msgid "filter on feed:"
 msgstr "订阅过滤："
 
-#: plugins/syndication/ktfeed.cpp:443
+#: plugins/syndication/ktfeed.cpp:449
 #, kde-format
 msgid "Aborted"
 msgstr "已中止"
 
-#: plugins/syndication/ktfeed.cpp:445
+#: plugins/syndication/ktfeed.cpp:451
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "下载订阅时的超时"
 
-#: plugins/syndication/ktfeed.cpp:447
+#: plugins/syndication/ktfeed.cpp:453
 #, kde-format
 msgid "Unknown hostname"
 msgstr "未知主机名"
 
-#: plugins/syndication/ktfeed.cpp:449
+#: plugins/syndication/ktfeed.cpp:455
 #, kde-format
 msgid "File not found"
 msgstr "未找到文件"
 
-#: plugins/syndication/ktfeed.cpp:451
+#: plugins/syndication/ktfeed.cpp:457
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "未知的获取器错误"
 
-#: plugins/syndication/ktfeed.cpp:455
+#: plugins/syndication/ktfeed.cpp:461
 #, kde-format
 msgid "Invalid feed data"
 msgstr "无效的订阅数据"
 
-#: plugins/syndication/ktfeed.cpp:457
+#: plugins/syndication/ktfeed.cpp:463
 #, kde-format
 msgid "Success"
 msgstr "成功"

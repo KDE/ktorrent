@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-18 00:43+0000\n"
 "PO-Revision-Date: 2012-07-04 08:46+0700\n"
 "Last-Translator: Sophea <sophea@khmeros.info>\n"
 "Language-Team: Khmer <>\n"
@@ -6529,7 +6529,7 @@ msgid "All"
 msgstr "ទាំង​អស់"
 
 #: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:466
+#: plugins/syndication/ktfeed.cpp:472
 #, kde-format
 msgid "None"
 msgstr "គ្មាន"
@@ -8402,17 +8402,26 @@ msgstr "បញ្ចូល​ខូគី​ផ្ទៀងផ្ទាត់​
 msgid "<b>OK</b>"
 msgstr "<b>យល់ព្រម</b>"
 
-#: plugins/syndication/feedwidget.cpp:223
+#: plugins/syndication/feedwidget.cpp:221
+#, fuzzy, kde-format
+#| msgid "Last updated:"
+msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
+msgid ""
+"Last Updated:\n"
+"%1"
+msgstr "បាន​ធ្វើ​បច្ចុប្បន្នភាព​ចុងក្រោយ ៖​"
+
+#: plugins/syndication/feedwidget.cpp:226
 #, kde-format
 msgid "<b>Not Loaded</b>"
 msgstr "<b>មិន​បាន​ផ្ទុក​ឡើង</b>"
 
-#: plugins/syndication/feedwidget.cpp:226
+#: plugins/syndication/feedwidget.cpp:229
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
 msgstr "<b>បាន​បរាជ័យ​ក្នុង​ការ​ទាញ​យក ៖ %1</b>"
 
-#: plugins/syndication/feedwidget.cpp:229
+#: plugins/syndication/feedwidget.cpp:232
 #, kde-format
 msgid "<b>Downloading</b>"
 msgstr "<b>ការ​ទាញយក</b>"
@@ -8430,32 +8439,38 @@ msgstr "ស្ថាន​ភាព ៖"
 msgid "Active Filters:"
 msgstr "តម្រង​សកម្ម ៖"
 
-#. i18n: ectx: property (text), widget (QLabel, label_3)
+#. i18n: ectx: property (text), widget (QLabel, label_refresh_rate)
 #: plugins/syndication/feedwidget.ui:131
 #, kde-format
 msgid "Refresh every:"
 msgstr "ធ្វើ​ឲ្យ​ស្រស់​រៀងរាល់ ៖"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, m_refresh_rate)
-#: plugins/syndication/feedwidget.ui:138
+#: plugins/syndication/feedwidget.ui:141
 #, kde-format
 msgid "Time between automatic refreshes of the feed."
 msgstr "រយៈពេល​រវាង​ការ​ធ្វើ​ឲ្យ​ស្រស់​ដោយ​ស្វ័យប្រវត្តិ​នៃ​មតិ​ព័ត៌មាន ។"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_refresh_rate)
-#: plugins/syndication/feedwidget.ui:141
+#: plugins/syndication/feedwidget.ui:144
 #, kde-format
 msgid " minutes"
 msgstr " នាទី"
 
+#. i18n: ectx: property (toolTip), widget (QLabel, m_feed_last_updated)
+#: plugins/syndication/feedwidget.ui:160
+#, kde-format
+msgid "Last successful update of the selected feed"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
-#: plugins/syndication/feedwidget.ui:170
+#: plugins/syndication/feedwidget.ui:183
 #, kde-format
 msgid "Cookies"
 msgstr "ខូគី"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_filters)
-#: plugins/syndication/feedwidget.ui:177
+#: plugins/syndication/feedwidget.ui:190
 #, kde-format
 msgid "Filters"
 msgstr "តម្រង"
@@ -8756,37 +8771,37 @@ msgstr "សាកល្បង"
 msgid "filter on feed:"
 msgstr "តម្រង​នៅ​លើ​មតិព័ត៌មាន ៖"
 
-#: plugins/syndication/ktfeed.cpp:443
+#: plugins/syndication/ktfeed.cpp:449
 #, kde-format
 msgid "Aborted"
 msgstr "បាន​បោះបង់"
 
-#: plugins/syndication/ktfeed.cpp:445
+#: plugins/syndication/ktfeed.cpp:451
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "អស់​ពេលវេលា នៅ​ពេល​ទាញ​យក​មតិ​ព័ត៌មាន"
 
-#: plugins/syndication/ktfeed.cpp:447
+#: plugins/syndication/ktfeed.cpp:453
 #, kde-format
 msgid "Unknown hostname"
 msgstr "មិន​ស្គាល់​ឈ្មោះ​ម៉ាស៊ីន​"
 
-#: plugins/syndication/ktfeed.cpp:449
+#: plugins/syndication/ktfeed.cpp:455
 #, kde-format
 msgid "File not found"
 msgstr "រក​មិន​ឃើញ​ឯកសារ"
 
-#: plugins/syndication/ktfeed.cpp:451
+#: plugins/syndication/ktfeed.cpp:457
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "កំហុស​មិន​ស្គាល់​កម្មវិធី​យក"
 
-#: plugins/syndication/ktfeed.cpp:455
+#: plugins/syndication/ktfeed.cpp:461
 #, kde-format
 msgid "Invalid feed data"
 msgstr "ទិន្នន័យ​មតិ​ព័ត៌មាន​មិន​ត្រឹមត្រូវ"
 
-#: plugins/syndication/ktfeed.cpp:457
+#: plugins/syndication/ktfeed.cpp:463
 #, kde-format
 msgid "Success"
 msgstr "ជោគ​ជ័យ"

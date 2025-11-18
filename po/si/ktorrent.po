@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-18 00:43+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -6422,7 +6422,7 @@ msgid "All"
 msgstr "සියලු"
 
 #: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:466
+#: plugins/syndication/ktfeed.cpp:472
 #, kde-format
 msgid "None"
 msgstr "කිසිවක් නැත"
@@ -8265,17 +8265,26 @@ msgstr "නව අවසරදීම් කුකී ඇතුළත් කර�
 msgid "<b>OK</b>"
 msgstr "<b>හරි</b>"
 
-#: plugins/syndication/feedwidget.cpp:223
+#: plugins/syndication/feedwidget.cpp:221
+#, fuzzy, kde-format
+#| msgid "Last updated:"
+msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
+msgid ""
+"Last Updated:\n"
+"%1"
+msgstr "අවසන් යාවත්:"
+
+#: plugins/syndication/feedwidget.cpp:226
 #, kde-format
 msgid "<b>Not Loaded</b>"
 msgstr "<b>පූර්ණය නොවූ</b>"
 
-#: plugins/syndication/feedwidget.cpp:226
+#: plugins/syndication/feedwidget.cpp:229
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
 msgstr "<b>බාගැනීම අසාර්ථකයි: %1</b>"
 
-#: plugins/syndication/feedwidget.cpp:229
+#: plugins/syndication/feedwidget.cpp:232
 #, kde-format
 msgid "<b>Downloading</b>"
 msgstr "<b>බාගනිමින්</b>"
@@ -8293,32 +8302,38 @@ msgstr "තත්වය:"
 msgid "Active Filters:"
 msgstr "පෙරහන් සක්‍රීය:"
 
-#. i18n: ectx: property (text), widget (QLabel, label_3)
+#. i18n: ectx: property (text), widget (QLabel, label_refresh_rate)
 #: plugins/syndication/feedwidget.ui:131
 #, kde-format
 msgid "Refresh every:"
 msgstr "වරකම නැවුම්:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, m_refresh_rate)
-#: plugins/syndication/feedwidget.ui:138
+#: plugins/syndication/feedwidget.ui:141
 #, kde-format
 msgid "Time between automatic refreshes of the feed."
 msgstr "පෝශකයේ ස්වයංක්‍රීය නැවුම්කරණ අතර කාලය."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_refresh_rate)
-#: plugins/syndication/feedwidget.ui:141
+#: plugins/syndication/feedwidget.ui:144
 #, kde-format
 msgid " minutes"
 msgstr " මිනිත්තු"
 
+#. i18n: ectx: property (toolTip), widget (QLabel, m_feed_last_updated)
+#: plugins/syndication/feedwidget.ui:160
+#, kde-format
+msgid "Last successful update of the selected feed"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
-#: plugins/syndication/feedwidget.ui:170
+#: plugins/syndication/feedwidget.ui:183
 #, kde-format
 msgid "Cookies"
 msgstr "කුකී"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_filters)
-#: plugins/syndication/feedwidget.ui:177
+#: plugins/syndication/feedwidget.ui:190
 #, kde-format
 msgid "Filters"
 msgstr "පෙරහන්"
@@ -8551,37 +8566,37 @@ msgstr "පිරික්සුම"
 msgid "filter on feed:"
 msgstr "පෝශක මත පෙරහන:"
 
-#: plugins/syndication/ktfeed.cpp:443
+#: plugins/syndication/ktfeed.cpp:449
 #, kde-format
 msgid "Aborted"
 msgstr "පිටවූ"
 
-#: plugins/syndication/ktfeed.cpp:445
+#: plugins/syndication/ktfeed.cpp:451
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "පෝශකය බාගැනීමේ කල් ඉකුත්වීම"
 
-#: plugins/syndication/ktfeed.cpp:447
+#: plugins/syndication/ktfeed.cpp:453
 #, kde-format
 msgid "Unknown hostname"
 msgstr "නොදන්නා ධාරක නාමයක්"
 
-#: plugins/syndication/ktfeed.cpp:449
+#: plugins/syndication/ktfeed.cpp:455
 #, kde-format
 msgid "File not found"
 msgstr "ගොනුව හමු නොවිනි"
 
-#: plugins/syndication/ktfeed.cpp:451
+#: plugins/syndication/ktfeed.cpp:457
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "නොදන්නා නැවත ලබාගැනීමේ දෝශයක්"
 
-#: plugins/syndication/ktfeed.cpp:455
+#: plugins/syndication/ktfeed.cpp:461
 #, kde-format
 msgid "Invalid feed data"
 msgstr "වැරදි පෝශක දත්ත"
 
-#: plugins/syndication/ktfeed.cpp:457
+#: plugins/syndication/ktfeed.cpp:463
 #, kde-format
 msgid "Success"
 msgstr "සාර්ථකයි"
