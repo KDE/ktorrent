@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-18 00:43+0000\n"
-"PO-Revision-Date: 2025-10-20 17:10+0300\n"
+"PO-Revision-Date: 2025-11-18 09:55+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -8428,13 +8428,14 @@ msgid "<b>OK</b>"
 msgstr "<b>Гаразд</b>"
 
 #: plugins/syndication/feedwidget.cpp:221
-#, fuzzy, kde-format
-#| msgid "Last updated:"
+#, kde-format
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
 msgid ""
 "Last Updated:\n"
 "%1"
-msgstr "Останнє оновлення:"
+msgstr ""
+"Останнє оновлення:\n"
+"%1"
 
 #: plugins/syndication/feedwidget.cpp:226
 #, kde-format
@@ -8485,7 +8486,7 @@ msgstr " хвилин"
 #: plugins/syndication/feedwidget.ui:160
 #, kde-format
 msgid "Last successful update of the selected feed"
-msgstr ""
+msgstr "Останнє успішне оновлення позначеної подачі"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
 #: plugins/syndication/feedwidget.ui:183

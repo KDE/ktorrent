@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-18 00:43+0000\n"
-"PO-Revision-Date: 2025-10-20 13:12+0300\n"
+"PO-Revision-Date: 2025-11-18 08:33+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -8227,13 +8227,14 @@ msgid "<b>OK</b>"
 msgstr "<b>בסדר</b>"
 
 #: plugins/syndication/feedwidget.cpp:221
-#, fuzzy, kde-format
-#| msgid "Last updated:"
+#, kde-format
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
 msgid ""
 "Last Updated:\n"
 "%1"
-msgstr "עדכון אחרון:"
+msgstr ""
+"עדכון אחרון:\n"
+"%1"
 
 #: plugins/syndication/feedwidget.cpp:226
 #, kde-format
@@ -8284,7 +8285,7 @@ msgstr " דקות"
 #: plugins/syndication/feedwidget.ui:160
 #, kde-format
 msgid "Last successful update of the selected feed"
-msgstr ""
+msgstr "העדכון המוצלח האחרון של הערוץ הנבחר"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
 #: plugins/syndication/feedwidget.ui:183

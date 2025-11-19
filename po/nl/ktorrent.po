@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-18 00:43+0000\n"
-"PO-Revision-Date: 2025-10-21 00:04+0200\n"
+"PO-Revision-Date: 2025-11-19 00:28+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 25.08.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -8417,13 +8417,14 @@ msgid "<b>OK</b>"
 msgstr "<b>OK</b>"
 
 #: plugins/syndication/feedwidget.cpp:221
-#, fuzzy, kde-format
-#| msgid "Last updated:"
+#, kde-format
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
 msgid ""
 "Last Updated:\n"
 "%1"
-msgstr "Laatste bijwerking:"
+msgstr ""
+"Laatste bijgewerkt:\n"
+"%1"
 
 #: plugins/syndication/feedwidget.cpp:226
 #, kde-format
@@ -8474,7 +8475,7 @@ msgstr " minuten"
 #: plugins/syndication/feedwidget.ui:160
 #, kde-format
 msgid "Last successful update of the selected feed"
-msgstr ""
+msgstr "Laatst met succes bijgewerkt uit de geselecteerde feed"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
 #: plugins/syndication/feedwidget.ui:183
