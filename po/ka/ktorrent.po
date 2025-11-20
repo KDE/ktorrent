@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-18 00:43+0000\n"
-"PO-Revision-Date: 2025-10-20 06:13+0200\n"
+"PO-Revision-Date: 2025-11-19 05:35+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -8338,13 +8338,14 @@ msgid "<b>OK</b>"
 msgstr "<b>თარიღი</b>"
 
 #: plugins/syndication/feedwidget.cpp:221
-#, fuzzy, kde-format
-#| msgid "Last updated:"
+#, kde-format
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
 msgid ""
 "Last Updated:\n"
 "%1"
-msgstr "ბოლო განახლება:"
+msgstr ""
+"ბოლო განახლება:\n"
+"%1"
 
 #: plugins/syndication/feedwidget.cpp:226
 #, kde-format
@@ -8395,7 +8396,7 @@ msgstr " წუთი"
 #: plugins/syndication/feedwidget.ui:160
 #, kde-format
 msgid "Last successful update of the selected feed"
-msgstr ""
+msgstr "მონიშნული ლენტის ბოლო წარმატებული განახლება"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
 #: plugins/syndication/feedwidget.ui:183

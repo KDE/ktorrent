@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-18 00:43+0000\n"
-"PO-Revision-Date: 2025-10-23 09:04+0400\n"
+"PO-Revision-Date: 2025-11-19 20:44+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -8269,13 +8269,14 @@ msgid "<b>OK</b>"
 msgstr "<b>حسنًا</b>"
 
 #: plugins/syndication/feedwidget.cpp:221
-#, fuzzy, kde-format
-#| msgid "Last updated:"
+#, kde-format
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
 msgid ""
 "Last Updated:\n"
 "%1"
-msgstr "آخر تحديث:"
+msgstr ""
+"آخر تحديث:\n"
+"%1"
 
 #: plugins/syndication/feedwidget.cpp:226
 #, kde-format
@@ -8326,7 +8327,7 @@ msgstr " د"
 #: plugins/syndication/feedwidget.ui:160
 #, kde-format
 msgid "Last successful update of the selected feed"
-msgstr ""
+msgstr "آخر تحديث ناجح للتغذية المحددة"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
 #: plugins/syndication/feedwidget.ui:183
