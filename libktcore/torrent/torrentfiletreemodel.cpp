@@ -716,7 +716,7 @@ void TorrentFileTreeModel::loadExpandedState(QSortFilterProxyModel *pm, QTreeVie
         return;
     }
 
-    BDecoder dec(state, false, 0);
+    BDecoder dec(state, false);
     try {
         const std::unique_ptr<BDictNode> dict = dec.decodeDict();
         if (dict) {

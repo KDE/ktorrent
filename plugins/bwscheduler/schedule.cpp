@@ -117,7 +117,7 @@ void Schedule::load(const QString &file)
     }
 
     QByteArray data = fptr.readAll();
-    BDecoder dec(data, false, 0);
+    BDecoder dec(data, false);
     std::unique_ptr<BNode> node = nullptr;
     try {
         node = dec.decode();

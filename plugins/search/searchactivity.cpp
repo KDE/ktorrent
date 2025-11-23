@@ -126,7 +126,7 @@ void SearchActivity::loadCurrentSearches()
     }
 
     QByteArray data = fptr.readAll();
-    bt::BDecoder dec(data, false, 0);
+    bt::BDecoder dec(data, false);
     try {
         const std::unique_ptr<bt::BListNode> search_list = dec.decodeList();
         if (!search_list) {

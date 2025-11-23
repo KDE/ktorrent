@@ -372,7 +372,7 @@ void MagnetManager::loadMagnets(const QString &file)
         return;
     }
 
-    BDecoder decoder(magnet_data, 0, false);
+    BDecoder decoder(magnet_data, false);
     try {
         const std::unique_ptr<BListNode> node = decoder.decodeList();
         if (!node) {
