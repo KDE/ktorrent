@@ -183,7 +183,7 @@ void VideoWidget::inhibitScreenSaver(bool on)
         QString msg = i18n("KTorrent is playing a video.");
         auto pendingReply = screensaver.Inhibit(QStringLiteral("ktorrent"), msg);
         auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
-        connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+        connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *callWatcher) {
             QDBusPendingReply<quint32> reply = *callWatcher;
             if (reply.isValid()) {
                 screensaver_cookie = reply.value();
@@ -194,7 +194,7 @@ void VideoWidget::inhibitScreenSaver(bool on)
 
         auto pendingReply2 = powerManagement.Inhibit(QStringLiteral("ktorrent"), msg);
         auto pendingCallWatcher2 = new QDBusPendingCallWatcher(pendingReply2, this);
-        connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+        connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *callWatcher) {
             QDBusPendingReply<quint32> reply = *callWatcher;
             if (reply.isValid()) {
                 screensaver_cookie = reply.value();
@@ -205,7 +205,7 @@ void VideoWidget::inhibitScreenSaver(bool on)
     } else {
         auto pendingReply = screensaver.UnInhibit(screensaver_cookie);
         auto pendingCallWatcher = new QDBusPendingCallWatcher(pendingReply, this);
-        connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+        connect(pendingCallWatcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *callWatcher) {
             QDBusPendingReply<void> reply = *callWatcher;
             if (reply.isValid()) {
                 screensaver_cookie = 0;
@@ -216,7 +216,7 @@ void VideoWidget::inhibitScreenSaver(bool on)
 
         auto pendingReply2 = powerManagement.UnInhibit(powermanagement_cookie);
         auto pendingCallWatcher2 = new QDBusPendingCallWatcher(pendingReply2, this);
-        connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *callWatcher) {
+        connect(pendingCallWatcher2, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *callWatcher) {
             QDBusPendingReply<void> reply = *callWatcher;
             if (reply.isValid()) {
                 powermanagement_cookie = 0;

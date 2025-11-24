@@ -291,7 +291,7 @@ void FileView::rename()
     KFileItem item(url);
     auto renameDialog = new KIO::RenameFileDialog(KFileItemList({item}), nullptr);
     renameDialog->open();
-    connect(renameDialog, &KIO::RenameFileDialog::renamingFinished, this, [=](const QList<QUrl> &urls) {
+    connect(renameDialog, &KIO::RenameFileDialog::renamingFinished, this, [this, index](const QList<QUrl> &urls) {
         model->setData(index, urls.first().fileName(), Qt::EditRole);
     });
 }

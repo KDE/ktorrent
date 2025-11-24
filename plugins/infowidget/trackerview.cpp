@@ -55,21 +55,21 @@ TrackerView::TrackerView(QWidget *parent)
 
     m_ContextMenu = new QMenu(this);
     QAction *copy_URL = m_ContextMenu->addAction(i18n("Copy Tracker URL"));
-    connect(copy_URL, &QAction::triggered, [=]() {
+    connect(copy_URL, &QAction::triggered, [this]() {
         bt::TrackerInterface *trk = selectedTracker();
         if (trk)
             QApplication::clipboard()->setText(trk->trackerURL().toDisplayString());
     });
 
     QAction *copy_status = m_ContextMenu->addAction(i18n("Copy Tracker status"));
-    connect(copy_status, &QAction::triggered, [=]() {
+    connect(copy_status, &QAction::triggered, [this]() {
         bt::TrackerInterface *trk = selectedTracker();
         if (trk)
             QApplication::clipboard()->setText(trk->trackerStatusString());
     });
 
     m_tracker_list->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(m_tracker_list, &QTreeView::customContextMenuRequested, [=](const QPoint &point) {
+    connect(m_tracker_list, &QTreeView::customContextMenuRequested, [this](const QPoint &point) {
         QModelIndex index = m_tracker_list->indexAt(point);
         if (index.isValid()) {
             m_ContextMenu->exec(m_tracker_list->viewport()->mapToGlobal(point));

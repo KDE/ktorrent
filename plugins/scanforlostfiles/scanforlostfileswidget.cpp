@@ -37,19 +37,19 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin *plugin, Q
 
     m_proxy = new FSProxyModel(this);
 
-    connect(cbShowAllFiles, &QCheckBox::checkStateChanged, [=](Qt::CheckState val) {
+    connect(cbShowAllFiles, &QCheckBox::checkStateChanged, [this](Qt::CheckState val) {
         m_proxy->setFiltered(!val);
         setupModels();
     });
 
-    connect(actionCopy_to_clipboard, &QAction::triggered, [=]() {
+    connect(actionCopy_to_clipboard, &QAction::triggered, [this]() {
         QModelIndex m = treeView->currentIndex();
         m = m_proxy->mapToSource(m);
         const QString fname = m_model->fileName(m);
         QGuiApplication::clipboard()->setText(fname);
     });
 
-    connect(actionOpen_file, &QAction::triggered, [=]() {
+    connect(actionOpen_file, &QAction::triggered, [this]() {
         QModelIndex index = treeView->currentIndex();
         auto job = new KIO::OpenUrlJob(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(index))));
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
@@ -150,7 +150,7 @@ void ScanForLostFilesWidget::on_btnScanFolder_clicked()
         m_thread,
         &ScanForLostFilesThread::finished,
         this,
-        [=]() {
+        [this]() {
             btnScanFolder->setText(i18n("Scan"));
             progressBar->setVisible(false);
             m_thread->deleteLater();
@@ -162,7 +162,7 @@ void ScanForLostFilesWidget::on_btnScanFolder_clicked()
         m_thread,
         &ScanForLostFilesThread::filterReady,
         this,
-        [=](QSet<QString> *filter) {
+        [this](QSet<QString> *filter) {
             if (filter) {
                 m_proxy->setFilter(filter);
                 setupModels();
