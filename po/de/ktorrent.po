@@ -1,20 +1,20 @@
-# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n.daphipz@fastmail.de>
-# SPDX-FileCopyrightText: 2005, 2006 Patrick Trettenbrein <patrick.trettenbrein@kdemail.net>
 # SPDX-FileCopyrightText: 2005 Stephan Johach <hunsum@gmx.de>
+# SPDX-FileCopyrightText: 2005, 2006 Patrick Trettenbrein <patrick.trettenbrein@kdemail.net>
 # SPDX-FileCopyrightText: 2005, 2006, 2007, 2008, 2010 Thomas Reitelbach <tr@erdfunkstelle.de>
 # SPDX-FileCopyrightText: 2006 Danny Kukawka <danny.kukawka@web.de>
 # SPDX-FileCopyrightText: 2006, 2007, 2008, 2009, 2010 Jannick Kuhr <opensource@kuhr.org>
+# SPDX-FileCopyrightText: 2009, 2010 Markus Slopianka <markus.s@kdemail.net>
 # SPDX-FileCopyrightText: 2009, 2010 Panagiotis Papadopoulos <pano_90@gmx.net>
 # SPDX-FileCopyrightText: 2009, 2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
-# SPDX-FileCopyrightText: 2009, 2010 Markus Slopianka <markus.s@kdemail.net>
 # SPDX-FileCopyrightText: 2010, 2011, 2012, 2014, 2016, 2022, 2023 Frederik Schwarzer <schwarzer@kde.org>
 # SPDX-FileCopyrightText: 2011 Torbjörn Klatt <torbjoern.k@googlemail.com>
+# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n.daphipz@fastmail.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-18 00:43+0000\n"
-"PO-Revision-Date: 2025-06-29 00:38+0200\n"
+"PO-Revision-Date: 2025-11-11 22:55+0100\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1453,16 +1453,13 @@ msgstr "Zurücksetzen"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Öffnen"
+msgstr "Öffnen …"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
 msgstr "Speichern unter …"
 
@@ -3063,10 +3060,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Empfohlene Einstellungen"
+msgstr "Empfohlene Einstellungen …"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3365,9 +3361,7 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, fuzzy, kde-format
-#| msgctxt "@title:group Options regarging Seeding"
-#| msgid "Seeding"
+#, kde-format
 msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
 msgstr "Hochladen"
@@ -4171,11 +4165,10 @@ msgid "Errors:"
 msgstr "Fehler:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Filter"
+msgstr "Filter …"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4389,7 +4382,7 @@ msgstr "%1 %"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "vor %1"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4485,10 +4478,9 @@ msgid "Added"
 msgstr "Hinzugefügt"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "Aktivität abtrennen"
+msgstr "Letzte Aktivität"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4594,7 +4586,7 @@ msgstr "Wann dieser Torrent hinzugefügt wurde"
 #: ktorrent/view/viewmodel.cpp:550
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Zeit seit der letzten Aktivität (Upload oder Download)"
 
 #: ktorrent/view/viewmodel.cpp:592
 #, kde-format
@@ -5486,10 +5478,7 @@ msgstr "Dateien suchen"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
@@ -6394,8 +6383,7 @@ msgstr "Alle deaktivieren"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
 msgstr "Umwandlung läuft …"
 
@@ -6414,10 +6402,9 @@ msgid "C&ancel"
 msgstr "&Abbrechen"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "Text-Datei wird geladen …"
+msgstr "Textdatei wird geladen …"
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6490,8 +6477,7 @@ msgid "Status: Not loaded."
 msgstr "Status: Nicht geladen"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
 msgstr "Status: Neue Blockliste wird heruntergeladen und konvertiert …"
 
@@ -6667,29 +6653,7 @@ msgstr "Protokollbetrachter"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_logging_flags)
 #: plugins/logviewer/logprefwidget.ui:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "Double click on the log level to alter it. The possible levels are :\n"
-#| "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#| "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#| "\"></p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">All: </span>All messages are shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Important: </span>Only important messages are shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Notice: </span>Only notice and important messages are "
-#| "shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Debug: </span>Debug, notice and important messages are "
-#| "shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">None:</span> No messages are shown</p>"
+#, kde-format
 msgid ""
 "<html>Double click on the log level to alter it. The possible levels are:\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
@@ -6713,8 +6677,8 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">None:</span> No messages are shown</p></html>"
 msgstr ""
-"Doppelklicken Sie auf die Protokollierungsstufe, um sie zu ändern. Mögliche "
-"Stufen sind:\n"
+"<html>Doppelklicken Sie auf die Protokollierungsstufe, um sie zu ändern. "
+"Mögliche Stufen sind:\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
 "p>\n"
@@ -6734,7 +6698,7 @@ msgstr ""
 "Nachrichten werden angezeigt</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Keine:</span> Es werden keine Nachrichten angezeigt</p>"
+"weight:600;\">Keine: </span>Es werden keine Nachrichten angezeigt</p></html>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:42
