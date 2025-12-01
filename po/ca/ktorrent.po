@@ -8960,12 +8960,3 @@ msgstr "Reescaneja"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Open..."
-#~ msgstr "Obre..."
-
-#~ msgid "Recommended Settings..."
-#~ msgstr "Arranjament recomanat..."
-
-#~ msgid "Filter..."
-#~ msgstr "Filtre..."
