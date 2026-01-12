@@ -588,7 +588,7 @@ msgstr "No s'ha pogut obrir %1: %2"
 #: ktorrent/dialogs/importdialog.cpp:352 ktorrent/dialogs/importdialog.cpp:368
 #, kde-format
 msgid "Failed to create %1: %2"
-msgstr "No s'ha pogut crear %1: %2"
+msgstr "Ha fallat mentre es creava %1: %2"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ImportDialog)
 #: ktorrent/dialogs/importdialog.ui:14
@@ -743,7 +743,7 @@ msgstr "Obri un URL"
 #: ktorrent/dialogs/pastedialog.cpp:114
 #, kde-format
 msgid "Error fetching tracker list"
-msgstr "S'ha produït un error en recuperar la llista de seguidors"
+msgstr "S'ha produït un error mentre es recuperava la llista de seguidors"
 
 #: ktorrent/dialogs/pastedialog.cpp:115
 #, kde-format
@@ -2295,8 +2295,8 @@ msgid ""
 "It can be disabled if you do not like the additional network traffic it "
 "generates"
 msgstr ""
-"Resol el nom d'amfitrió de cada parell. Açò farà que es mostre el nom "
-"d'amfitrió del parell en lloc de l'adreça IP. \n"
+"Resol el nom d'amfitrió de cada parell. Açò farà que es mostre el nom de "
+"l'amfitrió del parell en lloc de l'adreça IP. \n"
 "\n"
 "Es pot desactivar si no voleu el trànsit de xarxa addicional que genera"
 
@@ -5065,7 +5065,7 @@ msgstr "S'ha produït un error"
 #: libktcore/torrent/queuemanager.cpp:719
 #, kde-format
 msgid "Error stopping torrent %1: %2"
-msgstr "S'ha produït un error en parar el torrent %1: %2"
+msgstr "S'ha produït un error mentre es parava el torrent %1: %2"
 
 #: libktcore/torrent/torrentfilelistmodel.cpp:63
 #: libktcore/torrent/torrentfiletreemodel.cpp:356
@@ -7279,7 +7279,7 @@ msgstr "Buscant %1"
 #: plugins/search/searchenginelist.cpp:181
 #, kde-format
 msgid "Failed to parse %1"
-msgstr "No s'ha pogut analitzar %1"
+msgstr "Ha fallat durant l'anàlisi %1"
 
 #: plugins/search/searchenginelist.cpp:314
 #, kde-format
@@ -8903,12 +8903,12 @@ msgstr "Introduïu l'URL del canal RSS o Atom."
 #: plugins/syndication/syndicationactivity.cpp:133
 #, kde-format
 msgid "Failed to load feed %1: %2"
-msgstr "S'ha produït un error en carregar el canal %1: %2"
+msgstr "S'ha produït un error mentre es carregava el canal %1: %2"
 
 #: plugins/syndication/syndicationactivity.cpp:146
 #, kde-format
 msgid "Failed to create directory for feed %1: %2"
-msgstr "No s'ha pogut crear el directori per al canal %1: %2"
+msgstr "Ha fallat mentre es creava el directori per al canal %1: %2"
 
 #: plugins/syndication/syndicationactivity.cpp:190
 #, kde-format
