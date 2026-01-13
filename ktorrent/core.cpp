@@ -839,6 +839,7 @@ void Core::startUpdateTimer()
                     Out(SYS_GEN | LOG_DEBUG) << "Suppressing sleep" << endl;
                 } else
                     Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
+                callWatcher->deleteLater();
             });
         }
     }
@@ -881,6 +882,7 @@ void Core::update()
                         Out(SYS_GEN | LOG_DEBUG) << "Stopped suppressing sleep" << endl;
                     } else
                         Out(SYS_GEN | LOG_IMPORTANT) << "Failed to stop suppressing sleep" << endl;
+                    callWatcher->deleteLater();
                 });
             }
         } else {
