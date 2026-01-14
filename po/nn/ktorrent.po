@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-18 00:43+0000\n"
+"POT-Creation-Date: 2026-01-14 00:44+0000\n"
 "PO-Revision-Date: 2025-05-03 11:36+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -62,12 +62,12 @@ msgstr ""
 msgid "KTorrent is running one or more torrents"
 msgstr "KTorrent køyrer éin eller fleire torrentar"
 
-#: ktorrent/core.cpp:918
+#: ktorrent/core.cpp:920
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "Klarte ikkje laga torrent: %1"
 
-#: ktorrent/core.cpp:1014
+#: ktorrent/core.cpp:1016
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -76,23 +76,23 @@ msgstr ""
 "Eit eller fleire lagringsområde er ikkje montert. Du må montera dei for å "
 "starta denne torrenten."
 
-#: ktorrent/core.cpp:1015
+#: ktorrent/core.cpp:1017
 #, kde-format
 msgid "Retry"
 msgstr "Prøv på nytt"
 
 # «Monterte» eller «montert»? Er «monterte» eit adjektiv her?
-#: ktorrent/core.cpp:1021
+#: ktorrent/core.cpp:1023
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "Lagringsområdet %1 er ikkje montert"
 
-#: ktorrent/core.cpp:1023
+#: ktorrent/core.cpp:1025
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "Lagringsområda %1 er ikkje monterte"
 
-#: ktorrent/core.cpp:1034
+#: ktorrent/core.cpp:1036
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -101,22 +101,22 @@ msgstr ""
 "Manglar fleire datafiler til torrenten «%1».\n"
 "Ønskjer du byggja dei opp på nytt, eller vil du ikkje lasta dei ned?"
 
-#: ktorrent/core.cpp:1042 ktorrent/core.cpp:1050 ktorrent/core.cpp:1060
+#: ktorrent/core.cpp:1044 ktorrent/core.cpp:1052 ktorrent/core.cpp:1062
 #, kde-format
 msgid "Data files are missing"
 msgstr "Manglar datafiler"
 
-#: ktorrent/core.cpp:1049
+#: ktorrent/core.cpp:1051
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "Kan ikkje fjerna merking frå manglande filer: %1"
 
-#: ktorrent/core.cpp:1059
+#: ktorrent/core.cpp:1061
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "Kan ikkje byggja opp att manglande filer: %1"
 
-#: ktorrent/core.cpp:1069
+#: ktorrent/core.cpp:1071
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -125,22 +125,22 @@ msgstr ""
 "Fila som inneheld data for torrenten «%1» manglar.\n"
 "Vil du byggja ho opp att?"
 
-#: ktorrent/core.cpp:1076 ktorrent/core.cpp:1083
+#: ktorrent/core.cpp:1078 ktorrent/core.cpp:1085
 #, kde-format
 msgid "Data file is missing"
 msgstr "Manglar datafil"
 
-#: ktorrent/core.cpp:1082
+#: ktorrent/core.cpp:1084
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "Kan ikkje byggja opp att datafil: %1"
 
-#: ktorrent/core.cpp:1183
+#: ktorrent/core.cpp:1185
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "Ugyldig magnet-lenkje: %1"
 
-#: ktorrent/core.cpp:1186
+#: ktorrent/core.cpp:1188
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "

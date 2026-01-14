@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-18 00:43+0000\n"
+"POT-Creation-Date: 2026-01-14 00:44+0000\n"
 "PO-Revision-Date: 2025-07-20 01:44+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -60,12 +60,12 @@ msgstr ""
 msgid "KTorrent is running one or more torrents"
 msgstr "KTorrent가 하나 이상의 토렌트를 실행하고 있음"
 
-#: ktorrent/core.cpp:918
+#: ktorrent/core.cpp:920
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "토렌트를 만들 수 없음: %1"
 
-#: ktorrent/core.cpp:1014
+#: ktorrent/core.cpp:1016
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -74,22 +74,22 @@ msgstr ""
 "하나 이상의 볼륨이 마운트되어 있지 않습니다. 이 토렌트를 시작하려면, 해당하"
 "는 볼륨을 마운트해야 합니다."
 
-#: ktorrent/core.cpp:1015
+#: ktorrent/core.cpp:1017
 #, kde-format
 msgid "Retry"
 msgstr "다시 시도"
 
-#: ktorrent/core.cpp:1021
+#: ktorrent/core.cpp:1023
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "저장소 볼륨 %1이(가) 마운트되어 있지 않음"
 
-#: ktorrent/core.cpp:1023
+#: ktorrent/core.cpp:1025
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "저장소 볼륨 %1이(가) 마운트되어 있지 않음"
 
-#: ktorrent/core.cpp:1034
+#: ktorrent/core.cpp:1036
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -99,22 +99,22 @@ msgstr ""
 "유실된 데이터를 재생성하시겠습니까? 아니면 이 토렌트를 다운로드 하지 않으시겠"
 "습니까?"
 
-#: ktorrent/core.cpp:1042 ktorrent/core.cpp:1050 ktorrent/core.cpp:1060
+#: ktorrent/core.cpp:1044 ktorrent/core.cpp:1052 ktorrent/core.cpp:1062
 #, kde-format
 msgid "Data files are missing"
 msgstr "데이터 파일 유실됨"
 
-#: ktorrent/core.cpp:1049
+#: ktorrent/core.cpp:1051
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "다음 유실된 파일의 선택을 해제할 수 없음: %1"
 
-#: ktorrent/core.cpp:1059
+#: ktorrent/core.cpp:1061
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "다음 유실된 파일을 재생성할 수 없음: %1"
 
-#: ktorrent/core.cpp:1069
+#: ktorrent/core.cpp:1071
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -123,22 +123,22 @@ msgstr ""
 "토렌트 \"%1\"에 저장된 데이터가 유실되었습니다.\n"
 "다시 데이터를 만드시겠습니까?"
 
-#: ktorrent/core.cpp:1076 ktorrent/core.cpp:1083
+#: ktorrent/core.cpp:1078 ktorrent/core.cpp:1085
 #, kde-format
 msgid "Data file is missing"
 msgstr "데이터 파일 유실됨"
 
-#: ktorrent/core.cpp:1082
+#: ktorrent/core.cpp:1084
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "데이터 파일을 재생성할 수 없음: %1"
 
-#: ktorrent/core.cpp:1183
+#: ktorrent/core.cpp:1185
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "잘못된 마그넷 링크: %1"
 
-#: ktorrent/core.cpp:1186
+#: ktorrent/core.cpp:1188
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "

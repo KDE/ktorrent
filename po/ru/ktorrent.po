@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-18 00:43+0000\n"
+"POT-Creation-Date: 2026-01-14 00:44+0000\n"
 "PO-Revision-Date: 2025-12-23 19:09+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -74,12 +74,12 @@ msgstr ""
 msgid "KTorrent is running one or more torrents"
 msgstr "В KTorrent запущены один или более торрентов"
 
-#: ktorrent/core.cpp:918
+#: ktorrent/core.cpp:920
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "Не удалось создать торрент: %1"
 
-#: ktorrent/core.cpp:1014
+#: ktorrent/core.cpp:1016
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
@@ -88,22 +88,22 @@ msgstr ""
 "Один или несколько дисков не смонтированы. Чтобы запустить данный торрент, "
 "их надо смонтировать."
 
-#: ktorrent/core.cpp:1015
+#: ktorrent/core.cpp:1017
 #, kde-format
 msgid "Retry"
 msgstr "Повторить попытку"
 
-#: ktorrent/core.cpp:1021
+#: ktorrent/core.cpp:1023
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr "Логический диск %1 не смонтирован"
 
-#: ktorrent/core.cpp:1023
+#: ktorrent/core.cpp:1025
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr "Логические диски %1 не смонтированы"
 
-#: ktorrent/core.cpp:1034
+#: ktorrent/core.cpp:1036
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
@@ -112,22 +112,22 @@ msgstr ""
 "Несколько файлов торрента «%1» отсутствуют. \n"
 "Пересоздать или не загружать их снова?"
 
-#: ktorrent/core.cpp:1042 ktorrent/core.cpp:1050 ktorrent/core.cpp:1060
+#: ktorrent/core.cpp:1044 ktorrent/core.cpp:1052 ktorrent/core.cpp:1062
 #, kde-format
 msgid "Data files are missing"
 msgstr "Файлы данных отсутствуют"
 
-#: ktorrent/core.cpp:1049
+#: ktorrent/core.cpp:1051
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "Невозможно отменить загрузку недостающих файлов: %1"
 
-#: ktorrent/core.cpp:1059
+#: ktorrent/core.cpp:1061
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "Невозможно пересоздать недостающие файлы: %1"
 
-#: ktorrent/core.cpp:1069
+#: ktorrent/core.cpp:1071
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
@@ -136,22 +136,22 @@ msgstr ""
 "Файл, хранящий данные торрента «%1», отсутствует.\n"
 "Пересоздать его?"
 
-#: ktorrent/core.cpp:1076 ktorrent/core.cpp:1083
+#: ktorrent/core.cpp:1078 ktorrent/core.cpp:1085
 #, kde-format
 msgid "Data file is missing"
 msgstr "Отсутствует файл данных"
 
-#: ktorrent/core.cpp:1082
+#: ktorrent/core.cpp:1084
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "Невозможно пересоздать файл данных: %1"
 
-#: ktorrent/core.cpp:1183
+#: ktorrent/core.cpp:1185
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "Неверная magnet-ссылка на торрент: %1"
 
-#: ktorrent/core.cpp:1186
+#: ktorrent/core.cpp:1188
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
