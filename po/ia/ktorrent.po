@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2017, 2020, 2021, 2023, 2024, 2025 giovanni <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2017, 2020, 2021, 2023, 2024, 2025, 2026 giovanni <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:40+0000\n"
-"PO-Revision-Date: 2025-05-27 12:31+0200\n"
+"PO-Revision-Date: 2026-01-22 17:43+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1362,18 +1362,15 @@ msgstr "Netta"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Aperi"
+msgstr "Aperi…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
-msgstr "Salveguarda como..."
+msgstr "Salveguarda como…"
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -3107,9 +3104,7 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, fuzzy, kde-format
-#| msgctxt "@title:group Options regarging Seeding"
-#| msgid "Seeding"
+#, kde-format
 msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
 msgstr "Seminante"
@@ -3847,11 +3842,10 @@ msgid "Errors:"
 msgstr "Errores:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Filtro"
+msgstr "Filtro…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4061,7 +4055,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr " %1 ante"
 
 #: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
 #: plugins/infowidget/webseedsmodel.cpp:108
@@ -4159,7 +4153,7 @@ msgstr "Addite"
 #: ktorrent/view/viewmodel.cpp:508
 #, kde-format
 msgid "Last Activity"
-msgstr ""
+msgstr "Ultime activitate"
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
