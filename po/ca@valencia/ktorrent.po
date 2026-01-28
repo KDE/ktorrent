@@ -168,8 +168,8 @@ msgstr "Diàleg"
 msgid ""
 "Enter the IP address or hostname and port number of the peer you wish to add:"
 msgstr ""
-"Introduïu l'adreça IP o el nom d'amfitrió i el número de port del parell que "
-"voleu afegir:"
+"Introduïu l'adreça IP o el nom de l'amfitrió i el número de port del parell "
+"que voleu afegir:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/addpeersdlg.ui:34
@@ -186,7 +186,7 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Note:</span> We accept both IPv4 and "
 "IPv6 addresses</p>\n"
 msgstr ""
-"<p>L'adreça IP o nom d'amfitrió del parell amb el qual voleu connectar, "
+"<p>L'adreça IP o el nom d'amfitrió del parell amb el qual voleu connectar, "
 "s'hauria de posar ací.</p>\n"
 "<p><span style=\" font-weight:600;\">Nota:</span> S'accepten adreces IPv4 i "
 "IPv6</p>\n"
@@ -1126,7 +1126,7 @@ msgstr "Node:"
 #: ktorrent/dialogs/torrentcreatordlg.ui:294
 #, kde-format
 msgid "IP or Hostname"
-msgstr "IP o nom d'amfitrió"
+msgstr "IP o el nom de l'amfitrió"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, m_node_list)
 #. i18n: ectx: label, entry (port), group (downloads)
@@ -2461,13 +2461,13 @@ msgstr ""
 #: ktorrent/pref/btpref.ui:133
 #, kde-format
 msgid "Send the tracker a custom IP address or hostname"
-msgstr "Envia al seguidor una adreça IP o un nom d'amfitrió personalitzat"
+msgstr "Envia al seguidor una adreça IP o el nom de l'amfitrió personalitzat"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/btpref.ui:142
 #, kde-format
 msgid "Custom IP address or hostname:"
-msgstr "Adreça IP o nom d'amfitrió personalitzat:"
+msgstr "Adreça IP o el nom de l'amfitrió personalitzat:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_customIP)
 #: ktorrent/pref/btpref.ui:149
@@ -2476,9 +2476,9 @@ msgid ""
 "Custom IP address or hostname to send to the tracker. Hostnames will be "
 "resolved at runtime and the resolved IP address will be sent to the tracker."
 msgstr ""
-"Adreça IP o nom d'amfitrió personalitzat que s'enviarà al seguidor. Els noms "
-"d'amfitrió es resoldran en temps d'execució i les adreces IP resoltes "
-"s'enviaran al seguidor."
+"Adreça IP o el nom de l'amfitrió personalitzat que s'enviarà al seguidor. "
+"Els noms d'amfitrió es resoldran en temps d'execució i les adreces IP "
+"resoltes s'enviaran al seguidor."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, ColorsGbw)
@@ -3078,7 +3078,8 @@ msgstr "Servidor intermediari:"
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
 msgstr ""
-"Adreça IP o nom d'amfitrió del servidor intermediari HTTP que s'utilitzarà."
+"Adreça IP o el nom d'amfitrió del servidor intermediari HTTP que "
+"s'utilitzarà."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
@@ -3148,7 +3149,7 @@ msgstr "Servidor:"
 #: ktorrent/pref/proxypref.ui:123
 #, kde-format
 msgid "IP address or hostname of the SOCKS server."
-msgstr "Adreça IP o nom d'amfitrió del servidor SOCKS."
+msgstr "Adreça IP o el nom d'amfitrió del servidor SOCKS."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_socksPort)
 #: ktorrent/pref/proxypref.ui:137
@@ -3697,7 +3698,7 @@ msgstr "Mostra o oculta la barra de busca"
 #: ktorrent/tools/queuemanagerwidget.cpp:66
 #, kde-format
 msgid "Move Top"
-msgstr "Mou cap a dalt de tot"
+msgstr "Mou fins a dalt de tot"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:67
 #, kde-format
