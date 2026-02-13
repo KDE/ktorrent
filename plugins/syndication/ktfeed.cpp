@@ -92,25 +92,25 @@ void Feed::save()
 
     BEncoder enc(&fptr);
     enc.beginDict();
-    enc.write(QByteArrayLiteral("url"));
+    enc.write("url");
     enc.write(url.toEncoded());
     if (!cookie.isEmpty()) {
-        enc.write(QByteArrayLiteral("cookie"));
+        enc.write("cookie");
         enc.write(cookie.toUtf8());
     }
-    enc.write(QByteArrayLiteral("filters"));
+    enc.write("filters");
     enc.beginList();
     for (Filter *f : std::as_const(filters)) {
         enc.write(f->filterID().toUtf8());
     }
     enc.end();
-    enc.write(QByteArrayLiteral("loaded"));
+    enc.write("loaded");
     enc.beginList();
     for (const QString &id : std::as_const(loaded)) {
         enc.write(id.toUtf8());
     }
     enc.end();
-    enc.write(QByteArrayLiteral("downloaded_se_items"));
+    enc.write("downloaded_se_items");
     enc.beginList();
     QMap<Filter *, QList<SeasonEpisodeItem>>::iterator i = downloaded_se_items.begin();
     while (i != downloaded_se_items.end()) {
@@ -127,9 +127,9 @@ void Feed::save()
     }
     enc.end();
     if (!custom_name.isEmpty()) {
-        enc.write(QByteArrayLiteral("custom_name"), custom_name.toUtf8());
+        enc.write("custom_name", custom_name.toUtf8());
     }
-    enc.write(QByteArrayLiteral("refresh_rate"), refresh_rate);
+    enc.write("refresh_rate", refresh_rate);
     enc.end();
 }
 

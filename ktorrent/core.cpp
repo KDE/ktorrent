@@ -1251,10 +1251,10 @@ void Core::onMetadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &d
     enc.beginDict();
     QList<QUrl> trs = mlink.trackers();
     if (trs.count()) {
-        enc.write(QByteArrayLiteral("announce"));
+        enc.write("announce");
         enc.write(trs.first().toDisplayString().toUtf8());
         if (trs.count() > 1) {
-            enc.write(QByteArrayLiteral("announce-list"));
+            enc.write("announce-list");
             enc.beginList();
             for (const QUrl &tracker : std::as_const(trs)) {
                 enc.beginList();
@@ -1264,7 +1264,7 @@ void Core::onMetadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &d
             enc.end();
         }
     }
-    enc.write(QByteArrayLiteral("info"));
+    enc.write("info");
     out->write(data);
     enc.end();
 

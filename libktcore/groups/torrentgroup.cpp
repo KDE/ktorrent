@@ -45,11 +45,11 @@ void TorrentGroup::remove(TorrentInterface *tor)
 void TorrentGroup::save(bt::BEncoder *enc)
 {
     enc->beginDict();
-    enc->write(QByteArrayLiteral("name"));
+    enc->write("name");
     enc->write(name.toLocal8Bit());
-    enc->write(QByteArrayLiteral("icon"));
+    enc->write("icon");
     enc->write(icon_name.toLocal8Bit());
-    enc->write(QByteArrayLiteral("hashes"));
+    enc->write("hashes");
     enc->beginList();
     std::set<TorrentInterface *>::iterator i = torrents.begin();
     while (i != torrents.end()) {
@@ -64,21 +64,21 @@ void TorrentGroup::save(bt::BEncoder *enc)
         j++;
     }
     enc->end();
-    enc->write(QByteArrayLiteral("policy"));
+    enc->write("policy");
     enc->beginDict();
-    enc->write(QByteArrayLiteral("default_save_location"));
+    enc->write("default_save_location");
     enc->write(policy.default_save_location.toUtf8());
-    enc->write(QByteArrayLiteral("max_share_ratio"));
+    enc->write("max_share_ratio");
     enc->write(QByteArray::number(policy.max_share_ratio));
-    enc->write(QByteArrayLiteral("max_seed_time"));
+    enc->write("max_seed_time");
     enc->write(QByteArray::number(policy.max_seed_time));
-    enc->write(QByteArrayLiteral("max_upload_rate"));
+    enc->write("max_upload_rate");
     enc->write(policy.max_upload_rate);
-    enc->write(QByteArrayLiteral("max_download_rate"));
+    enc->write("max_download_rate");
     enc->write(policy.max_download_rate);
-    enc->write(QByteArrayLiteral("only_apply_on_new_torrents"));
+    enc->write("only_apply_on_new_torrents");
     enc->write((bt::Uint32)(policy.only_apply_on_new_torrents ? 1 : 0));
-    enc->write(QByteArrayLiteral("default_move_on_completion_location"));
+    enc->write("default_move_on_completion_location");
     enc->write(policy.default_move_on_completion_location.toUtf8());
     enc->end();
     enc->end();
@@ -104,40 +104,40 @@ void TorrentGroup::load(bt::BDictNode *dn)
         hashes.insert(SHA1Hash((const Uint8 *)ba.data()));
     }
 
-    if (BDictNode *gp = dn->getDict(QByteArrayLiteral("policy"))) {
+    if (BDictNode *gp = dn->getDict("policy")) {
         // load the group policy
-        if (gp->getValue(QByteArrayLiteral("default_save_location"))) {
-            policy.default_save_location = gp->getString(QByteArrayLiteral("default_save_location"));
+        if (gp->getValue("default_save_location")) {
+            policy.default_save_location = gp->getString("default_save_location");
             if (policy.default_save_location.length() == 0) {
                 policy.default_save_location = QString(); // make sure that 0 length strings are loaded as null strings
             }
         }
 
-        if (gp->getValue(QByteArrayLiteral("default_move_on_completion_location"))) {
-            policy.default_move_on_completion_location = gp->getString(QByteArrayLiteral("default_move_on_completion_location"));
+        if (gp->getValue("default_move_on_completion_location")) {
+            policy.default_move_on_completion_location = gp->getString("default_move_on_completion_location");
             if (policy.default_move_on_completion_location.length() == 0) {
                 policy.default_move_on_completion_location = QString(); // make sure that 0 length strings are loaded as null strings
             }
         }
 
-        if (gp->getValue(QByteArrayLiteral("max_share_ratio"))) {
-            policy.max_share_ratio = gp->getString(QByteArrayLiteral("max_share_ratio")).toFloat();
+        if (gp->getValue("max_share_ratio")) {
+            policy.max_share_ratio = gp->getString("max_share_ratio").toFloat();
         }
 
-        if (gp->getValue(QByteArrayLiteral("max_seed_time"))) {
-            policy.max_seed_time = gp->getString(QByteArrayLiteral("max_seed_time")).toFloat();
+        if (gp->getValue("max_seed_time")) {
+            policy.max_seed_time = gp->getString("max_seed_time").toFloat();
         }
 
-        if (gp->getValue(QByteArrayLiteral("max_upload_rate"))) {
-            policy.max_upload_rate = gp->getInt(QByteArrayLiteral("max_upload_rate"));
+        if (gp->getValue("max_upload_rate")) {
+            policy.max_upload_rate = gp->getInt("max_upload_rate");
         }
 
-        if (gp->getValue(QByteArrayLiteral("max_download_rate"))) {
-            policy.max_download_rate = gp->getInt(QByteArrayLiteral("max_download_rate"));
+        if (gp->getValue("max_download_rate")) {
+            policy.max_download_rate = gp->getInt("max_download_rate");
         }
 
-        if (gp->getValue(QByteArrayLiteral("only_apply_on_new_torrents"))) {
-            policy.only_apply_on_new_torrents = gp->getInt(QByteArrayLiteral("only_apply_on_new_torrents"));
+        if (gp->getValue("only_apply_on_new_torrents")) {
+            policy.only_apply_on_new_torrents = gp->getInt("only_apply_on_new_torrents");
         }
     }
 }

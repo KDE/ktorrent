@@ -136,13 +136,13 @@ void Schedule::load(const QString &file)
         parseItems(static_cast<BListNode *>(node.get()));
     } else if (node->getType() == BNode::DICT) {
         BDictNode *dict = static_cast<BDictNode *>(node.get());
-        BListNode *items = dict->getList(QByteArrayLiteral("items"));
+        BListNode *items = dict->getList("items");
         if (items) {
             parseItems(items);
         }
 
         try {
-            enabled = dict->getInt(QByteArrayLiteral("enabled")) == 1;
+            enabled = dict->getInt("enabled") == 1;
         } catch (...) {
             enabled = true;
         }
@@ -169,18 +169,18 @@ void Schedule::parseItems(BListNode *items)
 bool Schedule::parseItem(ScheduleItem *item, bt::BDictNode *dict)
 {
     // Must have at least a day or days entry
-    BValueNode *day = dict->getValue(QByteArrayLiteral("day"));
-    BValueNode *start_day = dict->getValue(QByteArrayLiteral("start_day"));
-    BValueNode *end_day = dict->getValue(QByteArrayLiteral("end_day"));
+    BValueNode *day = dict->getValue("day");
+    BValueNode *start_day = dict->getValue("start_day");
+    BValueNode *end_day = dict->getValue("end_day");
     if (!day && !start_day && !end_day) {
         return false;
     }
 
-    BValueNode *start = dict->getValue(QByteArrayLiteral("start"));
-    BValueNode *end = dict->getValue(QByteArrayLiteral("end"));
-    BValueNode *upload_limit = dict->getValue(QByteArrayLiteral("upload_limit"));
-    BValueNode *download_limit = dict->getValue(QByteArrayLiteral("download_limit"));
-    BValueNode *suspended = dict->getValue(QByteArrayLiteral("suspended"));
+    BValueNode *start = dict->getValue("start");
+    BValueNode *end = dict->getValue("end");
+    BValueNode *upload_limit = dict->getValue("upload_limit");
+    BValueNode *download_limit = dict->getValue("download_limit");
+    BValueNode *suspended = dict->getValue("suspended");
 
     if (!start || !end || !upload_limit || !download_limit || !suspended) {
         return false;
@@ -200,10 +200,10 @@ bool Schedule::parseItem(ScheduleItem *item, bt::BDictNode *dict)
     item->suspended = suspended->data().toInt() == 1;
     item->set_conn_limits = false;
 
-    BDictNode *conn_limits = dict->getDict(QByteArrayLiteral("conn_limits"));
+    BDictNode *conn_limits = dict->getDict("conn_limits");
     if (conn_limits) {
-        BValueNode *glob = conn_limits->getValue(QByteArrayLiteral("global"));
-        BValueNode *per_torrent = conn_limits->getValue(QByteArrayLiteral("per_torrent"));
+        BValueNode *glob = conn_limits->getValue("global");
+        BValueNode *per_torrent = conn_limits->getValue("per_torrent");
         if (glob && per_torrent) {
             item->global_conn_limit = glob->data().toInt();
             item->torrent_conn_limit = per_torrent->data().toInt();
@@ -211,11 +211,11 @@ bool Schedule::parseItem(ScheduleItem *item, bt::BDictNode *dict)
         }
     }
 
-    BValueNode *ss_limits = dict->getValue(QByteArrayLiteral("screensaver_limits"));
+    BValueNode *ss_limits = dict->getValue("screensaver_limits");
     if (ss_limits) {
         item->screensaver_limits = ss_limits->data().toInt() == 1;
-        item->ss_download_limit = dict->getInt(QByteArrayLiteral("ss_download_limit"));
-        item->ss_upload_limit = dict->getInt(QByteArrayLiteral("ss_upload_limit"));
+        item->ss_download_limit = dict->getInt("ss_download_limit");
+        item->ss_upload_limit = dict->getInt("ss_upload_limit");
     } else {
         item->screensaver_limits = false;
         item->ss_download_limit = item->ss_upload_limit = 0;
@@ -236,37 +236,37 @@ void Schedule::save(const QString &file)
 
     BEncoder enc(&fptr);
     enc.beginDict();
-    enc.write(QByteArrayLiteral("enabled"), enabled);
-    enc.write(QByteArrayLiteral("items"));
+    enc.write("enabled", enabled);
+    enc.write("items");
     enc.beginList();
     for (ScheduleItem *i : std::as_const(items)) {
         enc.beginDict();
-        enc.write(QByteArrayLiteral("start_day"));
+        enc.write("start_day");
         enc.write((Uint32)i->start_day);
-        enc.write(QByteArrayLiteral("end_day"));
+        enc.write("end_day");
         enc.write((Uint32)i->end_day);
-        enc.write(QByteArrayLiteral("start"));
+        enc.write("start");
         enc.write(i->start.toString().toLatin1());
-        enc.write(QByteArrayLiteral("end"));
+        enc.write("end");
         enc.write(i->end.toString().toLatin1());
-        enc.write(QByteArrayLiteral("upload_limit"));
+        enc.write("upload_limit");
         enc.write(i->upload_limit);
-        enc.write(QByteArrayLiteral("download_limit"));
+        enc.write("download_limit");
         enc.write(i->download_limit);
-        enc.write(QByteArrayLiteral("suspended"));
+        enc.write("suspended");
         enc.write((Uint32)(i->suspended ? 1 : 0));
         if (i->set_conn_limits) {
-            enc.write(QByteArrayLiteral("conn_limits"));
+            enc.write("conn_limits");
             enc.beginDict();
-            enc.write(QByteArrayLiteral("global"));
+            enc.write("global");
             enc.write((Uint32)i->global_conn_limit);
-            enc.write(QByteArrayLiteral("per_torrent"));
+            enc.write("per_torrent");
             enc.write((Uint32)i->torrent_conn_limit);
             enc.end();
         }
-        enc.write(QByteArrayLiteral("screensaver_limits"), (Uint32)i->screensaver_limits);
-        enc.write(QByteArrayLiteral("ss_upload_limit"), i->ss_upload_limit);
-        enc.write(QByteArrayLiteral("ss_download_limit"), i->ss_download_limit);
+        enc.write("screensaver_limits", (Uint32)i->screensaver_limits);
+        enc.write("ss_upload_limit", i->ss_upload_limit);
+        enc.write("ss_download_limit", i->ss_download_limit);
         enc.end();
     }
     enc.end();

@@ -145,9 +145,9 @@ void ShutdownRuleSet::save(const QString &file)
         enc.write("Trigger", (bt::Uint32)i->trigger);
         enc.write("Target", (bt::Uint32)i->target);
         if (i->target == SPECIFIC_TORRENT) {
-            enc.write(QByteArrayLiteral("Torrent"), i->tc->getInfoHash());
+            enc.write("Torrent", i->tc->getInfoHash());
         }
-        enc.write(QByteArrayLiteral("hit"), i->hit);
+        enc.write("hit", i->hit);
         enc.end();
     }
     enc.write(on);
@@ -185,13 +185,13 @@ void ShutdownRuleSet::load(const QString &file)
             }
 
             ShutdownRule rule;
-            rule.action = (Action)d->getInt(QByteArrayLiteral("Action"));
-            rule.target = (Target)d->getInt(QByteArrayLiteral("Target"));
-            rule.trigger = (Trigger)d->getInt(QByteArrayLiteral("Trigger"));
-            rule.hit = d->keys().contains(QByteArrayLiteral("hit")) && d->getInt(QByteArrayLiteral("hit")) == 1;
+            rule.action = (Action)d->getInt("Action");
+            rule.target = (Target)d->getInt("Target");
+            rule.trigger = (Trigger)d->getInt("Trigger");
+            rule.hit = d->keys().contains(QByteArrayLiteral("hit")) && d->getInt("hit") == 1;
             rule.tc = nullptr;
-            if (d->getValue(QByteArrayLiteral("Torrent"))) {
-                const QByteArray hash = d->getByteArray(QByteArrayLiteral("Torrent"));
+            if (d->getValue("Torrent")) {
+                const QByteArray hash = d->getByteArray("Torrent");
                 bt::TorrentInterface *const tc = torrentForHash(hash);
                 if (tc) {
                     rule.tc = tc;
