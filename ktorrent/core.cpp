@@ -1265,7 +1265,7 @@ void Core::onMetadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &d
         }
     }
     enc.write(QByteArrayLiteral("info"));
-    out->write(data.data(), data.size());
+    out->write(data);
     enc.end();
 
     QUrl url(mlink.toString());
