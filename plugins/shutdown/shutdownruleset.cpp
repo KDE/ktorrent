@@ -145,9 +145,7 @@ void ShutdownRuleSet::save(const QString &file)
         enc.write("Trigger", (bt::Uint32)i->trigger);
         enc.write("Target", (bt::Uint32)i->target);
         if (i->target == SPECIFIC_TORRENT) {
-            bt::SHA1Hash hash = i->tc->getInfoHash();
-            enc.write(QByteArrayLiteral("Torrent"));
-            enc.write(hash.getData(), 20);
+            enc.write(QByteArrayLiteral("Torrent"), i->tc->getInfoHash());
         }
         enc.write(QByteArrayLiteral("hit"), i->hit);
         enc.end();

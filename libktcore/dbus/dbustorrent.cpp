@@ -278,10 +278,10 @@ QByteArray DBusTorrent::stats() const
     enc.write(QByteArrayLiteral("num_corrupted_chunks"), s.num_corrupted_chunks);
     const bt::BitSet &bs = ti->downloadedChunksBitSet();
     enc.write(QByteArrayLiteral("downloaded_chunks"));
-    enc.write(bs.getData(), bs.getNumBytes());
+    enc.write(QByteArrayView{bs.getData(), bs.getNumBytes()});
     const bt::BitSet &ebs = ti->excludedChunksBitSet();
     enc.write(QByteArrayLiteral("excluded_chunks"));
-    enc.write(ebs.getData(), ebs.getNumBytes());
+    enc.write(QByteArrayView{ebs.getData(), ebs.getNumBytes()});
     enc.end();
     return ret;
 }

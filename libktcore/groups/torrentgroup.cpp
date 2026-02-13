@@ -55,13 +55,12 @@ void TorrentGroup::save(bt::BEncoder *enc)
     while (i != torrents.end()) {
         TorrentInterface *tc = *i;
         // write the info hash, because that will be unique for each torrent
-        const bt::SHA1Hash &h = tc->getInfoHash();
-        enc->write(h.getData(), 20);
+        enc->write(tc->getInfoHash());
         i++;
     }
     std::set<bt::SHA1Hash>::iterator j = hashes.begin();
     while (j != hashes.end()) {
-        enc->write(j->getData(), 20);
+        enc->write(*j);
         j++;
     }
     enc->end();
