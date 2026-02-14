@@ -61,6 +61,7 @@ LinkDownloader::~LinkDownloader()
 
 void LinkDownloader::downloadFinished(KJob *j)
 {
+    unregisterJob();
     KIO::StoredTransferJob *job = (KIO::StoredTransferJob *)j;
     if (job->error()) {
         Out(SYS_SYN | LOG_NOTICE) << "Failed to download " << url.toDisplayString() << " : " << job->errorString() << endl;
@@ -95,6 +96,17 @@ void LinkDownloader::start()
 {
     KIO::StoredTransferJob *j = KIO::storedGet(url, KIO::Reload, verbose ? KIO::DefaultFlags : KIO::HideProgressInfo);
     connect(j, &KIO::StoredTransferJob::result, this, &LinkDownloader::downloadFinished);
+    registerJob(j);
+}
+
+void LinkDownloader::kill()
+{
+    // In case KJob::kill() returns true, KJob::result() will be emitted later
+    // which will eventually this->deleteLater()
+    if (!startedJob->kill()) {
+        deleteLater();
+    }
+    startedJob = nullptr;
 }
 
 bool LinkDownloader::isTorrent(const QByteArray &data) const
@@ -154,6 +166,7 @@ void LinkDownloader::tryTorrentLinks()
             link_url = u;
             KIO::StoredTransferJob *j = KIO::storedGet(u, KIO::Reload, verbose ? KIO::DefaultFlags : KIO::HideProgressInfo);
             connect(j, &KIO::StoredTransferJob::result, this, &LinkDownloader::torrentDownloadFinished);
+            registerJob(j);
             links.removeAll(u);
             return;
         }
@@ -161,6 +174,18 @@ void LinkDownloader::tryTorrentLinks()
 
     // Try the next link in the list if there are no torrent links
     tryNextLink();
+}
+
+void LinkDownloader::registerJob(KJob *job)
+{
+    Q_ASSERT(startedJob == nullptr);
+    startedJob = job;
+    connect(job, &KJob::destroyed, this, &LinkDownloader::unregisterJob);
+}
+
+void LinkDownloader::unregisterJob()
+{
+    startedJob = nullptr;
 }
 
 void LinkDownloader::tryNextLink()
@@ -179,11 +204,13 @@ void LinkDownloader::tryNextLink()
     links.pop_front();
     KIO::StoredTransferJob *j = KIO::storedGet(link_url, KIO::Reload, KIO::HideProgressInfo);
     connect(j, &KIO::StoredTransferJob::result, this, &LinkDownloader::torrentDownloadFinished);
+    registerJob(j);
     Out(SYS_SYN | LOG_DEBUG) << "Trying " << link_url.toDisplayString() << endl;
 }
 
 void LinkDownloader::torrentDownloadFinished(KJob *j)
 {
+    unregisterJob();
     KIO::StoredTransferJob *job = (KIO::StoredTransferJob *)j;
     if (j->error()) {
         if (links.count() == 0) {

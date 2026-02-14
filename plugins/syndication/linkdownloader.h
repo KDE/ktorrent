@@ -30,6 +30,11 @@ public:
 
     /// Start the download process
     void start();
+    /*!
+     * Stop and Discard the download
+     * The LinkDownloader is not expected to be in a useful state after this
+     */
+    void kill();
 
     void downloadFinished(KJob *j);
     void torrentDownloadFinished(KJob *j);
@@ -39,6 +44,8 @@ private:
     void handleHtmlPage(const QByteArray &data);
     void tryNextLink();
     void tryTorrentLinks();
+    void registerJob(KJob *job);
+    void unregisterJob();
 
 Q_SIGNALS:
     void finished(bool ok);
@@ -53,6 +60,7 @@ private:
     QString location;
     QString move_on_completion;
     QString base_url;
+    KJob *startedJob = nullptr;
 };
 
 }

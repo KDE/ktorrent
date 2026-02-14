@@ -179,6 +179,7 @@ void SyndicationActivity::downloadLink(const QUrl &url, const QString &group, co
         sp->getCore()->load(bt::MagnetLink(url), options);
     } else {
         LinkDownloader *dlr = new LinkDownloader(url, sp->getCore(), !silently, group, location, move_on_completion);
+        connect(this, &SyndicationActivity::destroyed, dlr, &LinkDownloader::kill);
         dlr->start();
     }
 }
