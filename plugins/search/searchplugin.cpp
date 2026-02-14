@@ -46,7 +46,7 @@ SearchPlugin::~SearchPlugin()
 void SearchPlugin::load()
 {
     LogSystemManager::instance().registerSystem(i18nc("plugin name", "Search"), SYS_SRC);
-    proxy = new ProxyHelper((DBusSettings *)getCore()->getExternalInterface()->settings());
+    proxy = new ProxyHelper;
     engines = new SearchEngineList(proxy, kt::DataDir() + QStringLiteral("searchengines/"));
     engines->loadEngines();
 
