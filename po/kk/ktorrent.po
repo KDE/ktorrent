@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2013-08-27 05:45+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -8784,7 +8784,7 @@ msgstr "Сәтті өтті"
 msgid "Syndication Toolbar"
 msgstr "Ақпарларды жариялау құралдары"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "%1 дегенегі торрентке дұрыс байланыс орнатылмаған"
@@ -8832,7 +8832,7 @@ msgstr "Бүкілін өшіру"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "Жаңа сүзгі"
@@ -8869,7 +8869,7 @@ msgstr "%1 ақпарын жүктеу жаңылысы: %2"
 msgid "Failed to create directory for feed %1: %2"
 msgstr "%1 ақпар қапшығын құру жаңылысы: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "Жаңа сүзгі қосу"

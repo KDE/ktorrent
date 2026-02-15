@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2025-11-19 05:35+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -8747,7 +8747,7 @@ msgstr "წარმატება"
 msgid "Syndication Toolbar"
 msgstr "სინდიკაციის პანელი"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "%1-ზე ტორენტის სწორი ბმული ვერ ვიპოვე"
@@ -8795,7 +8795,7 @@ msgstr "ყველას გამოერთება"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "ახალი ფილტრი"
@@ -8832,7 +8832,7 @@ msgstr "ჩავარდა ჩატვირთვა ლენტისთ�
 msgid "Failed to create directory for feed %1: %2"
 msgstr "საქაღალდის შექმნის შეცდომა ლენტისთვის %1: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "ახალი ფილტრის დამატება"

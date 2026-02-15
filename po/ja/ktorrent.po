@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2009-10-31 23:24+0900\n"
 "Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -8949,7 +8949,7 @@ msgstr ""
 msgid "Syndication Toolbar"
 msgstr "シンジケーションツールバー"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "torrent への有効なリンクが %1 に見つかりませんでした"
@@ -8997,7 +8997,7 @@ msgstr "すべて削除"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "新しいフィルタ"
@@ -9036,7 +9036,7 @@ msgstr "フィード <resource>%1</resource> の読み込みに失敗しまし�
 msgid "Failed to create directory for feed %1: %2"
 msgstr "フィード <resource>%1</resource> 用のフォルダの作成に失敗しました: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "新しいフィルタを追加"

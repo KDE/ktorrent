@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2025-06-22 11:39+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -8820,7 +8820,7 @@ msgstr "Éxito"
 msgid "Syndication Toolbar"
 msgstr "Barra de ferramentas de sindicación"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "Non foi posíbel atopar unha ligazón correcta a un torrent en %1."
@@ -8868,7 +8868,7 @@ msgstr "Eliminalos todos"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "Filtro novo"
@@ -8905,7 +8905,7 @@ msgstr "Non foi posíbel cargar a fonte %1: %2"
 msgid "Failed to create directory for feed %1: %2"
 msgstr "Non foi posíbel crear un directorio para a fonte %1: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "Engadir un filtro novo."

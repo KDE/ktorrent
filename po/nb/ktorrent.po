@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2014-09-30 09:58+0200\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -8742,7 +8742,7 @@ msgstr "Vellykket"
 msgid "Syndication Toolbar"
 msgstr "Kildeverktøylinje"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "Klarte ikke å finne en gyldig lenke til en torrent på %1"
@@ -8790,7 +8790,7 @@ msgstr "Fjern alle"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "Nytt filter"
@@ -8827,7 +8827,7 @@ msgstr "Klarte ikke å laste kilden  %1. %2"
 msgid "Failed to create directory for feed %1: %2"
 msgstr "Klarte ikke å opprette mappe for kilden %1: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "Legg til nytt filter"

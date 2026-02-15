@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2025-11-21 01:41+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -8793,7 +8793,7 @@ msgstr "Lyckades"
 msgid "Syndication Toolbar"
 msgstr "Syndikeringsverktygsrad"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "Kunde inte hitta en giltig länk till ett dataflöde på %1"
@@ -8841,7 +8841,7 @@ msgstr "Ta bort alla"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "Nytt filter"
@@ -8878,7 +8878,7 @@ msgstr "Misslyckades ladda kanalen %1: %2"
 msgid "Failed to create directory for feed %1: %2"
 msgstr "Misslyckades skapa katalog för kanalen %1: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "Lägg till nytt filter"

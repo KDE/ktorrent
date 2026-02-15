@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2012-07-04 08:46+0700\n"
 "Last-Translator: Sophea <sophea@khmeros.info>\n"
 "Language-Team: Khmer <>\n"
@@ -8812,7 +8812,7 @@ msgstr "ជោគ​ជ័យ"
 msgid "Syndication Toolbar"
 msgstr "របារ​ឧបករណ៍​ធ្វើសមកាលកម្ម"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "មិន​អាច​រក​ឃើញ​តំណ​ត្រឹមត្រូវ​ចំពោះ torrent នៅ​លើ %1 ទេ"
@@ -8860,7 +8860,7 @@ msgstr "យក​ចេញ​ទាំងអស់"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "តម្រង​ថ្មី"
@@ -8897,7 +8897,7 @@ msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ផ្ទ
 msgid "Failed to create directory for feed %1: %2"
 msgstr "បរាជ័យ​ក្នុង​ការ​បង្កើត​ថត​សម្រាប់​មតិ​ព័ត៌មាន %1 ៖ %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "បន្ថែម​តម្រង​ថ្មី"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2025-12-06 11:55+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -8821,7 +8821,7 @@ msgstr "Behar bezala"
 msgid "Syndication Toolbar"
 msgstr "Sindikazioaren tresna-barra"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "Ezin izan da aurkitu torrent baterako esteka baliozkoa %1(e)n"
@@ -8869,7 +8869,7 @@ msgstr "Kendu denak"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "Iragazki berria"
@@ -8906,7 +8906,7 @@ msgstr "Huts egin du %1 jarioa kargatzean: %2"
 msgid "Failed to create directory for feed %1: %2"
 msgstr "Huts egin du %1 jariorako direktorioa sortzean: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "Gehitu iragazki berria"

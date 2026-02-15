@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2024-09-19 17:43+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -8917,7 +8917,7 @@ msgstr "Επιτυχία"
 msgid "Syndication Toolbar"
 msgstr "Γραμμή εργαλείων φορέα (Syndication)"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "Αδυναμία εύρεσης ενός έγκυρου συνδέσμου σε ένα torrent στο %1"
@@ -8965,7 +8965,7 @@ msgstr "Αφαίρεση όλων"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "Νέο φίλτρο"
@@ -9002,7 +9002,7 @@ msgstr "Αποτυχία φόρτωσης της ροής %1: %2"
 msgid "Failed to create directory for feed %1: %2"
 msgstr "Αποτυχία δημιουργίας καταλόγου για τη ροή %1: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "Προσθήκη νέου φίλτρου"

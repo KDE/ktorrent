@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -8482,7 +8482,7 @@ msgstr ""
 msgid "Syndication Toolbar"
 msgstr "Tækjaslá"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, fuzzy, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "ekki a tengill til a á 1"
@@ -8530,7 +8530,7 @@ msgstr "Fjarlægja allt"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, fuzzy, kde-format
 msgid "New Filter"
 msgstr "Ný sía"
@@ -8568,7 +8568,7 @@ msgstr "Tókst ekki að hlaða inn fréttastraumi %1."
 msgid "Failed to create directory for feed %1: %2"
 msgstr "Mistókst til fyrir 2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, fuzzy, kde-format
 msgid "Add New Filter"
 msgstr "Bæta við Nýtt Sía"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2025-11-08 22:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -8754,7 +8754,7 @@ msgstr "Sikeres"
 msgid "Syndication Toolbar"
 msgstr "Tartalommegosztási eszköztár"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "Nem található érvényes torrentre mutató hivatkozás itt: %1"
@@ -8802,7 +8802,7 @@ msgstr "Összes eltávolítása"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "Új szűrő"
@@ -8839,7 +8839,7 @@ msgstr "A(z) %1 hírcsatorna betöltése sikertelen: %2"
 msgid "Failed to create directory for feed %1: %2"
 msgstr "A(z) %1 hírcsatorna könyvtárának létrehozása sikertelen: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "Új szűrő hozzáadása"

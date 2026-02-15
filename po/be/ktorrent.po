@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2007-12-09 18:13+0200\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -8635,7 +8635,7 @@ msgstr ""
 msgid "Syndication Toolbar"
 msgstr "Галоўная панель начыння"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr ""
@@ -8689,7 +8689,7 @@ msgstr "Выдаліць усе"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, fuzzy, kde-format
 #| msgid "Add Folder"
 msgid "New Filter"
@@ -8728,7 +8728,7 @@ msgstr ""
 msgid "Failed to create directory for feed %1: %2"
 msgstr ""
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, fuzzy, kde-format
 #| msgid "Add Folder"
 msgid "Add New Filter"

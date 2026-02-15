@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2025-11-11 18:47+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -8723,7 +8723,7 @@ msgstr "Izdevās"
 msgid "Syndication Toolbar"
 msgstr "Sindicēšanas rīkjosla"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "„%1“ neizdevās atrast derīgu saiti uz torentu"
@@ -8771,7 +8771,7 @@ msgstr "Izņemt visus"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "Jauns filtrs"
@@ -8808,7 +8808,7 @@ msgstr "Neizdevās ielādēt barotni „%1“: %2"
 msgid "Failed to create directory for feed %1: %2"
 msgstr "Neizdevās izveidot mapi barotnei „%1“: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "Pievienot jaunu filtru"

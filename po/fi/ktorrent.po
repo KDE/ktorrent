@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-14 00:44+0000\n"
+"POT-Creation-Date: 2026-02-15 00:43+0000\n"
 "PO-Revision-Date: 2026-01-16 18:02+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -8754,7 +8754,7 @@ msgstr "Onnistui"
 msgid "Syndication Toolbar"
 msgstr "Syötetyökalurivi"
 
-#: plugins/syndication/linkdownloader.cpp:171
+#: plugins/syndication/linkdownloader.cpp:196
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr "Kohteesta %1 ei löytynyt kelvollista linkkiä torrentiin"
@@ -8802,7 +8802,7 @@ msgstr "Poista kaikki"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:188
+#: plugins/syndication/syndicationactivity.cpp:189
 #, kde-format
 msgid "New Filter"
 msgstr "Uusi suodatin"
@@ -8839,7 +8839,7 @@ msgstr "Syötettä %1 ei voitu ladata: %2"
 msgid "Failed to create directory for feed %1: %2"
 msgstr "Syötteelle %1 ei onnistuttu luomaan kansiota: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:190
+#: plugins/syndication/syndicationactivity.cpp:191
 #, kde-format
 msgid "Add New Filter"
 msgstr "Lisää uusi suodatin"
