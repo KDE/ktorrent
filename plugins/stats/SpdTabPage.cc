@@ -9,27 +9,28 @@
 namespace kt
 {
 
-SpdTabPage::SpdTabPage(QWidget* p) : PluginPage(p), pmUiSpd(new Ui::SpdWgt), mDlAvg(std::make_pair(0, 0)), mUlAvg(std::make_pair(0, 0))
+SpdTabPage::SpdTabPage(QWidget *p)
+    : PluginPage(p)
+    , pmUiSpd(new Ui::SpdWgt)
+    , mDlAvg(std::make_pair(0, 0))
+    , mUlAvg(std::make_pair(0, 0))
 {
-
     if (StatsPluginSettings::widgetType() == 0) {
         pmDlChtWgt = new PlainChartDrawer(this);
         pmPeersChtWgt = new PlainChartDrawer(this);
         pmUlChtWgt = new PlainChartDrawer(this);
 
-        connect(dynamic_cast<PlainChartDrawer*>(pmDlChtWgt), &PlainChartDrawer::Zeroed, this, &SpdTabPage::resetAvg);
-        connect(dynamic_cast<PlainChartDrawer*>(pmUlChtWgt), &PlainChartDrawer::Zeroed, this, &SpdTabPage::resetAvg);
+        connect(dynamic_cast<PlainChartDrawer *>(pmDlChtWgt), &PlainChartDrawer::Zeroed, this, &SpdTabPage::resetAvg);
+        connect(dynamic_cast<PlainChartDrawer *>(pmUlChtWgt), &PlainChartDrawer::Zeroed, this, &SpdTabPage::resetAvg);
 
     } else if (StatsPluginSettings::widgetType() == 1) {
         pmDlChtWgt = new KPlotWgtDrawer(this);
         pmPeersChtWgt = new KPlotWgtDrawer(this);
         pmUlChtWgt = new KPlotWgtDrawer(this);
 
-        connect(dynamic_cast<KPlotWgtDrawer*>(pmDlChtWgt), &KPlotWgtDrawer::Zeroed, this, &SpdTabPage::resetAvg);
-        connect(dynamic_cast<KPlotWgtDrawer*>(pmUlChtWgt), &KPlotWgtDrawer::Zeroed, this, &SpdTabPage::resetAvg);
+        connect(dynamic_cast<KPlotWgtDrawer *>(pmDlChtWgt), &KPlotWgtDrawer::Zeroed, this, &SpdTabPage::resetAvg);
+        connect(dynamic_cast<KPlotWgtDrawer *>(pmUlChtWgt), &KPlotWgtDrawer::Zeroed, this, &SpdTabPage::resetAvg);
     }
-
-
 
     setupUi();
 }
@@ -42,9 +43,9 @@ void SpdTabPage::setupUi()
 {
     pmUiSpd->setupUi(this);
 
-    pmUiSpd->DlSpdGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmDlChtWgt));
-    pmUiSpd->PeersSpdGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmPeersChtWgt));
-    pmUiSpd->UlSpdGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmUlChtWgt));
+    pmUiSpd->DlSpdGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmDlChtWgt));
+    pmUiSpd->PeersSpdGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmPeersChtWgt));
+    pmUiSpd->UlSpdGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmUlChtWgt));
 
     pmDlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on download chart", "Current speed"), QPen(StatsPluginSettings::dlSpdColor()), true));
     pmUlChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on upload chart", "Current speed"), QPen(StatsPluginSettings::ulSpdColor()), true));
@@ -66,7 +67,6 @@ void SpdTabPage::setupUi()
 
 void SpdTabPage::applySettings()
 {
-
     pmDlChtWgt->setPen(0, QPen(StatsPluginSettings::dlSpdColor()));
     pmUlChtWgt->setPen(0, QPen(StatsPluginSettings::ulSpdColor()));
 
@@ -99,7 +99,6 @@ void SpdTabPage::applySettings()
     pmDlChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
     pmPeersChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
     pmUlChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
-
 }
 
 void SpdTabPage::updateAllCharts()
@@ -109,20 +108,20 @@ void SpdTabPage::updateAllCharts()
     pmUlChtWgt->update();
 }
 
-void SpdTabPage::gatherDownloadSpeed(Plugin* pPlug)
+void SpdTabPage::gatherDownloadSpeed(Plugin *pPlug)
 {
     uint spd = pPlug->getCore()->getStats().download_speed;
     mDlAvg.first += spd;
     mDlAvg.second++;
 
-    pmDlChtWgt->addValue(0,  spd / 1024.0);
+    pmDlChtWgt->addValue(0, spd / 1024.0);
     pmDlChtWgt->addValue(1, (mDlAvg.first / mDlAvg.second) / 1024.0);
     pmDlChtWgt->addValue(2, Settings::maxDownloadRate());
 }
 
-void SpdTabPage::gatherPeersSpeed(Plugin* pPlug)
+void SpdTabPage::gatherPeersSpeed(Plugin *pPlug)
 {
-    kt::QueueManager* qm_iface = pPlug->getCore()->getQueueManager();
+    kt::QueueManager *qm_iface = pPlug->getCore()->getQueueManager();
 
     if (qm_iface == nullptr) {
         return;
@@ -134,14 +133,14 @@ void SpdTabPage::gatherPeersSpeed(Plugin* pPlug)
 
     l_up_spd = l_dn_spd = s_dn_spd = l_cnt = s_cnt = 0;
 
-    for (QList< bt::TorrentInterface*>::iterator it = qm_iface->begin(); it != qm_iface->end(); it++) {
-        bt::TorrentControl* tctl = dynamic_cast<bt::TorrentControl*>(*it);
+    for (QList<bt::TorrentInterface *>::iterator it = qm_iface->begin(); it != qm_iface->end(); it++) {
+        bt::TorrentControl *tctl = dynamic_cast<bt::TorrentControl *>(*it);
 
         if (!tctl) {
             continue;
         }
 
-        const bt::PeerManager* p_mgr = tctl->getPeerMgr();
+        const bt::PeerManager *p_mgr = tctl->getPeerMgr();
 
         const QList<bt::Peer *> ppl = p_mgr->getPeers();
 
@@ -177,11 +176,9 @@ void SpdTabPage::gatherPeersSpeed(Plugin* pPlug)
         pmPeersChtWgt->addValue(2, (static_cast<double>(s_dn_spd) / static_cast<double>(s_cnt)) / 1024.0);
         pmPeersChtWgt->addValue(4, static_cast<double>(s_dn_spd) / 1024.0);
     }
-
-
 }
 
-void SpdTabPage::gatherUploadSpeed(Plugin* pPlug)
+void SpdTabPage::gatherUploadSpeed(Plugin *pPlug)
 {
     uint spd = pPlug->getCore()->getStats().upload_speed;
     mUlAvg.first += spd;
@@ -192,14 +189,14 @@ void SpdTabPage::gatherUploadSpeed(Plugin* pPlug)
     pmUlChtWgt->addValue(2, Settings::maxUploadRate());
 }
 
-void SpdTabPage::gatherData(Plugin* pPlug)
+void SpdTabPage::gatherData(Plugin *pPlug)
 {
     gatherDownloadSpeed(pPlug);
     gatherPeersSpeed(pPlug);
     gatherUploadSpeed(pPlug);
 }
 
-void SpdTabPage::resetAvg(ChartDrawer* c)
+void SpdTabPage::resetAvg(ChartDrawer *c)
 {
     if (!c) {
         return;
@@ -212,6 +209,6 @@ void SpdTabPage::resetAvg(ChartDrawer* c)
     }
 }
 
-} //ns e
+} // ns e
 
 #include "moc_SpdTabPage.cpp"

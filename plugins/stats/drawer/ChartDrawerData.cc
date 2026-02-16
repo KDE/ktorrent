@@ -10,7 +10,11 @@
 namespace kt
 {
 
-ChartDrawerData::ChartDrawerData() : pmName(i18n("Unknown")), pmPen("#f00"), pmUuid(QUuid::createUuid()), mMax(true)
+ChartDrawerData::ChartDrawerData()
+    : pmName(i18n("Unknown"))
+    , pmPen("#f00")
+    , pmUuid(QUuid::createUuid())
+    , mMax(true)
 {
 }
 
@@ -18,17 +22,20 @@ ChartDrawerData::~ChartDrawerData()
 {
 }
 
-ChartDrawerData::ChartDrawerData(const ChartDrawerData& rCdd) : pmName(rCdd.pmName),
-    pmPen(rCdd.pmPen),
-    pmVals(rCdd.pmVals),
-    pmUuid(rCdd.pmUuid),
-    mMax(rCdd.mMax)
+ChartDrawerData::ChartDrawerData(const ChartDrawerData &rCdd)
+    : pmName(rCdd.pmName)
+    , pmPen(rCdd.pmPen)
+    , pmVals(rCdd.pmVals)
+    , pmUuid(rCdd.pmUuid)
+    , mMax(rCdd.mMax)
 {
-
 }
 
-ChartDrawerData::ChartDrawerData(const QString& rN, const QPen& rP, const bool sm, const QUuid& rU) : pmName(rN),
-    pmPen(rP), pmUuid(rU), mMax(sm)
+ChartDrawerData::ChartDrawerData(const QString &rN, const QPen &rP, const bool sm, const QUuid &rU)
+    : pmName(rN)
+    , pmPen(rP)
+    , pmUuid(rU)
+    , mMax(sm)
 {
 }
 
@@ -80,4 +87,3 @@ void ChartDrawerData::enableMarkMax(const bool e)
 }
 
 } // ns end
-

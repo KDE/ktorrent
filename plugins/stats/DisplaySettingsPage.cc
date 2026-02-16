@@ -4,22 +4,23 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include <statspluginsettings.h>
 #include "DisplaySettingsPage.h"
+#include <statspluginsettings.h>
 
 namespace kt
 {
 
-DisplaySettingsPage::DisplaySettingsPage(QWidget* parent)
-    : PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window This is about how things are displayed (colors, etc), not about a screen/display", "Display"), QStringLiteral("view-statistics"), parent)
+DisplaySettingsPage::DisplaySettingsPage(QWidget *parent)
+    : PrefPageInterface(StatsPluginSettings::self(),
+                        i18nc("@title:window This is about how things are displayed (colors, etc), not about a screen/display", "Display"),
+                        QStringLiteral("view-statistics"),
+                        parent)
 {
     setupUi(this);
 }
 
-
 DisplaySettingsPage::~DisplaySettingsPage()
 {
 }
-
 
 }

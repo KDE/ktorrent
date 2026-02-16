@@ -141,7 +141,7 @@ bool IWFileTreeModel::setData(const QModelIndex &index, const QVariant &value, i
 
     if (role == Qt::EditRole) {
         if (setName(index, value.toString())) {
-            static_cast<TorrentControl*>(tc)->afterRename();
+            static_cast<TorrentControl *>(tc)->afterRename();
             return true;
         }
     }

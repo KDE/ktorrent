@@ -246,7 +246,7 @@ bool IWFileListModel::setData(const QModelIndex &index, const QVariant &value, i
             QString path = value.toString();
             tc->setUserModifiedFileName(path);
         }
-        static_cast<TorrentControl*>(tc)->afterRename();
+        static_cast<TorrentControl *>(tc)->afterRename();
         Q_EMIT dataChanged(index, index);
         return true;
     }

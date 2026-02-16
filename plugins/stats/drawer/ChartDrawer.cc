@@ -48,4 +48,4 @@ ChartDrawer::val_t::const_iterator ChartDrawer::end() const
     return pmVals.end();
 }
 
-} //NS end
+} // NS end

@@ -25,7 +25,9 @@ class KTCORE_EXPORT GroupTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    enum ColumnRoles { PathRole = Qt::UserRole + 1 };
+    enum ColumnRoles {
+        PathRole = Qt::UserRole + 1
+    };
 
     GroupTreeModel(GroupManager *gman, QObject *parent);
     ~GroupTreeModel() override;

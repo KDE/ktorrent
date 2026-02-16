@@ -5,13 +5,16 @@
 
 #include <KPlotWgtDrawer.h>
 
-#include <QFileDialog>
 #include <KLocalizedString>
+#include <QFileDialog>
 
 namespace kt
 {
 
-KPlotWgtDrawer::KPlotWgtDrawer(QWidget* p) : KPlotWidget(p), ChartDrawer(), pmCtxMenu(new QMenu(this))
+KPlotWgtDrawer::KPlotWgtDrawer(QWidget *p)
+    : KPlotWidget(p)
+    , ChartDrawer()
+    , pmCtxMenu(new QMenu(this))
 {
     setLimits(0, mXMax, 0, mYMax);
     axis(TopAxis)->setVisible(false);
@@ -27,12 +30,10 @@ KPlotWgtDrawer::KPlotWgtDrawer(QWidget* p) : KPlotWidget(p), ChartDrawer(), pmCt
     setContextMenuPolicy(Qt::CustomContextMenu);
     MakeCtxMenu();
     connect(this, &KPlotWgtDrawer::customContextMenuRequested, this, &KPlotWgtDrawer::showContextMenu);
-
 }
 
 void KPlotWgtDrawer::addValue(const size_t idx, const wgtunit_t val, const bool upd)
 {
-
     if (idx >= static_cast<size_t>(plotObjects().size())) {
         return;
     }
@@ -42,12 +43,10 @@ void KPlotWgtDrawer::addValue(const size_t idx, const wgtunit_t val, const bool 
     if (upd) {
         update();
     }
-
 }
 
 void KPlotWgtDrawer::AddPointsFromBuffer()
 {
-
     if (!(pmBuff.size())) {
         return;
     }
@@ -60,13 +59,13 @@ void KPlotWgtDrawer::AddPointsFromBuffer()
             continue;
         }
 
-        QList< KPlotPoint* > kpp = kpo[pmBuff.front().first]->points();
+        QList<KPlotPoint *> kpp = kpo[pmBuff.front().first]->points();
 
         if (kpp.size() > mXMax) {
             kpo[pmBuff.front().first]->removePoint(0);
         }
 
-        for (size_t i = kpp.size() - 1 ; ((kpp.size()) && (i > 0)); i--) {
+        for (size_t i = kpp.size() - 1; ((kpp.size()) && (i > 0)); i--) {
             kpp[i]->setX(kpp[i]->x() - 1);
         }
 
@@ -84,9 +83,9 @@ void KPlotWgtDrawer::AddPointsFromBuffer()
     }
 }
 
-KPlotObject* KPlotWgtDrawer::cdd2kpo(const ChartDrawerData& rC) const
+KPlotObject *KPlotWgtDrawer::cdd2kpo(const ChartDrawerData &rC) const
 {
-    KPlotObject* kpo = new KPlotObject(rC.getPen().color(), KPlotObject::Lines, 1, KPlotObject::NoPoints);
+    KPlotObject *kpo = new KPlotObject(rC.getPen().color(), KPlotObject::Lines, 1, KPlotObject::NoPoints);
     kpo->setPen(rC.getPen());
 
     return kpo;
@@ -114,7 +113,10 @@ void KPlotWgtDrawer::insertDataSet(const size_t idx, ChartDrawerData Cdd)
     val_t::iterator src = kpol.begin();
 
     while (src != kpol.end()) {
-        dest_l.push_back(new KPlotObject((*src)->pen().color(), static_cast<KPlotObject::PlotType>(static_cast<int>((*src)->plotTypes())), (*src)->size(), (*src)->pointStyle()));
+        dest_l.push_back(new KPlotObject((*src)->pen().color(),
+                                         static_cast<KPlotObject::PlotType>(static_cast<int>((*src)->plotTypes())),
+                                         (*src)->size(),
+                                         (*src)->pointStyle()));
 
         src++;
     }
@@ -127,7 +129,6 @@ void KPlotWgtDrawer::insertDataSet(const size_t idx, ChartDrawerData Cdd)
     pmDescs.insert(pmDescs.begin() + idx, Cdd.getName());
 
     zeroAll();
-
 }
 
 void KPlotWgtDrawer::removeDataSet(const size_t idx)
@@ -144,7 +145,10 @@ void KPlotWgtDrawer::removeDataSet(const size_t idx)
     val_t::iterator src = kpol.begin();
 
     while (src != kpol.end()) {
-        dest_l.push_back(new KPlotObject((*src)->pen().color(), static_cast<KPlotObject::PlotType>(static_cast<int>((*src)->plotTypes())), (*src)->size(), (*src)->pointStyle()));
+        dest_l.push_back(new KPlotObject((*src)->pen().color(),
+                                         static_cast<KPlotObject::PlotType>(static_cast<int>((*src)->plotTypes())),
+                                         (*src)->size(),
+                                         (*src)->pointStyle()));
         src++;
     }
 
@@ -168,20 +172,16 @@ void KPlotWgtDrawer::zero(const size_t idx)
 
     std::list<buff_t::iterator> lb;
 
-    //iteration through elements to-be-removed is EVIL
+    // iteration through elements to-be-removed is EVIL
 
-    for (buff_t::iterator it = pmBuff.begin();
-         it != pmBuff.end();
-         it++) {
+    for (buff_t::iterator it = pmBuff.begin(); it != pmBuff.end(); it++) {
         if (it->first == idx) {
             lb.push_back(it);
         }
     }
 
-    //EVIL I SAY!
-    for (std::list<buff_t::iterator>::iterator it = lb.begin();
-         it != lb.end();
-         it++) {
+    // EVIL I SAY!
+    for (std::list<buff_t::iterator>::iterator it = lb.begin(); it != lb.end(); it++) {
         pmBuff.erase(*it);
     }
 
@@ -192,20 +192,20 @@ void KPlotWgtDrawer::zero(const size_t idx)
 
 void KPlotWgtDrawer::zeroAll()
 {
-    for (size_t i = 0; i < static_cast<size_t>(plotObjects().size()) ; i++) {
+    for (size_t i = 0; i < static_cast<size_t>(plotObjects().size()); i++) {
         zero(i);
     }
 
     Q_EMIT Zeroed(this);
 }
 
-void KPlotWgtDrawer::setUnitName(const QString& rN)
+void KPlotWgtDrawer::setUnitName(const QString &rN)
 {
     pmUnitName = rN;
     axis(RightAxis)->setLabel(rN);
 }
 
-void KPlotWgtDrawer::setPen(const size_t idx, const QPen& rP)
+void KPlotWgtDrawer::setPen(const size_t idx, const QPen &rP)
 {
     val_t kpol(plotObjects());
 
@@ -240,25 +240,24 @@ void KPlotWgtDrawer::setYMax(const wgtunit_t y)
 void KPlotWgtDrawer::findSetMax()
 {
     val_t kpol(plotObjects());
-    QList< KPlotPoint* > kppl;
+    QList<KPlotPoint *> kppl;
 
     wgtunit_t max = 0;
 
-    for (size_t i = 0; i < static_cast<size_t>(kpol.size()) ; i++) {
+    for (size_t i = 0; i < static_cast<size_t>(kpol.size()); i++) {
         kppl = kpol[i]->points();
 
-        for (size_t p = 0; p < static_cast<size_t>(kppl.size()) ; p++) {
+        for (size_t p = 0; p < static_cast<size_t>(kppl.size()); p++) {
             if ((kppl[p]->y()) > max) {
                 max = kppl[p]->y();
             }
         }
-
     }
 
     setYMax(max + 5);
 }
 
-void KPlotWgtDrawer::setUuid(const size_t idx, const QUuid& rQ)
+void KPlotWgtDrawer::setUuid(const size_t idx, const QUuid &rQ)
 {
     if (idx >= static_cast<size_t>(plotObjects().size())) {
         return;
@@ -267,7 +266,7 @@ void KPlotWgtDrawer::setUuid(const size_t idx, const QUuid& rQ)
     pmUuids.at(idx) = rQ;
 }
 
-int16_t KPlotWgtDrawer::findUuidInSet(const QUuid& rQ) const
+int16_t KPlotWgtDrawer::findUuidInSet(const QUuid &rQ) const
 {
     std::vector<QUuid>::const_iterator it = std::find(pmUuids.begin(), pmUuids.end(), rQ);
 
@@ -285,12 +284,12 @@ void KPlotWgtDrawer::update()
     KPlotWidget::update();
 }
 
-void KPlotWgtDrawer::setLegend(const QString& rL)
+void KPlotWgtDrawer::setLegend(const QString &rL)
 {
     setToolTip(rL);
 }
 
-void KPlotWgtDrawer::paintEvent(QPaintEvent* pPevt)
+void KPlotWgtDrawer::paintEvent(QPaintEvent *pPevt)
 {
     MarkMax();
 
@@ -312,8 +311,7 @@ QString KPlotWgtDrawer::makeLegendString()
     for (size_t i = 0; i < static_cast<size_t>(kpo.size()); i++) {
         lgnd += i18n("<li><span style='background-color: %1; font-size: 14px; font-family: monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>",
                      kpo[i]->linePen().color().name(),
-                     pmDescs.at(i)
-                    );
+                     pmDescs.at(i));
     }
 
     return lgnd + QStringLiteral("</ul>");
@@ -334,10 +332,10 @@ void KPlotWgtDrawer::enableBackgroundGrid(bool bg)
     setShowGrid(bg);
 }
 
-bool KPlotWgtDrawer::event(QEvent* e)
+bool KPlotWgtDrawer::event(QEvent *e)
 {
     if ((e->type()) == QEvent::ToolTip) {
-        QToolTip::showText(dynamic_cast<QHelpEvent*>(e)->globalPos(), makeLegendString(), this);
+        QToolTip::showText(dynamic_cast<QHelpEvent *>(e)->globalPos(), makeLegendString(), this);
         return true;
     } else {
         return KPlotWidget::event(e);
@@ -346,29 +344,29 @@ bool KPlotWgtDrawer::event(QEvent* e)
 
 void KPlotWgtDrawer::MakeCtxMenu()
 {
-
-    connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")),
-    &QAction::triggered, this, [this](bool) {
+    connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")), &QAction::triggered, this, [this](bool) {
         renderToImage();
     });
 
     pmCtxMenu->addSeparator();
 
     connect(pmCtxMenu->addAction(i18nc("@action:inmenu Recalculate the 0Y axis and then redraw the chart", "Rescale")),
-    &QAction::triggered, this, [this](bool) {
-        findSetMax();
-    });
+            &QAction::triggered,
+            this,
+            [this](bool) {
+                findSetMax();
+            });
 
     pmCtxMenu->addSeparator();
 
-    QAction* rst = pmCtxMenu->addAction(i18nc("@action:inmenu", "Reset"));
+    QAction *rst = pmCtxMenu->addAction(i18nc("@action:inmenu", "Reset"));
 
     connect(rst, &QAction::triggered, this, [this](bool) {
         zeroAll();
     });
 }
 
-void KPlotWgtDrawer::showContextMenu(const QPoint& pos)
+void KPlotWgtDrawer::showContextMenu(const QPoint &pos)
 {
     pmCtxMenu->exec(mapToGlobal(pos));
 }
@@ -388,7 +386,7 @@ void KPlotWgtDrawer::renderToImage()
 void KPlotWgtDrawer::MarkMax()
 {
     val_t kpol(plotObjects());
-    QList< KPlotPoint* > kppl;
+    QList<KPlotPoint *> kppl;
 
     wgtunit_t max;
     int32_t idx;
@@ -410,11 +408,9 @@ void KPlotWgtDrawer::MarkMax()
         if (idx >= 0) {
             kppl[idx]->setLabel(QString::number(max, 'f', 2));
         }
-
     }
-
 }
 
-}// ns end
+} // ns end
 
 #include "moc_KPlotWgtDrawer.cpp"

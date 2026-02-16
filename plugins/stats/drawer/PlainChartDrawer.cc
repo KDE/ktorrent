@@ -11,7 +11,10 @@
 namespace kt
 {
 
-PlainChartDrawer::PlainChartDrawer(QWidget* p) :  QFrame(p), ChartDrawer(), pmCtxMenu(new QMenu(this))
+PlainChartDrawer::PlainChartDrawer(QWidget *p)
+    : QFrame(p)
+    , ChartDrawer()
+    , pmCtxMenu(new QMenu(this))
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     MakeCtxMenu();
@@ -40,7 +43,7 @@ inline PlainChartDrawer::wgtunit_t PlainChartDrawer::TY(const wgtunit_t y) const
 
 inline PlainChartDrawer::wgtunit_t PlainChartDrawer::FindXScreenCoords(const wgtunit_t x) const
 {
-    return (width() / mXMax) * x ;
+    return (width() / mXMax) * x;
 }
 
 inline PlainChartDrawer::wgtunit_t PlainChartDrawer::FindYScreenCoords(const wgtunit_t y) const
@@ -50,7 +53,6 @@ inline PlainChartDrawer::wgtunit_t PlainChartDrawer::FindYScreenCoords(const wgt
 
 void PlainChartDrawer::paintEvent(QPaintEvent *pe)
 {
-
     QStyleOption opt;
     opt.initFrom(this);
 
@@ -67,19 +69,17 @@ void PlainChartDrawer::paintEvent(QPaintEvent *pe)
     DrawChart(pnt);
 }
 
-void PlainChartDrawer::DrawScale(QPainter& rPnt)
+void PlainChartDrawer::DrawScale(QPainter &rPnt)
 {
     if (!mYMax) {
         return;
     }
-
 
     QPen oldpen = rPnt.pen();
 
     QPen pen;
 
     if (mBgdGrid) {
-
         pen.setColor(QPalette().color(QPalette::AlternateBase));
         rPnt.setPen(pen);
 
@@ -92,7 +92,7 @@ void PlainChartDrawer::DrawScale(QPainter& rPnt)
         }
     }
 
-    wgtunit_t scale =  height() / 8;
+    wgtunit_t scale = height() / 8;
 
     pen.setColor(QPalette().color(QPalette::Text));
     pen.setWidth(1);
@@ -117,7 +117,7 @@ void PlainChartDrawer::DrawScale(QPainter& rPnt)
     rPnt.setFont(oldfont);
 }
 
-void PlainChartDrawer::DrawFrame(QPainter& rPnt)
+void PlainChartDrawer::DrawFrame(QPainter &rPnt)
 {
     QPen oldpen = rPnt.pen();
     QPen pen;
@@ -126,11 +126,7 @@ void PlainChartDrawer::DrawFrame(QPainter& rPnt)
     pen.setWidth(3);
     rPnt.setPen(pen);
 
-    QPoint points[3] = {
-        QPoint(0, TY(0)),
-        QPoint(width(), TY(0)),
-        QPoint(width(), TY(height()))
-    };
+    QPoint points[3] = {QPoint(0, TY(0)), QPoint(width(), TY(0)), QPoint(width(), TY(height()))};
 
     rPnt.drawPolyline(points, 3);
 
@@ -142,7 +138,6 @@ void PlainChartDrawer::DrawFrame(QPainter& rPnt)
     newf.setUnderline(1);
     rPnt.setFont(newf);
 
-
     QColor qc(pen.color());
     qc.setAlphaF(0.75);
     pen.setColor(qc);
@@ -152,10 +147,9 @@ void PlainChartDrawer::DrawFrame(QPainter& rPnt)
 
     rPnt.setFont(oldf);
     rPnt.setPen(oldpen);
-
 }
 
-void PlainChartDrawer::DrawChart(QPainter& rPnt)
+void PlainChartDrawer::DrawChart(QPainter &rPnt)
 {
     QPen oldpen = rPnt.pen();
 
@@ -171,35 +165,30 @@ void PlainChartDrawer::DrawChart(QPainter& rPnt)
     rPnt.setPen(oldpen);
 }
 
-void PlainChartDrawer::DrawChartLine(QPainter& rPnt, const ChartDrawerData& rCdd)
+void PlainChartDrawer::DrawChartLine(QPainter &rPnt, const ChartDrawerData &rCdd)
 {
-
     QPen qp = rCdd.getPen();
     qp.setJoinStyle(Qt::RoundJoin);
     rPnt.setPen(qp);
 
-    const ChartDrawerData::val_t& vals = rCdd.getValues();
+    const ChartDrawerData::val_t &vals = rCdd.getValues();
 
-    QPointF* l = new QPointF[vals.size()];
+    QPointF *l = new QPointF[vals.size()];
 
     for (size_t i = 0; i < vals.size(); i++) {
-        l[i] = QPointF(
-                   FindXScreenCoords(i),
-                   TY(FindYScreenCoords(vals.at(i)))
-               );
+        l[i] = QPointF(FindXScreenCoords(i), TY(FindYScreenCoords(vals.at(i))));
     }
 
     l[vals.size() - 1] = QPointF(
 
-                             width(),
-                             TY(FindYScreenCoords(*(vals.end() - 1)))
-                         );
+        width(),
+        TY(FindYScreenCoords(*(vals.end() - 1))));
 
     rPnt.drawPolyline(l, vals.size());
-    delete [] l;
+    delete[] l;
 }
 
-void PlainChartDrawer::DrawCurrentValue(QPainter& rPnt, const ChartDrawerData& rCdd, size_t idx)
+void PlainChartDrawer::DrawCurrentValue(QPainter &rPnt, const ChartDrawerData &rCdd, size_t idx)
 {
     QPen qp = rCdd.getPen();
     qp.setJoinStyle(Qt::RoundJoin);
@@ -231,7 +220,6 @@ void PlainChartDrawer::DrawCurrentValue(QPainter& rPnt, const ChartDrawerData& r
         lenmod = -5;
     }
 
-
     rPnt.setBackgroundMode(Qt::OpaqueMode);
 
     rPnt.drawText(QWidget::width() - (40 - lenmod), y, QString::number(val, 'f', 2));
@@ -253,7 +241,7 @@ void PlainChartDrawer::DrawCurrentValue(QPainter& rPnt, const ChartDrawerData& r
     rPnt.setFont(oldfont);
 }
 
-void PlainChartDrawer::DrawMaximum(QPainter& rPnt, const ChartDrawerData& rCdd, size_t idx)
+void PlainChartDrawer::DrawMaximum(QPainter &rPnt, const ChartDrawerData &rCdd, size_t idx)
 {
     QPen qp = rCdd.getPen();
     QBrush oldb = qp.brush();
@@ -267,7 +255,6 @@ void PlainChartDrawer::DrawMaximum(QPainter& rPnt, const ChartDrawerData& rCdd, 
     rPnt.setPen(qp);
     rPnt.drawLine(FindXScreenCoords(max.second), TY(0), FindXScreenCoords(max.second), TY(height()));
 
-
     idx++;
     wgtunit_t y = 5.0 + (idx * 14);
     wgtunit_t x = FindXScreenCoords(max.second);
@@ -277,7 +264,6 @@ void PlainChartDrawer::DrawMaximum(QPainter& rPnt, const ChartDrawerData& rCdd, 
     } else {
         x -= 35;
     }
-
 
     qc.setAlphaF(1);
 
@@ -298,29 +284,29 @@ void PlainChartDrawer::DrawMaximum(QPainter& rPnt, const ChartDrawerData& rCdd, 
 
 void PlainChartDrawer::MakeCtxMenu()
 {
-
-    connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")),
-    &QAction::triggered, this, [this](bool) {
+    connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")), &QAction::triggered, this, [this](bool) {
         renderToImage();
     });
 
     pmCtxMenu->addSeparator();
 
     connect(pmCtxMenu->addAction(i18nc("@action:inmenu Recalculate the 0Y axis and then redraw the chart", "Rescale")),
-    &QAction::triggered, this, [this](bool) {
-        findSetMax();
-    });
+            &QAction::triggered,
+            this,
+            [this](bool) {
+                findSetMax();
+            });
 
     pmCtxMenu->addSeparator();
 
-    QAction* rst = pmCtxMenu->addAction(i18nc("@action:inmenu", "Reset"));
+    QAction *rst = pmCtxMenu->addAction(i18nc("@action:inmenu", "Reset"));
 
     connect(rst, &QAction::triggered, this, [this](bool) {
         zeroAll();
     });
 }
 
-void PlainChartDrawer::showContextMenu(const QPoint& pos)
+void PlainChartDrawer::showContextMenu(const QPoint &pos)
 {
     pmCtxMenu->exec(mapToGlobal(pos));
 }
@@ -355,7 +341,6 @@ void PlainChartDrawer::addValue(const size_t idx, const wgtunit_t val, const boo
     if (upd) {
         update();
     }
-
 }
 
 void PlainChartDrawer::addDataSet(ChartDrawerData Cdd)
@@ -382,7 +367,6 @@ void PlainChartDrawer::removeDataSet(const size_t idx)
 
     setLegend(makeLegendString());
 }
-
 
 void PlainChartDrawer::zero(const size_t idx)
 {
@@ -420,13 +404,12 @@ void PlainChartDrawer::setXMax(const wgtunit_t x)
     }
 }
 
-
 void PlainChartDrawer::setYMax(const wgtunit_t y)
 {
     mYMax = y;
 }
 
-void PlainChartDrawer::setPen(const size_t idx, const QPen& rP)
+void PlainChartDrawer::setPen(const size_t idx, const QPen &rP)
 {
     if (idx >= pmVals.size()) {
         return;
@@ -446,7 +429,7 @@ QUuid PlainChartDrawer::getUuid(const size_t idx) const
     return pmVals.at(idx).getUuid();
 }
 
-void PlainChartDrawer::setUuid(const size_t idx, const QUuid& rU)
+void PlainChartDrawer::setUuid(const size_t idx, const QUuid &rU)
 {
     if (idx >= pmVals.size()) {
         return;
@@ -455,9 +438,8 @@ void PlainChartDrawer::setUuid(const size_t idx, const QUuid& rU)
     pmVals.at(idx).setUuid(rU);
 }
 
-int16_t PlainChartDrawer::findUuidInSet(const QUuid& rU) const
+int16_t PlainChartDrawer::findUuidInSet(const QUuid &rU) const
 {
-
     for (int16_t i = 0; i < static_cast<int16_t>(pmVals.size()); i++) {
         if (pmVals.at(i).getUuid() == rU) {
             return i;
@@ -494,14 +476,13 @@ QString PlainChartDrawer::makeLegendString()
     for (size_t i = 0; i < pmVals.size(); i++) {
         lgnd += i18n("<li><span style='background-color: %1; font-size: 14px; font-family: monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>",
                      pmVals.at(i).getPen().color().name(),
-                     pmVals.at(i).getName()
-                    );
+                     pmVals.at(i).getName());
     }
 
     return lgnd + QStringLiteral("</ul>");
 }
 
-void PlainChartDrawer::setLegend(const QString& rL)
+void PlainChartDrawer::setLegend(const QString &rL)
 {
     setToolTip(rL);
 }
@@ -516,7 +497,6 @@ void PlainChartDrawer::enableBackgroundGrid(bool bg)
     mBgdGrid = bg;
 }
 
-} //NS end
-
+} // NS end
 
 #include "moc_PlainChartDrawer.cpp"

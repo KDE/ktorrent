@@ -8,10 +8,12 @@
 namespace kt
 {
 
-ConnsTabPage::ConnsTabPage(QWidget* p) : PluginPage(p), pmConnsUi(new Ui::ConnsWgt), pmLhrSwnUuid(QUuid::createUuid()),
-    pmSesSwnUuid(QUuid::createUuid())
+ConnsTabPage::ConnsTabPage(QWidget *p)
+    : PluginPage(p)
+    , pmConnsUi(new Ui::ConnsWgt)
+    , pmLhrSwnUuid(QUuid::createUuid())
+    , pmSesSwnUuid(QUuid::createUuid())
 {
-
     if (StatsPluginSettings::widgetType() == 0) {
         pmConnsChtWgt = new PlainChartDrawer(this);
         pmDhtChtWgt = new PlainChartDrawer(this);
@@ -27,7 +29,6 @@ ConnsTabPage::~ConnsTabPage()
 {
 }
 
-
 void ConnsTabPage::setupUi()
 {
     pmConnsUi->setupUi(this);
@@ -35,15 +36,16 @@ void ConnsTabPage::setupUi()
     pmConnsChtWgt->setUnitName(i18n("Connections"));
     pmDhtChtWgt->setUnitName(i18n("Nodes"));
 
-    pmConnsUi->ConnsGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmConnsChtWgt));
-    pmConnsUi->DhtGbw->layout()->addWidget(dynamic_cast<QWidget*>(pmDhtChtWgt));
+    pmConnsUi->ConnsGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmConnsChtWgt));
+    pmConnsUi->DhtGbw->layout()->addWidget(dynamic_cast<QWidget *>(pmDhtChtWgt));
 
     //------------------
     pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers connected"), QPen(StatsPluginSettings::cnLConnColor()), true));
     //
 
     if (StatsPluginSettings::showLeechersInSwarms()) {
-        pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, pmLhrSwnUuid));
+        pmConnsChtWgt->addDataSet(
+            ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, pmLhrSwnUuid));
     }
 
     //
@@ -51,20 +53,27 @@ void ConnsTabPage::setupUi()
 
     //
     if (StatsPluginSettings::showSeedsInSwarms()) {
-        pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, pmSesSwnUuid));
+        pmConnsChtWgt->addDataSet(
+            ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, pmSesSwnUuid));
     }
 
     //
-    pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per torrent"), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()), true));
+    pmConnsChtWgt->addDataSet(
+        ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per torrent"), QPen(StatsPluginSettings::cnAvgLConnPerTorrColor()), true));
 
     //
-    pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per torrent"), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()), true));
+    pmConnsChtWgt->addDataSet(
+        ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per torrent"), QPen(StatsPluginSettings::cnAvgSConnPerTorrColor()), true));
 
     //
-    pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per running torrent"), QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()), true));
+    pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average leechers connected per running torrent"),
+                                              QPen(StatsPluginSettings::cnAvgLConnPerRunTorrColor()),
+                                              true));
 
     //
-    pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per running torrent"), QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()), true));
+    pmConnsChtWgt->addDataSet(ChartDrawerData(i18nc("Name of a line on chart", "Average seeds connected per running torrent"),
+                                              QPen(StatsPluginSettings::cnAvgSConnPerRunTorrColor()),
+                                              true));
 
     //--------------------------
 
@@ -80,18 +89,18 @@ void ConnsTabPage::setupUi()
 
 void ConnsTabPage::applySettings()
 {
-
     pmConnsChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
     pmDhtChtWgt->enableAntiAlias(StatsPluginSettings::antiAliasing());
 
     pmConnsChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
     pmDhtChtWgt->enableBackgroundGrid(StatsPluginSettings::drawBgdGrid());
 
-
     //-------
 
     if (StatsPluginSettings::showLeechersInSwarms() && (pmConnsChtWgt->findUuidInSet(pmLhrSwnUuid) == -1)) {
-        pmConnsChtWgt->insertDataSet(1, ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, pmLhrSwnUuid));
+        pmConnsChtWgt->insertDataSet(
+            1,
+            ChartDrawerData(i18nc("Name of a line on chart", "Leechers in swarms"), QPen(StatsPluginSettings::cnLSwarmsColor()), true, pmLhrSwnUuid));
     }
 
     if ((!StatsPluginSettings::showLeechersInSwarms()) && (pmConnsChtWgt->findUuidInSet(pmLhrSwnUuid) != -1)) {
@@ -102,9 +111,13 @@ void ConnsTabPage::applySettings()
 
     if (StatsPluginSettings::showSeedsInSwarms() && (pmConnsChtWgt->findUuidInSet(pmSesSwnUuid) == -1)) {
         if ((pmConnsChtWgt->findUuidInSet(pmLhrSwnUuid) == -1)) {
-            pmConnsChtWgt->insertDataSet(2, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, pmSesSwnUuid));
+            pmConnsChtWgt->insertDataSet(
+                2,
+                ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, pmSesSwnUuid));
         } else {
-            pmConnsChtWgt->insertDataSet(3, ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, pmSesSwnUuid));
+            pmConnsChtWgt->insertDataSet(
+                3,
+                ChartDrawerData(i18nc("Name of a line on chart", "Seeds in swarms"), QPen(StatsPluginSettings::cnSSwarmsColor()), true, pmSesSwnUuid));
         }
     }
 
@@ -145,12 +158,12 @@ void ConnsTabPage::applySettings()
     pmDhtChtWgt->setPen(0, QPen(StatsPluginSettings::dhtNodesColor()));
     pmDhtChtWgt->setPen(1, QPen(StatsPluginSettings::dhtTasksColor()));
 
-//--------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------
 
     pmConnsChtWgt->setXMax(StatsPluginSettings::connsSamples());
 
     if (bt::Globals::instance().getDHT().isRunning()) {
-        if (! dynamic_cast<QWidget*>(pmDhtChtWgt)->isEnabled()) {
+        if (!dynamic_cast<QWidget *>(pmDhtChtWgt)->isEnabled()) {
             pmConnsUi->DhtGbw->setEnabled(true);
         }
 
@@ -172,14 +185,13 @@ void ConnsTabPage::updateAllCharts()
 {
     pmConnsChtWgt->update();
 
-    if (dynamic_cast<QWidget*>(pmDhtChtWgt)->isEnabled()) {
+    if (dynamic_cast<QWidget *>(pmDhtChtWgt)->isEnabled()) {
         pmDhtChtWgt->update();
     }
 }
 
-void ConnsTabPage::gatherData(Plugin* pPlug)
+void ConnsTabPage::gatherData(Plugin *pPlug)
 {
-
     GatherConnStats(pPlug);
 
     if (pmConnsUi->DhtGbw->isEnabled()) {
@@ -187,7 +199,7 @@ void ConnsTabPage::gatherData(Plugin* pPlug)
     }
 }
 
-void ConnsTabPage::resetAvg(ChartDrawer*)
+void ConnsTabPage::resetAvg(ChartDrawer *)
 {
 }
 
@@ -199,9 +211,9 @@ void ConnsTabPage::GatherDhtStats()
     pmDhtChtWgt->addValue(1, st.num_tasks);
 }
 
-void ConnsTabPage::GatherConnStats(Plugin* pPlug)
+void ConnsTabPage::GatherConnStats(Plugin *pPlug)
 {
-    QueueManager* qm_iface = pPlug->getCore()->getQueueManager();
+    QueueManager *qm_iface = pPlug->getCore()->getQueueManager();
 
     if (qm_iface == nullptr) {
         return;
@@ -211,8 +223,8 @@ void ConnsTabPage::GatherConnStats(Plugin* pPlug)
 
     lc = ls = sc = ss = tc = rtc = 0;
 
-    for (QList< bt::TorrentInterface*>::iterator it = qm_iface->begin(); it != qm_iface->end(); it++) {
-        const bt::TorrentStats& tstat = (*it)->getStats();
+    for (QList<bt::TorrentInterface *>::iterator it = qm_iface->begin(); it != qm_iface->end(); it++) {
+        const bt::TorrentStats &tstat = (*it)->getStats();
 
         lc += tstat.leechers_connected_to;
         ls += tstat.leechers_total;
@@ -261,6 +273,6 @@ void ConnsTabPage::GatherConnStats(Plugin* pPlug)
     }
 }
 
-} //ns end
+} // ns end
 
 #include "moc_ConnsTabPage.cpp"

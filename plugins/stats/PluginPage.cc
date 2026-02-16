@@ -8,15 +8,15 @@
 namespace kt
 {
 
-PluginPage::PluginPage(QWidget* p) : QWidget(p)
+PluginPage::PluginPage(QWidget *p)
+    : QWidget(p)
 {
 }
-
 
 PluginPage::~PluginPage()
 {
 }
 
-} //ns end
+} // ns end
 
 #include "moc_PluginPage.cpp"

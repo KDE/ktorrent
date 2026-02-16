@@ -3,9 +3,9 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include <KPluginFactory>
 #include <StatsPlugin.h>
 #include <interfaces/torrentactivityinterface.h>
-#include <KPluginFactory>
 
 K_PLUGIN_CLASS_WITH_JSON(kt::StatsPlugin, "ktorrent_stats.json")
 
@@ -30,7 +30,7 @@ void StatsPlugin::load()
     pmUiSett = new SettingsPage(nullptr);
     pmDispSett = new DisplaySettingsPage(nullptr);
 
-    TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+    TorrentActivityInterface *ta = getGUI()->getTorrentActivity();
     ta->addToolWidget(pmUiSpd, i18n("Speed charts"), QStringLiteral("view-statistics"), i18n("Displays charts about download and upload speed"));
     ta->addToolWidget(pmUiConns, i18n("Connections charts"), QStringLiteral("view-statistics"), i18n("Displays charts about connections"));
 
@@ -41,12 +41,11 @@ void StatsPlugin::load()
     connect(getCore(), &CoreInterface::settingsChanged, this, &StatsPlugin::settingsChanged);
 
     pmTmr.start(StatsPluginSettings::dataGatherIval());
-
 }
 
 void StatsPlugin::unload()
 {
-    TorrentActivityInterface* ta = getGUI()->getTorrentActivity();
+    TorrentActivityInterface *ta = getGUI()->getTorrentActivity();
     ta->removeToolWidget(pmUiSpd);
     ta->removeToolWidget(pmUiConns);
 
@@ -84,7 +83,7 @@ void StatsPlugin::settingsChanged()
     pmUiConns->applySettings();
 }
 
-} //Ns end
+} // Ns end
 
 #include "StatsPlugin.moc"
 

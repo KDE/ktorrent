@@ -8,8 +8,8 @@
 namespace kt
 {
 
-SettingsPage::SettingsPage(QWidget* p) :
-    PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window", "Statistics"), QStringLiteral("view-statistics"), p)
+SettingsPage::SettingsPage(QWidget *p)
+    : PrefPageInterface(StatsPluginSettings::self(), i18nc("@title:window", "Statistics"), QStringLiteral("view-statistics"), p)
 {
     setupUi(this);
     connect(kcfg_UpdateEveryGuiUpdates, &QSpinBox::valueChanged, this, &SettingsPage::UpdGuiUpdatesToMs);
@@ -28,9 +28,9 @@ void SettingsPage::updateSettings()
 
 void SettingsPage::UpdGuiUpdatesToMs(int)
 {
-    UpdMsLbl->setText(i18n("(= %1 ms)", (kcfg_UpdateEveryGuiUpdates->value()) * Settings::guiUpdateInterval())) ;
+    UpdMsLbl->setText(i18n("(= %1 ms)", (kcfg_UpdateEveryGuiUpdates->value()) * Settings::guiUpdateInterval()));
 }
 
-} //ns end
+} // ns end
 
 #include "moc_SettingsPage.cpp"
