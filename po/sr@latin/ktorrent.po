@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-15 00:43+0000\n"
+"POT-Creation-Date: 2026-02-17 00:44+0000\n"
 "PO-Revision-Date: 2017-12-17 18:00+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -1648,12 +1648,12 @@ msgstr "Andreas Kling"
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
-#: ktorrent/main.cpp:128
+#: ktorrent/main.cpp:127
 #, kde-format
 msgid "DB-IP.com"
 msgstr ""
 
-#: ktorrent/main.cpp:129
+#: ktorrent/main.cpp:128
 #, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
@@ -1662,410 +1662,410 @@ msgid ""
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr ""
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsajt"
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "Prioriteti fajlova i još neke zakrpe"
 
-#: ktorrent/main.cpp:137
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "Tomas Bernar"
 
-#: ktorrent/main.cpp:138
+#: ktorrent/main.cpp:137
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "MiniUPnP je korišćen kao primer za našu primenu UPnP‑a"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesli Vejts"
 
-#: ktorrent/main.cpp:141 ktorrent/main.cpp:142
+#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "Poboljšanja za ZeroConf"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johanson"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "Veb sučelje „Ladno mleko“"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "Aleksandar Dimo"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "IDEAl kôd iz KDevelopa"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "Skot Volčok"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "Poboljšanje brzine pretvaranja u priključku IP filtera"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Brajan Berns iz Juniper Networksa"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "Otkrio dva bezbednosna propusta (oba su otklonjena)"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Sjao"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "Zakrpa za tiho učitavanje sa sačuvane lokacije"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "Ispravke u PHP kodu veb sučelja"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "Rezervisanje prostora na disku za XFS"
 
 # literal-segment: twisted_fall
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "Zakrpa za neprikazivanje veoma malih brzina"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "Zakrpa za prikazivanje mogućeg stanja iza zaštitnog zida"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vajnijus"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Several patches"
 msgstr "Nekoliko zakrpa"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "Zakrpa za skrivanje trake menija"
 
 # literal-segment: The_Kernel
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "Zakrpa za menjanje prioriteta fajla u veb sučelju"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafal Milecki"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Several webgui patches"
 msgstr "Nekoliko zakrpa veb sučelja"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "Ispravke za neka upozorenja"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brifer"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "Zakrpa za proračun slobodnog prostora pod FreeBSD‑om"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Apelhans"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "Zakrpa protiv rušenja u prikazu preuzetih parčića"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Rickard Närström"
 msgstr "Rikard Nerstrem"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "Nekoliko ispravki"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "Zakrpa za tiho učitavanje torenata iz komandne linije"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Lee Olson"
 msgstr "Li Olson"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "New set of icons"
 msgstr "Novi skup ikonica"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aron Dž. Sajgo"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "Podrška za prevlačenje za plasma aplet"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Ian Higginson"
 msgstr "Ijan Higinson"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "Zakrpa za čišćenje spiska priključaka"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "Amikaj Rotman"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "Zakrpa za pretvaranje plasma apleta u iskačući"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Leo Trubach"
 msgstr "Lav Trubač"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr "Zakrpa za podršku IP opsega u dijalogu filtriranja IP‑ova"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "Andrej Barbu"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "Mogućnost koja dodaje datum kada je torent dodat"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "Jonas Lundkvist"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "Mogućnost isključenja autentifikacije u veb sučelju"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "Jaroslav Svjerčinjski"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "Obrasci isključivanja u priključku za sindikaciju"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "Aleksej Šiljdjakov"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr "Zakrpa za preimenovanje torenata od jednog fajla na ime tog fajla"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "Marten de Majer"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr "Popravka za grešku 305379"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Rex Dieter"
 msgstr "Reks Diter"
 
 # literal-segment: x-scheme-handler/magnet
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr "Podrška za MIME tip x-scheme-handler/magnet"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Leszek Lesner"
 msgstr "Lešek Lezner"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr "Popravka za grešku 339584"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr "Andrijus Štikonas"
 
-#: ktorrent/main.cpp:173 ktorrent/main.cpp:174
+#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
 #, kde-format
 msgid "KF5 porting"
 msgstr "Prenos na KF5"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr "Nikolaj Šaforostov"
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:174
 #, fuzzy, kde-format
 #| msgid "Alexander Dymo"
 msgid "Alexander Trufanov"
 msgstr "Aleksandar Dimo"
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr ""
 
-#: ktorrent/main.cpp:176
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "Jack Hill"
 msgstr ""
 
-#: ktorrent/main.cpp:176
+#: ktorrent/main.cpp:175
 #, fuzzy, kde-format
 #| msgid "KF5 porting"
 msgid "KF6 porting"
 msgstr "Prenos na KF5"
 
-#: ktorrent/main.cpp:180
+#: ktorrent/main.cpp:179
 #, fuzzy, kde-format
 #| msgid "Enable All"
 msgid "Enable logging"
 msgstr "Uključi sve"
 
-#: ktorrent/main.cpp:182
+#: ktorrent/main.cpp:181
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
 
-#: ktorrent/main.cpp:183
+#: ktorrent/main.cpp:182
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "Tiho otvori torent dat u URL‑u"
 
-#: ktorrent/main.cpp:184
+#: ktorrent/main.cpp:183
 #, kde-format
 msgid "Document to open"
 msgstr "Dokument za otvaranje"
@@ -7680,7 +7680,7 @@ msgid "Event"
 msgstr "događaj"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ConnsWgt)
-#: plugins/stats/Conns.ui:13 plugins/stats/ConnsTabPage.cc:35
+#: plugins/stats/Conns.ui:13 plugins/stats/ConnsTabPage.cc:36
 #, kde-format
 msgid "Connections"
 msgstr "Veze"
@@ -7705,20 +7705,20 @@ msgctxt "Chart name"
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/stats/ConnsTabPage.cc:36
+#: plugins/stats/ConnsTabPage.cc:37
 #, kde-format
 msgid "Nodes"
 msgstr "Čvorovi"
 
 #. i18n: ectx: property (text), widget (QLabel, label_23)
-#: plugins/stats/ConnsTabPage.cc:42 plugins/stats/DisplaySettings.ui:513
+#: plugins/stats/ConnsTabPage.cc:43 plugins/stats/DisplaySettings.ui:513
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers connected"
 msgstr "pijavica povezano"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
-#: plugins/stats/ConnsTabPage.cc:46 plugins/stats/ConnsTabPage.cc:94
+#: plugins/stats/ConnsTabPage.cc:48 plugins/stats/ConnsTabPage.cc:103
 #: plugins/stats/DisplaySettings.ui:548
 #, kde-format
 msgctxt "Name of a line on chart"
@@ -7726,55 +7726,55 @@ msgid "Leechers in swarms"
 msgstr "pijavica u rojevima"
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
-#: plugins/stats/ConnsTabPage.cc:50 plugins/stats/DisplaySettings.ui:583
+#: plugins/stats/ConnsTabPage.cc:52 plugins/stats/DisplaySettings.ui:583
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds connected"
 msgstr "sejača povezano"
 
 #. i18n: ectx: property (text), widget (QLabel, label_26)
-#: plugins/stats/ConnsTabPage.cc:54 plugins/stats/ConnsTabPage.cc:105
-#: plugins/stats/ConnsTabPage.cc:107 plugins/stats/DisplaySettings.ui:618
+#: plugins/stats/ConnsTabPage.cc:57 plugins/stats/ConnsTabPage.cc:116
+#: plugins/stats/ConnsTabPage.cc:120 plugins/stats/DisplaySettings.ui:618
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds in swarms"
 msgstr "sejača u rojevima"
 
 #. i18n: ectx: property (text), widget (QLabel, label_27)
-#: plugins/stats/ConnsTabPage.cc:58 plugins/stats/DisplaySettings.ui:653
+#: plugins/stats/ConnsTabPage.cc:62 plugins/stats/DisplaySettings.ui:653
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per torrent"
 msgstr "prosečno pijavica vezano po torentu"
 
 #. i18n: ectx: property (text), widget (QLabel, label_28)
-#: plugins/stats/ConnsTabPage.cc:61 plugins/stats/DisplaySettings.ui:688
+#: plugins/stats/ConnsTabPage.cc:66 plugins/stats/DisplaySettings.ui:688
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per torrent"
 msgstr "prosečno sejača vezano po torentu"
 
-#: plugins/stats/ConnsTabPage.cc:64
+#: plugins/stats/ConnsTabPage.cc:69
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per running torrent"
 msgstr "prosečno pijavica vezano po aktivnom torentu"
 
-#: plugins/stats/ConnsTabPage.cc:67
+#: plugins/stats/ConnsTabPage.cc:74
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per running torrent"
 msgstr "prosečno sejača vezanih po aktivnom torentu"
 
 #. i18n: ectx: property (text), widget (QLabel, label_31)
-#: plugins/stats/ConnsTabPage.cc:72 plugins/stats/DisplaySettings.ui:806
+#: plugins/stats/ConnsTabPage.cc:81 plugins/stats/DisplaySettings.ui:806
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Nodes"
 msgstr "čvorovi"
 
 #. i18n: ectx: property (text), widget (QLabel, label_32)
-#: plugins/stats/ConnsTabPage.cc:73 plugins/stats/DisplaySettings.ui:845
+#: plugins/stats/ConnsTabPage.cc:82 plugins/stats/DisplaySettings.ui:845
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Tasks"
@@ -7791,7 +7791,7 @@ msgid "Download"
 msgstr "Preuzimanje"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
-#: plugins/stats/DisplaySettings.ui:37 plugins/stats/SpdTabPage.cc:49
+#: plugins/stats/DisplaySettings.ui:37 plugins/stats/SpdTabPage.cc:50
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Current speed"
@@ -7822,35 +7822,35 @@ msgid "Peers"
 msgstr "Vršnjaci"
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
-#: plugins/stats/DisplaySettings.ui:173 plugins/stats/SpdTabPage.cc:58
+#: plugins/stats/DisplaySettings.ui:173 plugins/stats/SpdTabPage.cc:59
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from leechers"
 msgstr "prosečno od pijavica"
 
 #. i18n: ectx: property (text), widget (QLabel, label_19)
-#: plugins/stats/DisplaySettings.ui:208 plugins/stats/SpdTabPage.cc:59
+#: plugins/stats/DisplaySettings.ui:208 plugins/stats/SpdTabPage.cc:60
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average to leechers"
 msgstr "prosečno ka pijavicama"
 
 #. i18n: ectx: property (text), widget (QLabel, label_20)
-#: plugins/stats/DisplaySettings.ui:243 plugins/stats/SpdTabPage.cc:60
+#: plugins/stats/DisplaySettings.ui:243 plugins/stats/SpdTabPage.cc:61
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from seeds"
 msgstr "prosečno od sejača"
 
 #. i18n: ectx: property (text), widget (QLabel, label_21)
-#: plugins/stats/DisplaySettings.ui:278 plugins/stats/SpdTabPage.cc:61
+#: plugins/stats/DisplaySettings.ui:278 plugins/stats/SpdTabPage.cc:62
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From leechers"
 msgstr "od pijavica"
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
-#: plugins/stats/DisplaySettings.ui:313 plugins/stats/SpdTabPage.cc:62
+#: plugins/stats/DisplaySettings.ui:313 plugins/stats/SpdTabPage.cc:63
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From seeds"
@@ -7867,7 +7867,7 @@ msgid "Upload"
 msgstr "Otpremanje"
 
 #. i18n: ectx: property (text), widget (QLabel, label_15)
-#: plugins/stats/DisplaySettings.ui:374 plugins/stats/SpdTabPage.cc:50
+#: plugins/stats/DisplaySettings.ui:374 plugins/stats/SpdTabPage.cc:51
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Current speed"
@@ -7948,7 +7948,7 @@ msgstr "KDE"
 msgid "(plugin reload is needed after change)"
 msgstr "(traži ponovno učitavanje priključka nakon izmene)"
 
-#: plugins/stats/DisplaySettingsPage.cc:14
+#: plugins/stats/DisplaySettingsPage.cc:15
 #, fuzzy, kde-format
 #| msgid "Display"
 msgctxt ""
@@ -7962,14 +7962,14 @@ msgstr "Prikaz"
 msgid "KiB/s"
 msgstr "kiB/s"
 
-#: plugins/stats/drawer/ChartDrawerData.cc:13
+#: plugins/stats/drawer/ChartDrawerData.cc:14
 #, kde-format
 msgid "Unknown"
 msgstr "Nepoznat"
 
 # skip-rule: x-markup-k
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:310
-#: plugins/stats/drawer/PlainChartDrawer.cc:492
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:309
+#: plugins/stats/drawer/PlainChartDrawer.cc:474
 #, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
@@ -7978,8 +7978,8 @@ msgstr ""
 "<h1 align='center' style='font-size: large; text-decoration: "
 "underline'>Legenda:</h1><ul type='square'>"
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:313
-#: plugins/stats/drawer/PlainChartDrawer.cc:495
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:312
+#: plugins/stats/drawer/PlainChartDrawer.cc:477
 #, kde-format
 msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
@@ -7988,37 +7988,37 @@ msgstr ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
 "monospace'>  </span> — %2</li>"
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:350
-#: plugins/stats/drawer/PlainChartDrawer.cc:302
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:347
+#: plugins/stats/drawer/PlainChartDrawer.cc:287
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
 msgstr "Sačuvaj kao sliku..."
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:357
-#: plugins/stats/drawer/PlainChartDrawer.cc:309
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:353
+#: plugins/stats/drawer/PlainChartDrawer.cc:293
 #, kde-format
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
 msgid "Rescale"
 msgstr "Promeni razmeru"
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:364
-#: plugins/stats/drawer/PlainChartDrawer.cc:316
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:362
+#: plugins/stats/drawer/PlainChartDrawer.cc:302
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
 msgstr "Resetuj"
 
 # >> @title:window
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:330
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:376
+#: plugins/stats/drawer/PlainChartDrawer.cc:316
 #, kde-format
 msgid "Select path to save image…"
 msgstr "Izbor putanje za upisivanje slike"
 
 # >> @item
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:330
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:376
+#: plugins/stats/drawer/PlainChartDrawer.cc:316
 #, kde-format
 msgid "Image files"
 msgstr "fajlovi slika"
@@ -8345,25 +8345,25 @@ msgctxt "@title:window"
 msgid "Speed"
 msgstr "Brzina"
 
-#: plugins/stats/SpdTabPage.cc:52
+#: plugins/stats/SpdTabPage.cc:53
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Average speed"
 msgstr "prosečna brzina"
 
-#: plugins/stats/SpdTabPage.cc:53
+#: plugins/stats/SpdTabPage.cc:54
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Average speed"
 msgstr "prosečna brzina"
 
-#: plugins/stats/SpdTabPage.cc:55
+#: plugins/stats/SpdTabPage.cc:56
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Speed limit"
 msgstr "ograničenje brzine"
 
-#: plugins/stats/SpdTabPage.cc:56
+#: plugins/stats/SpdTabPage.cc:57
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Speed limit"

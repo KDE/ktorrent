@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-15 00:43+0000\n"
+"POT-Creation-Date: 2026-02-17 00:44+0000\n"
 "PO-Revision-Date: 2025-07-20 01:44+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1621,12 +1621,12 @@ msgstr "Andreas Kling"
 msgid "Felipe Sateler"
 msgstr "Felipe Sateler"
 
-#: ktorrent/main.cpp:128
+#: ktorrent/main.cpp:127
 #, kde-format
 msgid "DB-IP.com"
 msgstr "DB-IP.com"
 
-#: ktorrent/main.cpp:129
+#: ktorrent/main.cpp:128
 #, kde-format
 msgid ""
 "Provider of the IP-Country database used in the InfoWidget plugin.\n"
@@ -1640,392 +1640,392 @@ msgstr ""
 "https://creativecommons.org/licenses/by/4.0/.\n"
 "깃발은 http://flags.blogpotato.de/ 사이트에서 제공했습니다."
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "Maxmind"
 msgstr "Maxmind"
 
-#: ktorrent/main.cpp:135
+#: ktorrent/main.cpp:134
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
 msgstr "InfoWidget 플러그인에 사용할 maxminddb 라이브러리입니다."
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "Adam Forsyth"
 msgstr "Adam Forsyth"
 
-#: ktorrent/main.cpp:136
+#: ktorrent/main.cpp:135
 #, kde-format
 msgid "File prioritization and some other patches"
 msgstr "파일 중요도 설정 및 몇몇 패치"
 
-#: ktorrent/main.cpp:137
+#: ktorrent/main.cpp:136
 #, kde-format
 msgid "Thomas Bernard"
 msgstr "Thomas Bernard"
 
-#: ktorrent/main.cpp:138
+#: ktorrent/main.cpp:137
 #, kde-format
 msgid "Miniupnp was used as an example for our own UPnP implementation"
 msgstr "Miniupnp는 우리 UPnP 플러그인의 예로 사용되었습니다"
 
-#: ktorrent/main.cpp:141
+#: ktorrent/main.cpp:140
 #, kde-format
 msgid "Lesly Weyts"
 msgstr "Lesly Weyts"
 
-#: ktorrent/main.cpp:141 ktorrent/main.cpp:142
+#: ktorrent/main.cpp:140 ktorrent/main.cpp:141
 #, kde-format
 msgid "Zeroconf enhancements"
 msgstr "Zeroconf 패치"
 
-#: ktorrent/main.cpp:142
+#: ktorrent/main.cpp:141
 #, kde-format
 msgid "Kevin Andre"
 msgstr "Kevin Andre"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Dagur Valberg Johannsson"
 msgstr "Dagur Valberg Johannsson"
 
-#: ktorrent/main.cpp:143
+#: ktorrent/main.cpp:142
 #, kde-format
 msgid "Coldmilk webgui"
 msgstr "Coldmilk webgui"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "Alexander Dymo"
 msgstr "Alexander Dymo"
 
-#: ktorrent/main.cpp:144
+#: ktorrent/main.cpp:143
 #, kde-format
 msgid "IDEAl code from KDevelop"
 msgstr "KDevelop의 IDEAl 코드"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Scott Wolchok"
 msgstr "Scott Wolchok"
 
-#: ktorrent/main.cpp:145
+#: ktorrent/main.cpp:144
 #, kde-format
 msgid "Conversion speed improvement in ipfilter plugin"
 msgstr "IP 필터 플러그인의 변환 속도 향상"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Bryan Burns of Juniper Networks"
 msgstr "Bryan Burns of Juniper Networks"
 
-#: ktorrent/main.cpp:146
+#: ktorrent/main.cpp:145
 #, kde-format
 msgid "Discovered 2 security vulnerabilities (both are fixed)"
 msgstr "보안 취약점 2개 발견 (2개 모두 고쳐짐)"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Goten Xiao"
 msgstr "Goten Xiao"
 
-#: ktorrent/main.cpp:147
+#: ktorrent/main.cpp:146
 #, kde-format
 msgid "Patch to load silently with a save location"
 msgstr "저장 위치를 지정하여 조용히 불러오기 패치"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Rapsys"
 msgstr "Rapsys"
 
-#: ktorrent/main.cpp:148
+#: ktorrent/main.cpp:147
 #, kde-format
 msgid "Fixes in PHP code of webinterface"
 msgstr "웹 인터페이스의 PHP 코드 수정"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "Athantor"
 msgstr "Athantor"
 
-#: ktorrent/main.cpp:149
+#: ktorrent/main.cpp:148
 #, kde-format
 msgid "XFS specific disk preallocation"
 msgstr "XFS 파일 시스템 디스크 미리 할당"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "twisted_fall"
 msgstr "twisted_fall"
 
-#: ktorrent/main.cpp:150
+#: ktorrent/main.cpp:149
 #, kde-format
 msgid "Patch to not show very low speeds"
 msgstr "매우 낮은 속도를 보여주지 않는 것에 대한 패치"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Lucke"
 msgstr "Lucke"
 
-#: ktorrent/main.cpp:151
+#: ktorrent/main.cpp:150
 #, kde-format
 msgid "Patch to show potentially firewalled status"
 msgstr "방화벽에 막힌 상태를 표시하도록 패치"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: ktorrent/main.cpp:152
+#: ktorrent/main.cpp:151
 #, kde-format
 msgid "Several patches"
 msgstr "기타 패치들"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Stefan Monov"
 msgstr "Stefan Monov"
 
-#: ktorrent/main.cpp:153
+#: ktorrent/main.cpp:152
 #, kde-format
 msgid "Patch to hide menu bar"
 msgstr "메뉴 바 숨김 패치"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "The_Kernel"
 msgstr "The_Kernel"
 
-#: ktorrent/main.cpp:154
+#: ktorrent/main.cpp:153
 #, kde-format
 msgid "Patch to change file priorities in the webgui"
 msgstr "webgui에서 파일 중요도를 변경하도록 패치"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Rafał Miłecki"
 msgstr "Rafał Miłecki"
 
-#: ktorrent/main.cpp:155
+#: ktorrent/main.cpp:154
 #, kde-format
 msgid "Several webgui patches"
 msgstr "몇몇 webgui 패치들"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Ozzi"
 msgstr "Ozzi"
 
-#: ktorrent/main.cpp:156
+#: ktorrent/main.cpp:155
 #, kde-format
 msgid "Fixes for several warnings"
 msgstr "몇몇 경고들 패치"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Markus Brueffer"
 msgstr "Markus Brueffer"
 
-#: ktorrent/main.cpp:157
+#: ktorrent/main.cpp:156
 #, kde-format
 msgid "Patch to fix free diskspace calculation on FreeBSD"
 msgstr "FreeBSD에서 남은 디스크 공간 계산 패치"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Lukas Appelhans"
 msgstr "Lukas Appelhans"
 
-#: ktorrent/main.cpp:158
+#: ktorrent/main.cpp:157
 #, kde-format
 msgid "Patch to fix a crash in ChunkDownloadView"
 msgstr "파일 조각 다운로드 보기의 충돌 패치"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "Rickard Närström"
 msgstr "Rickard Närström"
 
-#: ktorrent/main.cpp:159
+#: ktorrent/main.cpp:158
 #, kde-format
 msgid "A couple of bugfixes"
 msgstr "몇몇 버그 수리"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "caruccio"
 msgstr "caruccio"
 
-#: ktorrent/main.cpp:160
+#: ktorrent/main.cpp:159
 #, kde-format
 msgid "Patch to load torrents silently from the command line"
 msgstr "명령행에서 토렌트 조용히 불러오기 패치"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "Lee Olson"
 msgstr "Lee Olson"
 
-#: ktorrent/main.cpp:161
+#: ktorrent/main.cpp:160
 #, kde-format
 msgid "New set of icons"
 msgstr "새로운 아이콘 세트"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Aaron J. Seigo"
 msgstr "Aaron J. Seigo"
 
-#: ktorrent/main.cpp:162
+#: ktorrent/main.cpp:161
 #, kde-format
 msgid "Drag and drop support for Plasma applet"
 msgstr "Plasma 애플릿에서 드래그 && 드롭 지원"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Ian Higginson"
 msgstr "Ian Higginson"
 
-#: ktorrent/main.cpp:163
+#: ktorrent/main.cpp:162
 #, kde-format
 msgid "Patch to cleanup the plugin list"
 msgstr "플러그인 목록 지우기 패치"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Amichai Rothman"
 msgstr "Amichai Rothman"
 
-#: ktorrent/main.cpp:164
+#: ktorrent/main.cpp:163
 #, kde-format
 msgid "Patch to make the Plasma applet a popup applet"
 msgstr "Plasma 애플릿에서 팝업 애플릿 만들기 패치"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Leo Trubach"
 msgstr "Leo Trubach"
 
-#: ktorrent/main.cpp:165
+#: ktorrent/main.cpp:164
 #, kde-format
 msgid "Patch to add support for IP ranges in IP filter dialog"
 msgstr "IP 필터 대화 상자에서 IP 범위를 지정하도록 패치"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Andrei Barbu"
 msgstr "Andrei Barbu"
 
-#: ktorrent/main.cpp:166
+#: ktorrent/main.cpp:165
 #, kde-format
 msgid "Feature which adds the date a torrent was added"
 msgstr "토렌트가 추가된 날짜 기능 제공"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Jonas Lundqvist"
 msgstr "Jonas Lundqvist"
 
-#: ktorrent/main.cpp:167
+#: ktorrent/main.cpp:166
 #, kde-format
 msgid "Feature to disable authentication in the webinterface"
 msgstr "웹 인터페이스의 인증 해제 기능 제공"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Jaroslaw Swierczynski"
 msgstr "Jaroslaw Swierczynski"
 
-#: ktorrent/main.cpp:168
+#: ktorrent/main.cpp:167
 #, kde-format
 msgid "Exclusion patterns in the syndication plugin"
 msgstr "피드 플러그인에서 제외 패턴 제공"
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Alexey Shildyakov "
 msgstr "Alexey Shildyakov "
 
-#: ktorrent/main.cpp:169
+#: ktorrent/main.cpp:168
 #, kde-format
 msgid "Patch to rename single file torrents to the file inside"
 msgstr "한 파일을 가진 토렌트 이름 변경 기능 패치"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Maarten De Meyer"
 msgstr "Maarten De Meyer"
 
-#: ktorrent/main.cpp:170
+#: ktorrent/main.cpp:169
 #, kde-format
 msgid "Fix for bug 305379"
 msgstr "305379 버그 수정"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Rex Dieter"
 msgstr "Rex Dieter"
 
-#: ktorrent/main.cpp:171
+#: ktorrent/main.cpp:170
 #, kde-format
 msgid "Add support for x-scheme-handler/magnet mimetype"
 msgstr "x-scheme-handler/magnet MIME 형식 지원 추가"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Leszek Lesner"
 msgstr "Leszek Lesner"
 
-#: ktorrent/main.cpp:172
+#: ktorrent/main.cpp:171
 #, kde-format
 msgid "Fix for bug 339584"
 msgstr "339584 버그 수정"
 
-#: ktorrent/main.cpp:173
+#: ktorrent/main.cpp:172
 #, kde-format
 msgid "Andrius Štikonas"
 msgstr "Andrius Štikonas"
 
-#: ktorrent/main.cpp:173 ktorrent/main.cpp:174
+#: ktorrent/main.cpp:172 ktorrent/main.cpp:173
 #, kde-format
 msgid "KF5 porting"
 msgstr "KF5 포팅"
 
-#: ktorrent/main.cpp:174
+#: ktorrent/main.cpp:173
 #, kde-format
 msgid "Nick Shaforostoff"
 msgstr "Nick Shaforostoff"
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Alexander Trufanov"
 msgstr "Alexander Trufanov"
 
-#: ktorrent/main.cpp:175
+#: ktorrent/main.cpp:174
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
 msgstr "버그 수정, 정리, 최적화"
 
-#: ktorrent/main.cpp:176
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "Jack Hill"
 msgstr "Jack Hill"
 
-#: ktorrent/main.cpp:176
+#: ktorrent/main.cpp:175
 #, kde-format
 msgid "KF6 porting"
 msgstr "KF6 포팅"
 
-#: ktorrent/main.cpp:180
+#: ktorrent/main.cpp:179
 #, kde-format
 msgid "Enable logging"
 msgstr "로그 활성화"
 
-#: ktorrent/main.cpp:182
+#: ktorrent/main.cpp:181
 #, kde-format
 msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
@@ -2033,12 +2033,12 @@ msgid ""
 msgstr ""
 "표준 출력으로 로그를 활성화합니다. --enable-logging 옵션도 지정해야 합니다."
 
-#: ktorrent/main.cpp:183
+#: ktorrent/main.cpp:182
 #, kde-format
 msgid "Silently open torrent given on URL"
 msgstr "주어진 URL을 이용하여 토렌트 조용히 열기"
 
-#: ktorrent/main.cpp:184
+#: ktorrent/main.cpp:183
 #, kde-format
 msgid "Document to open"
 msgstr "열 문서"
@@ -7500,7 +7500,7 @@ msgid "Event"
 msgstr "이벤트"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ConnsWgt)
-#: plugins/stats/Conns.ui:13 plugins/stats/ConnsTabPage.cc:35
+#: plugins/stats/Conns.ui:13 plugins/stats/ConnsTabPage.cc:36
 #, kde-format
 msgid "Connections"
 msgstr "연결"
@@ -7525,20 +7525,20 @@ msgctxt "Chart name"
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/stats/ConnsTabPage.cc:36
+#: plugins/stats/ConnsTabPage.cc:37
 #, kde-format
 msgid "Nodes"
 msgstr "노드"
 
 #. i18n: ectx: property (text), widget (QLabel, label_23)
-#: plugins/stats/ConnsTabPage.cc:42 plugins/stats/DisplaySettings.ui:513
+#: plugins/stats/ConnsTabPage.cc:43 plugins/stats/DisplaySettings.ui:513
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Leechers connected"
 msgstr "연결된 받는 사람"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
-#: plugins/stats/ConnsTabPage.cc:46 plugins/stats/ConnsTabPage.cc:94
+#: plugins/stats/ConnsTabPage.cc:48 plugins/stats/ConnsTabPage.cc:103
 #: plugins/stats/DisplaySettings.ui:548
 #, kde-format
 msgctxt "Name of a line on chart"
@@ -7546,55 +7546,55 @@ msgid "Leechers in swarms"
 msgstr "토렌트 무리의 받는 사람"
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
-#: plugins/stats/ConnsTabPage.cc:50 plugins/stats/DisplaySettings.ui:583
+#: plugins/stats/ConnsTabPage.cc:52 plugins/stats/DisplaySettings.ui:583
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds connected"
 msgstr "연결된 시드"
 
 #. i18n: ectx: property (text), widget (QLabel, label_26)
-#: plugins/stats/ConnsTabPage.cc:54 plugins/stats/ConnsTabPage.cc:105
-#: plugins/stats/ConnsTabPage.cc:107 plugins/stats/DisplaySettings.ui:618
+#: plugins/stats/ConnsTabPage.cc:57 plugins/stats/ConnsTabPage.cc:116
+#: plugins/stats/ConnsTabPage.cc:120 plugins/stats/DisplaySettings.ui:618
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Seeds in swarms"
 msgstr "토렌트 무리의 시드"
 
 #. i18n: ectx: property (text), widget (QLabel, label_27)
-#: plugins/stats/ConnsTabPage.cc:58 plugins/stats/DisplaySettings.ui:653
+#: plugins/stats/ConnsTabPage.cc:62 plugins/stats/DisplaySettings.ui:653
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per torrent"
 msgstr "토렌트당 연결된 받는 사람 수의 평균"
 
 #. i18n: ectx: property (text), widget (QLabel, label_28)
-#: plugins/stats/ConnsTabPage.cc:61 plugins/stats/DisplaySettings.ui:688
+#: plugins/stats/ConnsTabPage.cc:66 plugins/stats/DisplaySettings.ui:688
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per torrent"
 msgstr "토렌트당 연결된 시드 수의 평균"
 
-#: plugins/stats/ConnsTabPage.cc:64
+#: plugins/stats/ConnsTabPage.cc:69
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average leechers connected per running torrent"
 msgstr "실행 중인 토렌트 당 연결된 받는 사람 수"
 
-#: plugins/stats/ConnsTabPage.cc:67
+#: plugins/stats/ConnsTabPage.cc:74
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average seeds connected per running torrent"
 msgstr "실행 중인 토렌트 당 연결된 평균 시드 수"
 
 #. i18n: ectx: property (text), widget (QLabel, label_31)
-#: plugins/stats/ConnsTabPage.cc:72 plugins/stats/DisplaySettings.ui:806
+#: plugins/stats/ConnsTabPage.cc:81 plugins/stats/DisplaySettings.ui:806
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Nodes"
 msgstr "노드"
 
 #. i18n: ectx: property (text), widget (QLabel, label_32)
-#: plugins/stats/ConnsTabPage.cc:73 plugins/stats/DisplaySettings.ui:845
+#: plugins/stats/ConnsTabPage.cc:82 plugins/stats/DisplaySettings.ui:845
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Tasks"
@@ -7611,7 +7611,7 @@ msgid "Download"
 msgstr "다운로드"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
-#: plugins/stats/DisplaySettings.ui:37 plugins/stats/SpdTabPage.cc:49
+#: plugins/stats/DisplaySettings.ui:37 plugins/stats/SpdTabPage.cc:50
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Current speed"
@@ -7642,35 +7642,35 @@ msgid "Peers"
 msgstr "피어"
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
-#: plugins/stats/DisplaySettings.ui:173 plugins/stats/SpdTabPage.cc:58
+#: plugins/stats/DisplaySettings.ui:173 plugins/stats/SpdTabPage.cc:59
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from leechers"
 msgstr "받는 사람으로부터의 평균 데이터 양"
 
 #. i18n: ectx: property (text), widget (QLabel, label_19)
-#: plugins/stats/DisplaySettings.ui:208 plugins/stats/SpdTabPage.cc:59
+#: plugins/stats/DisplaySettings.ui:208 plugins/stats/SpdTabPage.cc:60
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average to leechers"
 msgstr "받는 사람에게 주는 평균 데이터 양"
 
 #. i18n: ectx: property (text), widget (QLabel, label_20)
-#: plugins/stats/DisplaySettings.ui:243 plugins/stats/SpdTabPage.cc:60
+#: plugins/stats/DisplaySettings.ui:243 plugins/stats/SpdTabPage.cc:61
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Average from seeds"
 msgstr "시더로부터 받은 평균 데이터 양"
 
 #. i18n: ectx: property (text), widget (QLabel, label_21)
-#: plugins/stats/DisplaySettings.ui:278 plugins/stats/SpdTabPage.cc:61
+#: plugins/stats/DisplaySettings.ui:278 plugins/stats/SpdTabPage.cc:62
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From leechers"
 msgstr "받는 사람으로부터의 데이터 양"
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
-#: plugins/stats/DisplaySettings.ui:313 plugins/stats/SpdTabPage.cc:62
+#: plugins/stats/DisplaySettings.ui:313 plugins/stats/SpdTabPage.cc:63
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "From seeds"
@@ -7687,7 +7687,7 @@ msgid "Upload"
 msgstr "업로드"
 
 #. i18n: ectx: property (text), widget (QLabel, label_15)
-#: plugins/stats/DisplaySettings.ui:374 plugins/stats/SpdTabPage.cc:50
+#: plugins/stats/DisplaySettings.ui:374 plugins/stats/SpdTabPage.cc:51
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Current speed"
@@ -7767,7 +7767,7 @@ msgstr "KDE"
 msgid "(plugin reload is needed after change)"
 msgstr "(설졍 변경 후 플러그인을 다시 로드해야 함)"
 
-#: plugins/stats/DisplaySettingsPage.cc:14
+#: plugins/stats/DisplaySettingsPage.cc:15
 #, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
@@ -7780,13 +7780,13 @@ msgstr "표시"
 msgid "KiB/s"
 msgstr "KiB/s"
 
-#: plugins/stats/drawer/ChartDrawerData.cc:13
+#: plugins/stats/drawer/ChartDrawerData.cc:14
 #, kde-format
 msgid "Unknown"
 msgstr "알 수 없음"
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:310
-#: plugins/stats/drawer/PlainChartDrawer.cc:492
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:309
+#: plugins/stats/drawer/PlainChartDrawer.cc:474
 #, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
@@ -7795,8 +7795,8 @@ msgstr ""
 "<h1 align='center' style='font-size: large; text-decoration: underline'>범례:"
 "</h1><ul type='square'>"
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:313
-#: plugins/stats/drawer/PlainChartDrawer.cc:495
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:312
+#: plugins/stats/drawer/PlainChartDrawer.cc:477
 #, kde-format
 msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
@@ -7805,35 +7805,35 @@ msgstr ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
 "monospace'>&nbsp;&nbsp;</span>&nbsp;—&nbsp;%2</li>"
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:350
-#: plugins/stats/drawer/PlainChartDrawer.cc:302
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:347
+#: plugins/stats/drawer/PlainChartDrawer.cc:287
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
 msgstr "그림으로 저장..."
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:357
-#: plugins/stats/drawer/PlainChartDrawer.cc:309
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:353
+#: plugins/stats/drawer/PlainChartDrawer.cc:293
 #, kde-format
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
 msgid "Rescale"
 msgstr "다시 크기 조절"
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:364
-#: plugins/stats/drawer/PlainChartDrawer.cc:316
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:362
+#: plugins/stats/drawer/PlainChartDrawer.cc:302
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
 msgstr "초기화"
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:330
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:376
+#: plugins/stats/drawer/PlainChartDrawer.cc:316
 #, kde-format
 msgid "Select path to save image…"
 msgstr "그림을 저장할 경로를 선택하십시오..."
 
-#: plugins/stats/drawer/KPlotWgtDrawer.cc:378
-#: plugins/stats/drawer/PlainChartDrawer.cc:330
+#: plugins/stats/drawer/KPlotWgtDrawer.cc:376
+#: plugins/stats/drawer/PlainChartDrawer.cc:316
 #, kde-format
 msgid "Image files"
 msgstr "그림 파일"
@@ -8149,25 +8149,25 @@ msgctxt "@title:window"
 msgid "Speed"
 msgstr "속도"
 
-#: plugins/stats/SpdTabPage.cc:52
+#: plugins/stats/SpdTabPage.cc:53
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Average speed"
 msgstr "평균 속도"
 
-#: plugins/stats/SpdTabPage.cc:53
+#: plugins/stats/SpdTabPage.cc:54
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Average speed"
 msgstr "평균 속도"
 
-#: plugins/stats/SpdTabPage.cc:55
+#: plugins/stats/SpdTabPage.cc:56
 #, kde-format
 msgctxt "Name of a line on download chart"
 msgid "Speed limit"
 msgstr "속도 제한"
 
-#: plugins/stats/SpdTabPage.cc:56
+#: plugins/stats/SpdTabPage.cc:57
 #, kde-format
 msgctxt "Name of a line on upload chart"
 msgid "Speed limit"
