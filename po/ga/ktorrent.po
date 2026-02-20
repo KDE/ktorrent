@@ -254,11 +254,10 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:214
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Iompórtáil"
+msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:225
 #: ktorrent/dialogs/fileselectdlg.cpp:243
@@ -272,11 +271,10 @@ msgstr "Níl comhadlann %1 ann, an bhfuil fonn ort é a chruthú?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:98
 #: ktorrent/dialogs/missingfilesdlg.cpp:132
 #: ktorrent/dialogs/torrentcreatordlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "Athchruthaigh"
+msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:274
 #, kde-format
@@ -289,18 +287,16 @@ msgstr ""
 "leat na comhaid a scriosadh ?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:280
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "Scrios Comha(i)d"
+msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:281
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Níl, coimeád na comhaid"
+msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:304
 #, kde-format
@@ -941,17 +937,15 @@ msgstr "Comhad nó comhadlann a chruthófar torrent uaidh:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectDirectory)
 #: ktorrent/dialogs/torrentcreatordlg.ui:44
-#, fuzzy, kde-format
-#| msgid "Open Directory"
+#, kde-format
 msgid "Select Directory"
-msgstr "Oscail Comhadlann"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectFile)
 #: ktorrent/dialogs/torrentcreatordlg.ui:51
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select File"
-msgstr "Roghnaigh &Uile"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/torrentcreatordlg.ui:71
@@ -1015,10 +1009,9 @@ msgstr "8 MiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:127
-#, fuzzy, kde-format
-#| msgid "1 MiB"
+#, kde-format
 msgid "16 MiB"
-msgstr "1 MiB"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_start_seeding)
 #: ktorrent/dialogs/torrentcreatordlg.ui:137
@@ -1146,10 +1139,9 @@ msgstr "Suíomh réamhshocraithe sábhála:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_move_on_completion_enabled)
 #: ktorrent/groups/grouppolicydlg.ui:49
-#, fuzzy, kde-format
-#| msgid "Move when completed to:"
+#, kde-format
 msgid "Default move when completed location:"
-msgstr "Bog íosluchtuithe críochnaithe go:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, m_default_move_on_completion_location)
 #: ktorrent/groups/grouppolicydlg.ui:56
@@ -1169,10 +1161,9 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:66
-#, fuzzy, kde-format
-#| msgid "Torrent Files"
+#, kde-format
 msgid "Torrent Limits"
-msgstr "Comhaid Torrent"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/groups/grouppolicydlg.ui:74
@@ -1335,10 +1326,9 @@ msgid "Show/Hide KTorrent"
 msgstr "Taispeáin/Folaigh KTorrent"
 
 #: ktorrent/gui.cpp:417
-#, fuzzy, kde-format
-#| msgid "DHT: %1, %2"
+#, kde-format
 msgid "D: %1 | U: %2"
-msgstr "DHT: %1, %2"
+msgstr ""
 
 #: ktorrent/ipfilterwidget.cpp:39
 #, kde-format
@@ -1362,10 +1352,9 @@ msgid "Choose a file"
 msgstr "Roghnaigh comhad"
 
 #: ktorrent/ipfilterwidget.cpp:118 ktorrent/ipfilterwidget.cpp:130
-#, fuzzy, kde-format
-#| msgid "Search files"
+#, kde-format
 msgid "Text files"
-msgstr "Cuardaigh comhaid"
+msgstr ""
 
 #: ktorrent/ipfilterwidget.cpp:130
 #, kde-format
@@ -1406,18 +1395,15 @@ msgstr "Glan"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Oscail"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
-msgstr "Sábháil Mar..."
+msgstr ""
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -1479,10 +1465,9 @@ msgstr "Cuir Leis an nGrúpa"
 
 #. i18n: ectx: Menu (ColumnsMenu)
 #: ktorrent/kttorrentactivityui.rc:77
-#, fuzzy, kde-format
-#| msgid "Configure"
+#, kde-format
 msgid "Configure Columns"
-msgstr "Cumraigh"
+msgstr ""
 
 #. i18n: ectx: Menu (ColumnsMenu)
 #: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
@@ -1491,24 +1476,21 @@ msgid "Columns"
 msgstr "Colúin"
 
 #: ktorrent/main.cpp:99
-#, fuzzy, kde-format
-#| msgid "KTorrent"
+#, kde-format
 msgctxt "@title"
 msgid "KTorrent"
-msgstr "KTorrent"
+msgstr ""
 
 #: ktorrent/main.cpp:101
-#, fuzzy, kde-format
-#| msgid "Bittorrent client for KDE"
+#, kde-format
 msgid "Bittorrent client by KDE"
-msgstr "Cliant Bittorrent le haghaidh KDE"
+msgstr ""
 
 #: ktorrent/main.cpp:103
-#, fuzzy, kde-format
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr "© 2005 - 2011 Joris Guisson agus Ivan Vasic"
+msgstr ""
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -1536,10 +1518,9 @@ msgid "Diego Rosario Brogna"
 msgstr "Diego Rosario Brogna"
 
 #: ktorrent/main.cpp:116
-#, fuzzy, kde-format
-#| msgid "Global max share ratio patch"
+#, kde-format
 msgid "Webinterface Plugin, global max share ratio patch"
-msgstr "Paiste: cóimheas uasta comhroinnte"
+msgstr ""
 
 #: ktorrent/main.cpp:117
 #, kde-format
@@ -1992,10 +1973,9 @@ msgid "Nick Shaforostoff"
 msgstr ""
 
 #: ktorrent/main.cpp:175
-#, fuzzy, kde-format
-#| msgid "Alexander Dymo"
+#, kde-format
 msgid "Alexander Trufanov"
-msgstr "Alexander Dymo"
+msgstr ""
 
 #: ktorrent/main.cpp:175
 #, kde-format
@@ -2013,10 +1993,9 @@ msgid "KF6 porting"
 msgstr ""
 
 #: ktorrent/main.cpp:180
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Cumasaigh Uile"
+msgstr ""
 
 #: ktorrent/main.cpp:182
 #, kde-format
@@ -2113,24 +2092,21 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
-#, fuzzy, kde-format
-#| msgid "Magnet"
+#, kde-format
 msgid "Magnets Queue"
-msgstr "Maighnéad"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/advancedpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Number of upload slots:"
+#, kde-format
 msgid "Number of downloading slots:"
-msgstr "Líon na sliotán uasluchtaithe:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_numMagnetDownloadingSlots)
 #: ktorrent/pref/advancedpref.ui:147
-#, fuzzy, kde-format
-#| msgid "Maximum number of downloads (0 = no limit)"
+#, kde-format
 msgid "Maximum number of concurrent downloading magnets at the same time."
-msgstr "Líon uasta na n-íosluchtuithe (0 = gan teorainn)"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_requeueMagnets)
 #: ktorrent/pref/advancedpref.ui:163
@@ -2156,11 +2132,9 @@ msgstr ""
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:176 ktorrent/pref/qmpref.cpp:16
-#, fuzzy, kde-format
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgid " min"
-msgstr " nóiméad"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
@@ -2206,10 +2180,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
-#, fuzzy, kde-format
-#| msgid "Copy Torrent URL"
+#, kde-format
 msgid "Tracker list URL:"
-msgstr "Cóipeáil URL an Torrent"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_trackerListUrl)
 #: ktorrent/pref/advancedpref.ui:293
@@ -2232,10 +2205,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:307
-#, fuzzy, kde-format
-#| msgid "Resolving hostname %1"
+#, kde-format
 msgid "Resolve hostnames of peers"
-msgstr "Óstainm %1 á réiteach"
+msgstr ""
 
 #: ktorrent/pref/btpref.cpp:14
 #, kde-format
@@ -2309,15 +2281,10 @@ msgstr "Úsáid síolta Gréasáin"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_checkWhenFinished)
 #: ktorrent/pref/btpref.ui:81
-#, fuzzy, kde-format
-#| msgid ""
-#| "The torrent <b>%1</b> has not finished downloading, do you want to delete "
-#| "the incomplete data, too?"
+#, kde-format
 msgid ""
 "When a torrent has finished downloading, do a full data check on the torrent."
 msgstr ""
-"Níor chríochnaigh íosluchtú torrent <b>%1</b>. An bhfuil fonn ort na sonraí "
-"neamhiomlána a scriosadh freisin?"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_checkWhenFinished)
 #: ktorrent/pref/btpref.ui:84
@@ -2423,10 +2390,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
-#, fuzzy, kde-format
-#| msgid "KTorrent is not running."
+#, kde-format
 msgid "Torrent is running:"
-msgstr "Níl KTorrent ag rith."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/colorpref.ui:40
@@ -2436,17 +2402,15 @@ msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
-#, fuzzy, kde-format
-#| msgid "Folder to store temporary files"
+#, kde-format
 msgid "Color to use for torrents with error status."
-msgstr "Fillteán ina stóráiltear comhaid shealadacha"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/colorpref.ui:54
-#, fuzzy, kde-format
-#| msgid "Torrent:"
+#, kde-format
 msgid "Torrent error:"
-msgstr "Torrent:"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -2491,10 +2455,9 @@ msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Folder to store temporary files"
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
-msgstr "Fillteán ina stóráiltear comhaid shealadacha"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
@@ -2512,17 +2475,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
-#, fuzzy, kde-format
-#| msgid "Share ratio:"
+#, kde-format
 msgid "Low share ratio:"
-msgstr "Cóimheas comhroinnte:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Minimum good share ratio:"
+#, kde-format
 msgid "Good share ratio:"
-msgstr "Cóimheas íosta comhroinnte:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
@@ -2544,10 +2505,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
-#, fuzzy, kde-format
-#| msgid "Colors"
+#, kde-format
 msgid "Reset Colors"
-msgstr "Dathanna"
+msgstr ""
 
 #: ktorrent/pref/generalpref.cpp:13
 #, kde-format
@@ -2619,11 +2579,9 @@ msgstr "Deilbhín i dTráidire an Chórais"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:100
-#, fuzzy, kde-format
-#| msgid "Whether or not to show an icon in the system tray."
+#, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
 msgstr ""
-"Cé acu a thaispeánfar deilbhín i dtráidire an chórais nó nach dtaispeánfar."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:103
@@ -2655,10 +2613,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_openMultipleTorrentsSilently)
 #: ktorrent/pref/generalpref.ui:132
-#, fuzzy, kde-format
-#| msgid "Open all torrents silently"
+#, kde-format
 msgid "Open multiple torrents silently"
-msgstr "Oscail torrents go ciúin"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_openAllTorrentsSilently)
 #: ktorrent/pref/generalpref.ui:139
@@ -2704,12 +2661,9 @@ msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_highlightNewTorrents)
 #: ktorrent/pref/generalpref.ui:170
-#, fuzzy, kde-format
-#| msgid "Whether or not to use µTorrent compatible peer exchange."
+#, kde-format
 msgid "Whether or not new torrents will be highlighted."
 msgstr ""
-"Cé acu a bhainfear úsáid as malairt comhghleacaithe comhoiriúnach do "
-"µTorrent, nó nach mbainfear."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_highlightNewTorrents)
 #: ktorrent/pref/generalpref.ui:173
@@ -2918,10 +2872,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Torrent Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Socruithe Torrent"
+msgstr ""
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -2980,12 +2933,9 @@ msgstr "Úsáid seachfhreastalaí le haghaidh ceangal síolta Gréasáin"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useProxyForTracker)
 #: ktorrent/pref/proxypref.ui:84
-#, fuzzy, kde-format
-#| msgid "Whether or not to use the HTTP proxy for webseed connections."
+#, kde-format
 msgid "Whether or not to use the HTTP proxy for tracker connections."
 msgstr ""
-"Cé acu a bhainfear úsáid as an seachfhreastalaí HTTP le haghaidh ceangal "
-"síolta Gréasáin, nó nach mbainfear."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useProxyForTracker)
 #: ktorrent/pref/proxypref.ui:87
@@ -3022,17 +2972,15 @@ msgstr "Freastalaí:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_socksProxy)
 #: ktorrent/pref/proxypref.ui:123
-#, fuzzy, kde-format
-#| msgid "Use a SOCKS proxy server:"
+#, kde-format
 msgid "IP address or hostname of the SOCKS server."
-msgstr "Úsáid seachfhreastalaí SOCKS:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_socksPort)
 #: ktorrent/pref/proxypref.ui:137
-#, fuzzy, kde-format
-#| msgid "Use a SOCKS proxy server:"
+#, kde-format
 msgid "Port used by the SOCKS server."
-msgstr "Úsáid seachfhreastalaí SOCKS:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: ktorrent/pref/proxypref.ui:144
@@ -3062,10 +3010,9 @@ msgstr "Ainm úsáideora:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_socksUsername)
 #: ktorrent/pref/proxypref.ui:177
-#, fuzzy, kde-format
-#| msgid "Use a SOCKS proxy server:"
+#, kde-format
 msgid "Username for the SOCKS proxy server."
-msgstr "Úsáid seachfhreastalaí SOCKS:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: ktorrent/pref/proxypref.ui:184
@@ -3075,10 +3022,9 @@ msgstr "Focal Faire:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_socksPassword)
 #: ktorrent/pref/proxypref.ui:191
-#, fuzzy, kde-format
-#| msgid "Use a SOCKS proxy server:"
+#, kde-format
 msgid "Password for the SOCKS proxy server."
-msgstr "Úsáid seachfhreastalaí SOCKS:"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_qm_group_box)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
@@ -3208,12 +3154,10 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, fuzzy, kde-format
-#| msgctxt "@title:group Options regarging Seeding"
-#| msgid "Seeding"
+#, kde-format
 msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
-msgstr "Síolú"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_keepSeeding)
 #: ktorrent/pref/qmpref.ui:165
@@ -3252,11 +3196,7 @@ msgstr "Cóimheas uasta comhroinnte réamhshocraithe:"
 
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_maxRatio)
 #: ktorrent/pref/qmpref.ui:206
-#, fuzzy, kde-format
-#| msgid ""
-#| "The maximum seed time in hours. Once you reach this time, the torrent "
-#| "will be stopped. This is only applied to newly opened torrents, existing "
-#| "torrents will not be affected by changing this."
+#, kde-format
 msgid ""
 "<p>The maximum share ratio, if this value is reached seeding will be "
 "stopped. This is only applied to newly opened torrents, existing torrents "
@@ -3264,9 +3204,6 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Attention: </span>This is not used when "
 "downloading, only when seeding.</p>"
 msgstr ""
-"Tréimhse uasta síolaithe, in uaireanta. Nuair a imíonn an tréimhse seo, "
-"stopfar an torrent.Ní chuirtear é seo i bhfeidhm ach ar torrents atá "
-"oscailte as an nua; ní rachaidh sé i bhfeidhm ar torrents atá ann cheana."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/qmpref.ui:222
@@ -3314,10 +3251,9 @@ msgstr "(= %1/s)"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, RecommendedSettingsDlg)
 #: ktorrent/pref/recommendedsettingsdlg.ui:14
-#, fuzzy, kde-format
-#| msgid "Torrent Settings"
+#, kde-format
 msgid "Recommended Settings"
-msgstr "Socruithe Torrent"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/recommendedsettingsdlg.ui:24
@@ -3385,10 +3321,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_chk_slots)
 #: ktorrent/pref/recommendedsettingsdlg.ui:167
-#, fuzzy, kde-format
-#| msgid "Start torrent"
+#, kde-format
 msgid "Slots per torrent:"
-msgstr "Tosaigh torrent"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/recommendedsettingsdlg.ui:190
@@ -3417,9 +3352,6 @@ msgid "%1 node"
 msgid_plural "%1 nodes"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: ktorrent/statusbar.cpp:90
 #, kde-format
@@ -3427,9 +3359,6 @@ msgid "%1 task"
 msgid_plural "%1 tasks"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: ktorrent/statusbar.cpp:90
 #, kde-format
@@ -3491,10 +3420,9 @@ msgid "Stop Magnet"
 msgstr ""
 
 #: ktorrent/tools/magnetview.cpp:54
-#, fuzzy, kde-format
-#| msgid "Copy Torrent URL"
+#, kde-format
 msgid "Copy Magnet URL"
-msgstr "Cóipeáil URL an Torrent"
+msgstr ""
 
 #: ktorrent/tools/magnetview.cpp:56
 #, kde-format
@@ -3629,10 +3557,9 @@ msgid "Widget to manage the torrent queue"
 msgstr ""
 
 #: ktorrent/torrentactivity.cpp:96
-#, fuzzy, kde-format
-#| msgid "KTMagnetDownloader"
+#, kde-format
 msgid "Magnet Downloader"
-msgstr "KTMagnetDownloader"
+msgstr ""
 
 #: ktorrent/torrentactivity.cpp:96
 #, kde-format
@@ -3671,10 +3598,9 @@ msgid "Suspend all running torrents"
 msgstr "Cuir gach torrent reatha ar fionraí"
 
 #: ktorrent/torrentactivity.cpp:128
-#, fuzzy, kde-format
-#| msgid "Group"
+#, kde-format
 msgid "Group View"
-msgstr "Grúpa"
+msgstr ""
 
 #: ktorrent/torrentactivity.cpp:129
 #, kde-format
@@ -3820,16 +3746,14 @@ msgid "Torrent has been stopped.<br />"
 msgstr "Stopadh an torrent.<br />"
 
 #: ktorrent/trayicon.cpp:346
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "Teorainn luais, i KiB/s"
+msgstr ""
 
 #: ktorrent/trayicon.cpp:348
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "Teorainn luais, i KiB/s"
+msgstr ""
 
 #: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -3879,19 +3803,7 @@ msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, superseeding)
 #: ktorrent/view/propertiesdlg.ui:42
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\">If you are behind a "
-#| "router and you want to access the webinterface from somewhere on the "
-#| "Internet you need to forward the correct port.</p>\n"
-#| "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#| "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#| "\"></p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\">This checkbox will "
-#| "ensure that the UPnP plugin automatically forwards the port. The UPnP "
-#| "plugin needs to be loaded for this to work.</p>"
+#, kde-format
 msgid ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\">Superseeding mode, is a "
@@ -3906,17 +3818,6 @@ msgid ""
 "fully been established. Once there are multiple active seeders, this mode "
 "becomes useless.</p>"
 msgstr ""
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">Má tá tú taobh thiar de "
-"ródaire agus is mian leat an comhéadan Gréasáin a rochtain ó áit éigin ar an "
-"Idirlíon, ní mór duit an port ceart a chur ar aghaidh.</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
-"p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">Má chuireann tú tic sa "
-"bhosca seo, cuirfidh an breiseán UPnP an port ar aghaidh go huathoibríoch. "
-"Tá gá leis an mbreiseán UPnP a bheith luchtaithe chun é seo a dhéanamh.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, superseeding)
 #: ktorrent/view/propertiesdlg.ui:45
@@ -3926,16 +3827,11 @@ msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, move_on_completion_enabled)
 #: ktorrent/view/propertiesdlg.ui:52
-#, fuzzy, kde-format
-#| msgid ""
-#| "Moves the files to the specified location when the torrent finishes "
-#| "downloading."
+#, kde-format
 msgid ""
 "Move the files of the torrent to a different directory when it has finished "
 "downloading."
 msgstr ""
-"Bogann sé seo na comhaid go dtí an suíomh roghnaithe nuair a chríochnaítear "
-"íosluchtú an torrent."
 
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, move_on_completion_url)
 #: ktorrent/view/propertiesdlg.ui:62
@@ -4020,11 +3916,10 @@ msgid "Errors:"
 msgstr "Earráidí:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Scagaire"
+msgstr ""
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4229,11 +4124,10 @@ msgid "Select a directory to move the data to."
 msgstr "Roghnaigh an chomhadlann ar mian leat bogadh na sonraí inti."
 
 #: ktorrent/view/viewdelegate.cpp:332
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1 %"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:182
 #, kde-format
@@ -4248,11 +4142,10 @@ msgid "Downloaded"
 msgstr "Íosluchtaithe"
 
 #: ktorrent/view/viewmodel.cpp:475
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "Uaireanta Íosluchtaithe"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:477
 #: libktcore/torrent/torrentfilelistmodel.cpp:65
@@ -4267,11 +4160,10 @@ msgid "Uploaded"
 msgstr "Uasluchtaithe"
 
 #: ktorrent/view/viewmodel.cpp:481
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "Uasluchtaithe"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:483
 #, kde-format
@@ -4337,10 +4229,9 @@ msgid "Added"
 msgstr "Curtha Leis"
 
 #: ktorrent/view/viewmodel.cpp:508
-#, fuzzy, kde-format
-#| msgid "Last priority:"
+#, kde-format
 msgid "Last Activity"
-msgstr "Tosaíocht is ísle:"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:515
 #, kde-format
@@ -4463,10 +4354,9 @@ msgid "KTorrent's UPnP test application"
 msgstr "Feidhmchlár tástála UPnP le haghaidh KTorrent"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "(C) 2005 - 2008 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr "© 2005 - 2008 Joris Guisson and Ivan Vasic"
+msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -4603,11 +4493,10 @@ msgid "Ungrouped Torrents"
 msgstr "Torrents Gan Ghrúpa"
 
 #: libktcore/interfaces/functions.cpp:148
-#, fuzzy, kde-format
-#| msgid "Torrents"
+#, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
-msgstr "Torrents"
+msgstr ""
 
 #: libktcore/interfaces/functions.cpp:150
 #, kde-format
@@ -4622,10 +4511,9 @@ msgstr "Líon uasta na n-íosluchtuithe (0 = gan teorainn)"
 
 #. i18n: ectx: label, entry (maxSeeds), group (downloads)
 #: libktcore/ktorrent.kcfg:15
-#, fuzzy, kde-format
-#| msgid "Maximum number of downloads (0 = no limit)"
+#, kde-format
 msgid "Maximum number of seeds (0 = no limit)"
-msgstr "Líon uasta na n-íosluchtuithe (0 = gan teorainn)"
+msgstr ""
 
 #. i18n: ectx: label, entry (startDownloadsOnLowDiskSpace), group (downloads)
 #: libktcore/ktorrent.kcfg:20
@@ -4642,11 +4530,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (maxTotalConnections), group (downloads)
 #: libktcore/ktorrent.kcfg:30
-#, fuzzy, kde-format
-#| msgid "Maximum number of connections per torrent (0 = no limit)"
+#, kde-format
 msgid "Maximum number of connections for all torrents (0 = no limit) "
 msgstr ""
-"Líon uasta ceangal a cheadaítear in aghaidh gach torrent (0 = gan teorainn)"
 
 #. i18n: ectx: label, entry (maxUploadRate), group (downloads)
 #: libktcore/ktorrent.kcfg:35
@@ -4740,10 +4626,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (torrentCopyDir), group (downloads)
 #: libktcore/ktorrent.kcfg:116
-#, fuzzy, kde-format
-#| msgid "Copy torrent files to:"
+#, kde-format
 msgid "Folder to copy .torrent files to"
-msgstr "Cóipeáil comhaid torrent go:"
+msgstr ""
 
 #. i18n: ectx: label, entry (useCustomIP), group (downloads)
 #: libktcore/ktorrent.kcfg:119
@@ -4759,10 +4644,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (customIP), group (downloads)
 #: libktcore/ktorrent.kcfg:127
-#, fuzzy, kde-format
-#| msgid "IP address of the peer"
+#, kde-format
 msgid "IP to pass to the tracker"
-msgstr "Seoladh IP an chomhghleacaí"
+msgstr ""
 
 #. i18n: ectx: label, entry (guiUpdateInterval), group (downloads)
 #: libktcore/ktorrent.kcfg:131
@@ -4810,17 +4694,15 @@ msgstr ""
 
 #. i18n: ectx: label, entry (completedDir), group (downloads)
 #: libktcore/ktorrent.kcfg:248
-#, fuzzy, kde-format
-#| msgid "Folder to store downloaded files"
+#, kde-format
 msgid "Folder to move completed downloaded files to"
-msgstr "Fillteán ina stóráiltear comhaid íosluchtaithe"
+msgstr ""
 
 #. i18n: ectx: label, entry (maxSeedTime), group (downloads)
 #: libktcore/ktorrent.kcfg:251
-#, fuzzy, kde-format
-#| msgid "Maximum share ratio (0 = no limit)"
+#, kde-format
 msgid "Maximum seed time in hours (0 = no limit)"
-msgstr "Cóimheas uasta comhroinnte (0 = gan teorainn)"
+msgstr ""
 
 #: libktcore/plugin/pluginactivity.cpp:24
 #: libktcore/plugin/pluginactivity.cpp:44
@@ -4839,23 +4721,20 @@ msgid "Warning: %1"
 msgstr "Rabhadh: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Smutáin íosluchtaithe:"
+msgstr ""
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Chunks not downloaded:"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Líon na smután gan íosluchtú:"
+msgstr ""
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Eisiata:"
+msgstr ""
 
 #: libktcore/torrent/queuemanager.cpp:104
 #, kde-format
@@ -4894,12 +4773,10 @@ msgstr ""
 #: libktcore/torrent/queuemanager.cpp:227
 #: libktcore/torrent/queuemanager.cpp:266
 #: libktcore/torrent/queuemanager.cpp:295
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
-msgstr "Tosaigh"
+msgstr ""
 
 #: libktcore/torrent/queuemanager.cpp:142
 #, kde-format
@@ -5009,10 +4886,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/bwscheduler/bwprefpage.ui:120
-#, fuzzy, kde-format
-#| msgid "Schedule line color:"
+#, kde-format
 msgid "Schedule background color:"
-msgstr "Dath línte i sceideal:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_scheduleBackgroundColor)
 #: plugins/bwscheduler/bwprefpage.ui:127
@@ -5028,10 +4904,9 @@ msgstr "Dath línte i sceideal:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_scheduleLineColor)
 #: plugins/bwscheduler/bwprefpage.ui:141
-#, fuzzy, kde-format
-#| msgid "Add a new item to the schedule"
+#, kde-format
 msgid "Color of all lines on the schedule."
-msgstr "Cuir mír nua leis an sceideal"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/bwscheduler/bwprefpage.ui:148
@@ -5041,24 +4916,21 @@ msgstr "Dath míreanna i sceideal:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_itemColor)
 #: plugins/bwscheduler/bwprefpage.ui:155
-#, fuzzy, kde-format
-#| msgid "Add a new item to the schedule"
+#, kde-format
 msgid "Color of each normal item on the schedule."
-msgstr "Cuir mír nua leis an sceideal"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: plugins/bwscheduler/bwprefpage.ui:162
-#, fuzzy, kde-format
-#| msgid "Schedule Item color:"
+#, kde-format
 msgid "Suspended schedule item color:"
-msgstr "Dath míreanna i sceideal:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_suspendedColor)
 #: plugins/bwscheduler/bwprefpage.ui:169
-#, fuzzy, kde-format
-#| msgid "Add a new item to the schedule"
+#, kde-format
 msgid "Color of each suspended item on the schedule."
-msgstr "Cuir mír nua leis an sceideal"
+msgstr ""
 
 #: plugins/bwscheduler/bwschedulerplugin.cpp:91
 #: plugins/infowidget/infowidgetplugin.cpp:68
@@ -5350,16 +5222,14 @@ msgid "Add Trackers"
 msgstr "Cuir Lorgairí Leis"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Smutáin ar fáil:"
+msgstr ""
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Smutáin ar fáil:"
+msgstr ""
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:189
 #, kde-format
@@ -5458,11 +5328,10 @@ msgid "Open With"
 msgstr "Oscail Le"
 
 #: plugins/infowidget/fileview.cpp:116
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
-msgstr "Athainmnigh"
+msgstr ""
 
 #: plugins/infowidget/fileview.cpp:117
 #, kde-format
@@ -5485,10 +5354,9 @@ msgid "Download last"
 msgstr "Íosluchtaigh go deireanach"
 
 #: plugins/infowidget/fileview.cpp:123
-#, fuzzy, kde-format
-#| msgid "Do Not Download"
+#, kde-format
 msgid "Do not download"
-msgstr "Ná hÍosluchtaigh"
+msgstr ""
 
 #: plugins/infowidget/fileview.cpp:124
 #, kde-format
@@ -5774,10 +5642,9 @@ msgstr "Tosaíocht is airde:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_firstColor)
 #: plugins/infowidget/iwprefpage.ui:79
-#, fuzzy, kde-format
-#| msgid "Folder to store temporary files"
+#, kde-format
 msgid "Color to use for first priority files."
-msgstr "Fillteán ina stóráiltear comhaid shealadacha"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/infowidget/iwprefpage.ui:86
@@ -5787,17 +5654,15 @@ msgstr "Tosaíocht is ísle:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lastColor)
 #: plugins/infowidget/iwprefpage.ui:93
-#, fuzzy, kde-format
-#| msgid "Folder to store temporary files"
+#, kde-format
 msgid "Color to use for last priority files."
-msgstr "Fillteán ina stóráiltear comhaid shealadacha"
+msgstr ""
 
 #. i18n: ectx: label, entry (showPeerView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:10
-#, fuzzy, kde-format
-#| msgid "Show speed bar in tray icon"
+#, kde-format
 msgid "Show peer view tab in main window"
-msgstr "Taispeáin barra luais i dtráidire an chórais"
+msgstr ""
 
 #. i18n: ectx: label, entry (showChunkView), group (general)
 #: plugins/infowidget/ktinfowidgetplugin.kcfg:14
@@ -5857,11 +5722,10 @@ msgid "No"
 msgstr "Níl"
 
 #: plugins/infowidget/peerviewmodel.cpp:107
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1 %"
+msgstr ""
 
 # "choked", "snubbed" booleans in peerview.cpp
 #: plugins/infowidget/peerviewmodel.cpp:121
@@ -6130,16 +5994,14 @@ msgid "Next Update"
 msgstr "An Chéad Nuashonrú Eile"
 
 #: plugins/infowidget/trackerview.cpp:57
-#, fuzzy, kde-format
-#| msgid "Copy Torrent URL"
+#, kde-format
 msgid "Copy Tracker URL"
-msgstr "Cóipeáil URL an Torrent"
+msgstr ""
 
 #: plugins/infowidget/trackerview.cpp:64
-#, fuzzy, kde-format
-#| msgid "Tracker status:"
+#, kde-format
 msgid "Copy Tracker status"
-msgstr "Stádas an lorgaire:"
+msgstr ""
 
 #: plugins/infowidget/trackerview.cpp:115
 #, kde-format
@@ -6170,10 +6032,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_change_tracker)
 #: plugins/infowidget/trackerview.ui:39
-#, fuzzy, kde-format
-#| msgid "Tracker"
+#, kde-format
 msgid "Switch Tracker"
-msgstr "Lorgaire"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_scrape)
 #: plugins/infowidget/trackerview.ui:46
@@ -6204,19 +6065,7 @@ msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, m_webseed)
 #: plugins/infowidget/webseedstab.ui:19
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\">If you are behind a "
-#| "router and you want to access the webinterface from somewhere on the "
-#| "Internet you need to forward the correct port.</p>\n"
-#| "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#| "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#| "\"></p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\">This checkbox will "
-#| "ensure that the UPnP plugin automatically forwards the port. The UPnP "
-#| "plugin needs to be loaded for this to work.</p>"
+#, kde-format
 msgid ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\">Webseed to add to the "
@@ -6228,17 +6077,6 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">Note: </span>Only http webseeds are supported.</p>"
 msgstr ""
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">Má tá tú taobh thiar de "
-"ródaire agus is mian leat an comhéadan Gréasáin a rochtain ó áit éigin ar an "
-"Idirlíon, ní mór duit an port ceart a chur ar aghaidh.</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
-"p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">Má chuireann tú tic sa "
-"bhosca seo, cuirfidh an breiseán UPnP an port ar aghaidh go huathoibríoch. "
-"Tá gá leis an mbreiseán UPnP a bheith luchtaithe chun é seo a dhéanamh.</p>"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add)
 #: plugins/infowidget/webseedstab.ui:26
@@ -6266,10 +6104,9 @@ msgstr "Díchumasaigh Uile"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
-msgstr "Á Thiontú..."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6286,10 +6123,9 @@ msgid "C&ancel"
 msgstr "Ce&alaigh"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "Téacschomhad á luchtú..."
+msgstr ""
 
 #: plugins/ipfilter/convertthread.cpp:131
 #, kde-format
@@ -6310,10 +6146,9 @@ msgid "7z files are not supported"
 msgstr ""
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:143
-#, fuzzy, kde-format
-#| msgid "Cannot seek in file : %1"
+#, kde-format
 msgid "Cannot determine file type of <b>%1</b>"
-msgstr "Ní féidir lorg i gcomhad : %1"
+msgstr ""
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:175
 #, kde-format
@@ -6477,10 +6312,9 @@ msgstr "An chéad nuashonrú eile:"
 
 #. i18n: ectx: label, entry (filterURL), group (general)
 #: plugins/ipfilter/ktipfilterplugin.kcfg:10
-#, fuzzy, kde-format
-#| msgid "Use level1 filter?"
+#, kde-format
 msgid "Level1 filter url"
-msgstr "An bhfuil fonn ort scagaire leibhéil1 a úsáid?"
+msgstr ""
 
 #. i18n: ectx: label, entry (useLevel1), group (general)
 #: plugins/ipfilter/ktipfilterplugin.kcfg:14
@@ -6537,29 +6371,7 @@ msgstr "Amharcán Logchomhaid"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_logging_flags)
 #: plugins/logviewer/logprefwidget.ui:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "Double click on the log level to alter it. The possible levels are :\n"
-#| "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#| "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#| "\"></p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">All: </span>All messages are shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Important: </span>Only important messages are shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Notice: </span>Only notice and important messages are "
-#| "shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Debug: </span>Debug, notice and important messages are "
-#| "shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">None:</span> No messages are shown</p>"
+#, kde-format
 msgid ""
 "<html>Double click on the log level to alter it. The possible levels are:\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
@@ -6583,29 +6395,6 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">None:</span> No messages are shown</p></html>"
 msgstr ""
-"Déchliceáil ar an leibhéal logála chun é a athrú.  Is iad seo na leibhéil "
-"atá ar fáil:\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
-"p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Uile: </span>Taispeáin gach teachtaireacht</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Tábhachtach: </span>Taispeáin na teachtaireachtaí tábhachtacha "
-"amháin</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Fógra: </span>Taispeáin fógraí agus teachtaireachtaí "
-"tábhachtacha</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Dífhabhtú: </span>Taispeáin teachtaireachtaí a bhaineann le "
-"dífhabhtú, fógraí, agus teachtaireachtaí tábhachtacha</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Neamhní:</span>Ná taispeáin faic</p>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:42
@@ -6649,10 +6438,9 @@ msgstr ""
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_logWidgetPosition)
 #: plugins/logviewer/logprefwidget.ui:78
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:43
-#, fuzzy, kde-format
-#| msgid "Torrent to display:"
+#, kde-format
 msgid "Torrent activity"
-msgstr "Torrent le taispeáint:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/logviewer/logprefwidget.ui:103
@@ -6689,10 +6477,9 @@ msgstr ""
 #. i18n: ectx: label, entry (torrenttracker), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:10
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:40
-#, fuzzy, kde-format
-#| msgid "Cannot load the torrent file: %1"
+#, kde-format
 msgid "Grabs a tracker from the torrent file"
-msgstr "Ní féidir an comhad torrent a luchtú: %1"
+msgstr ""
 
 #. i18n: ectx: label, entry (customtracker), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:14
@@ -6708,19 +6495,17 @@ msgstr "An lorgaire réamhshocraithe"
 
 #. i18n: ectx: label, entry (dn), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:22
-#, fuzzy, kde-format
-#| msgid "Show Feed"
+#, kde-format
 msgid "Show dn"
-msgstr "Taispeáin Fotha"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_popup)
 #. i18n: ectx: label, entry (popup), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:26
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:90
-#, fuzzy, kde-format
-#| msgid "Show Uploads"
+#, kde-format
 msgid "Show popup"
-msgstr "Taispeáin Uasluchtuithe"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_onlypublic)
 #. i18n: ectx: label, entry (onlypublic), group (general)
@@ -6749,17 +6534,15 @@ msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, MagnetGeneratorPrefWidget)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:26
-#, fuzzy, kde-format
-#| msgid "Search Preferences"
+#, kde-format
 msgid "Magnet Generator Preferences"
-msgstr "Sainroghanna Cuardaigh"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_torrenttracker)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:43
-#, fuzzy, kde-format
-#| msgid "Cannot load the torrent file: %1"
+#, kde-format
 msgid "Add a tracker from the torrent file"
-msgstr "Ní féidir an comhad torrent a luchtú: %1"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_customtracker)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:50
@@ -6769,10 +6552,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_customtracker)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:53
-#, fuzzy, kde-format
-#| msgid "Invalid tracker URL"
+#, kde-format
 msgid "Add a custom tracker URL"
-msgstr "URL neamhbhailí ar an lorgaire"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_tr)
 #: plugins/magnetgenerator/magnetgeneratorprefwidget.ui:60
@@ -6977,10 +6759,9 @@ msgstr "Tá físeán á sheinm ag KTorrent."
 
 #. i18n: ectx: label, entry (openSilently), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:13
-#, fuzzy, kde-format
-#| msgid "Open torrents silently"
+#, kde-format
 msgid "Whether to open torrent silently or not."
-msgstr "Oscail torrents go ciúin"
+msgstr ""
 
 #. i18n: ectx: label, entry (actionDelete), group (general)
 #: plugins/scanfolder/ktscanfolderplugin.kcfg:18
@@ -7004,11 +6785,10 @@ msgstr ""
 #: plugins/scanfolder/torrentloadqueue.cpp:138
 #: plugins/scanfolder/torrentloadqueue.cpp:139
 #: plugins/scanfolder/torrentloadqueue.cpp:142
-#, fuzzy, kde-format
-#| msgid "loaded"
+#, kde-format
 msgctxt "folder name part"
 msgid "loaded"
-msgstr "luchtaithe"
+msgstr ""
 
 #: plugins/scanfolder/scanfolderplugin.cpp:43
 #: plugins/scanfolder/scanfolderplugin.cpp:56
@@ -7126,11 +6906,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox"
-#| msgid "Widget type:"
+#, kde-format
 msgid "Widget position:"
-msgstr "Cineál na giuirléide:"
+msgstr ""
 
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
@@ -7146,31 +6924,27 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select folder:"
-msgstr "Roghnaigh &Uile"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:101
-#, fuzzy, kde-format
-#| msgid "Show a file list"
+#, kde-format
 msgid "Show all files"
-msgstr "Taispeáin liosta comhad"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:112
-#, fuzzy, kde-format
-#| msgid "Open silently"
+#, kde-format
 msgid "Open file"
-msgstr "Oscail go ciúin"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgid "Delete on disk"
-msgstr "Scrios Comha(i)d"
+msgstr ""
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:124
@@ -7258,10 +7032,9 @@ msgstr "Sainroghanna Cuardaigh"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_clear_history)
 #: plugins/search/searchpref.ui:34
-#, fuzzy, kde-format
-#| msgid "Clear Search History"
+#, kde-format
 msgid "Clear the search history combo boxes."
-msgstr "Bánaigh Stair an Chuardaigh"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_clear_history)
 #: plugins/search/searchpref.ui:37
@@ -7271,19 +7044,15 @@ msgstr "Bánaigh Stair an Chuardaigh"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_reset_default_action)
 #: plugins/search/searchpref.ui:44
-#, fuzzy, kde-format
-#| msgid "Directory to move data to when a torrent has finished downloading."
+#, kde-format
 msgid "Reset the default action taken when a torrent is downloaded."
 msgstr ""
-"Comhadlann a gcuirfear sonraí inti nuair a chríochnaítear íosluchtú an "
-"torrent."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_reset_default_action)
 #: plugins/search/searchpref.ui:47
-#, fuzzy, kde-format
-#| msgid "Default save location:"
+#, kde-format
 msgid "Reset Default Torrent Action"
-msgstr "Suíomh réamhshocraithe sábhála:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_restorePreviousSession)
 #: plugins/search/searchpref.ui:69
@@ -7312,12 +7081,9 @@ msgstr "Oscail cuardaigh i mbrabhsálaí seachtrach"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useProxySettings)
 #: plugins/search/searchpref.ui:89
-#, fuzzy, kde-format
-#| msgid "Whether or not to use the HTTP proxy for webseed connections."
+#, kde-format
 msgid "Whether or not to use the HTTP proxy settings for search."
 msgstr ""
-"Cé acu a bhainfear úsáid as an seachfhreastalaí HTTP le haghaidh ceangal "
-"síolta Gréasáin, nó nach mbainfear."
 
 #. i18n: ectx: property (toolTip), widget (QRadioButton, kcfg_useDefaultBrowser)
 #: plugins/search/searchpref.ui:99
@@ -7339,10 +7105,9 @@ msgstr "Conair bhrabhsálaí saincheaptha:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_customBrowser)
 #: plugins/search/searchpref.ui:127
-#, fuzzy, kde-format
-#| msgid "Use custom browser"
+#, kde-format
 msgid "Path of the custom browser."
-msgstr "Úsáid brabhsálaí saincheaptha"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox8)
 #: plugins/search/searchpref.ui:152
@@ -7838,13 +7603,12 @@ msgstr "Meánlíon na síolta ceangailte in aghaidh gach torrent gníomhach"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
 msgid "Display"
-msgstr "Taispeáin"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AntiAliasing)
 #: plugins/stats/DisplaySettings.ui:910
@@ -7884,13 +7648,12 @@ msgid "(plugin reload is needed after change)"
 msgstr "(ní mór an breiseán a athluchtú tar éis athraithe)"
 
 #: plugins/stats/DisplaySettingsPage.cc:14
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
 msgid "Display"
-msgstr "Taispeáin"
+msgstr ""
 
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
@@ -7947,18 +7710,15 @@ msgstr ""
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:378
 #: plugins/stats/drawer/PlainChartDrawer.cc:330
-#, fuzzy, kde-format
-#| msgid "Search files"
+#, kde-format
 msgid "Image files"
-msgstr "Cuardaigh comhaid"
+msgstr ""
 
 #. i18n: ectx: label, entry (UpdateEveryGuiUpdates), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:10
-#, fuzzy, kde-format
-#| msgctxt "Continues with: [number field] GUI updates"
-#| msgid "Update charts every"
+#, kde-format
 msgid "Update charts every n gui updates"
-msgstr "Nuashonraigh cairteacha gach"
+msgstr ""
 
 #. i18n: ectx: label, entry (DataGatherIval), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:15
@@ -8150,10 +7910,9 @@ msgstr "An bhfuil fonn ort frithailiasáil a úsáid ar chairteacha?"
 
 #. i18n: ectx: label, entry (DrawBgdGrid), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:170
-#, fuzzy, kde-format
-#| msgid "Draw background grid"
+#, kde-format
 msgid "Draw ugly grey background grid?"
-msgstr "Dear greille sa chúlra"
+msgstr ""
 
 #. i18n: ectx: label, entry (WidgetType), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:175
@@ -8212,25 +7971,22 @@ msgstr "Uasta"
 #. i18n: The way the maximum of 0Y axis is calculated
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: plugins/stats/Settings.ui:255
-#, fuzzy, kde-format
-#| msgid "Maximum seed time:"
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Maximum speed scale mode: "
-msgstr "Tréimhse uasta síolaithe:"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaxMode)
 #: plugins/stats/Settings.ui:272
-#, fuzzy, kde-format
-#| msgid "Maximum seed time reached."
+#, kde-format
 msgid "Maximum ever achieved"
-msgstr "Sroicheadh an tréimhse uasta síolaithe."
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaxMode)
 #: plugins/stats/Settings.ui:277
-#, fuzzy, kde-format
-#| msgid "Maximum number of visible lines:"
+#, kde-format
 msgid "Maximum visible on chart"
-msgstr "Líon uasta na línte infheicthe:"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: plugins/stats/Settings.ui:290
@@ -8624,17 +8380,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_download_matches)
 #: plugins/syndication/filtereditor.ui:248
-#, fuzzy, kde-format
-#| msgid "Download progress of the chunk"
+#, kde-format
 msgid "Download torrents of matching items"
-msgstr "Dul chun cinn íosluchtú an smutáin"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_download_non_matches)
 #: plugins/syndication/filtereditor.ui:255
-#, fuzzy, kde-format
-#| msgid "Download progress of the chunk"
+#, kde-format
 msgid "Download torrents of non matching items"
-msgstr "Dul chun cinn íosluchtú an smutáin"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_add_to_group)
 #: plugins/syndication/filtereditor.ui:264
@@ -8699,10 +8453,9 @@ msgstr "D'éirigh leis"
 
 #. i18n: ectx: ToolBar (SyndicationToolBar)
 #: plugins/syndication/ktorrent_syndicationui.rc:5
-#, fuzzy, kde-format
-#| msgid "Shutdown Toolbar"
+#, kde-format
 msgid "Syndication Toolbar"
-msgstr "Barra Uirlisí Múchta"
+msgstr ""
 
 #: plugins/syndication/linkdownloader.cpp:171
 #, kde-format
@@ -8865,1947 +8618,3 @@ msgstr "Athscan"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Open..."
-#~ msgstr "Oscail..."
-
-#, fuzzy
-#~| msgid "Torrent Settings"
-#~ msgid "Recommended Settings..."
-#~ msgstr "Socruithe Torrent"
-
-#, fuzzy
-#~| msgid "Filter"
-#~ msgid "Filter..."
-#~ msgstr "Scagaire"
-
-#, fuzzy
-#~| msgid "(C) 2005 - 2007 Joris Guisson and Ivan Vasic"
-#~ msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
-#~ msgstr "© 2005 - 2007 Joris Guisson and Ivan Vasic"
-
-#~ msgid "Text encoding:"
-#~ msgstr "Ionchódú téacs:"
-
-#~ msgctxt "@title:window"
-#~ msgid "Display"
-#~ msgstr "Taispeáin"
-
-#~ msgid "Search Text"
-#~ msgstr "Téacs Cuardaigh"
-
-#~ msgid "Search Engine"
-#~ msgstr "Inneall Cuardaigh"
-
-#~ msgid "Search Engine Label"
-#~ msgstr "Lipéad an Innill Cuardaigh"
-
-#~ msgid ""
-#~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."
-#~ "blogpotato.de/ so thanks to them too."
-#~ msgstr ""
-#~ "Aimsitheoir tíortha le haghaidh an bhreiseáin InfoWidget. Táimid buíoch "
-#~ "de http://flags.blogpotato.de/ freisin, as na bratacha."
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - Smutáin Íosluchtaithe<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Smutáin Le hÍosluchtú<br><img src="
-#~ "\"excluded_color\">&nbsp; - Smutáin Eisiata"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\">&nbsp; - Smutáin Le Fáil<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Smutáin Dofhaighte<br><img src="
-#~ "\"excluded_color\">&nbsp; - Smutáin Eisiata"
-
-#~ msgid "Yes, delete the files"
-#~ msgstr "Tá, scrios na comhaid"
-
-#~ msgid "Scripting"
-#~ msgstr "Scriptiú"
-
-#~ msgid "Scripts"
-#~ msgstr "Scripteanna"
-
-#~ msgid "KTorrent Script Packages"
-#~ msgstr "Pacáistí Scripteanna KTorrent"
-
-#~ msgid ""
-#~ "Removing these scripts will fully delete them from your disk. Are you "
-#~ "sure you want to do this?"
-#~ msgstr ""
-#~ "Má bhaineann tú na scripteanna seo, scriosfar ó do dhiosca iad. An bhfuil "
-#~ "tú cinnte gur mian leat é seo a dhéanamh?"
-
-#~ msgid "Add Script"
-#~ msgstr "Cuir Script Leis"
-
-#~ msgid "Remove Script"
-#~ msgstr "Bain Script"
-
-#~ msgid "Run Script"
-#~ msgstr "Rith Script"
-
-#~ msgid "Stop Script"
-#~ msgstr "Stop Script"
-
-#~ msgid "Edit Script"
-#~ msgstr "Cuir Script in Eagar"
-
-#~ msgid "Configure"
-#~ msgstr "Cumraigh"
-
-#~ msgid "Invalid archive."
-#~ msgstr "Cartlann neamhbhailí."
-
-#~ msgid "Description:"
-#~ msgstr "Cur Síos:"
-
-#~ msgid "License:"
-#~ msgstr "Ceadúnas:"
-
-#~ msgid "Author:"
-#~ msgstr "Údar:"
-
-#~ msgid "E-Mail:"
-#~ msgstr "Ríomhphost:"
-
-#~ msgid "Website:"
-#~ msgstr "Suíomh Gréasáin:"
-
-#, fuzzy
-#~| msgid "Create a torrent"
-#~ msgid "Auto remove a torrent when:"
-#~ msgstr "Cruthaigh torrent"
-
-#, fuzzy
-#~| msgid "Remove torrent file after loading"
-#~ msgid "The torrent finishes downloading"
-#~ msgstr "Bain comhad torrent tar éis luchtaithe"
-
-#, fuzzy
-#~| msgid "Remove torrent file after loading"
-#~ msgid "The torrent finishes seeding"
-#~ msgstr "Bain comhad torrent tar éis luchtaithe"
-
-#~ msgid " hours"
-#~ msgstr " uair"
-
-#~ msgid " seconds"
-#~ msgstr " soicind"
-
-#~ msgid "E-Mail Settings"
-#~ msgstr "Socruithe Ríomhphoist"
-
-#~ msgid "EMail Settings"
-#~ msgstr "Socruithe Ríomhphoist"
-
-#~ msgid "SMTP Server"
-#~ msgstr "Freastalaí SMTP"
-
-#~ msgid "SMTP server:"
-#~ msgstr "Freastalaí SMTP:"
-
-#~ msgid "Use SSL/TLS encryption"
-#~ msgstr "Úsáid criptiú SSL/TLS"
-
-#~ msgid "Destination"
-#~ msgstr "Sprioc"
-
-#~ msgid "Add CC:"
-#~ msgstr "Cuir CC leis:"
-
-#, fuzzy
-#~| msgid "Add CC:"
-#~ msgid "Add BCC:"
-#~ msgstr "Cuir CC leis:"
-
-#~ msgid "Applet"
-#~ msgstr "Feidhmchláirín"
-
-#~ msgid ""
-#~ "<table>\t\t\t\t<tr><td>Download Speed:</td><td>%5 </td><td>Seeders: </"
-#~ "td><td>%1 (%2)</td></tr>\t\t\t\t<tr><td>Upload Speed:</td><td>%6 </"
-#~ "td><td>Leechers: </td><td>%3 (%4)</td></tr>"
-#~ msgstr ""
-#~ "<table>\t\t\t\t<tr><td>Luas Íosluchtaithe:</td><td>%5 </"
-#~ "td><td>Síoladóirí: </td><td>%1 (%2)</td></tr>\t\t\t\t<tr><td>Luas "
-#~ "Uasluchtaithe:</td><td>%6 </td><td>Súmairí: </td><td>%3 (%4)</td></tr>"
-
-#~ msgid ""
-#~ "<tr><td>Downloaded:</td><td>%1 </td><td>Size: </td><td>%2</td></tr>\t\t\t"
-#~ "\t<tr><td>Uploaded:</td><td>%3 </td><td>Complete: </td><td>%4 %</td></tr>"
-#~ "\t\t\t\t</table>"
-#~ msgstr ""
-#~ "<tr><td>Íosluchtaithe:</td><td>%1 </td><td>Méid: </td><td>%2</td></tr>\t\t"
-#~ "\t\t<tr><td>Uasluchtaithe:</td><td>%3 </td><td>Iomlán: </td><td>%4 %</"
-#~ "td></tr>\t\t\t\t</table>"
-
-#~ msgid "<b>%1</b><br/>%2 (Share Ratio: <font color=\"%4\">%3</font>)"
-#~ msgstr ""
-#~ "<b>%1</b><br/>%2 (Cóimheas Comhroinnte: <font color=\"%4\">%3</font>)"
-
-#~ msgid "KTorrent is not running."
-#~ msgstr "Níl KTorrent ag rith."
-
-#~ msgid "No torrents loaded."
-#~ msgstr "Níl aon torrent luchtaithe."
-
-#~ msgid "Torrent to display:"
-#~ msgstr "Torrent le taispeáint:"
-
-#~ msgid "Cannot find web interface skins."
-#~ msgstr "Ní féidir craicne comhéadain Gréasáin a aimsiú."
-
-#~ msgid "forward Port"
-#~ msgstr "cuir Port ar aghaidh"
-
-#~ msgid "interface skin"
-#~ msgstr "craiceann comhéadain"
-
-#~ msgid "username"
-#~ msgstr "ainm úsáideora"
-
-#~ msgid "password"
-#~ msgstr "focal faire"
-
-#~ msgid "Invalid data received"
-#~ msgstr "Fuarthas sonraí neamhbhailí"
-
-#~ msgid "Failed to open temporary file"
-#~ msgstr "Theip ar chomhad sealadach a oscailt"
-
-#~ msgid "Web Interface"
-#~ msgstr "Comhéadan Gréasáin"
-
-#~ msgid "Web interface skin:"
-#~ msgstr "Craiceann Comhéadain Gréasáin:"
-
-#~ msgid "Which interface to use."
-#~ msgstr "An comhéadan le húsáid."
-
-#, fuzzy
-#~| msgid ""
-#~| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~| "right:0px; -qt-block-indent:0; text-indent:0px;\">If you are behind a "
-#~| "router and you want to access the webinterface from somewhere on the "
-#~| "Internet you need to forward the correct port.</p>\n"
-#~| "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~| "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~| "\"></p>\n"
-#~| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~| "right:0px; -qt-block-indent:0; text-indent:0px;\">This checkbox will "
-#~| "ensure that the UPnP plugin automatically forwards the port. The UPnP "
-#~| "plugin needs to be loaded for this to work.</p>"
-#~ msgid ""
-#~ "If login required is enabled, you need to enter a username and a "
-#~ "password.\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#~ "weight:600;\">Attention: </span>You should not disable this when the "
-#~ "webinterface is accessible from the internet. It will allow anybody "
-#~ "access to it.</p>"
-#~ msgstr ""
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Má tá tú taobh thiar de "
-#~ "ródaire agus is mian leat an comhéadan Gréasáin a rochtain ó áit éigin ar "
-#~ "an Idirlíon, ní mór duit an port ceart a chur ar aghaidh.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Má chuireann tú tic sa "
-#~ "bhosca seo, cuirfidh an breiseán UPnP an port ar aghaidh go "
-#~ "huathoibríoch. Tá gá leis an mbreiseán UPnP a bheith luchtaithe chun "
-#~ "é seo a dhéanamh.</p>"
-
-#~ msgid "Login required"
-#~ msgstr "Logáil isteach de dhíth"
-
-#~ msgid "Username you need to use in the login page of the webinterface."
-#~ msgstr ""
-#~ "Ainm úsáideora le húsáid ar leathanach logála isteach an chomhéadain "
-#~ "Gréasain."
-
-#~ msgid ""
-#~ "The password for the webinterface login page. By default this is set to "
-#~ "ktorrent."
-#~ msgstr ""
-#~ "Focal faire le húsáid ar leathanach logála isteach an chomhéadain "
-#~ "Gréasain. Is é 'ktorrent' an focal faire seo de réir réamhshocraithe."
-
-#~ msgid "Web Server"
-#~ msgstr "Freastalaí Gréasáin"
-
-#~ msgid "The port the webinterface listens on."
-#~ msgstr "Port a n-éisteann an comhéadan Gréasáin leis."
-
-#~ msgid ""
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">If you are behind a "
-#~ "router and you want to access the webinterface from somewhere on the "
-#~ "Internet you need to forward the correct port.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">This checkbox will "
-#~ "ensure that the UPnP plugin automatically forwards the port. The UPnP "
-#~ "plugin needs to be loaded for this to work.</p>"
-#~ msgstr ""
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Má tá tú taobh thiar de "
-#~ "ródaire agus is mian leat an comhéadan Gréasáin a rochtain ó áit éigin ar "
-#~ "an Idirlíon, ní mór duit an port ceart a chur ar aghaidh.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Má chuireann tú tic sa "
-#~ "bhosca seo, cuirfidh an breiseán UPnP an port ar aghaidh go "
-#~ "huathoibríoch. Tá gá leis an mbreiseán UPnP a bheith luchtaithe chun "
-#~ "é seo a dhéanamh.</p>"
-
-#~ msgid "Forward port"
-#~ msgstr "Cuir port ar aghaidh"
-
-#~ msgid "Session TTL:"
-#~ msgstr "TTL seisiúin:"
-
-#~ msgid " secs"
-#~ msgstr " soic"
-
-#~ msgid "Do not use KIO for tracker announces"
-#~ msgstr "Ná húsáid KIO le haghaidh fógraí lorgaire"
-
-#~ msgid "Magnet"
-#~ msgstr "Maighnéad"
-
-#~ msgid "Standby"
-#~ msgstr "Fuireachas"
-
-#~ msgid " Engine:"
-#~ msgstr " Inneall:"
-
-#~ msgid "KTMagnetDownloader"
-#~ msgstr "KTMagnetDownloader"
-
-#~ msgid "(C) 2009 Joris Guisson"
-#~ msgstr "© 2009 Joris Guisson"
-
-#~ msgid "Show system tray icon"
-#~ msgstr "Taispeáin deilbhín i dtráidire an chórais"
-
-#~ msgid ""
-#~ "<table><tr><td>Download&nbsp;speed:</td><td><b>%1</b></td></"
-#~ "tr><tr><td>Upload&nbsp;speed:</td><td><b>%2</b></td></tr><tr><td>Received:"
-#~ "</td><td><b>%3</b></td></tr><tr><td>Transmitted:</td><td><b>%4</b></td></"
-#~ "tr></table>"
-#~ msgstr ""
-#~ "<table><tr><td>Luas&nbsp;íosluchtaithe:</td><td><b>%1</b></td></"
-#~ "tr><tr><td>Luas&nbsp;uasluchtaithe:</td><td><b>%2</b></td></"
-#~ "tr><tr><td>Faighte:</td><td><b>%3</b></td></tr><tr><td>Seolta:</td><td><b>"
-#~ "%4</b></td></tr></table>"
-
-#~ msgid "Diego R. Brogna"
-#~ msgstr "Diego R. Brogna"
-
-#~ msgid "Webinterface Plugin"
-#~ msgstr "Breiseán Comhéadain Gréasáin"
-
-#~ msgid " minute"
-#~ msgid_plural " minutes"
-#~ msgstr[0] " nóiméad"
-#~ msgstr[1] " nóiméad"
-#~ msgstr[2] " nóiméad"
-#~ msgstr[3] " nóiméad"
-#~ msgstr[4] " nóiméad"
-
-#, fuzzy
-#~| msgid "Stalled"
-#~ msgid "Stalled timer:"
-#~ msgstr "Ag fanacht"
-
-#~ msgid "Cannot open <b>%1</b>: %2"
-#~ msgstr "Ní féidir <b>%1</b> a oscailt: %2"
-
-#~ msgid "No torrents from the KDE3 version were found."
-#~ msgstr "Níor aimsíodh aon torrent ón leagan KDE3."
-
-#~ msgid "Importing 1 torrent ..."
-#~ msgid_plural "Importing %1 torrents ..."
-#~ msgstr[0] "%1 torrent á iompórtáil..."
-#~ msgstr[1] "%1 torrent á n-iompórtáil..."
-#~ msgstr[2] "%1 torrent á n-iompórtáil..."
-#~ msgstr[3] "%1 torrent á n-iompórtáil..."
-#~ msgstr[4] "%1 torrent á n-iompórtáil..."
-
-#~ msgid "Importing <b>%1</b> ..."
-#~ msgstr "<b>%1</b> á Iompórtáil..."
-
-#~ msgid "Failed to load <b>%1</b>"
-#~ msgstr "Níorbh fhéidir <b>%1</b> a luchtú"
-
-#~ msgid "Failed to import <b>%1</b>: %2"
-#~ msgstr "Níorbh fhéidir <b>%1</b> a iompórtáil: %2"
-
-#~ msgid "Imported <b>%1</b>"
-#~ msgstr "Iompórtáladh <b>%1</b>"
-
-#~ msgid "Importing ..."
-#~ msgstr "Á Iompórtáil..."
-
-#~ msgid "Importing torrents from KDE3 version:"
-#~ msgstr "Torrents á n-iompórtáil ón leagan KDE3:"
-
-#~ msgid "Import KDE3 Torrents"
-#~ msgstr "Iompórtáil Torrents KDE3"
-
-#~ msgid "Current speed"
-#~ msgstr "Luas reatha"
-
-#~ msgid "Average speed"
-#~ msgstr "Meánluas"
-
-#~ msgid "Window of X"
-#~ msgstr "Fuinneog X"
-
-#, fuzzy
-#~| msgid "Movie player"
-#~ msgid "Moving average"
-#~ msgstr "Seinnteoir scannán"
-
-#, fuzzy
-#~| msgid "Directory to move data to when a torrent has finished downloading."
-#~ msgid "Algorithm to estimate the time when a torrent is finished"
-#~ msgstr ""
-#~ "Comhadlann a gcuirfear sonraí inti nuair a chríochnaítear íosluchtú an "
-#~ "torrent."
-
-#~ msgctxt "Noun"
-#~ msgid "Download"
-#~ msgstr "Íosluchtú"
-
-#~ msgid "Seeds  in swarms"
-#~ msgstr "Síolta i saithí"
-
-#~ msgid "Top"
-#~ msgstr "Barr"
-
-#~ msgid "Exact"
-#~ msgstr "Beacht"
-
-#~ msgid "You cannot write to magnet resources."
-#~ msgstr "Ní féidir leat scríobh in acmhainní magnet."
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">They are no longer "
-#~ "there, recreate them.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Níl siad ann a "
-#~ "thuilleadh. Athchruthaigh iad.</p></body></html>"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Do not download the "
-#~ "missing files.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Ná híosluchtaigh na "
-#~ "comhaid ar iarraidh.</p></body></html>"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">The files have been "
-#~ "moved to another location, select the new location.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Bogadh na comhaid go "
-#~ "suíomh nua.  Roghnaigh an suíomh nua anois.</p></body></html>"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Cancel, do not start "
-#~ "the torrent.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Cealaigh, ná tosaigh an "
-#~ "torrent.</p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">The interval in milliseconds between GUI "
-#~ "updates.</span></p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#~ "weight:600;\">Note: </span>Increasing this will decrease CPU usage.</p></"
-#~ "body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">Eatramh i milleasoicindí idir nuashonruithe an "
-#~ "chomhéadain ghrafaigh.</span></p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#~ "weight:600;\">Note: </span>Laghdófar an lód ar an LAP má mhéadaíonn tú an "
-#~ "t-eatramh seo.</p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#~ "family:'Bitstream Vera Sans';\">Open all torrents silently.</span></p></"
-#~ "body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#~ "family:'Bitstream Vera Sans';\">Oscail gach torrent go ciúin.</span></p></"
-#~ "body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">Use the HTTP proxy settings configured in the "
-#~ "settings of KDE.</span></p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">Úsáid socruithe an tseachfhreastalaí HTTP ó "
-#~ "shocruithe KDE.</span></p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">Use a SOCKS proxy server for bittorrent "
-#~ "connections.</span></p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" font-family:'OpenSymbol'; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"><span style=\" font-weight:600;\">Note: </span>This is not used for "
-#~ "tracker connections</p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">Úsáid seachfhreastalaí SOCKS i gcomhair "
-#~ "ceangail bittorrent.</span></p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" font-family:'OpenSymbol'; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"><span style=\" font-weight:600;\">Nóta: </span>Ní úsáidtear é seo i "
-#~ "gcomhair ceangail lorgaire</p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">IP address or hostname of the SOCKS server</"
-#~ "span></p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">Seoladh IP nó óstainm an fhreastalaí SOCKS</"
-#~ "span></p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">Port used by the SOCKS server</span></p></"
-#~ "body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">Port a úsáideann an freastalaí SOCKS</span></"
-#~ "p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><span "
-#~ "style=\" font-size:8pt;\">Username for the SOCKS proxy server.</span></"
-#~ "p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><span "
-#~ "style=\" font-size:8pt;\">Ainm úsáideora le haghaidh seachfhreastalaí "
-#~ "SOCKS.</span></p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><span "
-#~ "style=\" font-size:8pt;\">Password for the SOCKS proxy server.</span></"
-#~ "p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><span "
-#~ "style=\" font-size:8pt;\">Focal faire le haghaidh seachfhreastalaí SOCKS."
-#~ "</span></p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;  font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">UDP port to use for the DHT protocol.</span></"
-#~ "p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; \"><span style=\" font-"
-#~ "weight:600;\">Attention:</span> If you are behind a router, this port "
-#~ "needs to be forwarded to accept incoming DHT requests. The UPnP plugin "
-#~ "can do this for you.</p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;  font-size:9pt;\"><span "
-#~ "style=\" font-size:8pt;\">Port UDP le húsáid le haghaidh phrótacal DHT.</"
-#~ "span></p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; \"><span style=\" font-"
-#~ "weight:600;\">Aire:</span> Má tá tú taobh thiar de ródaire, ní mór duit "
-#~ "an port seo a chur ar aghaidh chun iarratais DHT isteach a ghlacadh.  Is "
-#~ "féidir leis an mbreiseán UPnP é seo a dhéanamh ar do shon.</p></body></"
-#~ "html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-family:'OpenSymbol'; "
-#~ "font-size:9pt;\"><span style=\" font-size:8pt;\">Port used for the "
-#~ "bittorrent protocol.</span></p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; "
-#~ "font-family:'OpenSymbol';\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-family:'OpenSymbol';"
-#~ "\"><span style=\" font-weight:600;\">Attention:</span> If you are behind "
-#~ "a router, this port needs to be forwarded to accept incoming connections. "
-#~ "The UPnP plugin can do this for you.</p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-family:'OpenSymbol'; "
-#~ "font-size:9pt;\"><span style=\" font-size:8pt;\">Port a úsáidtear le "
-#~ "haghaidh an phrótacail bittorrent.</span></p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; "
-#~ "font-family:'OpenSymbol';\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-family:'OpenSymbol';"
-#~ "\"><span style=\" font-weight:600;\">Aire:</span> Má tá tú taobh thiar de "
-#~ "ródaire, ní mór duit an port seo a chur ar aghaidh chun ceangail isteach "
-#~ "a ghlacadh.  Is féidir leis an mbreiseán UPnP é seo a dhéanamh ar do shon."
-#~ "</p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-family:'OpenSymbol'; "
-#~ "font-size:9pt;\"><span style=\" font-size:8pt;\">Port used for the UDP "
-#~ "tracker protocol.</span></p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; "
-#~ "font-family:'OpenSymbol';\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-family:'OpenSymbol';"
-#~ "\"><span style=\" font-weight:600;\">Attention:</span> If you are behind "
-#~ "a router, this port needs to be forwarded. The UPnP plugin can do this "
-#~ "for you.</p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-family:'OpenSymbol'; "
-#~ "font-size:9pt;\"><span style=\" font-size:8pt;\">Port a úsáidtear le "
-#~ "haghaidh an phrótacail lorgaire UDP.</span></p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; "
-#~ "font-family:'OpenSymbol';\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-family:'OpenSymbol';"
-#~ "\"><span style=\" font-weight:600;\">Aire:</span> Má tá tú taobh thiar de "
-#~ "ródaire, ní mór duit an port seo a chur ar aghaidh.  Is féidir leis an "
-#~ "mbreiseán UPnP é seo a dhéanamh ar do shon.</p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Scan the folder "
-#~ "recursively for torrents.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;\">Note: "
-#~ "<span style=\" font-weight:400;\">This will not be done for any folder "
-#~ "named loaded.</span></p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Scan an fillteán go "
-#~ "hathchúrsach chun torrents a aimsiú.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;\">Nóta: "
-#~ "<span style=\" font-weight:400;\"> Ní dhéanfar é seo i bhfillteán ar bith "
-#~ "darb ainm 'loaded'.</span></p></body></html>"
-
-#~ msgid ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">When a torrent file has "
-#~ "been found and loaded, delete it.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;"
-#~ "\">Warning:<span style=\" font-weight:400;\"> you will permanently lose "
-#~ "this file.</span></p></body></html>"
-#~ msgstr ""
-#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#~ "REC-html40/strict.dtd\">\n"
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:8pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Scrios an comhad "
-#~ "torrent tar éis dó a bheith aimsithe agus luchtaithe.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;"
-#~ "\">Rabhadh:<span style=\" font-weight:400;\"> caillfidh tú an comhad seo "
-#~ "go brách.</span></p></body></html>"
-
-#~ msgid "Invalid IP address %1"
-#~ msgstr "Seoladh IP neamhbhailí %1"
-
-#~ msgid "Change Tracker"
-#~ msgstr "Athraigh an Lorgaire"
-
-#~ msgid "Open Tab"
-#~ msgstr "Oscail Cluaisín"
-
-#~ msgid " corrupted chunk"
-#~ msgid_plural " corrupted chunks"
-#~ msgstr[0] " smután truaillithe"
-#~ msgstr[1] " smután truaillithe"
-#~ msgstr[2] " smután truaillithe"
-#~ msgstr[3] " smután truaillithe"
-#~ msgstr[4] " smután truaillithe"
-
-# after number, so keep singular in form
-#~ msgid " corrupted chunks"
-#~ msgstr " smután truaillithe"
-
-#~ msgid "Data Checking"
-#~ msgstr "Seiceáil Sonraí"
-
-#~ msgid "Recheck chunks during uploading"
-#~ msgstr "Seiceáil smutáin arís le linn uasluchtaithe"
-
-#~ msgid "Do not recheck when chunks are bigger than"
-#~ msgstr "Ná hathsheiceáil nuair atá na smutáin níos mó ná"
-
-#~ msgid ""
-#~ "Automatically do a full data check when we find to many corrupted chunks."
-#~ msgstr ""
-#~ "Déan seiceáil iomlán go huathoibríoch nuair a aimsítear an iomarca smután "
-#~ "truaillithe."
-
-#~ msgid "Do a full data check after "
-#~ msgstr "Déan lánseiceáil ar shonraí tar éis "
-
-#~ msgid "Form"
-#~ msgstr "Foirm"
-
-#~ msgid "Mode:"
-#~ msgstr "Mód:"
-
-#~ msgid "Single File"
-#~ msgstr "Comhad Amháin"
-
-#~ msgid "Playlist"
-#~ msgstr "Seinmliosta"
-
-#~ msgid "Random"
-#~ msgstr "Randamach"
-
-#~ msgid "Title: <b>%1</b><br/>Artist: <b>%2</b>"
-#~ msgstr "Teideal: <b>%1</b><br/>Ealaíontóir: <b>%2</b>"
-
-#~ msgid "Title: <b>%1</b>"
-#~ msgstr "Teideal: <b>%1</b>"
-
-#~ msgid "Media Player Toolbar"
-#~ msgstr "Barra Uirlisí an tSeinnteora Meán"
-
-#~ msgid "No day has been selected."
-#~ msgstr "Níor roghnaíodh aon lá."
-
-#~ msgid ""
-#~ "Failed to add item, because it conflicts with another item on the "
-#~ "schedule."
-#~ msgstr ""
-#~ "Tagann an mhír seo salach ar mhír eile sa sceideal; ní féidir é a chur "
-#~ "leis."
-
-#~ msgid "Time"
-#~ msgstr "Am"
-
-#~ msgid "Days:"
-#~ msgstr "Laethanta:"
-
-#~ msgid "Entire Week"
-#~ msgstr "Seachtain Ar Fad"
-
-#~ msgid "Weekdays Only"
-#~ msgstr "Laethanta Oibre Amháin"
-
-#~ msgid "Weekend"
-#~ msgstr "Deireadh Seachtaine"
-
-#~ msgid "Day:"
-#~ msgstr "Lá:"
-
-#~ msgid "WAN Connection"
-#~ msgstr "Ceangal WAN"
-
-#~ msgid "Do you want to download this magnet link?"
-#~ msgstr "An bhfuil fonn ort an nasc maighnéid seo a íosluchtú?"
-
-#~ msgid "Copy URL"
-#~ msgstr "Cóipeáil URL"
-
-#~ msgid "Searching for %1..."
-#~ msgstr "%1 á lorg..."
-
-#~ msgid "Search finished"
-#~ msgstr "Cuardach críochnaithe"
-
-#~ msgid "Url"
-#~ msgstr "URL"
-
-#~ msgid "Invalid url %1"
-#~ msgstr "URL neamhbhailí %1"
-
-#~ msgid ""
-#~ "Filter file (level1.dat) already exists, do you want to convert it again?"
-#~ msgstr ""
-#~ "Tá an comhad scagtha (level1.dat) ann cheana, an bhfuil fonn ort é a "
-#~ "thiontú arís?"
-
-#~ msgid "File Exists"
-#~ msgstr "Tá an comhad ann"
-
-#~ msgid "Collection:"
-#~ msgstr "Bailiúchán:"
-
-#~ msgid ""
-#~ "Bandwidth\n"
-#~ "Schedule"
-#~ msgstr ""
-#~ "Sceideal\n"
-#~ "Bandaleithid"
-
-#~ msgid "Little icons"
-#~ msgstr "Deilbhíní beaga"
-
-#~ msgid "Normal icons"
-#~ msgstr "Gnáthdheilbhíní"
-
-#~ msgid "Big icons"
-#~ msgstr "Deilbhíní móra"
-
-#~ msgid "Icons only"
-#~ msgstr "Deilbhíní amháin"
-
-#~ msgid "Text only"
-#~ msgstr "Téacs amháin"
-
-#~ msgid "Icons and text"
-#~ msgstr "Deilbhíní agus téacs"
-
-#~ msgid "Right"
-#~ msgstr "Ar Dheis"
-
-#~ msgid "Bottom"
-#~ msgstr "Bun"
-
-#~ msgid "Download Toolbar"
-#~ msgstr "Barra Uirlisí Íosluchtaithe"
-
-#~ msgid "Torrents (*.torrent)"
-#~ msgstr "Comhaid Torrent (*.torrent)"
-
-#~ msgid "Torrent Files (*.torrent)"
-#~ msgstr "Comhaid Torrent (*.torrent)"
-
-#~ msgid "All Files"
-#~ msgstr "Gach Comhad"
-
-#~ msgid "Peer Exchange"
-#~ msgstr "Malairt Comhghleacaithe"
-
-#~ msgid "Additional Peer Sources"
-#~ msgstr "Foinsí Comhghleacaí Sa Bhreis"
-
-#~ msgid "Failed to download %1 : %2"
-#~ msgstr "Níorbh fhéidir %1 a íosluchtú: %2"
-
-#~ msgid "Cannot find port forwarding service in the device's description."
-#~ msgstr ""
-#~ "Ní féidir seirbhís a chuireann poirt ar aghaidh a aimsiú i gcur síos an "
-#~ "ghléis."
-
-#~ msgid "Connection closed unexpectedly."
-#~ msgstr "Dúnadh an ceangal gan súil leis."
-
-#~ msgid " Minutes"
-#~ msgstr " Nóiméad"
-
-#~ msgid "Tracker:"
-#~ msgstr "Lorgaire:"
-
-#~ msgid "Maximum share ratio limit reached."
-#~ msgstr "Sroicheadh an cóimheas uasta comhroinnte."
-
-#~ msgid "Illegal token: %1"
-#~ msgstr "Teaghrán neamhcheadaithe: %1"
-
-#~ msgid "Decode error"
-#~ msgstr "Earráid díchódaithe"
-
-#~ msgid "Cannot convert %1 to an int"
-#~ msgstr "Ní féidir %1 a thiontú go slánuimhir"
-
-#~ msgid "Torrent is incomplete."
-#~ msgstr "Torrent neamhiomlán."
-
-#~ msgid "Cannot open index file %1 : %2"
-#~ msgstr "Ní féidir comhad innéacs %1 a oscailt: %2"
-
-#~ msgid "Cannot open %1 for writing : readonly filesystem"
-#~ msgstr ""
-#~ "Ní féidir %1 a oscailt chun é a scríobh: córas comhad inléite amháin"
-
-#~ msgid "Cannot expand file %1 : %2"
-#~ msgstr "Ní féidir comhad %1 a fhairsingiú: %2"
-
-#~ msgid "Error reading from %1"
-#~ msgstr "Earráid agus %1 á léamh"
-
-#~ msgid "Cannot preallocate diskspace : %1"
-#~ msgstr "Ní féidir spás diosca a réamhdháileadh: %1"
-
-#~ msgid "Cannot create file %1 : %2"
-#~ msgstr "Ní féidir comhad %1 a chruthú: %2"
-
-#~ msgid "Failed to write first chunk to DND file : %1"
-#~ msgstr "Níorbh fhéidir an chéad smután a scríobh i gcomhad DND: %1"
-
-#~ msgid "Failed to write last chunk to DND file : %1"
-#~ msgstr "Níorbh fhéidir an smután deiridh a scríobh i gcomhad DND: %1"
-
-#~ msgid "Failed to open %1 : %2"
-#~ msgstr "Níorbh fhéidir %1 a oscailt: %2"
-
-#~ msgid "Cannot open file %1 : %2"
-#~ msgstr "Ní féidir comhad %1 a oscailt: %2"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Announcing"
-#~ msgstr "Fógairt"
-
-#~ msgid "The directory %1 does not exist"
-#~ msgstr "Níl comhadlann %1 ann"
-
-#~ msgid "Unknown client"
-#~ msgstr "Cliant anaithnid"
-
-#~ msgid "Unable to resolve hostname %1"
-#~ msgstr "Ní féidir óstainm %1 a réiteach"
-
-#~ msgid "Invalid response from tracker"
-#~ msgstr "Freagra neamhbhailí ó lorgaire"
-
-#~ msgid "Invalid data from tracker"
-#~ msgstr "Sonraí neamhbhailí ó lorgaire"
-
-#~ msgid "Cannot bind to udp port %1 or the 10 following ports."
-#~ msgstr ""
-#~ "Ní féidir ceangal le port udp %1, ná leis na deich bport seo a leanas."
-
-#~ msgid "Unable to create %1 : %2"
-#~ msgstr "Ní féidir %1 a chruthú: %2"
-
-#~ msgid "Not started"
-#~ msgstr "Gan tosú"
-
-#~ msgid "Download completed"
-#~ msgstr "Íosluchtú curtha i gcrích"
-
-#~ msgid "Seeding completed"
-#~ msgstr "Síolú críochnaithe"
-
-#~ msgid "Allocating diskspace"
-#~ msgstr "Spás diosca á dháileadh"
-
-#~ msgid "Queued for downloading"
-#~ msgstr "Sa chiú le híosluchtú"
-
-#~ msgid "Checking data"
-#~ msgstr "Sonraí á seiceáil"
-
-#~ msgid "Stopped. No space left on device."
-#~ msgstr "Stoptha. Tá an gléas lán."
-
-#~ msgid "Paused"
-#~ msgstr "Moillithe"
-
-#~ msgid "Cannot create index file: %1"
-#~ msgstr "Ní féidir an comhad innéacs a chruthú: %1"
-
-#~ msgid "Corrupted torrent."
-#~ msgstr "Torrent truaillithe."
-
-#~ msgid " Unable to open torrent file %1 : %2"
-#~ msgstr " Ní féidir comhad torrent %1 a oscailt: %2"
-
-#~ msgid "Parse Error"
-#~ msgstr "Earráid Pharsála"
-
-#~ msgid "Cannot open file : %1 : %2"
-#~ msgstr "Ní féidir an comhad a oscailt: %1: %2"
-
-#~ msgid "Not connected"
-#~ msgstr "Gan cheangal"
-
-#~ msgid "Resolving proxy %1:%2"
-#~ msgstr "Seachfhreastalaí %1:%2 á réiteach"
-
-#~ msgid "Connection closed"
-#~ msgstr "Ceangal dúnta"
-
-#~ msgid "Connected"
-#~ msgstr "Ceangailte"
-
-#~ msgid "Connecting"
-#~ msgstr "Ag Ceangal"
-
-#~ msgid "1 peer"
-#~ msgid_plural "%1 peers"
-#~ msgstr[0] "1 chomhghleacaí"
-#~ msgstr[1] "%1 chomhghleacaí"
-#~ msgstr[2] "%1 chomhghleacaí"
-#~ msgstr[3] "%1 gcomhghleacaí"
-#~ msgstr[4] "%1 comhghleacaí"
-
-#~ msgid "Cannot write to %1 : %2"
-#~ msgstr "Ní féidir scríobh i %1: %2"
-
-#~ msgid "Cannot read from %1"
-#~ msgstr "Ní féidir léamh ó %1"
-
-#~ msgid "Cannot open log file %1 : %2"
-#~ msgstr "Ní féidir logchomhad %1 a oscailt: %2"
-
-#~ msgid "Cannot create directory %1"
-#~ msgstr "Ní féidir comhadlann %1 a chruthú"
-
-#~ msgid "Cannot symlink %1 to %2: %3"
-#~ msgstr "Ní féidir nasc siombalach a dhéanamh ó %1 go %2: %3"
-
-#~ msgid "Cannot move %1 to %2: %3"
-#~ msgstr "Ní féidir %1 a bhogadh go %2: %3"
-
-#~ msgid "Cannot copy %1 to %2: %3"
-#~ msgstr "Ní féidir %1 a chóipeáil go %2: %3"
-
-#~ msgid "Cannot delete %1: %2"
-#~ msgstr "Ní féidir %1 a scriosadh: %2"
-
-#~ msgid "Cannot create %1: %2"
-#~ msgstr "Ní féidir %1 a chruthú: %2"
-
-#~ msgid "Cannot calculate the filesize of %1: %2"
-#~ msgstr "Ní féidir méid an chomhaid %1 a áireamh: %2"
-
-#~ msgid "Cannot calculate the filesize : %1"
-#~ msgstr "Ní féidir méid an chomhaid a áireamh: %1"
-
-#~ msgid "Cannot expand file: %1"
-#~ msgstr "Ní féidir an comhad a fhairsingiú: %1"
-
-#~ msgid "%1/s"
-#~ msgstr "%1/s"
-
-#~ msgid "1 day "
-#~ msgid_plural "%1 days "
-#~ msgstr[0] "1 lá "
-#~ msgstr[1] "%1 lá "
-#~ msgstr[2] "%1 lá "
-#~ msgstr[3] "%1 lá "
-#~ msgstr[4] "%1 lá "
-
-#~ msgid "General"
-#~ msgstr "Ginearálta"
-
-#~ msgid "Disk Input/Output"
-#~ msgstr "Ionchur/Aschur Diosca"
-
-#~ msgid ""
-#~ "Specified port (%1) is unavailable or in use by another application. "
-#~ "KTorrent is now using port %2."
-#~ msgstr ""
-#~ "Níl an port sonraithe (%1) ar fáil, nó tá sé in úsáid ag feidhmchlár "
-#~ "eile. Tá KTorrent ceangailte le port %2 anois."
-
-#~ msgid "Creating Torrent"
-#~ msgstr "Torrent á chruthú"
-
-#~ msgid "Creating %1..."
-#~ msgstr "%1 á chruthú..."
-
-#~ msgid "Checking Data ..."
-#~ msgstr "Sonraí á Seiceáil..."
-
-#~ msgid "Error scanning data: %1"
-#~ msgstr "Earráid agus sonraí á scanadh: %1"
-
-#~ msgid "Scanning data of <b>%1</b> :"
-#~ msgstr "Sonraí de <b>%1</b> á scanadh:"
-
-#~ msgid "Scanning data of torrent:"
-#~ msgstr "Sonraí an torrent á scanadh:"
-
-#~ msgid "Chunks found:"
-#~ msgstr "Líon na smután a aimsíodh:"
-
-#~ msgid "Chunks downloaded:"
-#~ msgstr "Smutáin íosluchtaithe:"
-
-#~ msgid "Invalid URL: "
-#~ msgstr "URL neamhbhailí:"
-
-#~ msgid "Normal priority:"
-#~ msgstr "Gnáth-thosaíocht:"
-
-#~ msgid "Malformed URL."
-#~ msgstr "URL míchumtha."
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Quit KTorrent</p></"
-#~ "body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'OpenSymbol'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Scoir KTorrent</p></"
-#~ "body></html>"
-
-#~ msgid "Quit"
-#~ msgstr "Scoir"
-
-#~ msgid "Free disk space:"
-#~ msgstr "Spás diosca saor:"
-
-#~ msgid ""
-#~ "You will lose all data in these files, are you sure you want to do this ?"
-#~ msgstr ""
-#~ "Caillfidh tú na sonraí uile sna comhaid seo; an bhfuil tú cinnte is mian "
-#~ "leat é seo a dhéanamh?"
-
-#~ msgid "Cannot expand file : %1"
-#~ msgstr "Ní féidir an comhad a fhairsingiú: %1"
-
-#~ msgid "Checking Data Integrity"
-#~ msgstr "Sláine Sonraí á Deimhniú"
-
-#~ msgid "Cannot migrate %1 : %2"
-#~ msgstr "Ní féidir %1 a aistriú: %2"
-
-#~ msgid "Select Folder to Save To"
-#~ msgstr "Roghnaigh Fillteán a Sábhálfar Ann"
-
-#~ msgid "Apply"
-#~ msgstr "Cuir i bhFeidhm"
-
-#~ msgid "Disk space"
-#~ msgstr "Spás diosca"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Bitstream Vera Sans'; font-"
-#~ "size:8pt; font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Instead of using a tree "
-#~ "of files to display the contents of a torrent, use a flat list of files.</"
-#~ "p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Bitstream Vera Sans'; font-"
-#~ "size:8pt; font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Taispeáin inneachar "
-#~ "torrent i liosta simplí in ionad crainn comhad.</p></body></html>"
-
-#~ msgid "Use a list of files when displaying the files of a torrent"
-#~ msgstr "Úsáid liosta comhad nuair atá na comhaid i dtorrent ar taispeáint"
-
-#~ msgid ""
-#~ "An error occurred while loading the torrent.\n"
-#~ "The torrent is probably corrupt or is not a torrent file."
-#~ msgstr ""
-#~ "Tharla earráid agus an torrent á luchtú.\n"
-#~ "Is dócha go bhfuil an torrent truaillithe, nó ní comhad torrent é."
-
-#~ msgid "Basic"
-#~ msgstr "Bunúsach"
-
-#~ msgid "Filesystem Specific"
-#~ msgstr "Sainiúil don Chóras Comhad"
-
-#~ msgid "Current Tracker"
-#~ msgstr "Lorgaire Reatha"
-
-#~ msgid "Seeders:"
-#~ msgstr "Síoladóirí:"
-
-#~ msgid "Leechers:"
-#~ msgstr "Súmairí:"
-
-#~ msgid "Next Update In:"
-#~ msgstr "An Chéad Nuashonrú Eile I:"
-
-#~ msgid "Next update in:"
-#~ msgstr "An chéad nuashonrú eile i:"
-
-#~ msgid "Cannot remove torrent default tracker."
-#~ msgstr "Ní féidir lorgaire réamhshocraithe torrent a bhaint."
-
-#~ msgid "Feed %1"
-#~ msgstr "Fotha %1"
-
-#~ msgid "Enqueue or dequeue a torrent"
-#~ msgstr "Ciúáil/Díchiúáil torrent"
-
-#~ msgid "Enqueue/Dequeue"
-#~ msgstr "Ciúáil/Díchiúáil"
-
-#~ msgid "&User controlled"
-#~ msgstr "&Rialaithe ag an úsáideoir"
-
-#~ msgid "Test String"
-#~ msgstr "Teaghrán Tástála"
-
-#~ msgid "Expressions"
-#~ msgstr "Sloinn"
-
-#~ msgid "Source List"
-#~ msgstr "Liosta Foinsí"
-
-#~ msgid "Variables"
-#~ msgstr "Athróga"
-
-#~ msgid "Add Variable"
-#~ msgstr "Cuir Athróg Leis"
-
-#~ msgid "Remove Variable"
-#~ msgstr "Bain Athróg"
-
-#~ msgid "Move Variable Up"
-#~ msgstr "Bog Athróg Suas"
-
-#~ msgid "Move Variable Down"
-#~ msgstr "Bog Athróg Síos"
-
-#~ msgid "Add Expression"
-#~ msgstr "Cuir Slonn Leis"
-
-#~ msgid "Remove Expression"
-#~ msgstr "Bain Slonn"
-
-#~ msgid "Add Source"
-#~ msgstr "Cuir Foinse Leis"
-
-#~ msgid "Remove Source"
-#~ msgstr "Bain Foinse"
-
-#~ msgid "Please enter the expression."
-#~ msgstr "Iontráil an slonn."
-
-#~ msgid "Move Filter Up"
-#~ msgstr "Bog Scagaire Suas"
-
-#~ msgid "Move Filter Down"
-#~ msgstr "Bog Scagaire Síos"
-
-#~ msgid "Please enter the new filter name."
-#~ msgstr "Iontráil ainm an scagaire nua."
-
-#~ msgid "RSS Feed"
-#~ msgstr "Fotha RSS"
-
-#~ msgid "BitFinder"
-#~ msgstr "BitFinder"
-
-#~ msgid "BF Sources"
-#~ msgstr "Foinsí BF"
-
-#~ msgid "BF Filters"
-#~ msgstr "Scagairí BF"
-
-#~ msgid "%1 KB/s"
-#~ msgstr "%1 kB/s"
-
-#~ msgid "%1 GB"
-#~ msgstr "%1 GB"
-
-#~ msgid "%1 MB"
-#~ msgstr "%1 MB"
-
-#~ msgid "%1 KB"
-#~ msgstr "%1 kB"
-
-#~ msgid "%1 B"
-#~ msgstr "%1 B"
-
-#~ msgid "Select interface:"
-#~ msgstr "Roghnaigh comhéadan:"
-
-#~ msgid "Php executable path:"
-#~ msgstr "Conair an chláir inrite PHP:"
-
-#~ msgid "The path of the php executable."
-#~ msgstr "Conair an chláir inrite php."
-
-#~ msgid "%1 exists and it is executable"
-#~ msgstr "Tá %1 ann agus tá sé inrite"
-
-#~ msgid "%1 does not exist"
-#~ msgstr "Níl %1 ann"
-
-#~ msgid "%1 is not executable"
-#~ msgstr "Níl %1 inrite"
-
-#~ msgid "%1 is a directory"
-#~ msgstr "Is comhadlann é %1"
-
-#~ msgid "%1 is not php executable path"
-#~ msgstr "Ní clár inrite PHP é %1"
-
-#~ msgid "User uploads"
-#~ msgstr "Uasluchtuithe úsáideora"
-
-#~ msgid "Queued uploads"
-#~ msgstr "Uasluchtuithe ciúáilte"
-
-#~ msgid "Up: %1 KB/s"
-#~ msgstr "Suas: %1 kB/s"
-
-#~ msgid "Down: %1 KB/s"
-#~ msgstr "Síos: %1 kB/s"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">IP address or hostname "
-#~ "of the SOCKS server</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Seoladh IP nó óstainm "
-#~ "an fhreastalaí SOCKS</p></body></html>"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Port used by the SOCKS "
-#~ "server</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Port a úsáideann an "
-#~ "freastalaí SOCKS</p></body></html>"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">If the SOCKS server "
-#~ "requires authentication via a username and a password, enable this box.</"
-#~ "p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Má tá fíordheimhniú de "
-#~ "dhíth ar an bhfreastalaí SOCKS le hainm úsáideora agus focal faire, "
-#~ "ticeáil an bosca seo.</p></body></html>"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Username for the SOCKS "
-#~ "proxy server.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Ainm úsáideora le "
-#~ "haghaidh an tseachfhreastalaí SOCKS.</p></body></html>"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Password for the SOCKS "
-#~ "proxy server.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Focal faire le haghaidh "
-#~ "an tseachfhreastalaí SOCKS.</p></body></html>"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">This value will be "
-#~ "filled in the DSCP field of all the IP packets sent for the bittorrent "
-#~ "protocol.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Cuirfear an luach seo "
-#~ "sa réimse DSCP de gach paicéad IP a sheoltar le haghaidh an phrótacail "
-#~ "bittorrent.</p></body></html>"
-
-#~ msgid "Assigned Peers"
-#~ msgstr "Comhghleacaithe Sannta"
-
-#~ msgid ""
-#~ "An error occurred while loading the torrent.<br/>The torrent is probably "
-#~ "corrupt or is not a torrent file."
-#~ msgstr ""
-#~ "Tharla earráid agus an torrent á luchtú.<br/>Is dócha go bhfuil an "
-#~ "torrent truaillithe, nó ni comhad torrent é."
-
-#~ msgid "Search engine name:"
-#~ msgstr "Ainm an innill cuardaigh:"
-
-#~ msgid "&Add"
-#~ msgstr "&Cuir Leis"
-
-#~ msgid "Engine"
-#~ msgstr "Inneall"
-
-#~ msgid "Update From Internet"
-#~ msgstr "Nuashonraigh Ón Idirlíon"
-
-#~ msgid ""
-#~ "Use your web browser to search for the string %1 (capital letters) on the "
-#~ "search engine you want to add. Use the resulting URL below."
-#~ msgstr ""
-#~ "Úsáid do bhrabhsálai chun an teaghrán %1 (ceannlitreacha) a lorg leis an "
-#~ "inneall cuardaigh is mian leat a chur leis. Úsáid an URL a gheobhaidh tú "
-#~ "thíos."
-
-#~ msgid "You must enter the search engine's name and URL"
-#~ msgstr "Ní mór duit ainm agus URL an innill cuardaigh a iontráil"
-
-#~ msgid ""
-#~ "A search engine with the same name already exists. Please use a different "
-#~ "name."
-#~ msgstr ""
-#~ "Tá inneall cuardaigh ann leis an ainm céanna cheana. Úsáid ainm eile, le "
-#~ "do thoil."
-
-#~ msgid ""
-#~ "Bad URL. You should search for FOOBAR with your Internet browser and copy/"
-#~ "paste the exact URL here."
-#~ msgstr ""
-#~ "DrochURL.  Ba chóir duit FOOBAR a lorg le do bhrabhsálaí agus cóipeáil/"
-#~ "greamaigh an URL anseo."
-
-#~ msgid "General:"
-#~ msgstr "Ginearálta:"
-
-#~ msgid "DHT:"
-#~ msgstr "DHT:"
-
-#~ msgid "Infowidget:"
-#~ msgstr "Giuirléid fhaisnéise:"
-
-#~ msgid "IP Filter:"
-#~ msgstr "Scagaire IP:"
-
-#~ msgid "Mediaplayer:"
-#~ msgstr "Seinnteoir Meán:"
-
-#~ msgid "Search:"
-#~ msgstr "Cuardaigh:"
-
-#~ msgid "UPnP:"
-#~ msgstr "UPnP:"
-
-#~ msgid "Zeroconf:"
-#~ msgstr "Zeroconf:"
-
-#~ msgid ""
-#~ "http://www.bluetack.co.uk/modules.php?name=Downloads&d_op=getit&lid=8"
-#~ msgstr ""
-#~ "http://www.bluetack.co.uk/modules.php?name=Downloads&d_op=getit&lid=8"
-
-#~ msgid "Banned Peers"
-#~ msgstr "Comhghleacaithe Toirmiscthe"
-
-#~ msgid "Ok"
-#~ msgstr "OK"
-
-#~ msgid ""
-#~ "Note: Blacklist applies to current session only. Use save/open to save "
-#~ "your entries or use IPFilter plugin (PeerGuardian)."
-#~ msgstr ""
-#~ "Nóta: Tá an liosta dubh i bhfeidhm le linn an tseisiúin reatha amháin. "
-#~ "Úsáid sábháil/oscail chun do chuid iontrálacha a shábháil nó úsáid "
-#~ "breiseán IPFilter (PeerGuardian)."
-
-#~ msgid "Detected devices:"
-#~ msgstr "Gléasanna braite:"
-
-#~ msgid "Reload"
-#~ msgstr "Athluchtaigh"
-
-#~ msgid "Back"
-#~ msgstr "Siar"
-
-#~ msgid "Cannot expand file %1 : incomplete write"
-#~ msgstr "Ní féidir comhad %1 a fhairsingiú: scríobh neamhiomlán"
-
-#~ msgid "Cannot expand file %1"
-#~ msgstr "Ní féidir comhad %1 a fhairsingiú"
-
-#~ msgid "Error writing to %1 : %2"
-#~ msgstr "Earráid agus %1 á scriobh: %2"
-
-#~ msgid "Error writing to %1"
-#~ msgstr "Earráid agus %1 á scriobh"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Which SOCKS protocol "
-#~ "version to use</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">An leagan SOCKS le "
-#~ "húsáid</p></body></html>"
-
-#~ msgid "RSS Plugin"
-#~ msgstr "Breiseán RSS"
-
-#~ msgid "&OK"
-#~ msgstr "&OK"
-
-#~ msgid "&Cancel"
-#~ msgstr "&Cealaigh"
-
-#~ msgid "RSS:"
-#~ msgstr "RSS:"
-
-#~ msgid "Import:"
-#~ msgstr "Iompórtáil:"
-
-#~ msgid "IP filter:"
-#~ msgstr "Scagaire IP:"
-
-#~ msgid "Uses UPnP to automatically forward ports on your router"
-#~ msgstr ""
-#~ "Úsáid UPnP go huathoibríoch chun poirt a chur ar aghaidh ar do ródaire"
-
-#~ msgid "Automatically scans directories for torrent files and loads them."
-#~ msgstr ""
-#~ "Scan comhadlanna go huathoibríoch chun comhaid torrent a aimsiú, agus "
-#~ "luchtaigh iad."
-
-#~ msgid "Allow to control ktorrent through browser"
-#~ msgstr "Leis seo is féidir ktorrent a rialú trí bhrabhsálaí"
-
-#~ msgid ""
-#~ "Shows additional information about a download. Like which chunks have "
-#~ "been downloaded, how many seeders and leechers ..."
-#~ msgstr ""
-#~ "Taispeáin faisnéis bhreise faoi íosluchtu.  Mar shampla, na smutáin atá "
-#~ "íosluchtaithe, cé mhéad síoladóirí agus súmairi..."
-
-#~ msgid "Filters out unwanted peers based on their IP address"
-#~ msgstr "Scag comhghleacaithe gan iarraidh, bunaithe ar a seoltaí IP"
-
-#~ msgid "Search for torrents on several popular torrent search engines"
-#~ msgstr ""
-#~ "Téigh ar lorg torrents le roinnt inneall cuardaigh atá i mbéal an phobail"
-
-#~ msgid "Bandwidth scheduling plugin"
-#~ msgstr "Breiseán sceidealta bandaleithid"
-
-#~ msgid "Cannot expand file"
-#~ msgstr "Ní féidir an comhad a fhairsingiú"
-
-#~ msgid ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Instead of using the "
-#~ "KDE proxy settings, use the HTTP proxy specified below.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#~ "css\">\n"
-#~ "p, li { white-space: pre-wrap; }\n"
-#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
-#~ "font-weight:400; font-style:normal;\">\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Úsáid an "
-#~ "seachfhreastalaí HTTP sonraithe thíos in ionad na socruithe "
-#~ "seachfhreastalaí KDE.</p></body></html>"
-
-#~ msgid "HTTP tracker proxy:"
-#~ msgstr "Seachfhreastalaí lorgaire HTTP:"
-
-#~ msgid "Torrent cannot be enqueued."
-#~ msgstr "Ní féidir an torrent a chur sa chiú."
-
-#~ msgid "Torrent cannot be started"
-#~ msgstr "Ní féidir an torrent a thosú"
-
-#~ msgid "Device running out of space"
-#~ msgstr "Tá an gléas ag éirí lán"
-
-#~ msgid "ScanDlgBase"
-#~ msgstr "Bundialóg Scanta"
-
-#~ msgid "Scanning data"
-#~ msgstr "Sonraí á scanadh"
-
-#~ msgid "Cannot load chunk %1"
-#~ msgstr "Ní féidir smután %1 a luchtú"
-
-#~ msgid "Plugin Manager"
-#~ msgstr "Bainisteoir Breiseán"
-
-#~ msgid "Load"
-#~ msgstr "Luchtaigh"
-
-#~ msgid "U&nload"
-#~ msgstr "&Díluchtaigh"
-
-#~ msgid "Unload All"
-#~ msgstr "Díluchtaigh Uile"
-
-#~ msgid "Loaded"
-#~ msgstr "Luchtaithe"
