@@ -8,15 +8,11 @@
 #define KTAUDIOPLAYER_H
 
 #include "mediafile.h"
-#include "mediafilestream.h"
+#include <QMediaPlayer>
 #include <QStringList>
 #include <QTimer>
-#include <phonon/MediaObject>
 
-namespace Phonon
-{
-class AudioOutput;
-}
+class QAudioOutput;
 
 namespace kt
 {
@@ -36,13 +32,9 @@ class MediaPlayer : public QObject
     Q_OBJECT
 public:
     MediaPlayer(QObject *parent);
-    ~MediaPlayer() override;
+    ~MediaPlayer() override = default;
 
-    Phonon::AudioOutput *output()
-    {
-        return audio;
-    }
-    Phonon::MediaObject *media0bject()
+    QMediaPlayer *mediaPlayer()
     {
         return media;
     }
@@ -56,9 +48,6 @@ public:
     /// Play a file
     void play(MediaFileRef file);
 
-    /// Queue a file
-    void queue(MediaFileRef file);
-
     /// Pause playing
     void pause();
 
@@ -71,10 +60,15 @@ public:
     /// Play the previous song
     MediaFileRef prev();
 
-    void streamStateChanged(int state);
+    /// Whether the current media source is a torrent stream
+    bool isTorrentSource() const
+    {
+        return current.io_device != nullptr;
+    }
 
 private Q_SLOTS:
-    void onStateChanged(Phonon::State cur, Phonon::State old);
+    void onMediaStatusChanged(QMediaPlayer::MediaStatus newState);
+    void onPlaybackStateChanged(QMediaPlayer::PlaybackState newState);
     void hasVideoChanged(bool hasVideo);
 
 Q_SIGNALS:
@@ -100,9 +94,9 @@ Q_SIGNALS:
     void stopped();
 
     /**
-     * Emitted when the player is about to finish
+     * Emitted when the player has reached the end of the current media
      */
-    void aboutToFinish();
+    void endOfMedia();
 
     /**
      * Emitted when the player starts playing
@@ -115,12 +109,16 @@ Q_SIGNALS:
     void loading();
 
 private:
-    Phonon::MediaObject *media;
-    Phonon::AudioOutput *audio;
+    void setMediaSource(const MediaFileRef::MediaSource &source);
+
+    QMediaPlayer *media;
+    QAudioOutput *audio;
     QList<MediaFileRef> history;
-    MediaFileRef current;
+    MediaFileRef::MediaSource current;
+    MediaFileRef next;
     bool buffering;
     bool manually_paused;
+    bool end_of_media = false;
 };
 
 }

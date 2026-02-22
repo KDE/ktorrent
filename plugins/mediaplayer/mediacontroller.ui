@@ -110,7 +110,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="Phonon::VolumeSlider" name="volume">
+        <widget class="kt::VolumeSlider" name="volume">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -131,7 +131,7 @@
     </widget>
    </item>
    <item>
-    <widget class="Phonon::SeekSlider" name="seek_slider">
+    <widget class="kt::SeekSlider" name="seek_slider">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -141,14 +141,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Phonon::SeekSlider</class>
+   <class>kt::SeekSlider</class>
    <extends>QSlider</extends>
-   <header location="global">phonon/seekslider.h</header>
+   <header>seekslider.h</header>
   </customwidget>
   <customwidget>
-   <class>Phonon::VolumeSlider</class>
+   <class>kt::VolumeSlider</class>
    <extends>QSlider</extends>
-   <header location="global">phonon/volumeslider.h</header>
+   <header>volumeslider.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

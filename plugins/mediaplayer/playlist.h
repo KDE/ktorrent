@@ -16,6 +16,8 @@
 
 namespace kt
 {
+class MediaPlayer;
+
 /**
  * PlayList containing a list of files to play.
  */

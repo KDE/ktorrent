@@ -8,8 +8,6 @@
 
 #include <KActionCollection>
 #include <QLabel>
-#include <phonon/SeekSlider>
-#include <phonon/VolumeSlider>
 
 #include "mediafile.h"
 #include "ui_mediacontroller.h"

@@ -8,8 +8,8 @@
 
 #include <QSharedPointer>
 #include <QString>
+#include <QUrl>
 #include <QWeakPointer>
-#include <phonon/MediaSource>
 
 #include <torrent/torrentfilestream.h>
 #include <util/constants.h>
@@ -22,8 +22,6 @@ class TorrentFileStream;
 
 namespace kt
 {
-class MediaPlayer;
-
 const bt::Uint32 INVALID_INDEX = 0xFFFFFFFF;
 
 /**
@@ -82,8 +80,8 @@ public:
     /// Get the last chunk of the file
     bt::Uint32 lastChunk() const;
 
-    /// Create a TorrentFileStream object for this MediaFile and return a weak pointer to it
-    bt::TorrentFileStream::WPtr stream();
+    /// Create a TorrentFileStream object for this MediaFile and return a pointer to it
+    bt::TorrentFileStream::Ptr stream();
 
     /// Is this a video ?
     bool isVideo() const;
@@ -145,8 +143,22 @@ public:
     /// Negative comparison operator
     bool operator!=(const MediaFileRef &other) const;
 
-    /// Create a Phonon::MediaSource for this MediaFileRef
-    Phonon::MediaSource createMediaSource(MediaPlayer *p);
+    /*!
+     * \brief Represents a source usable by \e QMediaPlayer.
+     *
+     * If this file is still being downloaded as part of a torrent then the
+     * \e io_device member will contain a valid \e TorrentFileStream which
+     * should be given to the \e QMediaPlayer as the source device. If the file
+     * is fully downloaded then \e io_device will be a \e nullptr and the
+     * \e path member should be used as the source instead.
+     */
+    struct MediaSource {
+        QUrl path;
+        QSharedPointer<QIODevice> io_device = nullptr;
+    };
+
+    /// Create a MediaSource for this MediaFileRef
+    MediaSource createMediaSource();
 
 private:
     MediaFile::WPtr ptr;

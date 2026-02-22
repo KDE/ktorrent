@@ -5,12 +5,14 @@
 
 #include "mediacontroller.h"
 
+#include <QAudioOutput>
 #include <QBoxLayout>
 #include <QFile>
 
 #include <KLocalizedString>
 
 #include "mediaplayer.h"
+#include "volumeslider.h"
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 
@@ -27,8 +29,9 @@ MediaController::MediaController(kt::MediaPlayer *player, KActionCollection *ac,
     setupUi(this);
 
     info_label->setText(i18n("Ready to play"));
-    seek_slider->setMediaObject(player->media0bject());
-    volume->setAudioOutput(player->output());
+    QMediaPlayer *media = player->mediaPlayer();
+    seek_slider->setMediaPlayer(media);
+    volume->setAudioOutput(media->audioOutput());
     volume->setOrientation(Qt::Horizontal);
 
     connect(player, &MediaPlayer::stopped, this, &MediaController::stopped);

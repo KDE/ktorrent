@@ -9,19 +9,19 @@
 
 #include <QAction>
 #include <QWidget>
-#include <phonon/MediaObject>
-#include <phonon/SeekSlider>
-#include <phonon/VideoWidget>
-#include <phonon/VolumeSlider>
 
 class QAction;
 class QLabel;
+class QSlider;
+class QVideoWidget;
 class KToolBar;
 class KActionCollection;
 
 namespace kt
 {
+class SeekSlider;
 class VideoChunkBar;
+class VolumeSlider;
 class MediaPlayer;
 class MediaFileRef;
 
@@ -62,14 +62,14 @@ private:
     QString formatTime(qint64 cur, qint64 total);
 
 private:
-    Phonon::VideoWidget *video;
+    QVideoWidget *video;
     MediaPlayer *player;
-    Phonon::SeekSlider *slider;
+    SeekSlider *slider;
     KToolBar *tb;
     QAction *play_action;
     QAction *stop_action;
     QLabel *time_label;
-    Phonon::VolumeSlider *volume;
+    VolumeSlider *volume;
     VideoChunkBar *chunk_bar;
     bool fullscreen;
     quint32 screensaver_cookie;

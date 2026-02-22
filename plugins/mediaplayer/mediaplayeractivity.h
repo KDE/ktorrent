@@ -54,7 +54,7 @@ public Q_SLOTS:
     void setVideoFullScreen(bool on);
     void onDoubleClicked(const MediaFileRef &file);
     void randomPlayActivated(bool on);
-    void aboutToFinishPlaying();
+    void playNextMedia();
     void showVideo(bool on);
     void closeTab();
     void currentTabChanged(int idx);

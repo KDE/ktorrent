@@ -7,27 +7,26 @@
 #include "videowidget.h"
 
 #include <QAction>
+#include <QAudioOutput>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QMouseEvent>
+#include <QSlider>
 #include <QStackedWidget>
 #include <QVBoxLayout>
+#include <QVideoWidget>
 
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <KToggleFullScreenAction>
 #include <KToolBar>
 
-#include <phonon/AudioOutput>
-#include <phonon/Global>
-#include <phonon/Path>
-#include <phonon/SeekSlider>
-#include <phonon/VolumeSlider>
-
 #include "mediaplayer.h"
 #include "powermanagementinhibit_interface.h"
 #include "screensaver_interface.h"
+#include "seekslider.h"
 #include "videochunkbar.h"
+#include "volumeslider.h"
 #include <torrent/chunkbar.h>
 #include <util/log.h>
 
@@ -47,12 +46,17 @@ VideoWidget::VideoWidget(MediaPlayer *player, KActionCollection *ac, QWidget *pa
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
 
-    video = new Phonon::VideoWidget(this);
-    Phonon::createPath(player->media0bject(), video);
+    video = new QVideoWidget(this);
+    player->mediaPlayer()->setVideoOutput(video);
     video->installEventFilter(this);
 
+    // It's awful but all three of these need to be true to enable the mouse move event while hovered
+    setMouseTracking(true);
+    video->setMouseTracking(true);
+    video->findChild<QWidget *>()->setMouseTracking(true);
+
     chunk_bar = new VideoChunkBar(player->getCurrentSource(), this);
-    chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream);
+    chunk_bar->setVisible(player->isTorrentSource());
 
     QHBoxLayout *hlayout = new QHBoxLayout(nullptr);
 
@@ -71,17 +75,18 @@ VideoWidget::VideoWidget(MediaPlayer *player, KActionCollection *ac, QWidget *pa
     connect(tfs, &QAction::toggled, this, &VideoWidget::toggleFullScreen);
     tb->addAction(tfs);
 
-    slider = new Phonon::SeekSlider(this);
-    slider->setMediaObject(player->media0bject());
+    QMediaPlayer *media = player->mediaPlayer();
+    slider = new SeekSlider(Qt::Horizontal, this);
+    slider->setMediaPlayer(media);
     slider->setMaximumHeight(tb->iconSize().height());
 
-    volume = new Phonon::VolumeSlider(this);
-    volume->setAudioOutput(player->output());
+    volume = new VolumeSlider(Qt::Horizontal, this);
+    volume->setAudioOutput(media->audioOutput());
     volume->setMaximumHeight(tb->iconSize().height());
     volume->setMaximumWidth(5 * tb->iconSize().width());
 
     time_label = new QLabel(this);
-    time_label->setText(formatTime(player->media0bject()->currentTime(), player->media0bject()->totalTime()));
+    time_label->setText(formatTime(player->mediaPlayer()->position(), player->mediaPlayer()->duration()));
     time_label->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 
     hlayout->addWidget(tb);
@@ -95,7 +100,7 @@ VideoWidget::VideoWidget(MediaPlayer *player, KActionCollection *ac, QWidget *pa
     vlayout->addWidget(video);
     vlayout->addLayout(hlayout);
 
-    connect(player->media0bject(), &Phonon::MediaObject::tick, this, &VideoWidget::timerTick);
+    connect(player->mediaPlayer(), &QMediaPlayer::positionChanged, this, &VideoWidget::timerTick);
     connect(player, &MediaPlayer::playing, this, &VideoWidget::playing);
     connect(player, &MediaPlayer::enableActions, this, &VideoWidget::enableActions);
 
@@ -109,14 +114,14 @@ VideoWidget::~VideoWidget()
 
 void VideoWidget::play()
 {
-    player->media0bject()->play();
+    player->mediaPlayer()->play();
 }
 
 void VideoWidget::stop()
 {
-    Phonon::MediaObject *mo = player->media0bject();
-    if (mo->state() == Phonon::PausedState) {
-        mo->seek(0);
+    QMediaPlayer *mo = player->mediaPlayer();
+    if (mo->playbackState() == QMediaPlayer::PlaybackState::PausedState) {
+        mo->setPosition(0);
         mo->stop();
     } else {
         mo->stop();
@@ -128,17 +133,18 @@ void VideoWidget::setControlsVisible(bool on)
     slider->setVisible(on);
     volume->setVisible(on);
     tb->setVisible(on);
-    chunk_bar->setVisible(player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream && on);
+    chunk_bar->setVisible(player->isTorrentSource() && on);
     time_label->setVisible(on);
 }
 
 bool VideoWidget::eventFilter(QObject *dst, QEvent *event)
 {
-    Q_UNUSED(dst);
-    if (fullscreen && event->type() == QEvent::MouseMove)
+    if (fullscreen && event->type() == QEvent::MouseMove) {
         mouseMoveEvent((QMouseEvent *)event);
+        return false;
+    }
 
-    return true;
+    return QWidget::eventFilter(dst, event);
 }
 
 void VideoWidget::mouseMoveEvent(QMouseEvent *event)
@@ -146,7 +152,7 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
     if (!fullscreen)
         return;
 
-    bool streaming = player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream;
+    bool streaming = player->isTorrentSource();
     if (slider->isVisible()) {
         int bh = height() - slider->height();
         int th = streaming ? chunk_bar->height() : 0;
@@ -229,7 +235,7 @@ void VideoWidget::inhibitScreenSaver(bool on)
 
 void VideoWidget::timerTick(qint64 time)
 {
-    time_label->setText(formatTime(time, player->media0bject()->totalTime()));
+    time_label->setText(formatTime(time, player->mediaPlayer()->duration()));
     if (chunk_bar->isVisible())
         chunk_bar->timeElapsed(time);
 }
@@ -243,7 +249,7 @@ QString VideoWidget::formatTime(qint64 cur, qint64 total)
 
 void VideoWidget::playing(const MediaFileRef &mfile)
 {
-    bool stream = player->media0bject()->currentSource().type() == Phonon::MediaSource::Stream;
+    bool stream = player->isTorrentSource();
     if (fullscreen && stream)
         chunk_bar->setVisible(slider->isVisible());
     else

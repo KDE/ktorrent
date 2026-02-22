@@ -156,7 +156,17 @@ if(KF6Completion_FOUND)
   set(HAVE_KF6Completion 1)
 endif()
 
-#find_package(Qt6 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
+find_package(Qt6 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Multimedia MultimediaWidgets)
+set_package_properties(Qt6::Multimedia
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's multimedia plugin"
+)
+set_package_properties(Qt6::MultimediaWidgets
+  PROPERTIES
+  TYPE OPTIONAL
+  PURPOSE "Required for KTorrent's multimedia plugin"
+)
 
 find_package(Taglib)
 set_package_properties(Taglib
@@ -168,14 +178,6 @@ set_package_properties(Taglib
 if(TAGLIB_FOUND)
   set(HAVE_Taglib 1)
 endif()
-
-find_package(Phonon4Qt6)
-set_package_properties(Phonon4Qt6
-  PROPERTIES
-  TYPE OPTIONAL
-  PURPOSE "Required for KTorrent's multimedia plugin"
-)
-
 
 #
 # checks for functions and stuff

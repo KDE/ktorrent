@@ -30,7 +30,7 @@ void VideoChunkBar::setMediaFile(const kt::MediaFileRef &mf)
     mfile = mf;
     MediaFile::Ptr file = mfile.mediaFile();
     if (file && !file->fullyAvailable()) {
-        bt::TorrentFileStream::Ptr stream = file->stream().toStrongRef();
+        bt::TorrentFileStream::Ptr stream = file->stream();
         if (stream)
             connect(stream.data(), &bt::TorrentFileStream::readyRead, this, &VideoChunkBar::updateChunkBar);
 
@@ -43,7 +43,7 @@ void VideoChunkBar::updateBitSet()
 {
     MediaFile::Ptr file = mfile.mediaFile();
     if (file) {
-        bt::TorrentFileStream::Ptr stream = file->stream().toStrongRef();
+        bt::TorrentFileStream::Ptr stream = file->stream();
         if (stream)
             bitset = stream->chunksBitSet();
         else
@@ -66,7 +66,7 @@ void VideoChunkBar::timeElapsed(qint64 time)
     if (!file)
         return;
 
-    bt::TorrentFileStream::Ptr stream = file->stream().toStrongRef();
+    bt::TorrentFileStream::Ptr stream = file->stream();
     if (!stream)
         return;
 
@@ -82,7 +82,7 @@ void VideoChunkBar::drawBarContents(QPainter *p)
     if (!file)
         return;
 
-    bt::TorrentFileStream::Ptr stream = file->stream().toStrongRef();
+    bt::TorrentFileStream::Ptr stream = file->stream();
     if (!stream)
         return;
 

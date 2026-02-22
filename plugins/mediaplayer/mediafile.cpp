@@ -11,8 +11,6 @@
 #include <QMimeDatabase>
 #include <QStringList>
 
-#include "mediafilestream.h"
-#include "mediaplayer.h"
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
@@ -136,7 +134,7 @@ bt::Uint32 MediaFile::lastChunk() const
     }
 }
 
-bt::TorrentFileStream::WPtr MediaFile::stream()
+bt::TorrentFileStream::Ptr MediaFile::stream()
 {
     if (!tfs) {
         // If some file is already in streaming mode, then try unstreamed mode
@@ -145,7 +143,7 @@ bt::TorrentFileStream::WPtr MediaFile::stream()
             tfs = tc->createTorrentFileStream(idx, false, nullptr);
     }
 
-    return bt::TorrentFileStream::WPtr(tfs);
+    return tfs;
 }
 
 bool MediaFile::isVideo() const
@@ -201,18 +199,17 @@ bool MediaFileRef::operator==(const kt::MediaFileRef &other) const
     return file_path == other.path();
 }
 
-Phonon::MediaSource MediaFileRef::createMediaSource(MediaPlayer *player)
+MediaFileRef::MediaSource MediaFileRef::createMediaSource()
 {
+    MediaSource ms;
+    ms.path = QUrl::fromLocalFile(file_path);
+
     MediaFile::Ptr mf = mediaFile();
     if (mf && !mf->fullyAvailable()) {
-        MediaFileStream *stream = new MediaFileStream(mf->stream());
-        QObject::connect(stream, &MediaFileStream::stateChanged, player, &MediaPlayer::streamStateChanged);
+        ms.io_device = mf->stream();
+    }
 
-        Phonon::MediaSource ms(stream);
-        ms.setAutoDelete(true);
-        return ms;
-    } else
-        return Phonon::MediaSource(QUrl::fromLocalFile(file_path));
+    return ms;
 }
 
 QString MediaFileRef::name() const

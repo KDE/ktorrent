@@ -1,8 +1,3 @@
-find_package(Taglib REQUIRED)
-#find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Multimedia MultimediaWidgets)
-#include_directories(${Qt5Multimedia_INCLUDE_DIRS})
-include_directories(SYSTEM ${PHONON_INCLUDE_DIR})
-
 ktorrent_add_plugin(MediaPlayerPlugin)
 
 set(ktmediaplayerplugin_dbus_SRC)
@@ -22,10 +17,11 @@ target_sources(MediaPlayerPlugin PRIVATE
 	mediaview.cpp
 	mediamodel.cpp
 	mediafile.cpp
-	mediafilestream.cpp
 	mediaplayer.cpp
+	seekslider.cpp
 	videowidget.cpp
 	videochunkbar.cpp
+	volumeslider.cpp
 )
 
 ki18n_wrap_ui(MediaPlayerPlugin mediacontroller.ui)
@@ -35,12 +31,12 @@ target_link_libraries(
     MediaPlayerPlugin
     ktcore
     Taglib::Taglib
-    Phonon::phonon4qt6
     KTorrent6
     KF6::I18n
     KF6::KIOFileWidgets
     KF6::XmlGui
     KF6::WidgetsAddons
-#    Qt:::MultimediaWidgets
+    Qt::Multimedia
+    Qt::MultimediaWidgets
     )
 install(FILES ktorrent_mediaplayerui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )

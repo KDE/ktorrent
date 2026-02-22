@@ -81,7 +81,7 @@ MediaPlayerActivity::MediaPlayerActivity(CoreInterface *core, KActionCollection 
     connect(media_player, &MediaPlayer::enableActions, this, &MediaPlayerActivity::enableActions);
     connect(media_player, &MediaPlayer::openVideo, this, &MediaPlayerActivity::openVideo);
     connect(media_player, &MediaPlayer::closeVideo, this, &MediaPlayerActivity::closeVideo);
-    connect(media_player, &MediaPlayer::aboutToFinish, this, &MediaPlayerActivity::aboutToFinishPlaying);
+    connect(media_player, &MediaPlayer::endOfMedia, this, &MediaPlayerActivity::playNextMedia);
     connect(play_list, &PlayListWidget::fileSelected, this, &MediaPlayerActivity::onSelectionChanged);
     connect(media_view, &MediaView::doubleClicked, this, &MediaPlayerActivity::onDoubleClicked);
     connect(play_list, &PlayListWidget::randomModeActivated, this, &MediaPlayerActivity::randomPlayActivated);
@@ -284,7 +284,7 @@ void MediaPlayerActivity::randomPlayActivated(bool on)
     next_action->setEnabled(next.isValid());
 }
 
-void MediaPlayerActivity::aboutToFinishPlaying()
+void MediaPlayerActivity::playNextMedia()
 {
     bool random = play_list->randomOrder();
     QModelIndex n = play_list->next(curr_item, random);
@@ -293,7 +293,7 @@ void MediaPlayerActivity::aboutToFinishPlaying()
 
     QString path = play_list->fileForIndex(n);
     if (bt::Exists(path)) {
-        media_player->queue(path);
+        media_player->play(path);
         curr_item = n;
         n = play_list->next(curr_item, random);
         next_action->setEnabled(n.isValid());
