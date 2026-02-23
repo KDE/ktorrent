@@ -44,13 +44,15 @@ void TrackerModel::changeTC(bt::TorrentInterface *tc)
 
 void TrackerModel::update()
 {
-    if (!tc)
+    if (!tc) {
         return;
+    }
 
     int idx = 0;
     for (Item *t : std::as_const(trackers)) {
-        if (t->update())
+        if (t->update()) {
             Q_EMIT dataChanged(index(idx, 1), index(idx, 5));
+        }
         idx++;
     }
 
@@ -59,28 +61,32 @@ void TrackerModel::update()
 
 int TrackerModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid() || !tc)
+    if (parent.isValid() || !tc) {
         return 0;
-    else
+    } else {
         return trackers.count();
+    }
 }
 
 int TrackerModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return 6;
+    }
 }
 
 QVariant TrackerModel::data(const QModelIndex &index, int role) const
 {
-    if (!tc || !index.isValid() || index.row() < 0 || index.row() >= trackers.count())
+    if (!tc || !index.isValid() || index.row() < 0 || index.row() >= trackers.count()) {
         return QVariant();
+    }
 
     Item *item = (Item *)index.internalPointer();
-    if (!item)
+    if (!item) {
         return QVariant();
+    }
 
     bt::TrackerInterface *trk = item->trk;
 
@@ -99,8 +105,9 @@ QVariant TrackerModel::data(const QModelIndex &index, int role) const
 
 bool TrackerModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!tc || !index.isValid() || index.row() < 0 || index.row() >= trackers.count())
+    if (!tc || !index.isValid() || index.row() < 0 || index.row() >= trackers.count()) {
         return false;
+    }
 
     if (role == Qt::CheckStateRole) {
         QUrl url = trackers.at(index.row())->trk->trackerURL();
@@ -112,8 +119,9 @@ bool TrackerModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 QVariant TrackerModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation != Qt::Horizontal)
+    if (orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole) {
         switch (section) {
@@ -136,12 +144,14 @@ QVariant TrackerModel::headerData(int section, Qt::Orientation orientation, int 
 
 void TrackerModel::addTrackers(QList<bt::TrackerInterface *> &tracker_list)
 {
-    if (tracker_list.isEmpty())
+    if (tracker_list.isEmpty()) {
         return;
+    }
 
     int row = trackers.count();
-    for (bt::TrackerInterface *trk : std::as_const(tracker_list))
+    for (bt::TrackerInterface *trk : std::as_const(tracker_list)) {
         trackers.append(new Item(trk));
+    }
 
     insertRows(row, tracker_list.count(), QModelIndex());
 }
@@ -172,32 +182,36 @@ bool TrackerModel::removeRows(int row, int count, const QModelIndex &parent)
 
 Qt::ItemFlags TrackerModel::flags(const QModelIndex &index) const
 {
-    if (!tc || !index.isValid() || index.row() >= trackers.count() || index.row() < 0 || index.column() != 0)
+    if (!tc || !index.isValid() || index.row() >= trackers.count() || index.row() < 0 || index.column() != 0) {
         return QAbstractItemModel::flags(index);
-    else
+    } else {
         return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
+    }
 }
 
 QModelIndex TrackerModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (parent.isValid() || row < 0 || row >= trackers.count() || column < 0 || column >= 6)
+    if (parent.isValid() || row < 0 || row >= trackers.count() || column < 0 || column >= 6) {
         return QModelIndex();
-    else
+    } else {
         return createIndex(row, column, trackers.at(row));
+    }
 }
 
 QUrl TrackerModel::trackerUrl(const QModelIndex &index)
 {
-    if (!tc || !index.isValid() || index.row() < 0 || index.row() >= trackers.count())
+    if (!tc || !index.isValid() || index.row() < 0 || index.row() >= trackers.count()) {
         return QUrl();
+    }
 
     return ((Item *)index.internalPointer())->trk->trackerURL();
 }
 
 bt::TrackerInterface *TrackerModel::tracker(const QModelIndex &index)
 {
-    if (!tc || !index.isValid() || index.row() < 0 || index.row() >= trackers.count())
+    if (!tc || !index.isValid() || index.row() < 0 || index.row() >= trackers.count()) {
         return nullptr;
+    }
 
     return ((Item *)index.internalPointer())->trk;
 }
@@ -260,10 +274,11 @@ QVariant TrackerModel::Item::displayData(int column) const
         return times_downloaded >= 0 ? times_downloaded : QVariant();
     case 5: {
         int secs = time_to_next_update;
-        if (secs)
+        if (secs) {
             return QTime(0, 0, 0, 0).addSecs(secs).toString(QStringLiteral("mm:ss"));
-        else
+        } else {
             return QVariant();
+        }
     }
     default:
         return QVariant();

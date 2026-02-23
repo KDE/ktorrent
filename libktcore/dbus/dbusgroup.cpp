@@ -20,17 +20,20 @@ static bool ValidCharacter(const QChar &c)
 
 static bool ValidDBusName(const QString &s)
 {
-    if (s.isEmpty())
+    if (s.isEmpty()) {
         return false;
+    }
 
     QString ret = s;
-    if (ret[0].isDigit())
+    if (ret[0].isDigit()) {
         return false;
+    }
 
     for (int i = 0; i < s.length(); i++) {
         QChar c = ret[i];
-        if (!ValidCharacter(c))
+        if (!ValidCharacter(c)) {
             return false;
+        }
     }
 
     return true;
@@ -46,8 +49,9 @@ DBusGroup::DBusGroup(Group *g, GroupManager *gman, QObject *parent)
         static int invalid_groups = 0;
         while (true) {
             name = QStringLiteral("group_") + QString::number(invalid_groups++);
-            if (!gman->find(name))
+            if (!gman->find(name)) {
                 break;
+            }
         }
     }
     QString path = QStringLiteral("/group/") + name;

@@ -31,8 +31,9 @@ void VideoChunkBar::setMediaFile(const kt::MediaFileRef &mf)
     MediaFile::Ptr file = mfile.mediaFile();
     if (file && !file->fullyAvailable()) {
         bt::TorrentFileStream::Ptr stream = file->stream();
-        if (stream)
+        if (stream) {
             connect(stream.data(), &bt::TorrentFileStream::readyRead, this, &VideoChunkBar::updateChunkBar);
+        }
 
         updateBitSet();
         updateChunkBar();
@@ -44,12 +45,14 @@ void VideoChunkBar::updateBitSet()
     MediaFile::Ptr file = mfile.mediaFile();
     if (file) {
         bt::TorrentFileStream::Ptr stream = file->stream();
-        if (stream)
+        if (stream) {
             bitset = stream->chunksBitSet();
-        else
+        } else {
             bitset.clear();
-    } else
+        }
+    } else {
         bitset.clear();
+    }
 }
 
 void VideoChunkBar::updateChunkBar()
@@ -63,15 +66,18 @@ void VideoChunkBar::timeElapsed(qint64 time)
 {
     Q_UNUSED(time);
     MediaFile::Ptr file = mfile.mediaFile();
-    if (!file)
+    if (!file) {
         return;
+    }
 
     bt::TorrentFileStream::Ptr stream = file->stream();
-    if (!stream)
+    if (!stream) {
         return;
+    }
 
-    if (current_chunk != stream->currentChunk() || stream->chunksBitSet() != bitset)
+    if (current_chunk != stream->currentChunk() || stream->chunksBitSet() != bitset) {
         updateChunkBar();
+    }
 }
 
 void VideoChunkBar::drawBarContents(QPainter *p)
@@ -79,12 +85,14 @@ void VideoChunkBar::drawBarContents(QPainter *p)
     ChunkBar::drawBarContents(p);
 
     MediaFile::Ptr file = mfile.mediaFile();
-    if (!file)
+    if (!file) {
         return;
+    }
 
     bt::TorrentFileStream::Ptr stream = file->stream();
-    if (!stream)
+    if (!stream) {
         return;
+    }
 
     current_chunk = stream->currentChunk();
     qreal f = (qreal)current_chunk / bitset.getNumBits();

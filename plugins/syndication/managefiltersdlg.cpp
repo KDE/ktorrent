@@ -55,13 +55,15 @@ ManageFiltersDlg::ManageFiltersDlg(Feed *feed, FilterList *filters, SyndicationA
     int nfilters = filters->rowCount(QModelIndex());
     for (int i = 0; i < nfilters; i++) {
         Filter *f = filters->filterByRow(i);
-        if (!f)
+        if (!f) {
             continue;
+        }
 
-        if (feed->usingFilter(f))
+        if (feed->usingFilter(f)) {
             active->addFilter(f);
-        else
+        } else {
             available->addFilter(f);
+        }
     }
 
     m_add->setEnabled(false);
@@ -82,8 +84,9 @@ void ManageFiltersDlg::accept()
     int nfilters = active->rowCount(QModelIndex());
     for (int i = 0; i < nfilters; i++) {
         Filter *f = active->filterByRow(i);
-        if (!f)
+        if (!f) {
             continue;
+        }
 
         feed->addFilter(f);
     }
@@ -96,8 +99,9 @@ void ManageFiltersDlg::add()
     QList<Filter *> to_add;
     for (const QModelIndex &i : idx) {
         Filter *f = available->filterForIndex(i);
-        if (f)
+        if (f) {
             to_add.append(f);
+        }
     }
 
     for (Filter *f : std::as_const(to_add)) {
@@ -116,8 +120,9 @@ void ManageFiltersDlg::remove()
     QList<Filter *> to_remove;
     for (const QModelIndex &i : idx) {
         Filter *f = active->filterForIndex(i);
-        if (f)
+        if (f) {
             to_remove.append(f);
+        }
     }
 
     for (Filter *f : std::as_const(to_remove)) {
@@ -136,8 +141,9 @@ void ManageFiltersDlg::removeAll()
     QList<Filter *> to_remove;
     for (int i = 0; i < nfilters; i++) {
         Filter *f = active->filterByRow(i);
-        if (!f)
+        if (!f) {
             continue;
+        }
 
         to_remove.append(f);
     }

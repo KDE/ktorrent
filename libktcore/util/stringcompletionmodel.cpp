@@ -36,8 +36,9 @@ void StringCompletionModel::load()
     QSet<QString> strings;
     while (!fptr.atEnd()) {
         QString line = QString::fromUtf8(fptr.readLine().trimmed());
-        if (line.length() > 0)
+        if (line.length() > 0) {
             strings.insert(line);
+        }
     }
 
     setStringList(QList<QString>(strings.begin(), strings.end()));
@@ -53,8 +54,9 @@ void StringCompletionModel::save()
 
     QTextStream out(&fptr);
     const QStringList sl = stringList();
-    for (const QString &s : sl)
+    for (const QString &s : sl) {
         out << s << Qt::endl;
+    }
 }
 
 void StringCompletionModel::addString(const QString &s)

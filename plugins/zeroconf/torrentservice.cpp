@@ -32,10 +32,11 @@ TorrentService::~TorrentService()
 
 void TorrentService::onPublished(bool ok)
 {
-    if (ok)
+    if (ok) {
         Out(SYS_ZCO | LOG_NOTICE) << "ZC: " << tc->getStats().torrent_name << " was published" << endl;
-    else
+    } else {
         Out(SYS_ZCO | LOG_NOTICE) << "ZC: failed to publish " << tc->getStats().torrent_name << endl;
+    }
 }
 
 void TorrentService::stop(bt::WaitJob *wjob)

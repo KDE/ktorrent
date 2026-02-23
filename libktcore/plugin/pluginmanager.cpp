@@ -90,17 +90,19 @@ void PluginManager::unload(const KPluginMetaData &data, int idx)
     Q_UNUSED(data)
 
     Plugin *p = loaded.find(idx);
-    if (!p)
+    if (!p) {
         return;
+    }
 
     // first shut it down properly
     bt::WaitJob *wjob = new WaitJob(2000);
     try {
         p->shutdown(wjob);
-        if (wjob->needToWait())
+        if (wjob->needToWait()) {
             bt::WaitJob::execute(wjob);
-        else
+        } else {
             delete wjob;
+        }
     } catch (Error &err) {
         Out(SYS_GEN | LOG_NOTICE) << "Error when unloading plugin: " << err.toString() << endl;
     }
@@ -122,10 +124,11 @@ void PluginManager::unloadAll()
             p->shutdown(wjob);
             i++;
         }
-        if (wjob->needToWait())
+        if (wjob->needToWait()) {
             bt::WaitJob::execute(wjob);
-        else
+        } else {
             delete wjob;
+        }
     } catch (Error &err) {
         Out(SYS_GEN | LOG_NOTICE) << "Error when unloading all plugins: " << err.toString() << endl;
     }

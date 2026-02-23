@@ -32,8 +32,9 @@ FilterList::~FilterList()
 void FilterList::filterEdited(Filter *f)
 {
     int idx = filters.indexOf(f);
-    if (idx < 0)
+    if (idx < 0) {
         return;
+    }
 
     Q_EMIT dataChanged(index(idx, 0), index(idx, 0));
 }
@@ -48,8 +49,9 @@ void FilterList::saveFilters(const QString &file)
 
     BEncoder enc(&fptr);
     enc.beginList();
-    for (Filter *f : std::as_const(filters))
+    for (Filter *f : std::as_const(filters)) {
         f->save(enc);
+    }
     enc.end();
 }
 
@@ -69,10 +71,11 @@ void FilterList::loadFilters(const QString &file)
             BDictNode *dict = ln->getDict(i);
             if (dict) {
                 Filter *filter = new Filter();
-                if (filter->load(dict))
+                if (filter->load(dict)) {
                     addFilter(filter);
-                else
+                } else {
                     delete filter;
+                }
             }
         }
     } catch (bt::Error &err) {

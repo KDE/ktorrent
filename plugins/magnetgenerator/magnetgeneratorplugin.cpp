@@ -70,8 +70,9 @@ void MagnetGeneratorPlugin::currentTorrentChanged(bt::TorrentInterface *tc)
 void MagnetGeneratorPlugin::generateMagnet()
 {
     bt::TorrentInterface *tor = getGUI()->getTorrentActivity()->getCurrentTorrent();
-    if (!tor)
+    if (!tor) {
         return;
+    }
 
     QUrl dn(tor->getStats().torrent_name);
     SHA1Hash ih(tor->getInfoHash());
@@ -99,8 +100,9 @@ void MagnetGeneratorPlugin::generateMagnet()
 
     addToClipboard(uri);
 
-    if (MagnetGeneratorPluginSettings::popup())
+    if (MagnetGeneratorPluginSettings::popup()) {
         showPopup();
+    }
 }
 
 void MagnetGeneratorPlugin::addToClipboard(QString uri)

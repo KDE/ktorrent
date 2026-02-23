@@ -44,8 +44,9 @@ int main(int argc, char **argv)
     }
 
     QString str = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QStringLiteral("/ktorrent");
-    if (!str.endsWith(bt::DirSeparator()))
+    if (!str.endsWith(bt::DirSeparator())) {
         str += bt::DirSeparator();
+    }
 
     bt::InitLog(str + QStringLiteral("ktupnptest.log"));
     UPnPTestWidget *mwnd = new UPnPTestWidget();

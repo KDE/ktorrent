@@ -57,15 +57,17 @@ TrackerView::TrackerView(QWidget *parent)
     QAction *copy_URL = m_ContextMenu->addAction(i18n("Copy Tracker URL"));
     connect(copy_URL, &QAction::triggered, [this]() {
         bt::TrackerInterface *trk = selectedTracker();
-        if (trk)
+        if (trk) {
             QApplication::clipboard()->setText(trk->trackerURL().toDisplayString());
+        }
     });
 
     QAction *copy_status = m_ContextMenu->addAction(i18n("Copy Tracker status"));
     connect(copy_status, &QAction::triggered, [this]() {
         bt::TrackerInterface *trk = selectedTracker();
-        if (trk)
+        if (trk) {
             QApplication::clipboard()->setText(trk->trackerStatusString());
+        }
     });
 
     m_tracker_list->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -86,27 +88,31 @@ TrackerView::~TrackerView()
 
 void TrackerView::addClicked()
 {
-    if (!tc)
+    if (!tc) {
         return;
+    }
 
     AddTrackersDialog dlg(this, tracker_hints);
-    if (dlg.exec() != QDialog::Accepted)
+    if (dlg.exec() != QDialog::Accepted) {
         return;
+    }
 
     const QStringList trackers = dlg.trackerList();
     QList<QUrl> urls;
     QStringList invalid;
     // check for invalid urls
     for (const QString &t : trackers) {
-        if (t.isEmpty())
+        if (t.isEmpty()) {
             continue;
+        }
 
         QUrl url(t.trimmed());
-        if (!url.isValid() || (url.scheme() != QLatin1String("udp") && url.scheme() != QLatin1String("http") && url.scheme() != QLatin1String("https")))
+        if (!url.isValid() || (url.scheme() != QLatin1String("udp") && url.scheme() != QLatin1String("http") && url.scheme() != QLatin1String("https"))) {
             invalid.append(t);
-        else {
-            if (!tracker_hints.contains(url.toDisplayString()))
+        } else {
+            if (!tracker_hints.contains(url.toDisplayString())) {
                 tracker_hints.append(url.toDisplayString());
+            }
             urls.append(url);
         }
     }
@@ -119,26 +125,30 @@ void TrackerView::addClicked()
     QList<bt::TrackerInterface *> tl;
     for (const QUrl &url : std::as_const(urls)) {
         bt::TrackerInterface *trk = tc.data()->getTrackersList()->addTracker(url, true);
-        if (!trk)
+        if (!trk) {
             dupes.append(url);
-        else
+        } else {
             tl.append(trk);
+        }
     }
 
-    if (dupes.size() == 1)
+    if (dupes.size() == 1) {
         KMessageBox::error(nullptr, i18n("There already is a tracker named <b>%1</b>.", dupes.front().toDisplayString()));
-    else if (dupes.size() > 1)
+    } else if (dupes.size() > 1) {
         KMessageBox::informationList(nullptr, i18n("The following duplicate trackers were not added:"), QUrl::toStringList(dupes));
+    }
 
-    if (!tl.isEmpty())
+    if (!tl.isEmpty()) {
         model->addTrackers(tl);
+    }
 }
 
 void TrackerView::removeClicked()
 {
     QModelIndex current = proxy_model->mapToSource(m_tracker_list->selectionModel()->currentIndex());
-    if (!current.isValid())
+    if (!current.isValid()) {
         return;
+    }
 
     model->removeRow(current.row());
 }
@@ -146,8 +156,9 @@ void TrackerView::removeClicked()
 bt::TrackerInterface *TrackerView::selectedTracker() const
 {
     QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
-    if (!current.isValid() || tc.isNull())
+    if (!current.isValid() || tc.isNull()) {
         return nullptr;
+    }
 
     return model->tracker(proxy_model->mapToSource(current));
 }
@@ -172,24 +183,27 @@ void TrackerView::restoreClicked()
 
 void TrackerView::updateClicked()
 {
-    if (!tc)
+    if (!tc) {
         return;
+    }
 
     tc.data()->updateTracker();
 }
 
 void TrackerView::scrapeClicked()
 {
-    if (!tc)
+    if (!tc) {
         return;
+    }
 
     tc.data()->scrapeTracker();
 }
 
 void TrackerView::changeTC(TorrentInterface *ti)
 {
-    if (tc.data() == ti)
+    if (tc.data() == ti) {
         return;
+    }
 
     setEnabled(ti != nullptr);
     torrentChanged(ti);
@@ -203,8 +217,9 @@ void TrackerView::changeTC(TorrentInterface *ti)
 
 void TrackerView::update()
 {
-    if (tc)
+    if (tc) {
         model->update();
+    }
 }
 
 void TrackerView::torrentChanged(TorrentInterface *ti)

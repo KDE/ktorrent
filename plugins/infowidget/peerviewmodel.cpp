@@ -43,8 +43,9 @@ PeerViewModel::Item::Item(bt::PeerInterface *peer
         icons_loaded = true;
 
         QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kf5/locale/countries"), QStandardPaths::LocateDirectory);
-        if (!path.isEmpty())
+        if (!path.isEmpty()) {
             flagDB.addFlagSource(path + QStringLiteral("/%1/flag.png"));
+        }
     }
 
 #if BUILD_WITH_GEOIP
@@ -81,24 +82,27 @@ QVariant PeerViewModel::Item::data(int col) const
 {
     switch (col) {
     case 0:
-        if (stats.transport_protocol == bt::UTP)
+        if (stats.transport_protocol == bt::UTP) {
             return QString(stats.address() + i18n(" (µTP)"));
-        else
+        } else {
             return stats.address();
+        }
     case 1:
         return country;
     case 2:
         return stats.client;
     case 3:
-        if (stats.download_rate >= 103)
+        if (stats.download_rate >= 103) {
             return BytesPerSecToString(stats.download_rate);
-        else
+        } else {
             return QVariant();
+        }
     case 4:
-        if (stats.upload_rate >= 103)
+        if (stats.upload_rate >= 103) {
             return BytesPerSecToString(stats.upload_rate);
-        else
+        } else {
             return QVariant();
+        }
     case 5:
         return stats.choked ? i18nc("Choked", "Yes") : i18nc("Not choked", "No");
     case 6:
@@ -171,8 +175,9 @@ QVariant PeerViewModel::Item::decoration(int col) const
 {
     switch (col) {
     case 0:
-        if (stats.encrypted)
+        if (stats.encrypted) {
             return QIcon::fromTheme(QStringLiteral("kt-encrypted"));
+        }
         break;
     case 1:
         return flag;
@@ -244,46 +249,52 @@ void PeerViewModel::update()
 
     for (Item *i : std::as_const(items)) {
         if (i->changed()) {
-            if (lowest == -1)
+            if (lowest == -1) {
                 lowest = idx;
+            }
             highest = idx;
         }
         idx++;
     }
 
     // emit only one data changed signal
-    if (lowest != -1)
+    if (lowest != -1) {
         Q_EMIT dataChanged(index(lowest, 3), index(highest, 15));
+    }
 }
 
 QModelIndex PeerViewModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (!hasIndex(row, column, parent) || parent.isValid())
+    if (!hasIndex(row, column, parent) || parent.isValid()) {
         return QModelIndex();
-    else
+    } else {
         return createIndex(row, column, items[row]);
+    }
 }
 
 int PeerViewModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return items.count();
+    }
 }
 
 int PeerViewModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return 16;
+    }
 }
 
 QVariant PeerViewModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation != Qt::Horizontal)
+    if (orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole) {
         switch (section) {
@@ -366,16 +377,18 @@ QVariant PeerViewModel::headerData(int section, Qt::Orientation orientation, int
 
 QVariant PeerViewModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() >= items.count())
+    if (!index.isValid() || index.row() >= items.count()) {
         return QVariant();
+    }
 
     Item *item = items[index.row()];
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole) {
         return item->data(index.column());
-    else if (role == Qt::UserRole)
+    } else if (role == Qt::UserRole) {
         return item->sortData(index.column());
-    else if (role == Qt::DecorationRole)
+    } else if (role == Qt::DecorationRole) {
         return item->decoration(index.column());
+    }
 
     return QVariant();
 }
@@ -383,8 +396,9 @@ QVariant PeerViewModel::data(const QModelIndex &index, int role) const
 bool PeerViewModel::removeRows(int row, int count, const QModelIndex & /*parent*/)
 {
     beginRemoveRows(QModelIndex(), row, row + count - 1);
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < count; i++) {
         delete items[row + i];
+    }
     items.remove(row, count);
     endRemoveRows();
     return true;
@@ -399,10 +413,11 @@ bool PeerViewModel::insertRows(int row, int count, const QModelIndex & /*parent*
 
 bt::PeerInterface *PeerViewModel::indexToPeer(const QModelIndex &index)
 {
-    if (!index.isValid() || index.row() >= items.count())
+    if (!index.isValid() || index.row() >= items.count()) {
         return nullptr;
-    else
+    } else {
         return ((Item *)index.internalPointer())->peer;
+    }
 }
 
 }

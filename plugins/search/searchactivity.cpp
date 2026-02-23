@@ -91,8 +91,9 @@ void SearchActivity::search(const QString &text, int engine)
 void SearchActivity::saveCurrentSearches()
 {
     QFile fptr(kt::DataDir() + QStringLiteral("current_searches"));
-    if (!fptr.open(QIODevice::WriteOnly))
+    if (!fptr.open(QIODevice::WriteOnly)) {
         return;
+    }
 
     // Sort by order in tab widget so that they are restored in the proper order
     std::sort(searches.begin(), searches.end(), IndexOfCompare<QTabWidget, SearchWidget>(tabs));
@@ -128,13 +129,15 @@ void SearchActivity::loadCurrentSearches()
     bt::BDecoder dec(data, false, 0);
     try {
         const std::unique_ptr<bt::BListNode> search_list = dec.decodeList();
-        if (!search_list)
+        if (!search_list) {
             throw bt::Error(QStringLiteral("Invalid current searches"));
+        }
 
         for (bt::Uint32 i = 0; i < search_list->getNumChildren(); i++) {
             bt::BDictNode *dict = search_list->getDict(i);
-            if (!dict)
+            if (!dict) {
                 continue;
+            }
 
             QString text = dict->getString("TEXT");
             QString sbtext = dict->getString("SBTEXT");
@@ -207,8 +210,9 @@ SearchWidget *SearchActivity::newSearchWidget(const QString &text)
 {
     SearchWidget *search = new SearchWidget(sp);
     int idx = tabs->addTab(search, QIcon::fromTheme(QLatin1String("edit-find")), text);
-    if (!text.isEmpty())
+    if (!text.isEmpty()) {
         tabs->setTabToolTip(idx, i18n("Search for %1", text));
+    }
 
     connect(search, &SearchWidget::openNewTab, this, &SearchActivity::openNewTab);
     connect(search, &SearchWidget::changeTitle, this, &SearchActivity::setTabTitle);
@@ -243,8 +247,9 @@ void SearchActivity::home()
 
 void SearchActivity::closeTab(int index)
 {
-    if (searches.count() == 1)
+    if (searches.count() == 1) {
         return;
+    }
 
     auto searchWidget = searches[index];
     tabs->removeTab(index);
@@ -266,15 +271,17 @@ void SearchActivity::openTab()
 void SearchActivity::setTabTitle(SearchWidget *sw, const QString &title)
 {
     int idx = tabs->indexOf(sw);
-    if (idx >= 0)
+    if (idx >= 0) {
         tabs->setTabText(idx, title);
+    }
 }
 
 void SearchActivity::setTabIcon(SearchWidget *sw, const QIcon &icon)
 {
     int idx = tabs->indexOf(sw);
-    if (idx >= 0)
+    if (idx >= 0) {
         tabs->setTabIcon(idx, icon);
+    }
 }
 
 void SearchActivity::clearSearchHistory()

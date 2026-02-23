@@ -42,8 +42,9 @@ public:
         Q_UNUSED(qName);
         tmp = QString();
         if (localName == QLatin1String("Url")) {
-            if (atts.value(QLatin1String("type")) == QLatin1String("text/html"))
+            if (atts.value(QLatin1String("type")) == QLatin1String("text/html")) {
                 engine->url = atts.value(QLatin1String("template")).toString();
+            }
         }
 
         return true;
@@ -55,12 +56,13 @@ public:
         Q_UNUSED(localName)
         Q_UNUSED(qName)
 
-        if (localName == QLatin1String("ShortName"))
+        if (localName == QLatin1String("ShortName")) {
             engine->name = tmp;
-        else if (localName == QLatin1String("Description"))
+        } else if (localName == QLatin1String("Description")) {
             engine->description = tmp;
-        else if (localName == QLatin1String("Image"))
+        } else if (localName == QLatin1String("Image")) {
             engine->icon_url = tmp;
+        }
 
         return true;
     }
@@ -71,8 +73,9 @@ public:
 
         while (!reader.atEnd()) {
             reader.readNext();
-            if (reader.hasError())
+            if (reader.hasError()) {
                 return false;
+            }
 
             switch (reader.tokenType()) {
             case QXmlStreamReader::StartElement:
@@ -87,8 +90,9 @@ public:
                 break;
             case QXmlStreamReader::Characters:
                 if (!reader.isWhitespace() && !reader.text().trimmed().isEmpty()) {
-                    if (!characters(reader.text()))
+                    if (!characters(reader.text())) {
                         return false;
+                    }
                 }
                 break;
             default:
@@ -96,8 +100,9 @@ public:
             }
         }
 
-        if (!reader.isEndDocument())
+        if (!reader.isEndDocument()) {
             return false;
+        }
 
         return true;
     }
@@ -118,8 +123,9 @@ SearchEngine::~SearchEngine()
 bool SearchEngine::load(const QString &xml_file)
 {
     QFile fptr(xml_file);
-    if (!fptr.open(QIODevice::ReadOnly))
+    if (!fptr.open(QIODevice::ReadOnly)) {
         return false;
+    }
 
     QByteArray source = fptr.readAll();
     OpenSearchHandler hdlr(this);

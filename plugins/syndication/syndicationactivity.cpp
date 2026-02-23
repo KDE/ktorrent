@@ -43,8 +43,9 @@ SyndicationActivity::SyndicationActivity(SyndicationPlugin *sp, DownloadQueue *q
     , dl_queue(queue)
 {
     QString ddir = kt::DataDir() + QStringLiteral("syndication/");
-    if (!bt::Exists(ddir))
+    if (!bt::Exists(ddir)) {
         bt::MakeDir(ddir, true);
+    }
 
     setToolTip(i18n("Manages RSS and Atom feeds"));
     QHBoxLayout *layout = new QHBoxLayout(this);
@@ -83,8 +84,9 @@ void SyndicationActivity::loadState(KSharedConfigPtr cfg)
     QString current = g.readEntry("current_feed", QString());
 
     Feed *f = feed_list->feedForDirectory(current);
-    if (f)
+    if (f) {
         feed_widget->setFeed(f);
+    }
 
     QByteArray state = g.readEntry("splitter", QByteArray());
     splitter->restoreState(state);
@@ -113,8 +115,9 @@ void SyndicationActivity::addFeed()
                                         QLineEdit::Normal,
                                         QString(),
                                         &ok);
-    if (!ok || url.isEmpty())
+    if (!ok || url.isEmpty()) {
         return;
+    }
 
     Syndication::Loader *loader = Syndication::Loader::create(this, SLOT(loadingComplete(Syndication::Loader *, Syndication::FeedPtr, Syndication::ErrorCode)));
     QStringList sl = url.split(QStringLiteral(":COOKIE:"));
@@ -165,8 +168,9 @@ void SyndicationActivity::removeFeed()
 
 void SyndicationActivity::showFeed(Feed *f)
 {
-    if (!f)
+    if (!f) {
         return;
+    }
 
     feed_widget->setFeed(f);
 }
@@ -197,8 +201,9 @@ void SyndicationActivity::removeFilter()
     QList<Filter *> to_remove;
     for (const QModelIndex &idx : indexes) {
         Filter *f = filter_list->filterForIndex(idx);
-        if (f)
+        if (f) {
             to_remove.append(f);
+        }
     }
 
     for (Filter *f : std::as_const(to_remove)) {
@@ -213,12 +218,14 @@ void SyndicationActivity::removeFilter()
 void SyndicationActivity::editFilter()
 {
     QModelIndexList idx = tab->filterView()->selectedFilters();
-    if (idx.count() == 0)
+    if (idx.count() == 0) {
         return;
+    }
 
     Filter *f = filter_list->filterForIndex(idx.front());
-    if (f)
+    if (f) {
         editFilter(f);
+    }
 }
 
 void SyndicationActivity::editFilter(Filter *f)
@@ -234,12 +241,14 @@ void SyndicationActivity::editFilter(Filter *f)
 void SyndicationActivity::manageFilters()
 {
     QModelIndexList idx = tab->feedView()->selectedFeeds();
-    if (idx.count() == 0)
+    if (idx.count() == 0) {
         return;
+    }
 
     Feed *f = feed_list->feedForIndex(idx.front());
-    if (!f)
+    if (!f) {
         return;
+    }
 
     ManageFiltersDlg dlg(f, filter_list, this, tab);
     if (dlg.exec() == QDialog::Accepted) {
@@ -251,8 +260,9 @@ void SyndicationActivity::manageFilters()
 void SyndicationActivity::editFeedName()
 {
     QModelIndexList idx = tab->feedView()->selectedFeeds();
-    if (idx.count())
+    if (idx.count()) {
         tab->feedView()->edit(idx.front());
+    }
 }
 }
 

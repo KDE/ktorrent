@@ -46,8 +46,9 @@ void IPFilterPlugin::load()
     connect(pref, &IPBlockingPrefPage::updateFinished, this, &IPFilterPlugin::checkAutoUpdate);
     getGUI()->addPrefPage(pref);
 
-    if (IPBlockingPluginSettings::useLevel1())
+    if (IPBlockingPluginSettings::useLevel1()) {
         loadAntiP2P();
+    }
 
     checkAutoUpdate();
 }
@@ -66,8 +67,9 @@ void IPFilterPlugin::unload()
 
 bool IPFilterPlugin::loadAntiP2P()
 {
-    if (ip_filter)
+    if (ip_filter) {
         return true;
+    }
 
     ip_filter.reset(new IPBlockList());
     if (!ip_filter->load(kt::DataDir() + QStringLiteral("level1.dat"))) {
@@ -84,8 +86,9 @@ bool IPFilterPlugin::unloadAntiP2P()
         AccessManager::instance().removeBlockList(ip_filter.data());
         ip_filter.reset();
         return true;
-    } else
+    } else {
         return true;
+    }
 }
 
 bool IPFilterPlugin::loadedAndRunning()
@@ -96,8 +99,9 @@ bool IPFilterPlugin::loadedAndRunning()
 void IPFilterPlugin::checkAutoUpdate()
 {
     auto_update_timer.stop();
-    if (!loadedAndRunning() || !IPBlockingPluginSettings::autoUpdate())
+    if (!loadedAndRunning() || !IPBlockingPluginSettings::autoUpdate()) {
         return;
+    }
 
     KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("IPFilterAutoUpdate"));
     bool ok = g.readEntry("last_update_ok", false);
@@ -105,19 +109,22 @@ void IPFilterPlugin::checkAutoUpdate()
     if (!ok) {
         QDateTime last_update_attempt = g.readEntry("last_update_attempt", now);
         // if we cannot do it now, or the last attempt was less then 15 minute ago, try again in 15 minutes
-        if (last_update_attempt.secsTo(now) < AUTO_UPDATE_RETRY_INTERVAL || !pref->doAutoUpdate())
+        if (last_update_attempt.secsTo(now) < AUTO_UPDATE_RETRY_INTERVAL || !pref->doAutoUpdate()) {
             auto_update_timer.start(AUTO_UPDATE_RETRY_INTERVAL * 1000);
+        }
     } else {
         QDateTime last_updated = g.readEntry("last_updated", QDateTime());
         QDateTime next_update;
-        if (last_updated.isNull())
+        if (last_updated.isNull()) {
             next_update = now.addDays(IPBlockingPluginSettings::autoUpdateInterval());
-        else
+        } else {
             next_update = QDateTime(last_updated).addDays(IPBlockingPluginSettings::autoUpdateInterval());
+        }
 
         if (now >= next_update) {
-            if (!pref->doAutoUpdate()) // if we cannot do it now, try again in 15 minutes
+            if (!pref->doAutoUpdate()) { // if we cannot do it now, try again in 15 minutes
                 auto_update_timer.start(AUTO_UPDATE_RETRY_INTERVAL * 1000);
+            }
         } else {
             // schedule an auto update
             auto_update_timer.start(1000 * (now.secsTo(next_update) + 5));

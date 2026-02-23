@@ -42,8 +42,9 @@ DownloadAndConvertJob::~DownloadAndConvertJob()
 void DownloadAndConvertJob::start()
 {
     QString temp = kt::DataDir() + QStringLiteral("tmp-") + url.fileName();
-    if (bt::Exists(temp))
+    if (bt::Exists(temp)) {
         bt::Delete(temp, true);
+    }
 
     active_job = KIO::file_copy(url, QUrl::fromLocalFile(temp), -1, KIO::Overwrite);
     connect(active_job, &KJob::result, this, &DownloadAndConvertJob::downloadFileFinished);
@@ -51,10 +52,11 @@ void DownloadAndConvertJob::start()
 
 void DownloadAndConvertJob::kill(KJob::KillVerbosity)
 {
-    if (active_job)
+    if (active_job) {
         active_job->kill(KJob::EmitResult);
-    else if (convert_dlg)
+    } else if (convert_dlg) {
         convert_dlg->reject();
+    }
 }
 
 void DownloadAndConvertJob::convert(KJob *j)
@@ -70,8 +72,9 @@ void DownloadAndConvertJob::convert(KJob *j)
         }
         setError(unzip ? UNZIP_FAILED : MOVE_FAILED);
         emitResult();
-    } else
+    } else {
         convert();
+    }
 }
 
 static bool isBinaryData(const QString &fileName)
@@ -122,10 +125,11 @@ void DownloadAndConvertJob::downloadFileFinished(KJob *j)
         connect(active_job, &KJob::result, this, &DownloadAndConvertJob::extract);
     } else if (ptr.name() == QStringLiteral("application/x-7z-compressed")) {
         QString msg = i18n("7z files are not supported");
-        if (mode == Verbose)
+        if (mode == Verbose) {
             KMessageBox::error(nullptr, msg);
-        else
+        } else {
             Q_EMIT notification(msg);
+        }
 
         setError(UNZIP_FAILED);
         emitResult();
@@ -141,10 +145,11 @@ void DownloadAndConvertJob::downloadFileFinished(KJob *j)
         connect(active_job, &KJob::result, this, qOverload<KJob *>(&DownloadAndConvertJob::convert));
     } else {
         QString msg = i18n("Cannot determine file type of <b>%1</b>", url.toDisplayString());
-        if (mode == Verbose)
+        if (mode == Verbose) {
             KMessageBox::error(nullptr, msg);
-        else
+        } else {
             Q_EMIT notification(msg);
+        }
 
         setError(UNZIP_FAILED);
         emitResult();
@@ -228,8 +233,9 @@ void DownloadAndConvertJob::makeBackupFinished(KJob *j)
         emitResult();
     } else {
         convert_dlg = new ConvertDialog(nullptr);
-        if (mode == Verbose)
+        if (mode == Verbose) {
             convert_dlg->show();
+        }
         connect(convert_dlg, &ConvertDialog::accepted, this, &DownloadAndConvertJob::convertAccepted);
         connect(convert_dlg, &ConvertDialog::rejected, this, &DownloadAndConvertJob::convertRejected);
     }
@@ -271,8 +277,9 @@ void DownloadAndConvertJob::convert()
 
         KIO::Job *job = KIO::file_copy(QUrl::fromLocalFile(dat_file), QUrl::fromLocalFile(tmp_file), -1, KIO::HideProgressInfo | KIO::Overwrite);
         connect(job, &KIO::Job::result, this, &DownloadAndConvertJob::makeBackupFinished);
-    } else
+    } else {
         makeBackupFinished(nullptr);
+    }
 }
 
 void DownloadAndConvertJob::cleanUpFiles()
@@ -286,8 +293,9 @@ void DownloadAndConvertJob::cleanUpFiles()
 
 void DownloadAndConvertJob::cleanUp(const QString &path)
 {
-    if (bt::Exists(path))
+    if (bt::Exists(path)) {
         bt::Delete(path, true);
+    }
 }
 }
 

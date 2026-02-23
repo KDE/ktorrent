@@ -55,8 +55,9 @@ void ExtenderBox::removeSimilar(Extender *ext)
             (*i)->hide();
             (*i)->deleteLater();
             i = extenders.erase(i);
-        } else
+        } else {
             i++;
+        }
     }
 }
 
@@ -96,8 +97,9 @@ void ViewDelegate::extend(bt::TorrentInterface *tc, kt::Extender *widget, bool c
         ext = itr.value();
     }
 
-    if (close_similar)
+    if (close_similar) {
         ext->removeSimilar(widget);
+    }
 
     ext->add(widget);
     widget->setParent(ext);
@@ -158,10 +160,11 @@ QSize ViewDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 {
     QSize ret;
 
-    if (!extenders.isEmpty())
+    if (!extenders.isEmpty()) {
         ret = maybeExtendedSize(option, index);
-    else
+    } else {
         ret = QStyledItemDelegate::sizeHint(option, index);
+    }
 
     return ret;
 }
@@ -170,13 +173,15 @@ QSize ViewDelegate::maybeExtendedSize(const QStyleOptionViewItem &option, const 
 {
     bt::TorrentInterface *tc = model->torrentFromIndex(index);
     QSize size(QStyledItemDelegate::sizeHint(option, index));
-    if (!tc)
+    if (!tc) {
         return size;
+    }
 
     ExtCItr itr = extenders.find(tc);
     const QWidget *ext = itr == extenders.end() ? nullptr : itr.value();
-    if (!ext)
+    if (!ext) {
         return size;
+    }
 
     // add extender height to maximum height of any column in our row
     int item_height = size.height();
@@ -185,12 +190,14 @@ QSize ViewDelegate::maybeExtendedSize(const QStyleOptionViewItem &option, const 
 
     // this is quite slow, but Qt is smart about when to call sizeHint().
     for (int column = 0; model->columnCount() < column; column++) {
-        if (column == this_column)
+        if (column == this_column) {
             continue;
+        }
 
         QModelIndex neighborIndex(index.sibling(row, column));
-        if (neighborIndex.isValid())
+        if (neighborIndex.isValid()) {
             item_height = std::max(item_height, QStyledItemDelegate::sizeHint(option, neighborIndex).height());
+        }
     }
 
     // we only want to reserve vertical space, the horizontal extender layout is our private business.
@@ -202,21 +209,23 @@ void ViewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 {
     QStyleOptionViewItem indicatorOption(option);
     initStyleOption(&indicatorOption, index);
-    if (index.column() == 0)
+    if (index.column() == 0) {
         indicatorOption.viewItemPosition = QStyleOptionViewItem::Beginning;
-    else if (index.column() == index.model()->columnCount() - 1)
+    } else if (index.column() == index.model()->columnCount() - 1) {
         indicatorOption.viewItemPosition = QStyleOptionViewItem::End;
-    else
+    } else {
         indicatorOption.viewItemPosition = QStyleOptionViewItem::Middle;
+    }
 
     QStyleOptionViewItem itemOption(option);
     initStyleOption(&itemOption, index);
-    if (index.column() == 0)
+    if (index.column() == 0) {
         itemOption.viewItemPosition = QStyleOptionViewItem::Beginning;
-    else if (index.column() == index.model()->columnCount() - 1)
+    } else if (index.column() == index.model()->columnCount() - 1) {
         itemOption.viewItemPosition = QStyleOptionViewItem::End;
-    else
+    } else {
         itemOption.viewItemPosition = QStyleOptionViewItem::Middle;
+    }
 
     bt::TorrentInterface *tc = model->torrentFromIndex(index);
     if (!tc || !extenders.contains(tc)) {
@@ -269,11 +278,13 @@ QRect ViewDelegate::extenderRect(QWidget *extender, const QStyleOptionViewItem &
     rect.setLeft(0);
     if (QTreeView *tv = qobject_cast<QTreeView *>(parent())) {
         int steps = 0;
-        for (QModelIndex idx(index.parent()); idx.isValid(); idx = idx.parent())
+        for (QModelIndex idx(index.parent()); idx.isValid(); idx = idx.parent()) {
             steps++;
+        }
 
-        if (tv->rootIsDecorated())
+        if (tv->rootIsDecorated()) {
             steps++;
+        }
 
         rect.setLeft(steps * tv->indentation());
     }
@@ -311,8 +322,9 @@ bool ViewDelegate::extended(bt::TorrentInterface *tc) const
 void ViewDelegate::hideExtender(bt::TorrentInterface *tc)
 {
     ExtItr i = extenders.find(tc);
-    if (i != extenders.end())
+    if (i != extenders.end()) {
         i.value()->hide();
+    }
 }
 
 void ViewDelegate::paintProgressBar(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -338,10 +350,11 @@ void ViewDelegate::paintProgressBar(QPainter *painter, const QStyleOptionViewIte
 
 void ViewDelegate::normalPaint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (index.column() == ViewModel::PERCENTAGE)
+    if (index.column() == ViewModel::PERCENTAGE) {
         paintProgressBar(painter, option, index);
-    else
+    } else {
         QStyledItemDelegate::paint(painter, option, index);
+    }
 }
 
 }

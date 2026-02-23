@@ -85,10 +85,11 @@ void MagnetView::showContextMenu(QPoint p)
     remove->setEnabled(idx_list.count() > 0);
 
     for (const QModelIndex &idx : idx_list) {
-        if (!mman->isStopped(idx.row()))
+        if (!mman->isStopped(idx.row())) {
             stop->setEnabled(true);
-        else
+        } else {
             start->setEnabled(true);
+        }
     }
     menu->popup(view->viewport()->mapToGlobal(p));
 }
@@ -96,8 +97,9 @@ void MagnetView::showContextMenu(QPoint p)
 void MagnetView::removeMagnetDownload()
 {
     QModelIndexList idx_list = view->selectionModel()->selectedRows();
-    if (!idx_list.isEmpty())
+    if (!idx_list.isEmpty()) {
         mman->removeMagnets(idx_list.front().row(), idx_list.size());
+    }
 }
 
 void MagnetView::startMagnetDownload()
@@ -137,8 +139,9 @@ void MagnetView::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Delete) {
         removeMagnetDownload();
         event->accept();
-    } else
+    } else {
         QWidget::keyPressEvent(event);
+    }
 }
 }
 

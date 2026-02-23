@@ -43,8 +43,9 @@ void UPnPPlugin::load()
     gui->getTorrentActivity()->addToolWidget(upnp_tab, i18n("UPnP"), QStringLiteral("kt-upnp"), i18n("Shows the status of the UPnP plugin"));
     // load the routers list
     QString routers_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("routers"));
-    if (routers_file.length())
+    if (routers_file.length()) {
         sock->loadRouters(routers_file);
+    }
     sock->discover();
 }
 

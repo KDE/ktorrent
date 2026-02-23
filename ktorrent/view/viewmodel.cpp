@@ -142,22 +142,25 @@ QVariant ViewModel::Item::data(int col) const
     case BYTES_LEFT:
         return bytes_left > 0 ? BytesToString(bytes_left) : QVariant();
     case DOWNLOAD_RATE:
-        if (download_rate >= 103 && s.bytes_left_to_download > 0) // lowest "visible" speed, all below will be 0,0 Kb/s
+        if (download_rate >= 103 && s.bytes_left_to_download > 0) { // lowest "visible" speed, all below will be 0,0 Kb/s
             return BytesPerSecToString(download_rate);
-        else
+        } else {
             return QVariant();
+        }
     case UPLOAD_RATE:
-        if (upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
+        if (upload_rate >= 103) { // lowest "visible" speed, all below will be 0,0 Kb/s
             return BytesPerSecToString(upload_rate);
-        else
+        } else {
             return QVariant();
+        }
     case ETA:
-        if (eta == bt::TimeEstimator::NEVER)
+        if (eta == bt::TimeEstimator::NEVER) {
             return QString(QChar(0x221E)); // infinity
-        else if (eta != bt::TimeEstimator::ALREADY_FINISHED)
+        } else if (eta != bt::TimeEstimator::ALREADY_FINISHED) {
             return DurationToString(eta);
-        else
+        } else {
             return QVariant();
+        }
     case SEEDERS:
         return QString(QString::number(seeders_connected_to) + QLatin1String(" (") + QString::number(seeders_total) + QLatin1Char(')'));
     case LEECHERS:
@@ -210,15 +213,17 @@ bool ViewModel::Item::lessThan(int col, const Item *other) const
     case ETA:
         return eta < other->eta;
     case SEEDERS:
-        if (seeders_connected_to == other->seeders_connected_to)
+        if (seeders_connected_to == other->seeders_connected_to) {
             return seeders_total < other->seeders_total;
-        else
+        } else {
             return seeders_connected_to < other->seeders_connected_to;
+        }
     case LEECHERS:
-        if (leechers_connected_to == other->leechers_connected_to)
+        if (leechers_connected_to == other->leechers_connected_to) {
             return leechers_total < other->leechers_total;
-        else
+        } else {
             return leechers_connected_to < other->leechers_connected_to;
+        }
     case PERCENTAGE:
         return percentage < other->percentage;
     case SHARE_RATIO:
@@ -256,10 +261,12 @@ QVariant ViewModel::Item::color(int col) const
                 if (tsi.trackers_count) {
                     if ((tsi.errors + tsi.warnings) == tsi.trackers_count) {
                         // no OK statuses
-                        if (tsi.timeout_errors)
+                        if (tsi.timeout_errors) {
                             return Settings::timeoutTrackerConnectionColor();
-                        if (tsi.warnings)
+                        }
+                        if (tsi.warnings) {
                             return Settings::warningsTrackerConnectionColor();
+                        }
                         return Settings::noTrackerConnectionColor();
                     }
                 }
@@ -279,14 +286,16 @@ QVariant ViewModel::Item::color(int col) const
 
     } else if (col == SHARE_RATIO) {
         return share_ratio >= Settings::greenRatio() ? Settings::goodShareRatioColor() : Settings::lowShareRatioColor();
-    } else
+    } else {
         return QVariant();
+    }
 }
 
 bool ViewModel::Item::visible(Group *group, const QString &filter_string) const
 {
-    if (group && !group->isMember(tc))
+    if (group && !group->isMember(tc)) {
         return false;
+    }
 
     return filter_string.isEmpty() || tc->getDisplayName().contains(filter_string, Qt::CaseInsensitive);
 }
@@ -306,10 +315,11 @@ QVariant ViewModel::Item::statusIcon() const
     case DOWNLOADING:
         return QIcon::fromTheme(QStringLiteral("go-down"));
     case STALLED:
-        if (tc->getStats().completed)
+        if (tc->getStats().completed) {
             return QIcon::fromTheme(QStringLiteral("go-up"));
-        else
+        } else {
             return QIcon::fromTheme(QStringLiteral("go-down"));
+        }
     case ALLOCATING_DISKSPACE:
         return QIcon::fromTheme(QStringLiteral("drive-harddisk"));
     case ERROR:
@@ -365,9 +375,11 @@ void ViewModel::addTorrent(bt::TorrentInterface *ti)
         i->highlight = true;
 
         // Turn off highlight for previously highlighted torrents
-        for (Item *item : std::as_const(torrents))
-            if (item->highlight)
+        for (Item *item : std::as_const(torrents)) {
+            if (item->highlight) {
                 item->highlight = false;
+            }
+        }
     }
 
     torrents.append(i);
@@ -413,8 +425,9 @@ bool ViewModel::update(ViewDelegate *delegate, bool force_resort)
     int row = 0;
     for (Item *i : std::as_const(torrents)) {
         bool hidden = !i->visible(group, filter_string);
-        if (!hidden && i->update(row, sort_column, update_list, this))
+        if (!hidden && i->update(row, sort_column, update_list, this)) {
             resort = true;
+        }
 
         if (hidden != i->hidden) {
             i->hidden = hidden;
@@ -422,11 +435,13 @@ bool ViewModel::update(ViewDelegate *delegate, bool force_resort)
         }
 
         // hide the extender if there is one shown
-        if (hidden && delegate->extended(i->tc))
+        if (hidden && delegate->extended(i->tc)) {
             delegate->hideExtender(i->tc);
+        }
 
-        if (!i->hidden)
+        if (!i->hidden) {
             num_visible++;
+        }
         row++;
     }
 
@@ -446,24 +461,27 @@ void ViewModel::setFilterString(const QString &filter)
 
 int ViewModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return num_visible;
+    }
 }
 
 int ViewModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return _NUMBER_OF_COLUMNS;
+    }
 }
 
 QVariant ViewModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation != Qt::Horizontal)
+    if (orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole) {
         switch (section) {
@@ -558,24 +576,28 @@ QVariant ViewModel::headerData(int section, Qt::Orientation orientation, int rol
 
 QModelIndex ViewModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return QModelIndex();
+    }
 
-    if (row < 0 || row >= torrents.count())
+    if (row < 0 || row >= torrents.count()) {
         return QModelIndex();
-    else
+    } else {
         return createIndex(row, column, torrents[row]);
+    }
 }
 
 QVariant ViewModel::data(const QModelIndex &index, int role) const
 {
     // there is no point checking index.row() < 0 because isValid already does this
-    if (!index.isValid() || index.row() >= torrents.count())
+    if (!index.isValid() || index.row() >= torrents.count()) {
         return QVariant();
+    }
 
     Item *item = reinterpret_cast<Item *>(index.internalPointer());
-    if (!item)
+    if (!item) {
         return QVariant();
+    }
 
     if (role == Qt::ForegroundRole) {
         return item->color(index.column());
@@ -588,14 +610,16 @@ QVariant ViewModel::data(const QModelIndex &index, int role) const
     } else if (role == Qt::ToolTipRole && index.column() == NAME) {
         QString tooltip;
         bt::TorrentInterface *tc = item->tc;
-        if (tc->loadUrl().isValid())
+        if (tc->loadUrl().isValid()) {
             tooltip = i18n("%1<br>Url: <b>%2</b>", tc->getDisplayName(), tc->loadUrl().toDisplayString());
-        else
+        } else {
             tooltip = tc->getDisplayName();
+        }
 
         tooltip += QLatin1String("<br/><br/>") + tc->getStats().statusToString();
-        if (tc->getTrackersList()->noTrackersReachable())
+        if (tc->getTrackersList()->noTrackersReachable()) {
             tooltip += i18n("<br/><br/>Unable to contact a tracker.");
+        }
 
         return tooltip;
     } else if (role == Qt::TextAlignmentRole) {
@@ -619,30 +643,35 @@ QVariant ViewModel::data(const QModelIndex &index, int role) const
 
 bool ViewModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() || index.row() >= torrents.count() || role != Qt::EditRole || index.column() != NAME)
+    if (!index.isValid() || index.row() >= torrents.count() || role != Qt::EditRole || index.column() != NAME) {
         return false;
+    }
 
     QString name = value.toString();
     Item *item = reinterpret_cast<Item *>(index.internalPointer());
-    if (!item)
+    if (!item) {
         return false;
+    }
 
     bt::TorrentInterface *tc = item->tc;
     tc->setDisplayName(name);
     Q_EMIT dataChanged(index, index);
-    if (sort_column == NAME)
+    if (sort_column == NAME) {
         sort(sort_column, sort_order);
+    }
     return true;
 }
 
 Qt::ItemFlags ViewModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid() || index.row() >= torrents.count())
+    if (!index.isValid() || index.row() >= torrents.count()) {
         return QAbstractTableModel::flags(index) | Qt::ItemIsDropEnabled;
+    }
 
     Qt::ItemFlags flags = QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
-    if (index.column() == NAME)
+    if (index.column() == NAME) {
         flags |= Qt::ItemIsEditable;
+    }
 
     return flags;
 }
@@ -663,8 +692,9 @@ QMimeData *ViewModel::mimeData(const QModelIndexList &indexes) const
     QDataStream stream(&encoded_data, QIODevice::WriteOnly);
     QStringList hashes;
     for (const QModelIndex &index : indexes) {
-        if (!index.isValid())
+        if (!index.isValid()) {
             continue;
+        }
 
         const bt::TorrentInterface *ti = torrentFromIndex(index);
         if (ti) {
@@ -675,8 +705,9 @@ QMimeData *ViewModel::mimeData(const QModelIndexList &indexes) const
         }
     }
 
-    for (const QString &s : std::as_const(hashes))
+    for (const QString &s : std::as_const(hashes)) {
         stream << s;
+    }
 
     mime_data->setData(QStringLiteral("application/x-ktorrent-drag-object"), encoded_data);
     return mime_data;
@@ -687,11 +718,13 @@ bool ViewModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int r
     Q_UNUSED(row);
     Q_UNUSED(column);
     Q_UNUSED(parent);
-    if (action == Qt::IgnoreAction)
+    if (action == Qt::IgnoreAction) {
         return true;
+    }
 
-    if (!data->hasUrls())
+    if (!data->hasUrls()) {
         return false;
+    }
 
     const QList<QUrl> files = data->urls();
     for (const QUrl &file : files) {
@@ -710,32 +743,36 @@ void ViewModel::torrentsFromIndexList(const QModelIndexList &idx, QList<bt::Torr
 {
     for (const QModelIndex &i : idx) {
         bt::TorrentInterface *tc = torrentFromIndex(i);
-        if (tc)
+        if (tc) {
             tlist.append(tc);
+        }
     }
 }
 
 bt::TorrentInterface *ViewModel::torrentFromIndex(const QModelIndex &index) const
 {
-    if (index.isValid() && index.row() < torrents.count())
+    if (index.isValid() && index.row() < torrents.count()) {
         return torrents[index.row()]->tc;
-    else
+    } else {
         return nullptr;
+    }
 }
 
 bt::TorrentInterface *ViewModel::torrentFromRow(int index) const
 {
-    if (index < torrents.count() && index >= 0)
+    if (index < torrents.count() && index >= 0) {
         return torrents[index]->tc;
-    else
+    } else {
         return nullptr;
+    }
 }
 
 void ViewModel::allTorrents(QList<bt::TorrentInterface *> &tlist) const
 {
     for (Item *item : std::as_const(torrents)) {
-        if (item->visible(group, filter_string))
+        if (item->visible(group, filter_string)) {
             tlist.append(item->tc);
+        }
     }
 }
 
@@ -777,14 +814,15 @@ public:
 
     bool operator()(ViewModel::Item *a, ViewModel::Item *b)
     {
-        if (a->hidden)
+        if (a->hidden) {
             return false;
-        else if (b->hidden)
+        } else if (b->hidden) {
             return true;
-        else if (order == Qt::AscendingOrder)
+        } else if (order == Qt::AscendingOrder) {
             return a->lessThan(col, b);
-        else
+        } else {
             return b->lessThan(col, a);
+        }
     }
 
     int col;

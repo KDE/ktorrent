@@ -24,12 +24,14 @@ ViewJobTracker::~ViewJobTracker()
 void ViewJobTracker::jobUnregistered(bt::Job *j)
 {
     ActiveJobs::iterator i = widgets.find(j);
-    if (i == widgets.end())
+    if (i == widgets.end()) {
         return;
+    }
 
     JobProgressWidget *w = i.value();
-    if (w->automaticRemove())
+    if (w->automaticRemove()) {
         w->emitCloseRequest();
+    }
 }
 
 void ViewJobTracker::jobRegistered(bt::Job *j)
@@ -44,8 +46,9 @@ kt::JobProgressWidget *ViewJobTracker::createJobWidget(bt::Job *job)
         ScanExtender *ext = new ScanExtender(job, nullptr);
         widgets[job] = ext;
         return ext;
-    } else
+    } else {
         return kt::JobTracker::createJobWidget(job);
+    }
 }
 }
 

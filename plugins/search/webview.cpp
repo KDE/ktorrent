@@ -46,22 +46,25 @@ WebView::~WebView()
 
 void WebView::handleMagnetUrl(const QUrl &magnet_url)
 {
-    if (client)
+    if (client) {
         client->magnetUrl(magnet_url);
+    }
 }
 
 void WebView::openUrl(const QUrl &url)
 {
-    if (url.host() == QStringLiteral("ktorrent.searchplugin"))
+    if (url.host() == QStringLiteral("ktorrent.searchplugin")) {
         home();
-    else
+    } else {
         load(url);
+    }
 }
 
 void WebView::home()
 {
-    if (home_page_html.isEmpty())
+    if (home_page_html.isEmpty()) {
         loadHomePage();
+    }
     if (!home_page_html.isEmpty()) {
         const QString file = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/search/home"));
         setHtml(home_page_html, QUrl(file));
@@ -70,8 +73,9 @@ void WebView::home()
 
 QString WebView::homePageData()
 {
-    if (home_page_html.isEmpty())
+    if (home_page_html.isEmpty()) {
         loadHomePage();
+    }
 
     return home_page_html;
 }
@@ -94,8 +98,9 @@ void WebView::loadHomePage()
             QString link = QStringLiteral("<link rel=\"stylesheet\" type=\"text/css\" href=\"%1\" />");
             link = link.arg(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kdeui/about/kde_infopage_rtl.css")));
             home_page_html = home_page_html.arg(link);
-        } else
+        } else {
             home_page_html = home_page_html.arg(QString());
+        }
 
         KIconLoader *iconloader = KIconLoader::global();
 
@@ -117,11 +122,12 @@ void WebView::loadHomePage()
 
 QUrl WebView::searchUrl(const QString &search_text)
 {
-    if (client)
+    if (client) {
         return client->searchUrl(search_text);
-    else
+    } else {
         // client is broken -> browse to home
         return QUrl(QStringLiteral("http://ktorrent.searchplugin/"));
+    }
 }
 
 QWebEngineView *WebView::createWindow(QWebEnginePage::WebWindowType type)

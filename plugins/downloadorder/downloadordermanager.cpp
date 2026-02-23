@@ -31,8 +31,9 @@ DownloadOrderManager::~DownloadOrderManager()
 
 void DownloadOrderManager::save()
 {
-    if (!enabled())
+    if (!enabled()) {
         return;
+    }
 
     QFile fptr(tor->getTorDir() + QStringLiteral("download_order"));
     if (!fptr.open(QIODevice::WriteOnly)) {
@@ -41,14 +42,16 @@ void DownloadOrderManager::save()
     }
 
     QTextStream out(&fptr);
-    for (Uint32 file : std::as_const(order))
+    for (Uint32 file : std::as_const(order)) {
         out << file << Qt::endl;
+    }
 }
 
 void DownloadOrderManager::load()
 {
-    if (!bt::Exists(tor->getTorDir() + QStringLiteral("download_order")))
+    if (!bt::Exists(tor->getTorDir() + QStringLiteral("download_order"))) {
         return;
+    }
 
     QFile fptr(tor->getTorDir() + QStringLiteral("download_order"));
     if (!fptr.open(QIODevice::ReadOnly)) {
@@ -61,14 +64,17 @@ void DownloadOrderManager::load()
         QString file = in.readLine();
         bool ok = false;
         Uint32 idx = file.toUInt(&ok);
-        if (ok && idx < tor->getNumFiles())
+        if (ok && idx < tor->getNumFiles()) {
             order.append(idx);
+        }
     }
 
     // make sure all files are in the order
-    for (Uint32 i = 0; i < tor->getNumFiles(); i++)
-        if (!order.contains(i))
+    for (Uint32 i = 0; i < tor->getNumFiles(); i++) {
+        if (!order.contains(i)) {
             order.append(i);
+        }
+    }
 }
 
 Uint32 DownloadOrderManager::nextIncompleteFile()
@@ -76,12 +82,14 @@ Uint32 DownloadOrderManager::nextIncompleteFile()
     // Look for the next file in the order which is not 100 % complete
     for (Uint32 file : std::as_const(order)) {
         // skip file if it is complete
-        if (std::fabs(100.0f - tor->getTorrentFile(file).getDownloadPercentage()) < 0.01)
+        if (std::fabs(100.0f - tor->getTorrentFile(file).getDownloadPercentage()) < 0.01) {
             continue;
+        }
 
         // skip excluded or only seed files
-        if (tor->getTorrentFile(file).getPriority() < LAST_PRIORITY)
+        if (tor->getTorrentFile(file).getPriority() < LAST_PRIORITY) {
             continue;
+        }
 
         // we have found the incomplete file
         return file;
@@ -91,8 +99,9 @@ Uint32 DownloadOrderManager::nextIncompleteFile()
 
 void DownloadOrderManager::chunkDownloaded(bt::TorrentInterface *me, Uint32 chunk)
 {
-    if (!enabled() || tor->getStats().completed || tor != me)
+    if (!enabled() || tor->getStats().completed || tor != me) {
         return;
+    }
 
     bt::TorrentFileInterface &high_priority_file = tor->getTorrentFile(current_high_priority_file);
     bool in_high_priority_file_range = chunk >= high_priority_file.getFirstChunk() && chunk <= high_priority_file.getLastChunk();
@@ -108,23 +117,27 @@ void DownloadOrderManager::chunkDownloaded(bt::TorrentInterface *me, Uint32 chun
 
 void DownloadOrderManager::update()
 {
-    if (!enabled() || tor->getStats().completed)
+    if (!enabled() || tor->getStats().completed) {
         return;
+    }
 
     Uint32 next_file = nextIncompleteFile();
-    if (next_file >= tor->getNumFiles())
+    if (next_file >= tor->getNumFiles()) {
         return;
+    }
 
-    if (next_file != current_high_priority_file)
+    if (next_file != current_high_priority_file) {
         Out(SYS_DIO | LOG_NOTICE) << "DownloadOrderPlugin: next file to download is " << tor->getTorrentFile(next_file).getUserModifiedPath() << endl;
+    }
 
     bool normal_found = false;
     bool high_found = false;
     // set the priority of the file to FIRST and all the other files to NORMAL
     for (Uint32 file : std::as_const(order)) {
         TorrentFileInterface &tf = tor->getTorrentFile(file);
-        if (tf.getPriority() < LAST_PRIORITY)
+        if (tf.getPriority() < LAST_PRIORITY) {
             continue;
+        }
 
         if (file == next_file) {
             tf.setPriority(FIRST_PRIORITY);
@@ -136,16 +149,18 @@ void DownloadOrderManager::update()
             tf.setPriority(NORMAL_PRIORITY);
             normal_found = true;
             current_normal_priority_file = file;
-        } else
+        } else {
             tf.setPriority(LAST_PRIORITY);
+        }
     }
     current_high_priority_file = next_file;
 }
 
 void DownloadOrderManager::enable()
 {
-    if (enabled())
+    if (enabled()) {
         return;
+    }
 
     for (Uint32 i = 0; i < tor->getNumFiles(); i++) {
         order.append(i);
@@ -155,8 +170,9 @@ void DownloadOrderManager::enable()
 void DownloadOrderManager::disable()
 {
     order.clear();
-    if (bt::Exists(tor->getTorDir() + QStringLiteral("download_order")))
+    if (bt::Exists(tor->getTorDir() + QStringLiteral("download_order"))) {
         bt::Delete(tor->getTorDir() + QStringLiteral("download_order"), true);
+    }
 }
 
 }

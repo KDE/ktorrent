@@ -113,8 +113,9 @@ void ScanExtender::finished(KJob *j)
 
 void ScanExtender::cancelPressed()
 {
-    if (job)
+    if (job) {
         job->kill(false);
+    }
 }
 
 void ScanExtender::closeRequested()

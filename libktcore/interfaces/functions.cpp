@@ -51,11 +51,13 @@ QString DataDir(CreationMode mode)
             QString ktorrent4DataFolder = QDir::homePath() + QLatin1String("/.kde/share/apps/ktorrent");
             if (!QFile::exists(ktorrent4DataFolder)) {
                 ktorrent4DataFolder = QDir::homePath() + QLatin1String("/.kde4/share/apps/ktorrent");
-                if (!QFile::exists(ktorrent4DataFolder))
+                if (!QFile::exists(ktorrent4DataFolder)) {
                     ktorrent4DataFolder.clear();
+                }
             }
-            if (ktorrent4DataFolder.isEmpty() || !QFile::rename(ktorrent4DataFolder, dataDirPath))
+            if (ktorrent4DataFolder.isEmpty() || !QFile::rename(ktorrent4DataFolder, dataDirPath)) {
                 fileInfo.dir().mkpath(fileInfo.fileName());
+            }
         }
     }
     // if (!str.endsWith(bt::DirSeparator()))
@@ -69,8 +71,9 @@ Uint16 RandomGoodPort()
     Uint16 start = 50000;
     while (true) {
         Uint16 port = start + QRandomGenerator::global()->bounded(10000);
-        if (port != Settings::port() && port != Settings::dhtPort() && port != Settings::udpTrackerPort())
+        if (port != Settings::port() && port != Settings::dhtPort() && port != Settings::udpTrackerPort()) {
             return port;
+        }
     }
 }
 
@@ -84,11 +87,13 @@ void ApplySettings()
     bt::PeerConnector::setMaxActive(Settings::maxConnectingSockets());
 
     // Check for port conflicts
-    if (Settings::port() == Settings::udpTrackerPort())
+    if (Settings::port() == Settings::udpTrackerPort()) {
         Settings::setUdpTrackerPort(RandomGoodPort());
+    }
 
-    if (Settings::port() == Settings::dhtPort())
+    if (Settings::port() == Settings::dhtPort()) {
         Settings::setDhtPort(RandomGoodPort());
+    }
 
     UDPTrackerSocket::setPort(Settings::udpTrackerPort());
     Choker::setNumUploadSlots(Settings::numUploadSlots());
@@ -112,10 +117,11 @@ void ApplySettings()
         ServerInterface::disableEncryption();
     }
 
-    if (Settings::useCustomIP())
+    if (Settings::useCustomIP()) {
         Tracker::setCustomIP(Settings::customIP());
-    else
+    } else {
         Tracker::setCustomIP(QString());
+    }
 
     QString proxy = Settings::httpProxy();
 
@@ -132,10 +138,11 @@ void ApplySettings()
     net::Socks::setSocksEnabled(Settings::socksEnabled());
     net::Socks::setSocksVersion(Settings::socksVersion());
     net::Socks::setSocksServerAddress(Settings::socksProxy(), Settings::socksPort());
-    if (Settings::socksUsePassword())
+    if (Settings::socksUsePassword()) {
         net::Socks::setSocksAuthentication(Settings::socksUsername(), Settings::socksPassword());
-    else
+    } else {
         net::Socks::setSocksAuthentication(QString(), QString());
+    }
 
     bt::ChunkManager::setPreviewSizes(Settings::previewSizeAudio() * 1024, Settings::previewSizeVideo() * 1024);
     bt::QueueManagerInterface::setQueueManagerEnabled(!Settings::manuallyControlTorrents());
@@ -146,8 +153,9 @@ void ApplySettings()
 QString TorrentFileFilter(bool all_files_included)
 {
     QString ret = i18nc("*.torrent", "Torrents") + QLatin1String(" (*.torrent)");
-    if (all_files_included)
+    if (all_files_included) {
         ret += QLatin1String(";;") + i18n("All files") + QLatin1String(" (*)");
+    }
     return ret;
 }
 }

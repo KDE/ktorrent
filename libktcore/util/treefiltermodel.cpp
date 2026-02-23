@@ -20,18 +20,21 @@ TreeFilterModel::~TreeFilterModel()
 bool TreeFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex idx = sourceModel()->index(source_row, 0, source_parent);
-    if (!idx.isValid())
+    if (!idx.isValid()) {
         return false;
+    }
 
     // if we are in a leaf return filterAcceptsRow
-    if (!sourceModel()->hasIndex(0, 0, idx))
+    if (!sourceModel()->hasIndex(0, 0, idx)) {
         return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+    }
 
     // now walk over each child recursively and check if one matches, if so we need to accept this
     int child = 0;
     while (sourceModel()->hasIndex(child, 0, idx)) {
-        if (filterAcceptsRow(child, idx))
+        if (filterAcceptsRow(child, idx)) {
             return true;
+        }
         child++;
     }
 

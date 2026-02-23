@@ -61,8 +61,9 @@ void ConvertDialog::update()
 
 void ConvertDialog::convert()
 {
-    if (convert_thread)
+    if (convert_thread) {
         return;
+    }
 
     convert_thread = new ConvertThread(this);
     connect(convert_thread, &ConvertThread::finished, this, &ConvertDialog::threadFinished, Qt::QueuedConnection);
@@ -83,26 +84,29 @@ void ConvertDialog::threadFinished()
         convert_thread->wait();
         convert_thread->deleteLater();
         convert_thread = nullptr;
-        if (canceled)
+        if (canceled) {
             reject();
-        else
+        } else {
             accept();
+        }
     }
 }
 
 void ConvertDialog::closeEvent(QCloseEvent *e)
 {
-    if (!convert_thread)
+    if (!convert_thread) {
         e->accept();
-    else
+    } else {
         e->ignore();
+    }
 }
 
 void ConvertDialog::btnCancelClicked()
 {
     canceled = true;
-    if (convert_thread)
+    if (convert_thread) {
         convert_thread->stop();
+    }
 }
 
 }

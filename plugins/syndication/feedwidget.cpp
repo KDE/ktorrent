@@ -99,10 +99,11 @@ void FeedWidget::loadState(KConfigGroup &g)
 
     QHeaderView *hv = m_item_list->header();
     QByteArray state = g.readEntry("feed_widget_list_header", QByteArray());
-    if (!state.isEmpty())
+    if (!state.isEmpty()) {
         hv->restoreState(state);
-    else
+    } else {
         QTimer::singleShot(3000, this, &FeedWidget::resizeColumns);
+    }
 }
 
 void FeedWidget::saveState(KConfigGroup &g)
@@ -141,33 +142,38 @@ void FeedWidget::setFeed(Feed *f)
 
 void FeedWidget::downloadClicked()
 {
-    if (!feed)
+    if (!feed) {
         return;
+    }
 
     const QModelIndexList sel = m_item_list->selectionModel()->selectedRows();
     for (const QModelIndex &idx : sel) {
         Syndication::ItemPtr ptr = model->itemForIndex(idx);
-        if (ptr)
+        if (ptr) {
             feed->downloadItem(ptr, QString(), QString(), QString(), false);
+        }
     }
 }
 
 void FeedWidget::refreshClicked()
 {
-    if (feed)
+    if (feed) {
         feed->refresh();
+    }
 }
 
 void FeedWidget::refreshRateChanged(int v)
 {
-    if (v > 0 && feed)
+    if (v > 0 && feed) {
         feed->setRefreshRate(v);
+    }
 }
 
 void FeedWidget::filtersClicked()
 {
-    if (!feed)
+    if (!feed) {
         return;
+    }
 
     ManageFiltersDlg dlg(feed, filters, act, this);
     if (dlg.exec() == QDialog::Accepted) {
@@ -178,8 +184,9 @@ void FeedWidget::filtersClicked()
 
 void FeedWidget::cookiesClicked()
 {
-    if (!feed)
+    if (!feed) {
         return;
+    }
 
     bool ok = false;
     QString cookie = feed->authenticationCookie();
@@ -212,8 +219,9 @@ void FeedWidget::selectionChanged(const QItemSelection &sel, const QItemSelectio
 
 void FeedWidget::updated()
 {
-    if (!feed)
+    if (!feed) {
         return;
+    }
 
     switch (feed->feedStatus()) {
     case Feed::OK:

@@ -23,8 +23,9 @@ DBusTorrentFileStream::DBusTorrentFileStream(bt::Uint32 file_index, kt::DBusTorr
     sb.registerObject(path, this, flags);
 
     stream = tor->torrent()->createTorrentFileStream(file_index, true, this);
-    if (stream)
+    if (stream) {
         stream->open(QIODevice::ReadOnly);
+    }
 }
 
 DBusTorrentFileStream::~DBusTorrentFileStream()
@@ -53,15 +54,17 @@ qint64 DBusTorrentFileStream::pos() const
 
 QByteArray DBusTorrentFileStream::read(qint64 maxlen)
 {
-    if (!stream || bytesAvailable() == 0)
+    if (!stream || bytesAvailable() == 0) {
         return QByteArray();
+    }
 
     qint64 to_read = std::min(maxlen, bytesAvailable());
     QByteArray ba(to_read, 0);
 
     qint64 ret = stream->read(ba.data(), to_read);
-    if (ret < to_read)
+    if (ret < to_read) {
         ba.resize(ret);
+    }
     return ba;
 }
 

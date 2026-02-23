@@ -67,22 +67,25 @@ void ShutdownRuleSet::seedingAutoStopped(bt::TorrentInterface *tc, bt::AutoStopR
 
 void ShutdownRuleSet::triggered(Trigger trigger, TorrentInterface *tc)
 {
-    if (!on)
+    if (!on) {
         return;
+    }
 
     bool hit = false;
     bool all_hit = true;
     for (QList<ShutdownRule>::iterator i = rules.begin(); i != rules.end(); i++) {
         bool rule_hit = false;
-        if (trigger == DOWNLOADING_COMPLETED)
+        if (trigger == DOWNLOADING_COMPLETED) {
             rule_hit = i->downloadingFinished(tc, core->getQueueManager());
-        else
+        } else {
             rule_hit = i->seedingFinished(tc, core->getQueueManager());
+        }
 
-        if (rule_hit)
+        if (rule_hit) {
             hit = true;
-        else if (!i->hit)
+        } else if (!i->hit) {
             all_hit = false;
+        }
     }
 
     if ((!all_rules_must_be_hit && hit) || (all_rules_must_be_hit && all_hit)) {
@@ -113,10 +116,11 @@ void ShutdownRuleSet::torrentRemoved(bt::TorrentInterface *tc)
 {
     // Throw away all rules for this torrent
     for (QList<ShutdownRule>::iterator i = rules.begin(); i != rules.end();) {
-        if (i->tc == tc)
+        if (i->tc == tc) {
             i = rules.erase(i);
-        else
+        } else {
             i++;
+        }
     }
 }
 
@@ -166,18 +170,21 @@ void ShutdownRuleSet::load(const QString &file)
     try {
         clear();
         const std::unique_ptr<BListNode> list = dec.decodeList();
-        if (!list)
+        if (!list) {
             throw bt::Error(QStringLiteral("Toplevel node not a list"));
+        }
 
         BListNode *const l = list.get();
         Uint32 i = 0;
         for (; i < l->getNumChildren(); ++i) {
-            if (l->getChild(i)->getType() != BNode::DICT)
+            if (l->getChild(i)->getType() != BNode::DICT) {
                 break;
+            }
 
             BDictNode *const d = l->getDict(i);
-            if (!d)
+            if (!d) {
                 continue;
+            }
 
             ShutdownRule rule;
             rule.action = (Action)d->getInt(QByteArrayLiteral("Action"));
@@ -188,19 +195,21 @@ void ShutdownRuleSet::load(const QString &file)
             if (d->getValue(QByteArrayLiteral("Torrent"))) {
                 const QByteArray hash = d->getByteArray(QByteArrayLiteral("Torrent"));
                 bt::TorrentInterface *const tc = torrentForHash(hash);
-                if (tc)
+                if (tc) {
                     rule.tc = tc;
-                else
+                } else {
                     continue; // no valid torrent found so skip this rule
+                }
             }
             rules.append(rule);
         }
 
         on = (l->getInt(i++) == 1);
-        if (i < l->getNumChildren())
+        if (i < l->getNumChildren()) {
             all_rules_must_be_hit = (l->getInt(i) == 1);
-        else
+        } else {
             all_rules_must_be_hit = false;
+        }
     } catch (bt::Error &err) {
         Out(SYS_GEN | LOG_DEBUG) << "Failed to parse " << file << " : " << err.toString() << endl;
     }
@@ -212,8 +221,9 @@ bt::TorrentInterface *ShutdownRuleSet::torrentForHash(const QByteArray &hash)
     QueueManager *qman = core->getQueueManager();
     for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++) {
         bt::TorrentInterface *t = *i;
-        if (t->getInfoHash() == ih)
+        if (t->getInfoHash() == ih) {
             return t;
+        }
     }
 
     return nullptr;
@@ -221,10 +231,11 @@ bt::TorrentInterface *ShutdownRuleSet::torrentForHash(const QByteArray &hash)
 
 kt::Action ShutdownRuleSet::currentAction() const
 {
-    if (rules.count() == 0)
+    if (rules.count() == 0) {
         return SHUTDOWN;
-    else
+    } else {
         return rules.front().action;
+    }
 }
 
 QString ShutdownRuleSet::toolTip() const
@@ -249,10 +260,11 @@ QString ShutdownRuleSet::toolTip() const
             break;
         }
 
-        if (all_rules_must_be_hit)
+        if (all_rules_must_be_hit) {
             msg += i18n(" when all of the following events have occurred:<br/><br/> ");
-        else
+        } else {
             msg += i18n(" when one of the following events occur:<br/><br/> ");
+        }
 
         QStringList items;
         for (const ShutdownRule &r : std::as_const(rules)) {
@@ -268,11 +280,13 @@ QString ShutdownRuleSet::toolTip() const
 
 bool ShutdownRule::downloadingFinished(bt::TorrentInterface *tor, QueueManager *qman)
 {
-    if (target != ALL_TORRENTS && tc != tor)
+    if (target != ALL_TORRENTS && tc != tor) {
         return false;
+    }
 
-    if (trigger != DOWNLOADING_COMPLETED)
+    if (trigger != DOWNLOADING_COMPLETED) {
         return false;
+    }
 
     if (target != ALL_TORRENTS) {
         hit = tc == tor;
@@ -282,8 +296,9 @@ bool ShutdownRule::downloadingFinished(bt::TorrentInterface *tor, QueueManager *
         for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++) {
             bt::TorrentInterface *t = *i;
             const bt::TorrentStats &stats = t->getStats();
-            if (t != tor && !stats.completed && stats.running)
+            if (t != tor && !stats.completed && stats.running) {
                 return false;
+            }
         }
 
         hit = true;
@@ -293,11 +308,13 @@ bool ShutdownRule::downloadingFinished(bt::TorrentInterface *tor, QueueManager *
 
 bool ShutdownRule::seedingFinished(bt::TorrentInterface *tor, QueueManager *qman)
 {
-    if (target != ALL_TORRENTS && tc != tor)
+    if (target != ALL_TORRENTS && tc != tor) {
         return false;
+    }
 
-    if (trigger != SEEDING_COMPLETED)
+    if (trigger != SEEDING_COMPLETED) {
         return false;
+    }
 
     if (target != ALL_TORRENTS) {
         hit = tc == tor;
@@ -306,12 +323,14 @@ bool ShutdownRule::seedingFinished(bt::TorrentInterface *tor, QueueManager *qman
         // target is all torrents, so check if all torrents have completed seeding
         for (QueueManager::iterator i = qman->begin(); i != qman->end(); i++) {
             bt::TorrentInterface *t = *i;
-            if (t == tor)
+            if (t == tor) {
                 continue;
+            }
 
             const bt::TorrentStats &stats = t->getStats();
-            if (stats.running)
+            if (stats.running) {
                 return false;
+            }
         }
 
         hit = true;
@@ -321,16 +340,17 @@ bool ShutdownRule::seedingFinished(bt::TorrentInterface *tor, QueueManager *qman
 
 QString ShutdownRule::toolTip() const
 {
-    if (target == ALL_TORRENTS && trigger == kt::DOWNLOADING_COMPLETED)
+    if (target == ALL_TORRENTS && trigger == kt::DOWNLOADING_COMPLETED) {
         return i18n("<b>All torrents</b> finish downloading");
-    else if (target == ALL_TORRENTS && trigger == kt::SEEDING_COMPLETED)
+    } else if (target == ALL_TORRENTS && trigger == kt::SEEDING_COMPLETED) {
         return i18n("<b>All torrents</b> finish seeding");
-    else if (target == SPECIFIC_TORRENT && trigger == kt::DOWNLOADING_COMPLETED)
+    } else if (target == SPECIFIC_TORRENT && trigger == kt::DOWNLOADING_COMPLETED) {
         return i18n("<b>%1</b> finishes downloading", tc->getDisplayName());
-    else if (target == SPECIFIC_TORRENT && trigger == kt::SEEDING_COMPLETED)
+    } else if (target == SPECIFIC_TORRENT && trigger == kt::SEEDING_COMPLETED) {
         return i18n("<b>%1</b> finishes seeding", tc->getDisplayName());
-    else
+    } else {
         return QString();
+    }
 }
 
 }

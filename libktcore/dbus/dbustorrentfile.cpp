@@ -40,11 +40,13 @@ int DBusTorrentFile::priority() const
 
 void DBusTorrentFile::setPriority(int prio)
 {
-    if (prio > 60 || prio < 10)
+    if (prio > 60 || prio < 10) {
         return;
+    }
 
-    if (prio % 10 != 0)
+    if (prio % 10 != 0) {
         return;
+    }
 
     file.setPriority((bt::Priority)prio);
 }

@@ -42,8 +42,9 @@ PasteDialog::PasteDialog(Core *core, QWidget *parent, Qt::WindowFlags fl)
     connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
-    if (url.isValid())
+    if (url.isValid()) {
         m_url->setText(text);
+    }
 
     loadGroups();
 }
@@ -62,8 +63,9 @@ void PasteDialog::loadGroups()
 
     // now custom ones
     while (it != gman->end()) {
-        if (!it->second->isStandardGroup())
+        if (!it->second->isStandardGroup()) {
             grps << it->first;
+        }
         ++it;
     }
 
@@ -106,8 +108,9 @@ void PasteDialog::accept()
                 while (reply->canReadLine()) {
                     QString trackerUrl = QString::fromLatin1(reply->readLine());
                     trackerUrl.chop(1);
-                    if (!trackerUrl.isEmpty())
+                    if (!trackerUrl.isEmpty()) {
                         magnetLink.append(QStringLiteral("&tr=")).append(trackerUrl);
+                    }
                 }
             } else {
                 QMessageBox::warning(this,

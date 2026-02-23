@@ -54,10 +54,11 @@ bool MagnetModel::isStopped(int row) const
 void MagnetModel::onUpdateQueue(bt::Uint32 idx, bt::Uint32 count)
 {
     int rows = mman->count();
-    if (currentRows < rows) // add new rows
+    if (currentRows < rows) { // add new rows
         insertRows(idx, rows - currentRows, QModelIndex());
-    else if (currentRows > rows) // delete rows
+    } else if (currentRows > rows) { // delete rows
         removeRows(idx, currentRows - rows, QModelIndex());
+    }
 
     currentRows = rows;
     Q_EMIT dataChanged(index(idx, 0), index(count, columnCount(QModelIndex())));
@@ -65,8 +66,9 @@ void MagnetModel::onUpdateQueue(bt::Uint32 idx, bt::Uint32 count)
 
 QVariant MagnetModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= mman->count())
+    if (!index.isValid() || index.row() < 0 || index.row() >= mman->count()) {
         return QVariant();
+    }
 
     const MagnetDownloader *md = mman->getMagnetDownloader(index.row());
     if (role == Qt::DisplayRole) {
@@ -81,11 +83,13 @@ QVariant MagnetModel::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     } else if (role == Qt::DecorationRole) {
-        if (index.column() == 0)
+        if (index.column() == 0) {
             return QIcon::fromTheme(QStringLiteral("kt-magnet"));
+        }
     } else if (role == Qt::ToolTipRole) {
-        if (index.column() == 0)
+        if (index.column() == 0) {
             return md->magnetLink().toString();
+        }
     }
 
     return QVariant();
@@ -93,8 +97,9 @@ QVariant MagnetModel::data(const QModelIndex &index, int role) const
 
 QVariant MagnetModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation == Qt::Vertical)
+    if (orientation == Qt::Vertical) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole) {
         switch (section) {
@@ -114,18 +119,20 @@ QVariant MagnetModel::headerData(int section, Qt::Orientation orientation, int r
 
 int MagnetModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return 3;
+    }
 }
 
 int MagnetModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid() || !mman)
+    if (parent.isValid() || !mman) {
         return 0;
-    else
+    } else {
         return mman->count();
+    }
 }
 
 bool MagnetModel::insertRows(int row, int count, const QModelIndex &parent)
@@ -146,10 +153,11 @@ bool MagnetModel::removeRows(int row, int count, const QModelIndex &parent)
 
 QString MagnetModel::displayName(const bt::MagnetDownloader *md) const
 {
-    if (md->magnetLink().displayName().isEmpty())
+    if (md->magnetLink().displayName().isEmpty()) {
         return md->magnetLink().toString();
-    else
+    } else {
         return md->magnetLink().displayName();
+    }
 }
 
 QString MagnetModel::status(int row) const

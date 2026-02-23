@@ -96,8 +96,9 @@ void ChunkBar::drawContents(QPainter *p)
     p->setBrush(palette().color(enable ? QPalette::Active : QPalette::Inactive, QPalette::Base));
     p->setPen(Qt::NoPen); // p->setPen(QPen(Qt::red));
     p->drawRect(contentsRect());
-    if (enable)
+    if (enable) {
         p->drawPixmap(contentsRect(), pixmap);
+    }
 }
 
 void ChunkBar::drawBarContents(QPainter *p)
@@ -106,12 +107,13 @@ void ChunkBar::drawBarContents(QPainter *p)
     const BitSet &bs = getBitSet();
     curr = bs;
     QColor highlight_color = palette().color(QPalette::Active, QPalette::Highlight);
-    if (bs.allOn())
+    if (bs.allOn()) {
         drawAllOn(p, highlight_color, contentsRect());
-    else if (curr.getNumBits() > w)
+    } else if (curr.getNumBits() > w) {
         drawMoreChunksThenPixels(p, bs, highlight_color, contentsRect());
-    else
+    } else {
         drawEqual(p, bs, highlight_color, contentsRect());
+    }
 }
 
 void ChunkBar::generateLegend(const QList<LegendItem> &legend_items)

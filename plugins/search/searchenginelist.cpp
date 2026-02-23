@@ -43,8 +43,9 @@ void SearchEngineList::loadEngines()
     if (!bt::Exists(data_dir)) {
         if (bt::Exists(kt::DataDir() + QStringLiteral("search_engines"))) {
             try {
-                if (!bt::Exists(data_dir))
+                if (!bt::Exists(data_dir)) {
                     bt::MakeDir(data_dir);
+                }
             } catch (...) {
                 return;
             }
@@ -61,10 +62,11 @@ void SearchEngineList::loadEngines()
             if (bt::Exists(data_dir + sd + QStringLiteral("/opensearch.xml")) && !bt::Exists(data_dir + sd + QStringLiteral("/removed"))) {
                 Out(SYS_SRC | LOG_DEBUG) << "Loading " << sd << endl;
                 SearchEngine *se = new SearchEngine(data_dir + sd + QLatin1Char('/'));
-                if (!se->load(data_dir + sd + QStringLiteral("/opensearch.xml")))
+                if (!se->load(data_dir + sd + QStringLiteral("/opensearch.xml"))) {
                     delete se;
-                else
+                } else {
                     engines.append(se);
+                }
             }
         }
 
@@ -86,21 +88,24 @@ void SearchEngineList::convertSearchEnginesFile()
     while (!in.atEnd()) {
         QString line = in.readLine();
 
-        if (line.startsWith(QLatin1Char('#')) || line.startsWith(QLatin1Char(' ')) || line.isEmpty())
+        if (line.startsWith(QLatin1Char('#')) || line.startsWith(QLatin1Char(' ')) || line.isEmpty()) {
             continue;
+        }
 
         QStringList tokens = line.split(QLatin1Char(' '));
         QString name = tokens[0];
         name = name.replace(QLatin1String("%20"), QLatin1String(" "));
         QUrlQuery url = QUrlQuery(QUrl(tokens[1]));
 
-        for (Uint32 i = 2; i < (Uint32)tokens.count(); ++i)
+        for (Uint32 i = 2; i < (Uint32)tokens.count(); ++i) {
             url.addQueryItem(tokens[i].section(QLatin1Char('='), 0, 0), tokens[i].section(QLatin1Char('='), 1, 1));
+        }
 
         try {
             QString dir = data_dir + name;
-            if (!dir.endsWith(QLatin1Char('/')))
+            if (!dir.endsWith(QLatin1Char('/'))) {
                 dir += QLatin1Char('/');
+            }
 
             bt::MakeDir(dir);
             addEngine(dir, url.toString().replace(QLatin1String("FOOBAR"), QLatin1String("{searchTerms}")));
@@ -113,8 +118,9 @@ void SearchEngineList::convertSearchEnginesFile()
 QUrl SearchEngineList::search(bt::Uint32 engine, const QString &terms)
 {
     QUrl u;
-    if (engine < (Uint32)engines.count())
+    if (engine < (Uint32)engines.count()) {
         u = engines[engine]->search(terms);
+    }
 
     Out(SYS_SRC | LOG_NOTICE) << "Searching " << u.toDisplayString() << endl;
     return u;
@@ -122,10 +128,11 @@ QUrl SearchEngineList::search(bt::Uint32 engine, const QString &terms)
 
 QString SearchEngineList::getEngineName(bt::Uint32 engine) const
 {
-    if (engine >= (Uint32)engines.count())
+    if (engine >= (Uint32)engines.count()) {
         return QString();
-    else
+    } else {
         return engines[engine]->engineName();
+    }
 }
 
 void SearchEngineList::openSearchDownloadJobFinished(KJob *j)
@@ -153,8 +160,9 @@ void SearchEngineList::addEngine(OpenSearchDownloadJob *j)
 void SearchEngineList::addEngine(const QString &dir, const QString &url)
 {
     QFile fptr(dir + QStringLiteral("opensearch.xml"));
-    if (!fptr.open(QIODevice::WriteOnly))
+    if (!fptr.open(QIODevice::WriteOnly)) {
         throw bt::Error(i18n("Cannot open %1: %2", dir + QStringLiteral("opensearch.xml"), fptr.errorString()));
+    }
 
     QUrl kurl(url);
     QTextStream out(&fptr);
@@ -167,8 +175,9 @@ void SearchEngineList::addEngine(const QString &dir, const QString &url)
         "</OpenSearchDescription>\n");
 
     QString base = kurl.scheme() + QStringLiteral("://") + kurl.host();
-    if (kurl.port() > 0)
+    if (kurl.port() > 0) {
         base += QString::fromLatin1(":%1").arg(kurl.port());
+    }
 
     QString tmp = url;
     tmp = tmp.replace(QLatin1Char('&'), QLatin1String("&amp;"));
@@ -189,8 +198,9 @@ void SearchEngineList::removeEngines(const QModelIndexList &sel)
 {
     QList<SearchEngine *> to_remove;
     for (const QModelIndex &idx : sel) {
-        if (idx.isValid() && idx.row() >= 0 && idx.row() < engines.count())
+        if (idx.isValid() && idx.row() >= 0 && idx.row() < engines.count()) {
             to_remove.append(engines.at(idx.row()));
+        }
     }
 
     beginResetModel();
@@ -214,8 +224,9 @@ void SearchEngineList::addDefaults()
 {
     // data dir does not exist yet so create it and add the default list
     try {
-        if (!bt::Exists(data_dir))
+        if (!bt::Exists(data_dir)) {
             bt::MakeDir(data_dir);
+        }
     } catch (...) {
         return;
     }
@@ -247,18 +258,20 @@ void SearchEngineList::loadEngine(const QString &global_dir, const QString &user
 
     if (bt::Exists(user_dir + QStringLiteral("removed"))) {
         // if the removed file is there don't load, if we are not allowed
-        if (!load_removed)
+        if (!load_removed) {
             return;
-        else
+        } else {
             bt::Delete(user_dir + QStringLiteral("removed"));
+        }
     }
 
     if (!alreadyLoaded(user_dir)) {
         SearchEngine *se = new SearchEngine(user_dir);
-        if (!se->load(global_dir + QStringLiteral("opensearch.xml")))
+        if (!se->load(global_dir + QStringLiteral("opensearch.xml"))) {
             delete se;
-        else
+        } else {
             engines.append(se);
+        }
     }
 }
 
@@ -266,10 +279,12 @@ void SearchEngineList::loadDefault(bool removed_to)
 {
     QStringList dir_list =
         QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
-    if (dir_list.isEmpty())
+    if (dir_list.isEmpty()) {
         dir_list = QStandardPaths::locateAll(QStandardPaths::AppLocalDataLocation, QStringLiteral("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
-    if (dir_list.isEmpty())
+    }
+    if (dir_list.isEmpty()) {
         dir_list = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, QStringLiteral("ktorrent/opensearch"), QStandardPaths::LocateDirectory);
+    }
 
     for (const QString &dir : std::as_const(dir_list)) {
         const QStringList subdirs = QDir(dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
@@ -282,8 +297,9 @@ void SearchEngineList::loadDefault(bool removed_to)
 bool SearchEngineList::alreadyLoaded(const QString &user_dir)
 {
     for (const SearchEngine *se : std::as_const(engines)) {
-        if (se->engineDir() == user_dir)
+        if (se->engineDir() == user_dir) {
             return true;
+        }
     }
 
     return false;
@@ -291,20 +307,23 @@ bool SearchEngineList::alreadyLoaded(const QString &user_dir)
 
 int SearchEngineList::rowCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return engines.count();
-    else
+    } else {
         return 0;
+    }
 }
 
 QVariant SearchEngineList::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
     SearchEngine *se = engines.at(index.row());
-    if (!se)
+    if (!se) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole) {
         return se->engineName();

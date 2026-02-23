@@ -38,10 +38,11 @@ bool MediaPlayer::paused() const
 void MediaPlayer::resume()
 {
     if (paused() || manually_paused) {
-        if (buffering)
+        if (buffering) {
             manually_paused = false;
-        else
+        } else {
             media->play();
+        }
     }
 }
 
@@ -70,8 +71,9 @@ void MediaPlayer::pause()
         Out(SYS_MPL | LOG_DEBUG) << "MediaPlayer: paused" << endl;
         manually_paused = true;
         int flags = MEDIA_PLAY | MEDIA_STOP;
-        if (history.count() > 1)
+        if (history.count() > 1) {
             flags |= MEDIA_PREV;
+        }
 
         Q_EMIT enableActions(flags);
     }
@@ -80,8 +82,9 @@ void MediaPlayer::pause()
 void MediaPlayer::stop()
 {
     media->stop();
-    if (buffering)
+    if (buffering) {
         buffering = false;
+    }
 
     current = MediaFileRef::MediaSource();
     onPlaybackStateChanged(QMediaPlayer::PlaybackState::StoppedState);
@@ -126,8 +129,9 @@ void MediaPlayer::onMediaStatusChanged(QMediaPlayer::MediaStatus newState)
     case QMediaPlayer::MediaStatus::LoadingMedia:
         Out(SYS_MPL | LOG_DEBUG) << "MediaPlayer: loading" << endl;
         flags |= MEDIA_STOP;
-        if (history.count() > 1)
+        if (history.count() > 1) {
             flags |= MEDIA_PREV;
+        }
 
         Q_EMIT enableActions(flags);
         Q_EMIT loading();
@@ -168,16 +172,18 @@ void MediaPlayer::onMediaStatusChanged(QMediaPlayer::MediaStatus newState)
     case QMediaPlayer::MediaStatus::EndOfMedia:
         Out(SYS_MPL | LOG_DEBUG) << "MediaPlayer: end of media" << endl;
         Q_EMIT endOfMedia();
-        if (history.count() > 1)
+        if (history.count() > 1) {
             flags |= MEDIA_PREV;
+        }
 
         Q_EMIT enableActions(flags);
         break;
     case QMediaPlayer::MediaStatus::InvalidMedia:
         Out(SYS_MPL | LOG_IMPORTANT) << "MediaPlayer: error " << media->errorString() << endl;
         flags = MEDIA_PLAY;
-        if (history.count() > 1)
+        if (history.count() > 1) {
             flags |= MEDIA_PREV;
+        }
 
         Q_EMIT enableActions(flags);
         break;
@@ -191,8 +197,9 @@ void MediaPlayer::onPlaybackStateChanged(QMediaPlayer::PlaybackState newState)
     case QMediaPlayer::PlaybackState::StoppedState:
         Out(SYS_MPL | LOG_DEBUG) << "MediaPlayer: stopped" << endl;
         flags = MEDIA_PLAY;
-        if (history.count() > 1)
+        if (history.count() > 1) {
             flags |= MEDIA_PREV;
+        }
 
         Q_EMIT enableActions(flags);
         Q_EMIT stopped();
@@ -200,8 +207,9 @@ void MediaPlayer::onPlaybackStateChanged(QMediaPlayer::PlaybackState newState)
     case QMediaPlayer::PlaybackState::PlayingState:
         Out(SYS_MPL | LOG_DEBUG) << "MediaPlayer: playing " << getCurrentSource().path() << endl;
         flags = MEDIA_PAUSE | MEDIA_STOP;
-        if (history.count() > 1)
+        if (history.count() > 1) {
             flags |= MEDIA_PREV;
+        }
 
         Q_EMIT enableActions(flags);
         hasVideoChanged(media->hasVideo());
@@ -211,8 +219,9 @@ void MediaPlayer::onPlaybackStateChanged(QMediaPlayer::PlaybackState newState)
         if (!buffering) {
             Out(SYS_MPL | LOG_DEBUG) << "MediaPlayer: paused" << endl;
             flags = MEDIA_PLAY | MEDIA_STOP;
-            if (history.count() > 1)
+            if (history.count() > 1) {
                 flags |= MEDIA_PREV;
+            }
 
             Q_EMIT enableActions(flags);
         }
@@ -222,18 +231,20 @@ void MediaPlayer::onPlaybackStateChanged(QMediaPlayer::PlaybackState newState)
 
 MediaFileRef MediaPlayer::getCurrentSource() const
 {
-    if (history.isEmpty())
+    if (history.isEmpty()) {
         return MediaFileRef();
-    else
+    } else {
         return MediaFileRef(history.back());
+    }
 }
 
 void MediaPlayer::hasVideoChanged(bool hasVideo)
 {
-    if (hasVideo)
+    if (hasVideo) {
         Q_EMIT openVideo();
-    else
+    } else {
         Q_EMIT closeVideo();
+    }
 }
 
 void MediaPlayer::setMediaSource(const MediaFileRef::MediaSource &source)

@@ -68,14 +68,16 @@ void WebSeedsTab::changeTC(bt::TorrentInterface *tc)
     onWebSeedTextChanged(m_webseed->text());
 
     // see if we need to enable or disable the remove button
-    if (curr_tc)
+    if (curr_tc) {
         selectionChanged(m_webseed_list->selectionModel()->selectedRows());
+    }
 }
 
 void WebSeedsTab::addWebSeed()
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     bt::TorrentInterface *tc = curr_tc.data();
     QUrl url(m_webseed->text());
@@ -91,16 +93,18 @@ void WebSeedsTab::addWebSeed()
 
 void WebSeedsTab::removeWebSeed()
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     bt::TorrentInterface *tc = curr_tc.data();
     const QModelIndexList idx_list = m_webseed_list->selectionModel()->selectedRows();
     for (const QModelIndex &idx : idx_list) {
         const WebSeedInterface *ws = tc->getWebSeed(proxy_model->mapToSource(idx).row());
         if (ws && ws->isUserCreated()) {
-            if (!tc->removeWebSeed(ws->getUrl()))
+            if (!tc->removeWebSeed(ws->getUrl())) {
                 KMessageBox::error(this, i18n("Cannot remove webseed %1, it is part of the torrent.", ws->getUrl().toDisplayString()));
+            }
         }
     }
 
@@ -125,8 +129,9 @@ void WebSeedsTab::selectionChanged(const QModelIndexList &indexes)
 void WebSeedsTab::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(deselected);
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     selectionChanged(selected.indexes());
 }
@@ -139,8 +144,9 @@ void WebSeedsTab::onWebSeedTextChanged(const QString &ws)
 
 void WebSeedsTab::update()
 {
-    if (model->update())
+    if (model->update()) {
         proxy_model->invalidate();
+    }
 }
 
 void WebSeedsTab::saveState(KSharedConfigPtr cfg)
@@ -154,8 +160,9 @@ void WebSeedsTab::loadState(KSharedConfigPtr cfg)
 {
     KConfigGroup g = cfg->group(QStringLiteral("WebSeedsTab"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
-    if (!s.isEmpty())
+    if (!s.isEmpty()) {
         m_webseed_list->header()->restoreState(s);
+    }
 }
 
 void WebSeedsTab::disableAll()

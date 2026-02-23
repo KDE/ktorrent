@@ -50,15 +50,18 @@ void TorrentFileModel::onCodecChange()
 
 Qt::ItemFlags TorrentFileModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return {};
+    }
 
     Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
-    if (tc->getStats().multi_file_torrent)
+    if (tc->getStats().multi_file_torrent) {
         flags |= Qt::ItemIsUserCheckable;
+    }
 
-    if (fileNamesEditable() && index.column() == 0)
+    if (fileNamesEditable() && index.column() == 0) {
         flags |= Qt::ItemIsEditable;
+    }
 
     return flags;
 }

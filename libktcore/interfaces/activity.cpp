@@ -45,8 +45,9 @@ Activity::~Activity()
 
 void Activity::setXMLGUIFile(const QString &xml_file)
 {
-    if (!activity_part)
+    if (!activity_part) {
         activity_part = new ActivityPart(this);
+    }
 
     activity_part->setXMLGUIFile(xml_file);
 }

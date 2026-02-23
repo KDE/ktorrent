@@ -27,8 +27,9 @@ public:
 
     ~FSProxyModel()
     {
-        if (m_filter)
+        if (m_filter) {
             delete m_filter;
+        }
     }
 
     /**
@@ -45,8 +46,9 @@ public:
      */
     void setFilter(QSet<QString> *filter)
     {
-        if (m_filter && m_filter != filter)
+        if (m_filter && m_filter != filter) {
             delete m_filter;
+        }
         m_filter = filter;
     }
 

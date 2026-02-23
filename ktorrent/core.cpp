@@ -81,8 +81,9 @@ Core::Core(kt::GUI *gui)
 
     removed_bytes_up = removed_bytes_down = 0;
 
-    if (!data_dir.endsWith(bt::DirSeparator()))
+    if (!data_dir.endsWith(bt::DirSeparator())) {
         data_dir += bt::DirSeparator();
+    }
 
     connect(&update_timer, &QTimer::timeout, this, &Core::update);
 
@@ -131,8 +132,9 @@ void Core::startServers()
 
     if (Settings::utpEnabled()) {
         startUTPServer(port);
-        if (!Settings::onlyUseUtp())
+        if (!Settings::onlyUseUtp()) {
             startTCPServer(port);
+        }
     } else {
         startTCPServer(port);
     }
@@ -171,20 +173,24 @@ void Core::applySettings()
 
     bt::Globals &globals = bt::Globals::instance();
 
-    if (globals.isTCPEnabled() && !tcp_enabled)
+    if (globals.isTCPEnabled() && !tcp_enabled) {
         globals.shutdownTCPServer();
-    else if (!globals.isTCPEnabled() && tcp_enabled)
+    } else if (!globals.isTCPEnabled() && tcp_enabled) {
         startTCPServer(port);
-    else if (tcp_enabled && port != current_port)
+    } else if (tcp_enabled && port != current_port) {
         globals.getTCPServer().changePort(port);
+    }
 
-    if (globals.isUTPEnabled() && (!utp_enabled || port != current_port))
+    if (globals.isUTPEnabled() && (!utp_enabled || port != current_port)) {
         globals.shutdownUTPServer();
-    if (!globals.isUTPEnabled() && utp_enabled)
+    }
+    if (!globals.isUTPEnabled() && utp_enabled) {
         startUTPServer(port);
+    }
 
-    if (utp_enabled)
+    if (utp_enabled) {
         globals.getUTPServer().setTOS(Settings::dscp() << 2);
+    }
 
     ServerInterface::setPort(port);
     ServerInterface::setUtpEnabled(utp_enabled, Settings::onlyUseUtp());
@@ -195,8 +201,9 @@ void Core::applySettings()
     setKeepSeeding(Settings::keepSeeding());
 
     QString tmp = Settings::tempDir();
-    if (tmp.isEmpty())
+    if (tmp.isEmpty()) {
         tmp = kt::DataDir();
+    }
 
     changeDataDir(tmp);
     // update QM
@@ -220,13 +227,16 @@ bool Core::init(TorrentControl *tc, const QString &group, const QString &locatio
     bool skip_check = false;
     QString selected_group = group;
 
-    if (Settings::maxRatio() > 0)
+    if (Settings::maxRatio() > 0) {
         tc->setMaxShareRatio(Settings::maxRatio());
-    if (Settings::maxSeedTime() > 0)
+    }
+    if (Settings::maxSeedTime() > 0) {
         tc->setMaxSeedTime(Settings::maxSeedTime());
+    }
 
-    if (Settings::useCompletedDir() && (silently || Settings::openAllTorrentsSilently()))
+    if (Settings::useCompletedDir() && (silently || Settings::openAllTorrentsSilently())) {
         tc->setMoveWhenCompletedDir(Settings::completedDir());
+    }
 
     if (qman->alreadyLoaded(tc->getInfoHash())) {
         Out(SYS_GEN | LOG_IMPORTANT) << "Torrent " << tc->getDisplayName() << " already loaded" << endl;
@@ -239,12 +249,14 @@ bool Core::init(TorrentControl *tc, const QString &group, const QString &locatio
         bool ret = dlg.execute(tc, &start_torrent, &skip_check, location) == QDialog::Accepted;
         dlg.saveState(KSharedConfig::openConfig());
 
-        if (!ret)
+        if (!ret) {
             return false;
-        else
+        } else {
             selected_group = dlg.selectedGroup();
-    } else
+        }
+    } else {
         start_torrent = true;
+    }
 
     QStringList conflicting;
     if (qman->checkFileConflicts(tc, conflicting)) {
@@ -264,17 +276,19 @@ bool Core::init(TorrentControl *tc, const QString &group, const QString &locatio
     try {
         tc->createFiles();
     } catch (bt::Error &err) {
-        if (!silently)
+        if (!silently) {
             gui->errorMsg(err.toString());
+        }
         Out(SYS_GEN | LOG_IMPORTANT) << err.toString() << endl;
         return false;
     }
 
     if (tc->hasExistingFiles()) {
-        if (!skip_check)
+        if (!skip_check) {
             doDataCheck(tc, true);
-        else
+        } else {
             tc->markExistingFilesAsDownloaded();
+        }
     }
 
     tc->setPreallocateDiskSpace(true);
@@ -285,13 +299,15 @@ bool Core::init(TorrentControl *tc, const QString &group, const QString &locatio
     // now copy torrent file to user specified dir if needed
     if (Settings::useTorrentCopyDir()) {
         QString torFile = tc->getTorDir();
-        if (!torFile.endsWith(bt::DirSeparator()))
+        if (!torFile.endsWith(bt::DirSeparator())) {
             torFile += bt::DirSeparator();
+        }
 
         torFile += QLatin1String("torrent");
         QString destination = Settings::torrentCopyDir();
-        if (!destination.endsWith(bt::DirSeparator()))
+        if (!destination.endsWith(bt::DirSeparator())) {
             destination += bt::DirSeparator();
+        }
 
         destination += tc->getStats().torrent_name + QLatin1String(".torrent");
         KIO::copy(QUrl::fromLocalFile(torFile), QUrl::fromLocalFile(destination));
@@ -307,8 +323,9 @@ bool Core::init(TorrentControl *tc, const QString &group, const QString &locatio
     }
 
     Q_EMIT torrentAdded(tc);
-    if (silently)
+    if (silently) {
         Q_EMIT openedSilently(tc);
+    }
     return true;
 }
 
@@ -331,17 +348,19 @@ bt::TorrentInterface *Core::loadFromData(const QByteArray &data, const QString &
         Q_EMIT canNotLoadSilently(warning.toString());
     } catch (bt::Error &err) {
         bt::Out(SYS_GEN | LOG_IMPORTANT) << err.toString() << endl;
-        if (!silently)
+        if (!silently) {
             gui->errorMsg(err.toString());
-        else
+        } else {
             Q_EMIT canNotLoadSilently(err.toString());
+        }
     }
 
     delete tc;
     tc = nullptr;
     // delete tdir if necessary
-    if (bt::Exists(tdir))
+    if (bt::Exists(tdir)) {
         bt::Delete(tdir, true);
+    }
 
     return nullptr;
 }
@@ -366,8 +385,9 @@ void Core::downloadFinished(KJob *job)
 {
     KIO::StoredTransferJob *j = (KIO::StoredTransferJob *)job;
     int err = j->error();
-    if (err == KIO::ERR_USER_CANCELED)
+    if (err == KIO::ERR_USER_CANCELED) {
         return;
+    }
 
     if (err) {
         gui->errorMsg(j);
@@ -381,8 +401,9 @@ void Core::downloadFinished(KJob *job)
         }
 
         QString dir = locationHint(group);
-        if (dir != QString())
+        if (dir != QString()) {
             loadFromData(j->data(), dir, group, CoreInterface::LoadOption::Default, j->url());
+        }
     }
 }
 
@@ -397,8 +418,9 @@ void Core::load(const QUrl &url, const QString &group, LoadOptions loadOptions)
     } else if (url.isLocalFile()) {
         QString path = url.toLocalFile();
         QString dir = locationHint(group);
-        if (dir != QString())
+        if (dir != QString()) {
             loadFromFile(path, dir, group, loadOptions);
+        }
     } else {
         KIO::Job *j = KIO::storedGet(url);
         if (silently) {
@@ -406,8 +428,9 @@ void Core::load(const QUrl &url, const QString &group, LoadOptions loadOptions)
         } else {
             connect(j, &KIO::Job::result, this, &Core::downloadFinished);
         }
-        if (!group.isEmpty())
+        if (!group.isEmpty()) {
             add_to_groups.insert(url, group);
+        }
     }
 }
 
@@ -441,8 +464,9 @@ void Core::downloadFinishedSilently(KJob *job)
             add_to_groups.erase(i);
         }
 
-        if (dir != QString())
+        if (dir != QString()) {
             loadFromData(j->data(), dir, group, CoreInterface::LoadOption::Silently, j->url());
+        }
     }
 }
 
@@ -478,8 +502,9 @@ void Core::start(bt::TorrentInterface *tc)
         tc->unpause();
     } else {
         TorrentStartResponse reason = qman->start(tc);
-        if (reason == NOT_ENOUGH_DISKSPACE || reason == QM_LIMITS_REACHED)
+        if (reason == NOT_ENOUGH_DISKSPACE || reason == QM_LIMITS_REACHED) {
             Q_EMIT canNotStart(tc, reason);
+        }
     }
 
     startUpdateTimer(); // restart update timer
@@ -487,16 +512,18 @@ void Core::start(bt::TorrentInterface *tc)
 
 void Core::start(QList<bt::TorrentInterface *> &todo)
 {
-    if (todo.isEmpty())
+    if (todo.isEmpty()) {
         return;
+    }
 
     // unpause paused torrents
     for (QList<bt::TorrentInterface *>::iterator i = todo.begin(); i != todo.end();) {
         if ((*i)->getStats().paused) {
             (*i)->unpause();
             i = todo.erase(i);
-        } else
+        } else {
             i++;
+        }
     }
 
     if (todo.count() == 1) {
@@ -549,11 +576,13 @@ void Core::loadExistingTorrent(const QString &tor_dir)
     TorrentControl *tc = nullptr;
 
     QString idir = tor_dir;
-    if (!idir.endsWith(bt::DirSeparator()))
+    if (!idir.endsWith(bt::DirSeparator())) {
         idir += bt::DirSeparator();
+    }
 
-    if (!bt::Exists(idir + QLatin1String("torrent")))
+    if (!bt::Exists(idir + QLatin1String("torrent"))) {
         return;
+    }
 
     try {
         tc = new TorrentControl();
@@ -580,8 +609,9 @@ void Core::loadTorrents()
     const QStringList sl = dir.entryList(filters, QDir::Dirs);
     for (const QString &s : sl) {
         QString idir = data_dir + s;
-        if (!idir.endsWith(DirSeparator()))
+        if (!idir.endsWith(DirSeparator())) {
             idir.append(DirSeparator());
+        }
 
         Out(SYS_GEN | LOG_NOTICE) << "Loading " << idir << endl;
         loadExistingTorrent(idir);
@@ -595,8 +625,9 @@ void Core::loadTorrents()
 void Core::delayedStart()
 {
     qman->orderQueue();
-    if (!kt::QueueManager::enabled())
+    if (!kt::QueueManager::enabled()) {
         qman->startAutoStartTorrents();
+    }
 }
 
 void Core::remove(bt::TorrentInterface *tc, bool data_to)
@@ -617,8 +648,9 @@ void Core::remove(bt::TorrentInterface *tc, bool data_to)
         QString dir = tc->getTorDir();
 
         try {
-            if (data_to)
+            if (data_to) {
                 tc->deleteDataFiles();
+            }
         } catch (Error &e) {
             gui->errorMsg(e.toString());
         }
@@ -644,8 +676,9 @@ void Core::remove(QList<bt::TorrentInterface *> &todo, bool data_to)
             delayed_removal.insert(tc, data_to);
             connect(tc, &bt::TorrentInterface::runningJobsDone, this, &Core::delayedRemove);
             i = todo.erase(i);
-        } else
+        } else {
             i++;
+        }
     }
 
     stop(todo);
@@ -658,8 +691,9 @@ void Core::remove(QList<bt::TorrentInterface *> &todo, bool data_to)
         QString dir = tc->getTorDir();
 
         try {
-            if (data_to)
+            if (data_to) {
                 tc->deleteDataFiles();
+            }
         } catch (Error &e) {
             gui->errorMsg(e.toString());
         }
@@ -679,8 +713,9 @@ void Core::remove(QList<bt::TorrentInterface *> &todo, bool data_to)
 
 void Core::delayedRemove(bt::TorrentInterface *tc)
 {
-    if (!delayed_removal.contains(tc))
+    if (!delayed_removal.contains(tc)) {
         return;
+    }
 
     remove(tc, delayed_removal[tc]);
 }
@@ -697,8 +732,9 @@ void Core::setMaxSeeds(int max)
 
 void Core::torrentFinished(bt::TorrentInterface *tc)
 {
-    if (!keep_seeding)
+    if (!keep_seeding) {
         tc->stop();
+    }
 
     Q_EMIT finished(tc);
     qman->torrentFinished(tc);
@@ -734,8 +770,9 @@ void Core::onExit()
     // wait for completion of stopped events
     if (job->needToWait()) {
         WaitJob::execute(job);
-    } else
+    } else {
         delete job;
+    }
 
     // shutdown the servers
     Globals::instance().shutdownTCPServer();
@@ -751,18 +788,21 @@ bool Core::changeDataDir(const QString &new_dir)
         // do nothing if new and old dir are the same
         if ((QFileInfo(data_dir).absoluteFilePath().length() && QFileInfo(data_dir).absoluteFilePath() == QFileInfo(new_dir).absoluteFilePath()
              && QFileInfo(data_dir).absoluteFilePath() == QFileInfo(new_dir).absoluteFilePath())
-            || data_dir == new_dir || data_dir == (new_dir + bt::DirSeparator()))
+            || data_dir == new_dir || data_dir == (new_dir + bt::DirSeparator())) {
             return true;
+        }
 
         update_timer.stop();
         // safety check
-        if (!bt::Exists(new_dir))
+        if (!bt::Exists(new_dir)) {
             bt::MakeDir(new_dir);
+        }
 
         // make sure new_dir ends with a /
         QString nd = new_dir;
-        if (!nd.endsWith(DirSeparator()))
+        if (!nd.endsWith(DirSeparator())) {
             nd += DirSeparator();
+        }
 
         Out(SYS_GEN | LOG_DEBUG) << "Switching to datadir " << nd << endl;
 
@@ -837,8 +877,9 @@ void Core::startUpdateTimer()
                 if (reply.isValid()) {
                     sleep_suppression_cookie = reply.value();
                     Out(SYS_GEN | LOG_DEBUG) << "Suppressing sleep" << endl;
-                } else
+                } else {
                     Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
+                }
                 callWatcher->deleteLater();
             });
         }
@@ -847,8 +888,9 @@ void Core::startUpdateTimer()
 
 void Core::update()
 {
-    if (exiting)
+    if (exiting) {
         return;
+    }
 
     try {
         bt::UpdateCurrentTime();
@@ -880,8 +922,9 @@ void Core::update()
                     if (reply.isValid()) {
                         sleep_suppression_cookie = 0;
                         Out(SYS_GEN | LOG_DEBUG) << "Stopped suppressing sleep" << endl;
-                    } else
+                    } else {
                         Out(SYS_GEN | LOG_IMPORTANT) << "Failed to stop suppressing sleep" << endl;
+                    }
                     callWatcher->deleteLater();
                 });
             }
@@ -906,15 +949,17 @@ bt::TorrentInterface *Core::createTorrent(bt::TorrentCreator *mktor, bool seed)
         if (tc) {
             connectSignals(tc);
             qman->append(tc);
-            if (seed)
+            if (seed) {
                 start(tc);
+            }
             Q_EMIT torrentAdded(tc);
             return tc;
         }
     } catch (bt::Error &e) {
         // cleanup if necessary
-        if (bt::Exists(tdir))
+        if (bt::Exists(tdir)) {
             bt::Delete(tdir, true);
+        }
 
         // Show error message
         gui->errorMsg(i18n("Cannot create torrent: %1", e.toString()));
@@ -986,18 +1031,20 @@ kt::QueueManager *Core::getQueueManager()
 void Core::torrentSeedAutoStopped(bt::TorrentInterface *tc, AutoStopReason reason)
 {
     qman->startNext();
-    if (reason == MAX_RATIO_REACHED)
+    if (reason == MAX_RATIO_REACHED) {
         Q_EMIT maxShareRatioReached(tc);
-    else
+    } else {
         Q_EMIT maxSeedTimeReached(tc);
+    }
     startUpdateTimer();
 }
 
 void Core::setSuspendedState(bool suspend)
 {
     qman->setSuspendedState(suspend);
-    if (!suspend)
+    if (!suspend) {
         startUpdateTimer();
+    }
 }
 
 bool Core::getSuspendedState()
@@ -1008,8 +1055,9 @@ bool Core::getSuspendedState()
 bool Core::checkMissingFiles(TorrentInterface *tc)
 {
     QStringList missing;
-    if (!tc->hasMissingFiles(missing))
+    if (!tc->hasMissingFiles(missing)) {
         return true;
+    }
 
     QStringList not_mounted;
     while (!tc->isStorageMounted(not_mounted)) {
@@ -1019,17 +1067,19 @@ bool Core::checkMissingFiles(TorrentInterface *tc)
             not_mounted.clear();
             continue;
         } else {
-            if (not_mounted.size() == 1)
+            if (not_mounted.size() == 1) {
                 tc->handleError(i18n("Storage volume %1 is not mounted", not_mounted.first()));
-            else
+            } else {
                 tc->handleError(i18n("Storage volumes %1 are not mounted", not_mounted.join(QStringLiteral(", "))));
+            }
             return false;
         }
     }
 
     missing.clear();
-    if (!tc->hasMissingFiles(missing))
+    if (!tc->hasMissingFiles(missing)) {
         return true;
+    }
 
     if (tc->getStats().multi_file_torrent) {
         QString msg = i18n(
@@ -1157,8 +1207,9 @@ DBus *Core::getExternalInterface()
 void Core::onStatusChanged(bt::TorrentInterface *tc)
 {
     Q_UNUSED(tc);
-    if (!reordering_queue)
+    if (!reordering_queue) {
         gui->updateActions();
+    }
 }
 
 void Core::beforeQueueReorder()
@@ -1184,8 +1235,9 @@ void Core::load(const bt::MagnetLink &mlink, const MagnetLinkLoadOptions &option
     if (!mlink.isValid()) {
         gui->errorMsg(i18n("Invalid magnet bittorrent link: %1", mlink.toString()));
     } else {
-        if (!Globals::instance().getDHT().isRunning())
+        if (!Globals::instance().getDHT().isRunning()) {
             Q_EMIT dhtNotEnabled(i18n("You are attempting to download a magnet link, and DHT is not enabled. For optimum results enable DHT."));
+        }
         mman->addMagnet(mlink, options, false);
         startUpdateTimer();
     }
@@ -1224,8 +1276,9 @@ void Core::onMetadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &d
     }
     bt::TorrentInterface *tc = load(tmp, url, options.group, options.location, loadOptions);
 
-    if (tc && !options.move_on_completion.isEmpty())
+    if (tc && !options.move_on_completion.isEmpty()) {
         tc->setMoveWhenCompletedDir(options.move_on_completion);
+    }
 }
 
 QString Core::locationHint(const QString &group) const
@@ -1235,15 +1288,17 @@ QString Core::locationHint(const QString &group) const
     // First see if we can use the group settings
     Group *g = gman->find(group);
     QString group_save_location = g != nullptr ? g->groupPolicy().default_save_location : QString();
-    if (!group_save_location.isEmpty() && bt::Exists(group_save_location))
+    if (!group_save_location.isEmpty() && bt::Exists(group_save_location)) {
         dir = g->groupPolicy().default_save_location;
-    else if (Settings::useSaveDir())
+    } else if (Settings::useSaveDir()) {
         dir = Settings::saveDir();
-    else
+    } else {
         dir = Settings::lastSaveDir();
+    }
 
-    if (dir.isEmpty() || !bt::Exists(dir))
+    if (dir.isEmpty() || !bt::Exists(dir)) {
         dir = QDir::homePath();
+    }
 
     return dir;
 }

@@ -45,12 +45,14 @@ QString MediaFile::name() const
         if (idx < tc->getNumFiles()) {
             QString path = tc->getTorrentFile(idx).getUserModifiedPath();
             const auto parts = QStringView{path}.split(QLatin1Char('/'));
-            if (parts.count() == 0)
+            if (parts.count() == 0) {
                 return path;
-            else
+            } else {
                 return parts.back().toString();
-        } else
+            }
+        } else {
             return QString();
+        }
     } else {
         return tc->getDisplayName();
     }
@@ -59,10 +61,11 @@ QString MediaFile::name() const
 QString MediaFile::path() const
 {
     if (tc->getStats().multi_file_torrent) {
-        if (idx < tc->getNumFiles())
+        if (idx < tc->getNumFiles()) {
             return tc->getTorrentFile(idx).getPathOnDisk();
-        else
+        } else {
             return QString();
+        }
     } else {
         return tc->getStats().output_path;
     }
@@ -89,10 +92,11 @@ bool MediaFile::previewAvailable() const
 float MediaFile::downloadPercentage() const
 {
     if (tc->getStats().multi_file_torrent) {
-        if (idx < tc->getNumFiles())
+        if (idx < tc->getNumFiles()) {
             return tc->getTorrentFile(idx).getDownloadPercentage();
-        else
+        } else {
             return 0.0f;
+        }
     } else {
         return bt::Percentage(tc->getStats());
     }
@@ -101,10 +105,11 @@ float MediaFile::downloadPercentage() const
 bt::Uint64 MediaFile::size() const
 {
     if (tc->getStats().multi_file_torrent) {
-        if (idx < tc->getNumFiles())
+        if (idx < tc->getNumFiles()) {
             return tc->getTorrentFile(idx).getSize();
-        else
+        } else {
             return 0;
+        }
     } else {
         return tc->getStats().total_bytes;
     }
@@ -113,10 +118,11 @@ bt::Uint64 MediaFile::size() const
 bt::Uint32 MediaFile::firstChunk() const
 {
     if (tc->getStats().multi_file_torrent) {
-        if (idx < tc->getNumFiles())
+        if (idx < tc->getNumFiles()) {
             return tc->getTorrentFile(idx).getFirstChunk();
-        else
+        } else {
             return 0;
+        }
     } else {
         return 0;
     }
@@ -125,10 +131,11 @@ bt::Uint32 MediaFile::firstChunk() const
 bt::Uint32 MediaFile::lastChunk() const
 {
     if (tc->getStats().multi_file_torrent) {
-        if (idx < tc->getNumFiles())
+        if (idx < tc->getNumFiles()) {
             return tc->getTorrentFile(idx).getLastChunk();
-        else
+        } else {
             return 0;
+        }
     } else {
         return tc->getStats().total_chunks - 1;
     }
@@ -139,8 +146,9 @@ bt::TorrentFileStream::Ptr MediaFile::stream()
     if (!tfs) {
         // If some file is already in streaming mode, then try unstreamed mode
         tfs = tc->createTorrentFileStream(idx, true, nullptr);
-        if (!tfs)
+        if (!tfs) {
             tfs = tc->createTorrentFileStream(idx, false, nullptr);
+        }
     }
 
     return tfs;
@@ -215,10 +223,11 @@ MediaFileRef::MediaSource MediaFileRef::createMediaSource()
 QString MediaFileRef::name() const
 {
     int idx = file_path.lastIndexOf(bt::DirSeparator());
-    if (idx != -1)
+    if (idx != -1) {
         return file_path.mid(idx + 1);
-    else
+    } else {
         return file_path;
+    }
 }
 
 }

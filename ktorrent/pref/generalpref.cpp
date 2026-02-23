@@ -30,28 +30,32 @@ void GeneralPref::loadSettings()
     kcfg_torrentCopyDir->setProperty("kcfg_property", QStringLiteral("text"));
     kcfg_completedDir->setProperty("kcfg_property", QStringLiteral("text"));
 
-    if (Settings::tempDir().isEmpty())
+    if (Settings::tempDir().isEmpty()) {
         kcfg_tempDir->setText(kt::DataDir());
-    else
+    } else {
         kcfg_tempDir->setText(Settings::tempDir());
+    }
 
     kcfg_saveDir->setEnabled(Settings::useSaveDir());
-    if (Settings::saveDir().isEmpty())
+    if (Settings::saveDir().isEmpty()) {
         kcfg_saveDir->setText(QDir::homePath());
-    else
+    } else {
         kcfg_saveDir->setText(Settings::saveDir());
+    }
 
     kcfg_torrentCopyDir->setEnabled(Settings::useTorrentCopyDir());
-    if (Settings::torrentCopyDir().isEmpty())
+    if (Settings::torrentCopyDir().isEmpty()) {
         kcfg_torrentCopyDir->setText(QDir::homePath());
-    else
+    } else {
         kcfg_torrentCopyDir->setText(Settings::torrentCopyDir());
+    }
 
     kcfg_completedDir->setEnabled(Settings::useCompletedDir());
-    if (Settings::completedDir().isEmpty())
+    if (Settings::completedDir().isEmpty()) {
         kcfg_completedDir->setText(QDir::homePath());
-    else
+    } else {
         kcfg_completedDir->setText(Settings::completedDir());
+    }
 
     //          kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
     //          kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());

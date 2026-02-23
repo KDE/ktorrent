@@ -122,8 +122,9 @@ void TorrentCreatorDlg::loadGroups()
 
     // now custom ones
     while (it != gman->end()) {
-        if (!it->second->isStandardGroup())
+        if (!it->second->isStandardGroup()) {
             grps << it->first;
+        }
         ++it;
     }
 
@@ -278,8 +279,9 @@ void TorrentCreatorDlg::accept()
             "You have not added a tracker, "
             "are you sure you want to create this torrent?");
         if (KMessageBox::warningTwoActions(gui, msg, QString(), KGuiItem(i18nc("@action:button", "Create")), KStandardGuiItem::cancel())
-            == KMessageBox::SecondaryAction)
+            == KMessageBox::SecondaryAction) {
             return;
+        }
     }
 
     if (m_node_list->topLevelItemCount() == 0 && m_dht->isChecked()) {
@@ -346,11 +348,13 @@ void TorrentCreatorDlg::hashCalculationDone()
         return;
     }
 
-    if (!recentDirClass.isEmpty())
+    if (!recentDirClass.isEmpty()) {
         KRecentDirs::add(recentDirClass, QFileInfo(s).absolutePath());
+    }
 
-    if (!s.endsWith(QLatin1String(".torrent")))
+    if (!s.endsWith(QLatin1String(".torrent"))) {
         s += QLatin1String(".torrent");
+    }
 
     mktor->saveTorrent(s);
     bt::TorrentInterface *tc = core->createTorrent(mktor, m_start_seeding->isChecked());

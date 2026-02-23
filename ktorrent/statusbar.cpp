@@ -58,8 +58,9 @@ StatusBar::~StatusBar()
 
 void StatusBar::updateSpeed(bt::Uint32 up, bt::Uint32 down)
 {
-    if (up == up_speed && down == down_speed)
+    if (up == up_speed && down == down_speed) {
         return;
+    }
 
     up_speed = up;
     down_speed = down;
@@ -69,8 +70,9 @@ void StatusBar::updateSpeed(bt::Uint32 up, bt::Uint32 down)
 
 void StatusBar::updateTransfer(bt::Uint64 up, bt::Uint64 down)
 {
-    if (up == up_transfer && down == down_transfer)
+    if (up == up_transfer && down == down_transfer) {
         return;
+    }
 
     up_transfer = up;
     down_transfer = down;
@@ -80,16 +82,18 @@ void StatusBar::updateTransfer(bt::Uint64 up, bt::Uint64 down)
 
 void StatusBar::updateDHTStatus(bool on, const dht::Stats &s)
 {
-    if (on == dht_on && dht_peers == s.num_peers && dht_tasks == s.num_tasks)
+    if (on == dht_on && dht_peers == s.num_peers && dht_tasks == s.num_tasks) {
         return;
+    }
 
     dht_on = on;
     dht_peers = s.num_peers;
     dht_tasks = s.num_tasks;
-    if (on)
+    if (on) {
         dht_status->setText(i18n("DHT: %1, %2", i18np("%1 node", "%1 nodes", s.num_peers), i18np("%1 task", "%1 tasks", s.num_tasks)));
-    else
+    } else {
         dht_status->setText(i18n("DHT: off"));
+    }
 }
 
 QProgressBar *StatusBar::createProgressBar()

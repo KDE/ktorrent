@@ -49,8 +49,9 @@ void WeekView::onSelectionChanged()
     const QList<QGraphicsItem *> sel = scene->selectedItems();
     for (QGraphicsItem *s : sel) {
         QMap<QGraphicsItem *, ScheduleItem *>::iterator i = item_map.find(s);
-        if (i != item_map.end())
+        if (i != item_map.end()) {
             selection.append(i.value());
+        }
     }
 
     Q_EMIT selectionChanged();
@@ -61,8 +62,9 @@ void WeekView::setSchedule(Schedule *s)
     clear();
     schedule = s;
 
-    if (schedule)
+    if (schedule) {
         s->apply(boost::bind(&WeekView::addScheduleItem, this, boost::placeholders::_1));
+    }
 
     scene->setSchedule(s);
 }
@@ -99,15 +101,17 @@ void WeekView::addScheduleItem(ScheduleItem *item)
 {
     QGraphicsItem *gi = scene->addScheduleItem(item);
 
-    if (gi)
+    if (gi) {
         item_map[gi] = item;
+    }
 }
 
 void WeekView::onDoubleClicked(QGraphicsItem *i)
 {
     QMap<QGraphicsItem *, ScheduleItem *>::iterator itr = item_map.find(i);
-    if (itr != item_map.end())
+    if (itr != item_map.end()) {
         Q_EMIT editItem(itr.value());
+    }
 }
 
 void WeekView::showContextMenu(const QPoint &pos)

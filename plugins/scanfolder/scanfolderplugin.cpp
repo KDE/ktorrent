@@ -71,16 +71,18 @@ void ScanFolderPlugin::updateScanFolders()
 
     // make sure folders end with /
     for (QString &s : folders) {
-        if (s.endsWith(bt::DirSeparator()))
+        if (s.endsWith(bt::DirSeparator())) {
             s += bt::DirSeparator();
+        }
     }
 
-    if (ScanFolderPluginSettings::actionDelete())
+    if (ScanFolderPluginSettings::actionDelete()) {
         tlq->setLoadedTorrentAction(DeleteAction);
-    else if (ScanFolderPluginSettings::actionMove())
+    } else if (ScanFolderPluginSettings::actionMove()) {
         tlq->setLoadedTorrentAction(MoveAction);
-    else
+    } else {
         tlq->setLoadedTorrentAction(DefaultAction);
+    }
 
     scanner->setRecursive(ScanFolderPluginSettings::recursive());
     scanner->setFolderList(folders);

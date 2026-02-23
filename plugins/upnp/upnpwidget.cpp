@@ -41,8 +41,9 @@ UPnPWidget::UPnPWidget(UPnPMCastSocket *sock, QWidget *parent)
     // load the state of the devices treewidget
     KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("UPnPDevicesList"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("state", QByteArray()));
-    if (!s.isEmpty())
+    if (!s.isEmpty()) {
         m_devices->header()->restoreState(s);
+    }
 
     m_forward->setEnabled(false);
     m_undo_forward->setEnabled(false);
@@ -62,8 +63,9 @@ void UPnPWidget::shutdown(bt::WaitJob *job)
     g.writeEntry("state", s.toBase64());
 
     const net::PortList &pl = bt::Globals::instance().getPortList();
-    for (const net::Port &p : pl)
+    for (const net::Port &p : pl) {
         model->undoForward(p, job);
+    }
 }
 
 void UPnPWidget::addDevice(bt::UPnPRouter *r)
@@ -76,8 +78,9 @@ void UPnPWidget::addDevice(bt::UPnPRouter *r)
         const net::PortList &pl = bt::Globals::instance().getPortList();
 
         for (const net::Port &p : pl) {
-            if (p.forward)
+            if (p.forward) {
                 r->forward(p);
+            }
         }
     } catch (Error &e) {
         KMessageBox::error(this, e.toString());
@@ -87,15 +90,17 @@ void UPnPWidget::addDevice(bt::UPnPRouter *r)
 void UPnPWidget::onForwardBtnClicked()
 {
     UPnPRouter *r = model->routerForIndex(m_devices->selectionModel()->currentIndex());
-    if (!r)
+    if (!r) {
         return;
+    }
 
     try {
         const net::PortList &pl = bt::Globals::instance().getPortList();
 
         for (const net::Port &p : pl) {
-            if (p.forward)
+            if (p.forward) {
                 r->forward(p);
+            }
         }
     } catch (Error &e) {
         KMessageBox::error(this, e.toString());
@@ -105,15 +110,17 @@ void UPnPWidget::onForwardBtnClicked()
 void UPnPWidget::onUndoForwardBtnClicked()
 {
     UPnPRouter *r = model->routerForIndex(m_devices->selectionModel()->currentIndex());
-    if (!r)
+    if (!r) {
         return;
+    }
 
     try {
         const net::PortList &pl = bt::Globals::instance().getPortList();
 
         for (const net::Port &p : pl) {
-            if (p.forward)
+            if (p.forward) {
                 r->undoForward(p);
+            }
         }
     } catch (Error &e) {
         KMessageBox::error(this, e.toString());

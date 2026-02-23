@@ -26,10 +26,11 @@ QWidget *SpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewIt
 {
     QSpinBox *editor = new QSpinBox(parent);
     editor->setSuffix(i18n(" KiB/s"));
-    if (index.column() < 3)
+    if (index.column() < 3) {
         editor->setSpecialValueText(i18n("No limit"));
-    else
+    } else {
         editor->setSpecialValueText(i18n("No assured speed"));
+    }
     editor->setMinimum(0);
     editor->setMaximum(10000000);
     return editor;
@@ -54,8 +55,9 @@ void SpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, c
 void SpinBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const
 {
     QRect r = option.rect;
-    if (option.rect.height() < editor->sizeHint().height())
+    if (option.rect.height() < editor->sizeHint().height()) {
         r.setHeight(editor->sizeHint().height());
+    }
     editor->setGeometry(r);
 }
 

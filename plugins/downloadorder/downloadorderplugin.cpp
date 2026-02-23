@@ -48,8 +48,9 @@ void DownloadOrderPlugin::load()
     currentTorrentChanged(ta->getCurrentTorrent());
 
     const kt::QueueManager *const qman = getCore()->getQueueManager();
-    for (bt::TorrentInterface *i : *qman)
+    for (bt::TorrentInterface *i : *qman) {
         torrentAdded(i);
+    }
 }
 
 void DownloadOrderPlugin::unload()
@@ -64,8 +65,9 @@ void DownloadOrderPlugin::unload()
 void DownloadOrderPlugin::showDownloadOrderDialog()
 {
     bt::TorrentInterface *tor = getGUI()->getTorrentActivity()->getCurrentTorrent();
-    if (!tor || !tor->getStats().multi_file_torrent)
+    if (!tor || !tor->getStats().multi_file_torrent) {
         return;
+    }
 
     DownloadOrderDialog dlg(this, tor, getGUI()->getMainWindow());
     dlg.exec();
@@ -84,8 +86,9 @@ DownloadOrderManager *DownloadOrderPlugin::manager(bt::TorrentInterface *tc)
 DownloadOrderManager *DownloadOrderPlugin::createManager(bt::TorrentInterface *tc)
 {
     DownloadOrderManager *m = manager(tc);
-    if (m)
+    if (m) {
         return m;
+    }
 
     m = new DownloadOrderManager(tc);
     managers.insert(tc, m);

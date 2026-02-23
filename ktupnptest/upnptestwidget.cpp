@@ -83,6 +83,7 @@ void UPnPTestWidget::message(const QString &line, unsigned int arg)
 
 void UPnPTestWidget::verboseModeChecked(bool on)
 {
-    if (mcast_socket)
+    if (mcast_socket) {
         mcast_socket->setVerbose(on);
+    }
 }

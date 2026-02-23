@@ -33,24 +33,27 @@ void RouterModel::addRouter(bt::UPnPRouter *r)
 
 int RouterModel::rowCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return routers.count();
-    else
+    } else {
         return 0;
+    }
 }
 
 int RouterModel::columnCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return 2;
-    else
+    } else {
         return 0;
+    }
 }
 
 QVariant RouterModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+    if (role != Qt::DisplayRole || orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:
@@ -64,16 +67,18 @@ QVariant RouterModel::headerData(int section, Qt::Orientation orientation, int r
 
 bt::UPnPRouter *RouterModel::routerForIndex(const QModelIndex &index)
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return nullptr;
-    else
+    } else {
         return routers.at(index.row());
+    }
 }
 
 QVariant RouterModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
     const bt::UPnPRouter *r = routers.at(index.row());
     if (role == Qt::DisplayRole) {
@@ -81,16 +86,18 @@ QVariant RouterModel::data(const QModelIndex &index, int role) const
         case 0:
             return r->getDescription().friendlyName;
         case 1:
-            if (!r->getError().isEmpty())
+            if (!r->getError().isEmpty()) {
                 return r->getError();
-            else
+            } else {
                 return ports(r);
+            }
         }
     } else if (role == Qt::DecorationRole) {
-        if (index.column() == 0)
+        if (index.column() == 0) {
             return QIcon::fromTheme(QStringLiteral("modem"));
-        else if (index.column() == 1 && !r->getError().isEmpty())
+        } else if (index.column() == 1 && !r->getError().isEmpty()) {
             return QIcon::fromTheme(QStringLiteral("dialog-error"));
+        }
     } else if (role == Qt::ToolTipRole) {
         if (index.column() == 0) {
             const bt::UPnPDeviceDescription &d = r->getDescription();
@@ -101,8 +108,9 @@ QVariant RouterModel::data(const QModelIndex &index, int role) const
                 d.modelName,
                 d.manufacturer,
                 d.modelDescription);
-        } else if (index.column() == 1 && !r->getError().isEmpty())
+        } else if (index.column() == 1 && !r->getError().isEmpty()) {
             return r->getError();
+        }
     }
 
     return QVariant();
@@ -165,8 +173,9 @@ void RouterModel::update()
 void RouterModel::forward(const net::Port &port)
 {
     try {
-        for (bt::UPnPRouter *r : std::as_const(routers))
+        for (bt::UPnPRouter *r : std::as_const(routers)) {
             r->forward(port);
+        }
     } catch (bt::Error &e) {
         Out(SYS_PNP | LOG_DEBUG) << "Error : " << e.toString() << endl;
     }
@@ -175,8 +184,9 @@ void RouterModel::forward(const net::Port &port)
 void RouterModel::undoForward(const net::Port &port, bt::WaitJob *wjob)
 {
     try {
-        for (bt::UPnPRouter *r : std::as_const(routers))
+        for (bt::UPnPRouter *r : std::as_const(routers)) {
             r->undoForward(port, wjob);
+        }
     } catch (Error &e) {
         Out(SYS_PNP | LOG_DEBUG) << "Error : " << e.toString() << endl;
     }

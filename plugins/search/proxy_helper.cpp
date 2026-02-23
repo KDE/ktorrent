@@ -12,8 +12,9 @@ bool ProxyHelper::ApplyProxy(KIO::MetaData &metadata) const
     if (!SearchPluginSettings::openInExternal() && SearchPluginSettings::useProxySettings()) {
         if (!Settings::useKDEProxySettings() && !Settings::httpProxy().trimmed().isEmpty()) {
             QString p = QStringLiteral("%1:%2").arg(Settings::httpProxy()).arg(Settings::httpProxyPort());
-            if (!p.startsWith(QLatin1String("http://")))
+            if (!p.startsWith(QLatin1String("http://"))) {
                 p = QStringLiteral("http://") + p;
+            }
 
             if (!QUrl(p).isValid()) {
                 p = QString();

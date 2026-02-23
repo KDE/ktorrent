@@ -70,8 +70,9 @@ void ChunkDownloadView::downloadRemoved(ChunkDownloadInterface *cd)
 
 void ChunkDownloadView::update()
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     model->update();
     const TorrentStats &s = curr_tc.data()->getStats();

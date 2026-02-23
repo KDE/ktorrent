@@ -86,20 +86,22 @@ PlayListWidget::~PlayListWidget()
 QModelIndex PlayListWidget::selectedItem() const
 {
     QModelIndexList rows = view->selectionModel()->selectedRows();
-    if (rows.count() > 0)
+    if (rows.count() > 0) {
         return proxy_model->mapToSource(rows.front());
-    else
+    } else {
         return QModelIndex();
+    }
 }
 
 void PlayListWidget::onSelectionChanged(const QItemSelection &s, const QItemSelection &d)
 {
     Q_UNUSED(d);
     QModelIndexList idx = s.indexes();
-    if (idx.count() > 0)
+    if (idx.count() > 0) {
         Q_EMIT fileSelected(fileForIndex(idx.front()));
-    else
+    } else {
         Q_EMIT fileSelected(MediaFileRef());
+    }
 }
 
 QModelIndex PlayListWidget::play()
@@ -116,8 +118,9 @@ QModelIndex PlayListWidget::play()
 void PlayListWidget::doubleClicked(const QModelIndex &index)
 {
     MediaFileRef file = play_list->fileForIndex(proxy_model->mapToSource(index));
-    if (!file.path().isEmpty())
+    if (!file.path().isEmpty()) {
         Q_EMIT doubleClicked(file);
+    }
 }
 
 void PlayListWidget::saveState(KSharedConfigPtr cfg)
@@ -132,8 +135,9 @@ void PlayListWidget::loadState(KSharedConfigPtr cfg)
 {
     KConfigGroup g = cfg->group(QStringLiteral("PlayListWidget"));
     QByteArray d = g.readEntry("play_list_state", QByteArray());
-    if (!d.isEmpty())
+    if (!d.isEmpty()) {
         view->header()->restoreState(d);
+    }
 
     view->header()->setSortIndicatorShown(true);
     random_mode->setChecked(g.readEntry("random_mode", false));
@@ -157,14 +161,17 @@ void PlayListWidget::addMedia()
     const QString startURL = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///add_media")), recentDirClass).toLocalFile();
     const QStringList files = QFileDialog::getOpenFileNames(this, QString(), startURL);
 
-    if (files.isEmpty())
+    if (files.isEmpty()) {
         return;
+    }
 
-    if (!recentDirClass.isEmpty())
+    if (!recentDirClass.isEmpty()) {
         KRecentDirs::add(recentDirClass, QFileInfo(files.first()).absolutePath());
+    }
 
-    for (const QString &file : files)
+    for (const QString &file : files) {
         play_list->addFile(collection->find(file));
+    }
 
     Q_EMIT enableNext(play_list->rowCount() > 0);
 }
@@ -173,11 +180,13 @@ void PlayListWidget::removeFiles()
 {
     QList<MediaFileRef> files;
     const QModelIndexList indexes = view->selectionModel()->selectedRows();
-    for (const QModelIndex &idx : indexes)
+    for (const QModelIndex &idx : indexes) {
         files.append(play_list->fileForIndex(idx));
+    }
 
-    for (const MediaFileRef &f : std::as_const(files))
+    for (const MediaFileRef &f : std::as_const(files)) {
         play_list->removeFile(f);
+    }
 
     Q_EMIT enableNext(play_list->rowCount() > 0);
 }
@@ -189,8 +198,9 @@ void PlayListWidget::onItemsDropped()
 
 QModelIndex PlayListWidget::next(const QModelIndex &idx, bool random) const
 {
-    if (play_list->rowCount() == 0)
+    if (play_list->rowCount() == 0) {
         return QModelIndex();
+    }
 
     if (!idx.isValid()) {
         if (!random) {
@@ -207,21 +217,24 @@ QModelIndex PlayListWidget::next(const QModelIndex &idx, bool random) const
 
 QModelIndex PlayListWidget::next(const QModelIndex &idx) const
 {
-    if (idx.isValid())
+    if (idx.isValid()) {
         return idx.sibling(idx.row() + 1, 0); // take a look at the next sibling
-    else
+    } else {
         return play_list->index(0, 0);
+    }
 }
 
 QModelIndex PlayListWidget::randomNext(const QModelIndex &idx) const
 {
     int count = play_list->rowCount();
-    if (count <= 1)
+    if (count <= 1) {
         return QModelIndex();
+    }
 
     int r = QRandomGenerator::global()->bounded(count);
-    while (r == idx.row())
+    while (r == idx.row()) {
         r = QRandomGenerator::global()->bounded(count);
+    }
 
     return proxy_model->index(r, 0, QModelIndex());
 }
@@ -236,8 +249,9 @@ QModelIndex PlayListWidget::indexForFile(const QString &file) const
     int count = proxy_model->rowCount();
     for (int i = 0; i < count; i++) {
         QModelIndex idx = proxy_model->index(i, 0);
-        if (fileForIndex(idx) == file)
+        if (fileForIndex(idx) == file) {
             return idx;
+        }
     }
 
     return QModelIndex();

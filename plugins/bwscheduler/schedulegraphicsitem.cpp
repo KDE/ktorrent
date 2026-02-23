@@ -79,10 +79,11 @@ void ScheduleGraphicsItem::update(const QRectF &r)
         text = i18n("%1 Down\n%2 Up", ds, us);
     }
 
-    if (text_item == nullptr)
+    if (text_item == nullptr) {
         text_item = scene()->addText(text);
-    else
+    } else {
         text_item->setPlainText(text);
+    }
 
     QFontMetricsF fm(text_item->font());
     text_item->setPos(QPointF(r.x(), r.y()));
@@ -104,16 +105,18 @@ QVariant ScheduleGraphicsItem::itemChange(GraphicsItemChange change, const QVari
         QPointF new_pos = value.toPointF();
         if (!constraints.contains(new_pos)) {
             qreal x = constraints.x() - boundingRect().x();
-            if (new_pos.x() < x)
+            if (new_pos.x() < x) {
                 new_pos.setX(x);
-            else if (new_pos.x() + rect().width() > x + constraints.width())
+            } else if (new_pos.x() + rect().width() > x + constraints.width()) {
                 new_pos.setX(x + constraints.width() - rect().width());
+            }
 
             qreal y = constraints.y() - boundingRect().y();
-            if (new_pos.y() < y)
+            if (new_pos.y() < y) {
                 new_pos.setY(y);
-            else if (new_pos.y() + rect().height() > y + constraints.height())
+            } else if (new_pos.y() + rect().height() > y + constraints.height()) {
                 new_pos.setY(y + constraints.height() - rect().height());
+            }
 
             return new_pos;
         }
@@ -131,8 +134,9 @@ QRectF ScheduleGraphicsItem::resize(QPointF scene_pos)
     if (resize_edge & Top) {
         if (y >= cur.y() + cur.height()) { // rect becomes flipped
             qreal yn = cur.y() + cur.height();
-            if (yn < constraints.y())
+            if (yn < constraints.y()) {
                 yn = constraints.y();
+            }
 
             qreal h = y - yn;
             cur.setY(yn);
@@ -148,8 +152,9 @@ QRectF ScheduleGraphicsItem::resize(QPointF scene_pos)
     } else if (resize_edge & Bottom) {
         if (y < cur.y()) { // rect becomes flipped
             qreal yn = y;
-            if (yn < constraints.y())
+            if (yn < constraints.y()) {
                 yn = constraints.y();
+            }
 
             qreal h = cur.y() - yn;
             cur.setY(yn);
@@ -158,16 +163,18 @@ QRectF ScheduleGraphicsItem::resize(QPointF scene_pos)
             resize_edge &= ~kt::Bottom;
         } else {
             cur.setHeight(y - cur.y());
-            if (cur.y() + cur.height() >= constraints.y() + constraints.height())
+            if (cur.y() + cur.height() >= constraints.y() + constraints.height()) {
                 cur.setHeight(constraints.y() + constraints.height() - cur.y());
+            }
         }
     }
 
     if (resize_edge & Left) {
         if (x >= cur.x() + cur.width()) { // rect becomes flipped
             qreal xn = cur.x() + cur.x();
-            if (xn < constraints.x())
+            if (xn < constraints.x()) {
                 xn = constraints.x();
+            }
 
             qreal w = x - xn;
             cur.setX(xn);
@@ -183,8 +190,9 @@ QRectF ScheduleGraphicsItem::resize(QPointF scene_pos)
     } else if (resize_edge & Right) {
         if (x < cur.x()) { // rect becomes flipped
             qreal xn = x;
-            if (xn < constraints.x())
+            if (xn < constraints.x()) {
                 xn = constraints.x();
+            }
 
             qreal w = cur.x() - xn;
             cur.setX(xn);
@@ -193,8 +201,9 @@ QRectF ScheduleGraphicsItem::resize(QPointF scene_pos)
             resize_edge &= ~kt::Right;
         } else {
             cur.setWidth(x - cur.x());
-            if (cur.x() + cur.width() >= constraints.x() + constraints.width())
+            if (cur.x() + cur.width() >= constraints.x() + constraints.width()) {
                 cur.setWidth(constraints.x() + constraints.width() - cur.x());
+            }
         }
     }
 
@@ -213,8 +222,9 @@ void ScheduleGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     } else {
         QRectF cur = resize(event->scenePos());
         setRect(cur);
-        if (text_item)
+        if (text_item) {
             text_item->setPos(cur.x(), cur.y());
+        }
 
         ws->updateGuidanceLines(cur.y(), cur.y() + cur.height());
     }
@@ -282,14 +292,15 @@ void ScheduleGraphicsItem::updateCursor()
 {
     Qt::CursorShape shape = Qt::ArrowCursor;
     if (resize_edge != 0) {
-        if (resize_edge == kt::TopRight || resize_edge == kt::BottomLeft)
+        if (resize_edge == kt::TopRight || resize_edge == kt::BottomLeft) {
             shape = Qt::SizeBDiagCursor;
-        else if (resize_edge == kt::BottomRight || resize_edge == kt::TopLeft)
+        } else if (resize_edge == kt::BottomRight || resize_edge == kt::TopLeft) {
             shape = Qt::SizeFDiagCursor;
-        else if (resize_edge == kt::Top || resize_edge == kt::Bottom)
+        } else if (resize_edge == kt::Top || resize_edge == kt::Bottom) {
             shape = Qt::SizeVerCursor;
-        else
+        } else {
             shape = Qt::SizeHorCursor;
+        }
     }
     setCursor(shape);
 }
@@ -301,15 +312,17 @@ Uint32 ScheduleGraphicsItem::nearEdge(QPointF p)
     qreal x = rect().x();
     qreal xe = x + rect().width();
     Uint32 ret = 0;
-    if (std::fabs(p.y() - y) < 4)
+    if (std::fabs(p.y() - y) < 4) {
         ret |= Top;
-    else if (std::fabs(p.y() - ye) < 4)
+    } else if (std::fabs(p.y() - ye) < 4) {
         ret |= Bottom;
+    }
 
-    if (std::fabs(p.x() - x) < 4)
+    if (std::fabs(p.x() - x) < 4) {
         ret |= Left;
-    else if (std::fabs(p.x() - xe) < 4)
+    } else if (std::fabs(p.x() - xe) < 4) {
         ret |= Right;
+    }
 
     return ret;
 }

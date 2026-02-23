@@ -72,8 +72,9 @@ void ImportDialog::finished()
     QString data_dir = m_data_url->url().toLocalFile();
     QString torrent_path = m_torrent_url->url().toLocalFile();
     if (canceled || !dc_thread->getError().isEmpty()) {
-        if (!canceled)
+        if (!canceled) {
             KMessageBox::error(this, dc_thread->getError());
+        }
         dc_thread->deleteLater();
         dc_thread = nullptr;
         reject();
@@ -82,12 +83,14 @@ void ImportDialog::finished()
 
     // find a new torrent dir and make it if necessary
     QString tor_dir = core->findNewTorrentDir();
-    if (!tor_dir.endsWith(bt::DirSeparator()))
+    if (!tor_dir.endsWith(bt::DirSeparator())) {
         tor_dir += bt::DirSeparator();
+    }
 
     try {
-        if (!bt::Exists(tor_dir))
+        if (!bt::Exists(tor_dir)) {
             bt::MakeDir(tor_dir);
+        }
 
         // write the index file
         writeIndex(tor_dir + QStringLiteral("index"), dc->getResult());
@@ -103,11 +106,13 @@ void ImportDialog::finished()
 
             // first make tor_dir/dnd
             QString dnd_dir = tor_dir + QStringLiteral("dnd") + bt::DirSeparator();
-            if (!bt::Exists(dnd_dir))
+            if (!bt::Exists(dnd_dir)) {
                 MakeDir(dnd_dir);
+            }
 
-            if (!data_dir.endsWith(bt::DirSeparator()))
+            if (!data_dir.endsWith(bt::DirSeparator())) {
                 data_dir += bt::DirSeparator();
+            }
 
             for (Uint32 i = 0; i < tor.getNumFiles(); i++) {
                 TorrentFile &tf = tor.getFile(i);
@@ -164,15 +169,17 @@ void ImportDialog::import()
     if (tor.isMultiFile()) {
         dc = new MultiDataChecker(0, tor.getNumChunks());
         QString path = data_url.toLocalFile();
-        if (!path.endsWith(bt::DirSeparator()))
+        if (!path.endsWith(bt::DirSeparator())) {
             path += bt::DirSeparator();
+        }
 
         for (Uint32 i = 0; i < tor.getNumFiles(); i++) {
             bt::TorrentFile &tf = tor.getFile(i);
             tf.setPathOnDisk(path + tf.getPath());
         }
-    } else
+    } else {
         dc = new SingleDataChecker(0, tor.getNumChunks());
+    }
 
     connect(dc, &bt::DataChecker::progress, this, &ImportDialog::progress, Qt::QueuedConnection);
 
@@ -245,13 +252,15 @@ void ImportDialog::writeIndex(const QString &file, const BitSet &chunks)
 {
     // first try to open it
     File fptr;
-    if (!fptr.open(file, QStringLiteral("wb")))
+    if (!fptr.open(file, QStringLiteral("wb"))) {
         throw Error(i18n("Cannot open %1: %2", file, fptr.errorString()));
+    }
 
     // write all chunks to the file
     for (Uint32 i = 0; i < chunks.getNumBits(); i++) {
-        if (!chunks.get(i))
+        if (!chunks.get(i)) {
             continue;
+        }
 
         // we have the chunk so write a NewChunkHeader struct to the file
         NewChunkHeader hdr;
@@ -274,10 +283,12 @@ void ImportDialog::makeDirs(const QString &dnd_dir, const QString &data_url, con
     for (int i = 0; i < sl.count() - 1; i++) {
         otmp += sl[i];
         dtmp += sl[i];
-        if (!bt::Exists(otmp))
+        if (!bt::Exists(otmp)) {
             MakeDir(otmp);
-        if (!bt::Exists(dtmp))
+        }
+        if (!bt::Exists(dtmp)) {
             MakeDir(dtmp);
+        }
         otmp += bt::DirSeparator();
         dtmp += bt::DirSeparator();
     }
@@ -298,11 +309,13 @@ void ImportDialog::saveStats(const QString &stats_file, const QString &data_dir,
     out << "RUNNING_TIME_UL=0" << Qt::endl;
     out << "PRIORITY=0" << Qt::endl;
     out << "AUTOSTART=1" << Qt::endl;
-    if (Settings::maxRatio() > 0)
+    if (Settings::maxRatio() > 0) {
         out << QStringLiteral("MAX_RATIO=%1").arg(Settings::maxRatio(), 0, 'f', 2) << Qt::endl;
+    }
     out << QStringLiteral("IMPORTED=%1").arg(imported) << Qt::endl;
-    if (custom_output_name)
+    if (custom_output_name) {
         out << "CUSTOM_OUTPUT_NAME=1" << Qt::endl;
+    }
 }
 
 Uint64 ImportDialog::calcImportedBytes(const bt::BitSet &chunks, const Torrent &tor)
@@ -311,13 +324,15 @@ Uint64 ImportDialog::calcImportedBytes(const bt::BitSet &chunks, const Torrent &
     Uint64 ls = tor.getLastChunkSize();
 
     for (Uint32 i = 0; i < chunks.getNumBits(); i++) {
-        if (!chunks.get(i))
+        if (!chunks.get(i)) {
             continue;
+        }
 
-        if (i == chunks.getNumBits() - 1)
+        if (i == chunks.getNumBits() - 1) {
             nb += ls;
-        else
+        } else {
             nb += tor.getChunkSize();
+        }
     }
     return nb;
 }
@@ -348,8 +363,9 @@ void ImportDialog::saveFileMap(const Torrent &tor, const QString &tor_dir)
 {
     QString file_map = tor_dir + QLatin1String("file_map");
     QFile fptr(file_map);
-    if (!fptr.open(QIODevice::WriteOnly))
+    if (!fptr.open(QIODevice::WriteOnly)) {
         throw Error(i18n("Failed to create %1: %2", file_map, fptr.errorString()));
+    }
 
     QTextStream out(&fptr);
 
@@ -364,8 +380,9 @@ void ImportDialog::saveFileMap(const QString &tor_dir, const QString &ddir)
 {
     QString file_map = tor_dir + QLatin1String("file_map");
     QFile fptr(file_map);
-    if (!fptr.open(QIODevice::WriteOnly))
+    if (!fptr.open(QIODevice::WriteOnly)) {
         throw Error(i18n("Failed to create %1: %2", file_map, fptr.errorString()));
+    }
 
     QTextStream out(&fptr);
     out << ddir << Qt::endl;

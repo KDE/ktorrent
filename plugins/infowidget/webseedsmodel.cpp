@@ -44,8 +44,9 @@ void WebSeedsModel::changeTC(bt::TorrentInterface *tc)
 
 bool WebSeedsModel::update()
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return false;
+    }
 
     bt::TorrentInterface *tc = curr_tc.data();
     bool ret = false;
@@ -80,24 +81,27 @@ bool WebSeedsModel::update()
 
 int WebSeedsModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return curr_tc ? curr_tc.data()->getNumWebSeeds() : 0;
+    }
 }
 
 int WebSeedsModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return 4;
+    }
 }
 
 QVariant WebSeedsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+    if (role != Qt::DisplayRole || orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:
@@ -115,11 +119,13 @@ QVariant WebSeedsModel::headerData(int section, Qt::Orientation orientation, int
 
 QVariant WebSeedsModel::data(const QModelIndex &index, int role) const
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return QVariant();
+    }
 
-    if (!index.isValid() || index.row() >= (int)curr_tc.data()->getNumWebSeeds() || index.row() < 0)
+    if (!index.isValid() || index.row() >= (int)curr_tc.data()->getNumWebSeeds() || index.row() < 0) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole) {
         const bt::WebSeedInterface *ws = curr_tc.data()->getWebSeed(index.row());
@@ -155,19 +161,22 @@ QVariant WebSeedsModel::data(const QModelIndex &index, int role) const
 Qt::ItemFlags WebSeedsModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags flags = QAbstractTableModel::flags(index);
-    if (index.column() == 0)
+    if (index.column() == 0) {
         flags |= Qt::ItemIsUserCheckable;
+    }
 
     return flags;
 }
 
 bool WebSeedsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!curr_tc || role != Qt::CheckStateRole)
+    if (!curr_tc || role != Qt::CheckStateRole) {
         return false;
+    }
 
-    if (!index.isValid() || index.row() >= (int)curr_tc.data()->getNumWebSeeds() || index.row() < 0)
+    if (!index.isValid() || index.row() >= (int)curr_tc.data()->getNumWebSeeds() || index.row() < 0) {
         return false;
+    }
 
     bt::WebSeedInterface *ws = curr_tc.data()->getWebSeed(index.row());
     ws->setEnabled((Qt::CheckState)value.toInt() == Qt::Checked), Q_EMIT dataChanged(index, index);

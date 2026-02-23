@@ -24,8 +24,9 @@ FeedListDelegate::~FeedListDelegate()
 QSize FeedListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QVariant value = index.data(Qt::SizeHintRole);
-    if (value.isValid())
+    if (value.isValid()) {
         return qvariant_cast<QSize>(value);
+    }
 
     QStyleOptionViewItem opt = option;
     initStyleOption(&opt, index);

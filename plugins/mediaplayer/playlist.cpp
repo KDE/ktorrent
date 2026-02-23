@@ -58,16 +58,18 @@ void PlayList::removeFile(const MediaFileRef &file)
         row++;
     }
 
-    if (found)
+    if (found) {
         removeRow(row);
+    }
 }
 
 MediaFileRef PlayList::fileForIndex(const QModelIndex &index) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= files.count())
+    if (!index.isValid() || index.row() < 0 || index.row() >= files.count()) {
         return MediaFileRef(QString());
-    else
+    } else {
         return files.at(index.row()).first;
+    }
 }
 
 void PlayList::clear()
@@ -79,8 +81,9 @@ void PlayList::clear()
 
 QVariant PlayList::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation == Qt::Vertical || role != Qt::DisplayRole)
+    if (orientation == Qt::Vertical || role != Qt::DisplayRole) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:
@@ -100,8 +103,9 @@ QVariant PlayList::headerData(int section, Qt::Orientation orientation, int role
 
 QVariant PlayList::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::UserRole && role != Qt::DecorationRole))
+    if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::UserRole && role != Qt::DecorationRole)) {
         return QVariant();
+    }
 
     const PlayListItem &item = files.at(index.row());
     const MediaFileRef &file = item.first;
@@ -113,18 +117,20 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
     }
 
     if (!ref || ref->isNull()) {
-        if (index.column() == 0)
+        if (index.column() == 0) {
             return QFileInfo(file.path()).fileName();
-        else
+        } else {
             return QVariant();
+        }
     }
 
     TagLib::Tag *tag = ref->tag();
     if (!tag) {
-        if (index.column() == 0)
+        if (index.column() == 0) {
             return QFileInfo(file.path()).fileName();
-        else
+        } else {
             return QVariant();
+        }
     }
 
     if (role == Qt::DisplayRole || role == Qt::UserRole) {
@@ -153,8 +159,9 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
     }
 
     if (role == Qt::DecorationRole && index.column() == 0) {
-        if (file == player->getCurrentSource())
+        if (file == player->getCurrentSource()) {
             return QIcon::fromTheme(QStringLiteral("arrow-right"));
+        }
     }
 
     return QVariant();
@@ -162,10 +169,11 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
 
 int PlayList::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return 5;
+    }
 }
 
 int PlayList::rowCount(const QModelIndex &parent) const
@@ -181,10 +189,11 @@ QModelIndex PlayList::parent(const QModelIndex &child) const
 
 QModelIndex PlayList::index(int row, int column, const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return QModelIndex();
-    else
+    } else {
         return createIndex(row, column);
+    }
 }
 
 Qt::DropActions PlayList::supportedDropActions() const
@@ -196,10 +205,11 @@ Qt::ItemFlags PlayList::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
 
-    if (index.isValid())
+    if (index.isValid()) {
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
-    else
+    } else {
         return Qt::ItemIsDropEnabled | defaultFlags;
+    }
 }
 
 QStringList PlayList::mimeTypes() const
@@ -227,18 +237,22 @@ QMimeData *PlayList::mimeData(const QModelIndexList &indexes) const
 
 bool PlayList::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-    if (action == Qt::IgnoreAction)
+    if (action == Qt::IgnoreAction) {
         return true;
+    }
 
     const QList<QUrl> urls = data->urls();
-    if (urls.count() == 0 || column > 0)
+    if (urls.count() == 0 || column > 0) {
         return false;
+    }
 
-    if (row == -1)
+    if (row == -1) {
         row = parent.row();
+    }
 
-    if (row == -1)
+    if (row == -1) {
         row = rowCount(QModelIndex());
+    }
 
     // Remove dragged rows if there are any
     std::sort(dragged_rows.begin(), dragged_rows.end());
@@ -273,8 +287,9 @@ bool PlayList::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < count; i++) {
         files.removeAt(i + row);
+    }
     endRemoveRows();
     return true;
 }
@@ -288,8 +303,9 @@ void PlayList::save(const QString &file)
     }
 
     QTextStream out(&fptr);
-    for (const PlayListItem &f : std::as_const(files))
+    for (const PlayListItem &f : std::as_const(files)) {
         out << f.first.path() << Qt::endl;
+    }
 }
 
 void PlayList::load(const QString &file)

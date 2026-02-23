@@ -42,16 +42,18 @@ void MediaViewFilter::setShowIncomplete(bool on)
 
 bool MediaViewFilter::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-    if (show_incomplete)
+    if (show_incomplete) {
         return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+    }
 
     MediaModel *model = (MediaModel *)sourceModel();
     MediaFileRef ref = model->fileForIndex(model->index(source_row));
     MediaFile::Ptr file = ref.mediaFile();
-    if (file->fullyAvailable())
+    if (file->fullyAvailable()) {
         return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
-    else
+    } else {
         return false;
+    }
 }
 
 void MediaViewFilter::refresh()
@@ -113,12 +115,14 @@ MediaView::~MediaView()
 
 void MediaView::onDoubleClicked(const QModelIndex &index)
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return;
+    }
 
     QModelIndex idx = filter->mapToSource(index);
-    if (!idx.isValid())
+    if (!idx.isValid()) {
         return;
+    }
 
     Q_EMIT doubleClicked(model->fileForIndex(idx));
 }

@@ -30,61 +30,71 @@ void FilterListModel::removeFilter(Filter *f)
     int idx = filters.indexOf(f);
     beginResetModel();
     filters.removeAll(f);
-    if (idx >= 0)
+    if (idx >= 0) {
         removeRow(idx);
+    }
     endResetModel();
 }
 
 Filter *FilterListModel::filterForIndex(const QModelIndex &idx)
 {
-    if (!idx.isValid())
+    if (!idx.isValid()) {
         return nullptr;
+    }
 
     return filters.at(idx.row());
 }
 
 Filter *FilterListModel::filterByName(const QString &name)
 {
-    for (Filter *f : std::as_const(filters))
-        if (f->filterName() == name)
+    for (Filter *f : std::as_const(filters)) {
+        if (f->filterName() == name) {
             return f;
+        }
+    }
 
     return nullptr;
 }
 
 Filter *FilterListModel::filterByID(const QString &id)
 {
-    for (Filter *f : std::as_const(filters))
-        if (f->filterID() == id)
+    for (Filter *f : std::as_const(filters)) {
+        if (f->filterID() == id) {
             return f;
+        }
+    }
 
     return nullptr;
 }
 
 Filter *FilterListModel::filterByRow(int row)
 {
-    if (row < 0 || row >= filters.count())
+    if (row < 0 || row >= filters.count()) {
         return nullptr;
-    else
+    } else {
         return filters.at(row);
+    }
 }
 
 int FilterListModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return filters.count();
+    }
 }
 
 QVariant FilterListModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= filters.count())
+    if (!index.isValid() || index.row() < 0 || index.row() >= filters.count()) {
         return QVariant();
+    }
 
     Filter *f = filters.at(index.row());
-    if (!f)
+    if (!f) {
         return QVariant();
+    }
 
     switch (role) {
     case Qt::DisplayRole:

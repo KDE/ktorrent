@@ -38,23 +38,26 @@ TorrentLoadQueue::~TorrentLoadQueue()
 void TorrentLoadQueue::add(const QUrl &url)
 {
     to_load.append(url);
-    if (!timer.isActive())
+    if (!timer.isActive()) {
         timer.start(1000);
+    }
 }
 
 void TorrentLoadQueue::add(const QList<QUrl> &urls)
 {
     to_load.append(urls);
-    if (!timer.isActive())
+    if (!timer.isActive()) {
         timer.start(1000);
+    }
 }
 
 bool TorrentLoadQueue::validateTorrent(const QUrl &url, QByteArray &data)
 {
     // try to decode file, if it is syntactically correct, we can try to load it
     QFile fptr(url.toLocalFile());
-    if (!fptr.open(QIODevice::ReadOnly))
+    if (!fptr.open(QIODevice::ReadOnly)) {
         return false;
+    }
 
     try {
         data = fptr.readAll();
@@ -76,8 +79,9 @@ bool TorrentLoadQueue::validateTorrent(const QUrl &url, QByteArray &data)
 
 void TorrentLoadQueue::loadOne()
 {
-    if (to_load.isEmpty())
+    if (to_load.isEmpty()) {
         return;
+    }
 
     QUrl url = to_load.takeFirst();
 
@@ -96,16 +100,18 @@ void TorrentLoadQueue::loadOne()
         }
     }
 
-    if (!to_load.isEmpty())
+    if (!to_load.isEmpty()) {
         timer.start(1000);
+    }
 }
 
 void TorrentLoadQueue::load(const QUrl &url, const QByteArray &data)
 {
     bt::Out(SYS_SNF | LOG_NOTICE) << "ScanFolder: loading " << url.toDisplayString() << bt::endl;
     QString group;
-    if (ScanFolderPluginSettings::addToGroup())
+    if (ScanFolderPluginSettings::addToGroup()) {
         group = ScanFolderPluginSettings::group();
+    }
 
     CoreInterface::LoadOptions options = CoreInterface::LoadOption::Default;
     if (ScanFolderPluginSettings::openSilently()) {
@@ -120,24 +126,28 @@ void TorrentLoadQueue::loadingFinished(const QUrl &url)
 {
     QString name = url.fileName();
     QString dirname = QFileInfo(url.toLocalFile()).absolutePath();
-    if (!dirname.endsWith(bt::DirSeparator()))
+    if (!dirname.endsWith(bt::DirSeparator())) {
         dirname += bt::DirSeparator();
+    }
 
     switch (action) {
     case DeleteAction:
         // If torrent has hidden complement - remove it too.
-        if (bt::Exists(dirname + QLatin1Char('.') + name))
+        if (bt::Exists(dirname + QLatin1Char('.') + name)) {
             bt::Delete(dirname + QLatin1Char('.') + name, true);
+        }
 
         bt::Delete(url.toLocalFile(), true);
         break;
     case MoveAction:
         // If torrent has hidden complement - remove it too.
-        if (bt::Exists(dirname + QLatin1Char('.') + name))
+        if (bt::Exists(dirname + QLatin1Char('.') + name)) {
             bt::Delete(dirname + QLatin1Char('.') + name, true);
+        }
 
-        if (!bt::Exists(dirname + i18nc("folder name part", "loaded")))
+        if (!bt::Exists(dirname + i18nc("folder name part", "loaded"))) {
             bt::MakeDir(dirname + i18nc("folder name part", "loaded"), true);
+        }
 
         KIO::file_move(url,
                        QUrl::fromLocalFile(dirname + i18nc("folder name part", "loaded") + bt::DirSeparator() + name),

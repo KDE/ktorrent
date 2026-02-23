@@ -84,8 +84,9 @@ void SearchPlugin::unload()
 void SearchPlugin::search(const QString &text, int engine, bool external)
 {
     if (external) {
-        if (engine < 0 || engine >= (int)engines->getNumEngines())
+        if (engine < 0 || engine >= (int)engines->getNumEngines()) {
             engine = 0;
+        }
 
         QUrl url = engines->search(engine, text);
 

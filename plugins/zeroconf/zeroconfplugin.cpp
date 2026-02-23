@@ -61,8 +61,9 @@ void ZeroConfPlugin::unload()
 
 void ZeroConfPlugin::torrentAdded(bt::TorrentInterface *tc)
 {
-    if (services.contains(tc))
+    if (services.contains(tc)) {
         return;
+    }
 
     TorrentService *av = new TorrentService(tc);
     services.insert(tc, av);
@@ -74,8 +75,9 @@ void ZeroConfPlugin::torrentAdded(bt::TorrentInterface *tc)
 void ZeroConfPlugin::torrentRemoved(bt::TorrentInterface *tc)
 {
     TorrentService *av = services.find(tc);
-    if (!av)
+    if (!av) {
         return;
+    }
     Out(SYS_ZCO | LOG_NOTICE) << "ZeroConf service removed for " << tc->getStats().torrent_name << endl;
     tc->removePeerSource(av);
     services.erase(tc);

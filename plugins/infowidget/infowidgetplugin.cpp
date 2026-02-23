@@ -68,16 +68,21 @@ void InfoWidgetPlugin::unload()
     LogSystemManager::instance().unregisterSystem(i18n("Bandwidth Scheduler"));
     disconnect(getCore(), &CoreInterface::settingsChanged, this, &InfoWidgetPlugin::applySettings);
     disconnect(getCore(), &CoreInterface::torrentRemoved, this, &InfoWidgetPlugin::torrentRemoved);
-    if (cd_view)
+    if (cd_view) {
         cd_view->saveState(KSharedConfig::openConfig());
-    if (peer_view)
+    }
+    if (peer_view) {
         peer_view->saveState(KSharedConfig::openConfig());
-    if (file_view)
+    }
+    if (file_view) {
         file_view->saveState(KSharedConfig::openConfig());
-    if (webseeds_tab)
+    }
+    if (webseeds_tab) {
         webseeds_tab->saveState(KSharedConfig::openConfig());
-    if (tracker_view)
+    }
+    if (tracker_view) {
         tracker_view->saveState(KSharedConfig::openConfig());
+    }
     KSharedConfig::openConfig()->sync();
 
     TorrentActivityInterface *ta = getGUI()->getTorrentActivity();
@@ -85,14 +90,18 @@ void InfoWidgetPlugin::unload()
     getGUI()->removePrefPage(pref);
     ta->removeToolWidget(status_tab);
     ta->removeToolWidget(file_view);
-    if (cd_view)
+    if (cd_view) {
         ta->removeToolWidget(cd_view);
-    if (tracker_view)
+    }
+    if (tracker_view) {
         ta->removeToolWidget(tracker_view);
-    if (peer_view)
+    }
+    if (peer_view) {
         ta->removeToolWidget(peer_view);
-    if (webseeds_tab)
+    }
+    if (webseeds_tab) {
         ta->removeToolWidget(webseeds_tab);
+    }
 
     delete monitor;
     monitor = nullptr;
@@ -114,40 +123,52 @@ void InfoWidgetPlugin::unload()
 
 void InfoWidgetPlugin::guiUpdate()
 {
-    if (status_tab && status_tab->isVisible())
+    if (status_tab && status_tab->isVisible()) {
         status_tab->update();
+    }
 
-    if (file_view && file_view->isVisible())
+    if (file_view && file_view->isVisible()) {
         file_view->update();
+    }
 
-    if (peer_view && peer_view->isVisible())
+    if (peer_view && peer_view->isVisible()) {
         peer_view->update();
+    }
 
-    if (cd_view && cd_view->isVisible())
+    if (cd_view && cd_view->isVisible()) {
         cd_view->update();
+    }
 
-    if (tracker_view && tracker_view->isVisible())
+    if (tracker_view && tracker_view->isVisible()) {
         tracker_view->update();
+    }
 
-    if (webseeds_tab && webseeds_tab->isVisible())
+    if (webseeds_tab && webseeds_tab->isVisible()) {
         webseeds_tab->update();
+    }
 }
 
 void InfoWidgetPlugin::currentTorrentChanged(bt::TorrentInterface *tc)
 {
-    if (status_tab)
+    if (status_tab) {
         status_tab->changeTC(tc);
-    if (file_view)
+    }
+    if (file_view) {
         file_view->changeTC(tc);
-    if (cd_view)
+    }
+    if (cd_view) {
         cd_view->changeTC(tc);
-    if (tracker_view)
+    }
+    if (tracker_view) {
         tracker_view->changeTC(tc);
-    if (webseeds_tab)
+    }
+    if (webseeds_tab) {
         webseeds_tab->changeTC(tc);
+    }
 
-    if (peer_view)
+    if (peer_view) {
         peer_view->setEnabled(tc != nullptr);
+    }
 
     createMonitor(tc);
 }
@@ -166,8 +187,9 @@ void InfoWidgetPlugin::applySettings()
         InfoWidgetPluginSettings::setLastColor(Qt::red);
     }
 
-    if (save)
+    if (save) {
         InfoWidgetPluginSettings::self()->save();
+    }
 
     showWebSeedsTab(InfoWidgetPluginSettings::showWebSeedsTab());
     showPeerView(InfoWidgetPluginSettings::showPeerView());
@@ -253,13 +275,16 @@ void InfoWidgetPlugin::createMonitor(bt::TorrentInterface *tc)
     delete monitor;
     monitor = nullptr;
 
-    if (peer_view)
+    if (peer_view) {
         peer_view->removeAll();
-    if (cd_view)
+    }
+    if (cd_view) {
         cd_view->removeAll();
+    }
 
-    if (tc && (peer_view || cd_view))
+    if (tc && (peer_view || cd_view)) {
         monitor = new Monitor(tc, peer_view, cd_view, file_view);
+    }
 }
 
 void InfoWidgetPlugin::torrentRemoved(bt::TorrentInterface *tc)

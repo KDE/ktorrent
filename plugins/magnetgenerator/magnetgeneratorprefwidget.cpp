@@ -27,8 +27,9 @@ MagnetGeneratorPrefWidget::~MagnetGeneratorPrefWidget()
 
 void MagnetGeneratorPrefWidget::customTrackerToggled(bool on)
 {
-    if (on)
+    if (on) {
         kcfg_torrenttracker->setCheckState(Qt::Unchecked);
+    }
 
     kcfg_tr->setEnabled(on);
 }

@@ -137,8 +137,9 @@ void Schedule::load(const QString &file)
     } else if (node->getType() == BNode::DICT) {
         BDictNode *dict = static_cast<BDictNode *>(node.get());
         BListNode *items = dict->getList(QByteArrayLiteral("items"));
-        if (items)
+        if (items) {
             parseItems(items);
+        }
 
         try {
             enabled = dict->getInt(QByteArrayLiteral("enabled")) == 1;
@@ -152,14 +153,16 @@ void Schedule::parseItems(BListNode *items)
 {
     for (Uint32 i = 0; i < items->getNumChildren(); i++) {
         BDictNode *dict = items->getDict(i);
-        if (!dict)
+        if (!dict) {
             continue;
+        }
 
         ScheduleItem *item(new ScheduleItem());
-        if (parseItem(item, dict))
+        if (parseItem(item, dict)) {
             addItem(item);
-        else
+        } else {
             delete item;
+        }
     }
 }
 
@@ -169,8 +172,9 @@ bool Schedule::parseItem(ScheduleItem *item, bt::BDictNode *dict)
     BValueNode *day = dict->getValue(QByteArrayLiteral("day"));
     BValueNode *start_day = dict->getValue(QByteArrayLiteral("start_day"));
     BValueNode *end_day = dict->getValue(QByteArrayLiteral("end_day"));
-    if (!day && !start_day && !end_day)
+    if (!day && !start_day && !end_day) {
         return false;
+    }
 
     BValueNode *start = dict->getValue(QByteArrayLiteral("start"));
     BValueNode *end = dict->getValue(QByteArrayLiteral("end"));
@@ -178,12 +182,13 @@ bool Schedule::parseItem(ScheduleItem *item, bt::BDictNode *dict)
     BValueNode *download_limit = dict->getValue(QByteArrayLiteral("download_limit"));
     BValueNode *suspended = dict->getValue(QByteArrayLiteral("suspended"));
 
-    if (!start || !end || !upload_limit || !download_limit || !suspended)
+    if (!start || !end || !upload_limit || !download_limit || !suspended) {
         return false;
+    }
 
-    if (day)
+    if (day) {
         item->start_day = item->end_day = day->data().toInt();
-    else {
+    } else {
         item->start_day = start_day->data().toInt();
         item->end_day = end_day->data().toInt();
     }
@@ -276,12 +281,14 @@ void Schedule::clear()
 
 bool Schedule::addItem(ScheduleItem *item)
 {
-    if (!item->isValid() || item->end <= item->start)
+    if (!item->isValid() || item->end <= item->start) {
         return false;
+    }
 
     for (ScheduleItem *i : std::as_const(items)) {
-        if (item->conflicts(*i))
+        if (item->conflicts(*i)) {
             return false;
+        }
     }
 
     items.append(item);
@@ -290,8 +297,9 @@ bool Schedule::addItem(ScheduleItem *item)
 
 void Schedule::removeItem(ScheduleItem *item)
 {
-    if (items.removeAll(item) > 0)
+    if (items.removeAll(item) > 0) {
         delete item;
+    }
 }
 
 ScheduleItem *Schedule::getCurrentItem(const QDateTime &now)
@@ -308,20 +316,23 @@ int Schedule::getTimeToNextScheduleEvent(const QDateTime &now)
 {
     ScheduleItem *item = getCurrentItem(now);
     // when we are in the middle of a ScheduleItem, we need to trigger again at the end of it
-    if (item)
+    if (item) {
         return now.time().secsTo(item->end) + 5; // change the schedule 5 seconds after it expires
+    }
 
     // let us look at all schedule items on the same day
     // and find the next one
     for (ScheduleItem *i : std::as_const(items)) {
         if (between(now.date().dayOfWeek(), i->start_day, i->end_day) && i->start > now.time()) {
-            if (!item || i->start < item->start)
+            if (!item || i->start < item->start) {
                 item = i;
+            }
         }
     }
 
-    if (item)
+    if (item) {
         return now.time().secsTo(item->start) + 5;
+    }
 
     QTime end_of_day(23, 59, 59);
     return now.time().secsTo(end_of_day) + 5;
@@ -376,8 +387,9 @@ bool Schedule::validModify(ScheduleItem *item, const QTime &start, const QTime &
 bool Schedule::conflicts(ScheduleItem *item)
 {
     for (ScheduleItem *i : std::as_const(items)) {
-        if (i != item && (i->conflicts(*item) || item->conflicts(*i)))
+        if (i != item && (i->conflicts(*item) || item->conflicts(*i))) {
             return true;
+        }
     }
     return false;
 }

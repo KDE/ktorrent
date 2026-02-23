@@ -18,8 +18,9 @@ TorrentActivityInterface::~TorrentActivityInterface()
 
 void TorrentActivityInterface::notifyViewListeners(bt::TorrentInterface *tc)
 {
-    for (ViewListener *vl : std::as_const(listeners))
+    for (ViewListener *vl : std::as_const(listeners)) {
         vl->currentTorrentChanged(tc);
+    }
 }
 
 void TorrentActivityInterface::addViewListener(ViewListener *vl)

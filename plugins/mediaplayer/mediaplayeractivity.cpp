@@ -92,8 +92,9 @@ MediaPlayerActivity::MediaPlayerActivity(CoreInterface *core, KActionCollection 
 
 MediaPlayerActivity::~MediaPlayerActivity()
 {
-    if (fullscreen_mode)
+    if (fullscreen_mode) {
         setVideoFullScreen(false);
+    }
 }
 
 void MediaPlayerActivity::setupActions()
@@ -140,11 +141,13 @@ void MediaPlayerActivity::openVideo()
 {
     QString path = media_player->getCurrentSource().path();
     int idx = path.lastIndexOf(bt::DirSeparator());
-    if (idx >= 0)
+    if (idx >= 0) {
         path = path.mid(idx + 1);
+    }
 
-    if (path.isEmpty())
+    if (path.isEmpty()) {
         path = i18n("Media Player");
+    }
 
     if (video) {
         int idx = tabs->indexOf(video);
@@ -159,8 +162,9 @@ void MediaPlayerActivity::openVideo()
     }
     // tabs->setTabBarHidden(false);
 
-    if (!show_video_action->isChecked())
+    if (!show_video_action->isChecked()) {
         show_video_action->setChecked(true);
+    }
 }
 
 void MediaPlayerActivity::closeVideo()
@@ -171,16 +175,18 @@ void MediaPlayerActivity::closeVideo()
         video->deleteLater();
         video = nullptr;
     }
-    if (show_video_action->isChecked())
+    if (show_video_action->isChecked()) {
         show_video_action->setChecked(false);
+    }
 }
 
 void MediaPlayerActivity::showVideo(bool on)
 {
-    if (on)
+    if (on) {
         openVideo();
-    else
+    } else {
         closeVideo();
+    }
 }
 
 void MediaPlayerActivity::play()
@@ -235,8 +241,9 @@ void MediaPlayerActivity::next()
 {
     bool random = play_list->randomOrder();
     QModelIndex n = play_list->next(curr_item, random);
-    if (!n.isValid())
+    if (!n.isValid()) {
         return;
+    }
 
     QString path = play_list->fileForIndex(n);
     if (bt::Exists(path)) {
@@ -257,12 +264,14 @@ void MediaPlayerActivity::enableActions(unsigned int flags)
     if (idx.isValid()) {
         PlayList *pl = play_list->playList();
         MediaFileRef file = pl->fileForIndex(idx);
-        if (bt::Exists(file.path()))
+        if (bt::Exists(file.path())) {
             play_action->setEnabled((flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
-        else
+        } else {
             play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
-    } else
+        }
+    } else {
         play_action->setEnabled(flags & kt::MEDIA_PLAY);
+    }
 
     prev_action->setEnabled(flags & kt::MEDIA_PREV);
     action_flags = flags;
@@ -270,12 +279,13 @@ void MediaPlayerActivity::enableActions(unsigned int flags)
 
 void MediaPlayerActivity::onSelectionChanged(const MediaFileRef &file)
 {
-    if (bt::Exists(file.path()))
+    if (bt::Exists(file.path())) {
         play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || file != media_player->getCurrentSource());
-    else if (!file.path().isEmpty())
+    } else if (!file.path().isEmpty()) {
         play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
-    else
+    } else {
         play_action->setEnabled(false);
+    }
 }
 
 void MediaPlayerActivity::randomPlayActivated(bool on)
@@ -288,8 +298,9 @@ void MediaPlayerActivity::playNextMedia()
 {
     bool random = play_list->randomOrder();
     QModelIndex n = play_list->next(curr_item, random);
-    if (!n.isValid())
+    if (!n.isValid()) {
         return;
+    }
 
     QString path = play_list->fileForIndex(n);
     if (bt::Exists(path)) {
@@ -302,8 +313,9 @@ void MediaPlayerActivity::playNextMedia()
 
 void MediaPlayerActivity::closeTab()
 {
-    if (video != tabs->currentWidget())
+    if (video != tabs->currentWidget()) {
         return;
+    }
 
     stop();
     closeVideo();
@@ -311,8 +323,9 @@ void MediaPlayerActivity::closeTab()
 
 void MediaPlayerActivity::setVideoFullScreen(bool on)
 {
-    if (!video)
+    if (!video) {
         return;
+    }
 
     if (on && !fullscreen_mode) {
         tabs->removeTab(tabs->indexOf(video));
@@ -326,11 +339,13 @@ void MediaPlayerActivity::setVideoFullScreen(bool on)
 
         QString path = media_player->getCurrentSource().path();
         int idx = path.lastIndexOf(bt::DirSeparator());
-        if (idx >= 0)
+        if (idx >= 0) {
             path = path.mid(idx + 1);
+        }
 
-        if (path.isEmpty())
+        if (path.isEmpty()) {
             path = i18n("Media Player");
+        }
 
         idx = tabs->addTab(video, QIcon::fromTheme(QStringLiteral("video-x-generic")), path);
         tabs->setTabToolTip(idx, i18n("Movie player"));
@@ -353,12 +368,14 @@ void MediaPlayerActivity::loadState(KSharedConfigPtr cfg)
 {
     KConfigGroup g = cfg->group(QStringLiteral("MediaPlayerActivity"));
     QByteArray d = g.readEntry("splitter_state", QByteArray());
-    if (!d.isEmpty())
+    if (!d.isEmpty()) {
         splitter->restoreState(d);
+    }
 
     play_list->loadState(cfg);
-    if (bt::Exists(kt::DataDir() + QLatin1String("playlist")))
+    if (bt::Exists(kt::DataDir() + QLatin1String("playlist"))) {
         play_list->playList()->load(kt::DataDir() + QLatin1String("playlist"));
+    }
 
     QModelIndex next = play_list->next(curr_item, play_list->randomOrder());
     next_action->setEnabled(next.isValid());

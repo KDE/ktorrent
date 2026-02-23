@@ -88,10 +88,11 @@ void ConvertThread::readInput()
 
 static bool LessThan(const IPBlock &a, const IPBlock &b)
 {
-    if (a.ip1 == b.ip1)
+    if (a.ip1 == b.ip1) {
         return a.ip2 < b.ip2;
-    else
+    } else {
         return a.ip1 < b.ip1;
+    }
 }
 
 void ConvertThread::sort()
@@ -101,8 +102,9 @@ void ConvertThread::sort()
 
 void ConvertThread::merge()
 {
-    if (input.count() < 2) // noting to merge
+    if (input.count() < 2) { // noting to merge
         return;
+    }
 
     QList<IPBlock>::iterator i = input.begin();
     QList<IPBlock>::iterator j = i;

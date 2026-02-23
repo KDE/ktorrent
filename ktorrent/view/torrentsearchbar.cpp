@@ -60,8 +60,9 @@ void TorrentSearchBar::hideBar()
 
 bool TorrentSearchBar::eventFilter(QObject *obj, QEvent *ev)
 {
-    if (ev->type() == QEvent::KeyPress && ((QKeyEvent *)ev)->key() == Qt::Key_Escape)
+    if (ev->type() == QEvent::KeyPress && ((QKeyEvent *)ev)->key() == Qt::Key_Escape) {
         hideBar();
+    }
 
     return QObject::eventFilter(obj, ev);
 }
@@ -74,8 +75,9 @@ void TorrentSearchBar::loadState(KSharedConfigPtr cfg)
     if (g.readEntry("hidden", true)) {
         setHidden(true);
         Q_EMIT filterBarHidden(QString());
-    } else
+    } else {
         setHidden(false);
+    }
 }
 
 void TorrentSearchBar::saveState(KSharedConfigPtr cfg)

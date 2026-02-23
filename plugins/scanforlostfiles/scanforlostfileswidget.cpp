@@ -178,8 +178,9 @@ void ScanForLostFilesWidget::on_actionDelete_on_disk_triggered()
     QModelIndexList sel = treeView->selectionModel()->selectedRows();
     int n = sel.count();
     if (n == 1) { // single item can be a directory
-        if (m_model->fileInfo(m_proxy->mapToSource(sel.front())).isDir())
+        if (m_model->fileInfo(m_proxy->mapToSource(sel.front())).isDir()) {
             n++;
+        }
     }
 
     QString msg = i18np("You will lose all data in this file, are you sure you want to do this?",

@@ -90,15 +90,17 @@ void TorrentGroup::load(bt::BDictNode *dn)
     name = QString::fromLocal8Bit(dn->getByteArray("name"));
     setIconByName(QString::fromLocal8Bit(dn->getByteArray("icon")));
     BListNode *ln = dn->getList("hashes");
-    if (!ln)
+    if (!ln) {
         return;
+    }
 
     path = QLatin1String("/all/custom/") + name;
 
     for (Uint32 i = 0; i < ln->getNumChildren(); i++) {
         QByteArray ba = ln->getByteArray(i);
-        if (ba.size() != 20)
+        if (ba.size() != 20) {
             continue;
+        }
 
         hashes.insert(SHA1Hash((const Uint8 *)ba.data()));
     }
@@ -107,30 +109,37 @@ void TorrentGroup::load(bt::BDictNode *dn)
         // load the group policy
         if (gp->getValue(QByteArrayLiteral("default_save_location"))) {
             policy.default_save_location = gp->getString(QByteArrayLiteral("default_save_location"));
-            if (policy.default_save_location.length() == 0)
+            if (policy.default_save_location.length() == 0) {
                 policy.default_save_location = QString(); // make sure that 0 length strings are loaded as null strings
+            }
         }
 
         if (gp->getValue(QByteArrayLiteral("default_move_on_completion_location"))) {
             policy.default_move_on_completion_location = gp->getString(QByteArrayLiteral("default_move_on_completion_location"));
-            if (policy.default_move_on_completion_location.length() == 0)
+            if (policy.default_move_on_completion_location.length() == 0) {
                 policy.default_move_on_completion_location = QString(); // make sure that 0 length strings are loaded as null strings
+            }
         }
 
-        if (gp->getValue(QByteArrayLiteral("max_share_ratio")))
+        if (gp->getValue(QByteArrayLiteral("max_share_ratio"))) {
             policy.max_share_ratio = gp->getString(QByteArrayLiteral("max_share_ratio")).toFloat();
+        }
 
-        if (gp->getValue(QByteArrayLiteral("max_seed_time")))
+        if (gp->getValue(QByteArrayLiteral("max_seed_time"))) {
             policy.max_seed_time = gp->getString(QByteArrayLiteral("max_seed_time")).toFloat();
+        }
 
-        if (gp->getValue(QByteArrayLiteral("max_upload_rate")))
+        if (gp->getValue(QByteArrayLiteral("max_upload_rate"))) {
             policy.max_upload_rate = gp->getInt(QByteArrayLiteral("max_upload_rate"));
+        }
 
-        if (gp->getValue(QByteArrayLiteral("max_download_rate")))
+        if (gp->getValue(QByteArrayLiteral("max_download_rate"))) {
             policy.max_download_rate = gp->getInt(QByteArrayLiteral("max_download_rate"));
+        }
 
-        if (gp->getValue(QByteArrayLiteral("only_apply_on_new_torrents")))
+        if (gp->getValue(QByteArrayLiteral("only_apply_on_new_torrents"))) {
             policy.only_apply_on_new_torrents = gp->getInt(QByteArrayLiteral("only_apply_on_new_torrents"));
+        }
     }
 }
 
@@ -149,11 +158,13 @@ void TorrentGroup::addTorrent(TorrentInterface *tor, bool new_torrent)
 {
     torrents.insert(tor);
     // apply group policy if needed
-    if (policy.only_apply_on_new_torrents && !new_torrent)
+    if (policy.only_apply_on_new_torrents && !new_torrent) {
         return;
+    }
 
-    if (bt::Exists(policy.default_move_on_completion_location))
+    if (bt::Exists(policy.default_move_on_completion_location)) {
         tor->setMoveWhenCompletedDir(policy.default_move_on_completion_location);
+    }
     tor->setMaxShareRatio(policy.max_share_ratio);
     tor->setMaxSeedTime(policy.max_seed_time);
     tor->setTrafficLimits(policy.max_upload_rate * 1024, policy.max_download_rate * 1024);
@@ -163,8 +174,9 @@ void TorrentGroup::addTorrent(TorrentInterface *tor, bool new_torrent)
 
 void TorrentGroup::policyChanged()
 {
-    if (policy.only_apply_on_new_torrents)
+    if (policy.only_apply_on_new_torrents) {
         return;
+    }
 
     std::set<TorrentInterface *>::iterator i = torrents.begin();
     while (i != torrents.end()) {
@@ -180,8 +192,9 @@ void TorrentGroup::loadTorrents(QueueManager *qman)
 {
     QueueManager::iterator i = qman->begin();
     while (i != qman->end()) {
-        if (hashes.count((*i)->getInfoHash()) > 0)
+        if (hashes.count((*i)->getInfoHash()) > 0) {
             torrents.insert(*i);
+        }
         i++;
     }
 

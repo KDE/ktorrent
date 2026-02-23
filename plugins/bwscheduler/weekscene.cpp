@@ -45,8 +45,9 @@ qreal LongestDayWidth(const QFontMetricsF &fm)
     qreal wd = 0;
     for (int i = 1; i <= 7; i++) {
         qreal w = fm.horizontalAdvance(QLocale::system().dayName(i));
-        if (w > wd)
+        if (w > wd) {
             wd = w;
+        }
     }
     return wd;
 }
@@ -55,19 +56,21 @@ void WeekScene::updateStatusText(int up, int down, bool suspended, bool enabled)
 {
     static KFormat format;
     QString msg;
-    if (suspended)
+    if (suspended) {
         msg = i18n("Current schedule: suspended");
-    else if (up > 0 && down > 0)
+    } else if (up > 0 && down > 0) {
         msg = i18n("Current schedule: %1/s download, %2/s upload", format.formatByteSize(down * 1024), format.formatByteSize(up * 1024));
-    else if (up > 0)
+    } else if (up > 0) {
         msg = i18n("Current schedule: unlimited download, %1/s upload", format.formatByteSize(up * 1024));
-    else if (down > 0)
+    } else if (down > 0) {
         msg = i18n("Current schedule: %1/s download, unlimited upload", format.formatByteSize(down * 1024));
-    else
+    } else {
         msg = i18n("Current schedule: unlimited upload and download");
+    }
 
-    if (!enabled)
+    if (!enabled) {
         msg += i18n(" (scheduler disabled)");
+    }
 
     status->setPlainText(msg);
 }
@@ -174,8 +177,9 @@ void WeekScene::mousePressEvent(QGraphicsSceneMouseEvent *ev)
                 break;
             }
         }
-    } else
+    } else {
         QGraphicsScene::mousePressEvent(ev);
+    }
 }
 
 qreal WeekScene::timeToY(const QTime &time)
@@ -199,23 +203,26 @@ void WeekScene::itemMoved(ScheduleItem *item, const QPointF &np)
     QTime end = start.addSecs(d);
 
     int start_day = 1 + floor((np.x() + day_width * 0.5 - xoff) / day_width);
-    if (start_day < 1)
+    if (start_day < 1) {
         start_day = 1;
-    else if (start_day > 7)
+    } else if (start_day > 7) {
         start_day = 7;
+    }
 
     int end_day = start_day + (item->end_day - item->start_day);
-    if (end_day < 1)
+    if (end_day < 1) {
         end_day = 1;
-    else if (end_day > 7)
+    } else if (end_day > 7) {
         end_day = 7;
+    }
     Q_EMIT itemMoved(item, start, end, start_day, end_day);
 }
 
 bool WeekScene::validMove(ScheduleItem *item, const QPointF &np)
 {
-    if (!schedule)
+    if (!schedule) {
         return true;
+    }
 
     QTime start = yToTime(np.y());
     int d = item->start.secsTo(item->end); // duration in seconds
@@ -223,8 +230,9 @@ bool WeekScene::validMove(ScheduleItem *item, const QPointF &np)
 
     int start_day = 1 + floor((np.x() + day_width * 0.5 - xoff) / day_width);
     int end_day = start_day + (item->end_day - item->start_day);
-    if (end_day > 7)
+    if (end_day > 7) {
         end_day = 7;
+    }
     return schedule->validModify(item, start, end, start_day, end_day);
 }
 
@@ -235,15 +243,17 @@ void WeekScene::itemResized(ScheduleItem *item, const QRectF &r)
 
     int start_day = 1 + floor((r.x() + day_width * 0.5 - xoff) / day_width);
     int end_day = 1 + floor((r.x() + r.width() - day_width * 0.5 - xoff) / day_width);
-    if (start_day < 1)
+    if (start_day < 1) {
         start_day = 1;
-    else if (start_day > 7)
+    } else if (start_day > 7) {
         start_day = 7;
+    }
 
-    if (end_day < 1)
+    if (end_day < 1) {
         end_day = 1;
-    else if (end_day > 7)
+    } else if (end_day > 7) {
         end_day = 7;
+    }
 
     Q_EMIT itemMoved(item, start, end, start_day, end_day);
 }
@@ -269,8 +279,9 @@ void WeekScene::colorsChanged()
     QPen pen(SchedulerPluginSettings::scheduleLineColor());
     QBrush brush(SchedulerPluginSettings::scheduleBackgroundColor());
 
-    for (QGraphicsLineItem *line : std::as_const(lines))
+    for (QGraphicsLineItem *line : std::as_const(lines)) {
         line->setPen(pen);
+    }
 
     for (QGraphicsRectItem *rect : std::as_const(rects)) {
         rect->setPen(pen);

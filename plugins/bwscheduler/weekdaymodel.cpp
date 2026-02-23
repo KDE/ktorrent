@@ -12,8 +12,9 @@ namespace kt
 WeekDayModel::WeekDayModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 7; i++) {
         checked[i] = false;
+    }
 }
 
 WeekDayModel::~WeekDayModel()
@@ -22,16 +23,18 @@ WeekDayModel::~WeekDayModel()
 
 int WeekDayModel::rowCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return 7;
-    else
+    } else {
         return 0;
+    }
 }
 
 QVariant WeekDayModel::data(const QModelIndex &index, int role) const
 {
-    if (index.row() < 0 || index.row() >= 7)
+    if (index.row() < 0 || index.row() >= 7) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole) {
         return QLocale::system().dayName(index.row() + 1);
@@ -44,8 +47,9 @@ QVariant WeekDayModel::data(const QModelIndex &index, int role) const
 
 bool WeekDayModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= 7)
+    if (!index.isValid() || index.row() < 0 || index.row() >= 7) {
         return false;
+    }
 
     if (role == Qt::CheckStateRole) {
         checked[index.row()] = (Qt::CheckState)value.toUInt() == Qt::Checked;
@@ -57,18 +61,21 @@ bool WeekDayModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 Qt::ItemFlags WeekDayModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid() || index.row() >= 7 || index.row() < 0)
+    if (!index.isValid() || index.row() >= 7 || index.row() < 0) {
         return QAbstractItemModel::flags(index);
-    else
+    } else {
         return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
+    }
 }
 
 QList<int> WeekDayModel::checkedDays() const
 {
     QList<int> ret;
-    for (int i = 0; i < 7; i++)
-        if (checked[i])
+    for (int i = 0; i < 7; i++) {
+        if (checked[i]) {
             ret << (i + 1);
+        }
+    }
     return ret;
 }
 

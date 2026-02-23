@@ -47,8 +47,9 @@ void ScanFolderPrefPage::loadSettings()
     while (it != gman->end()) {
         if (it->second->groupFlags() & Group::CUSTOM_GROUP) {
             grps << it->first;
-            if (it->first == ScanFolderPluginSettings::group())
+            if (it->first == ScanFolderPluginSettings::group()) {
                 current = cnt;
+            }
             cnt++;
         }
         ++it;
@@ -76,10 +77,11 @@ void ScanFolderPrefPage::loadDefaults()
 
 void ScanFolderPrefPage::updateSettings()
 {
-    if (kcfg_addToGroup->isChecked() && kcfg_addToGroup->isEnabled())
+    if (kcfg_addToGroup->isChecked() && kcfg_addToGroup->isEnabled()) {
         ScanFolderPluginSettings::setGroup(m_group->currentText());
-    else
+    } else {
         ScanFolderPluginSettings::setGroup(QString());
+    }
 
     ScanFolderPluginSettings::setFolders(folders);
     ScanFolderPluginSettings::self()->save();
@@ -90,8 +92,9 @@ void ScanFolderPrefPage::addPressed()
 {
     QString p = QFileDialog::getExistingDirectory(this);
     if (!p.isEmpty()) {
-        if (!p.endsWith(bt::DirSeparator()))
+        if (!p.endsWith(bt::DirSeparator())) {
             p += bt::DirSeparator();
+        }
         m_folders->addItem(new QListWidgetItem(QIcon::fromTheme(QStringLiteral("folder")), p));
         folders.append(p);
     }

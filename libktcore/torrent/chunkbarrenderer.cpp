@@ -34,8 +34,9 @@ void ChunkBarRenderer::drawEqual(QPainter *p, const BitSet &bs, const QColor &co
     Uint32 w = contents_rect.width();
     double scale = 1.0;
     Uint32 total_chunks = bs.getNumBits();
-    if (total_chunks != w)
+    if (total_chunks != w) {
         scale = (double)w / total_chunks;
+    }
 
     p->setPen(QPen(c, 1, Qt::SolidLine));
     p->setBrush(c);
@@ -43,8 +44,9 @@ void ChunkBarRenderer::drawEqual(QPainter *p, const BitSet &bs, const QColor &co
     QList<Range> rs;
 
     for (Uint32 i = 0; i < bs.getNumBits(); i++) {
-        if (!bs.get(i))
+        if (!bs.get(i)) {
             continue;
+        }
 
         if (rs.empty()) {
             Range r = {i, i, 0};
@@ -79,12 +81,15 @@ void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter *p, const BitSet &bs, c
         Uint32 num_dl = 0;
         Uint32 jStart = (Uint32)(i * chunks_per_pixel);
         Uint32 jEnd = (Uint32)((i + 1) * chunks_per_pixel + 0.5);
-        for (Uint32 j = jStart; j < jEnd; j++)
-            if (bs.get(j))
+        for (Uint32 j = jStart; j < jEnd; j++) {
+            if (bs.get(j)) {
                 num_dl++;
+            }
+        }
 
-        if (num_dl == 0)
+        if (num_dl == 0) {
             continue;
+        }
 
         int fac = int(100 * ((double)num_dl / (jEnd - jStart)) + 0.5);
         if (rs.empty()) {
@@ -110,12 +115,13 @@ void ChunkBarRenderer::drawMoreChunksThenPixels(QPainter *p, const BitSet &bs, c
         QColor c = color;
         if (fac < 100) {
             // do some rounding off
-            if (fac <= 25)
+            if (fac <= 25) {
                 fac = 25;
-            else if (fac <= 50)
+            } else if (fac <= 50) {
                 fac = 45;
-            else
+            } else {
                 fac = 65;
+            }
             c = color.lighter(200 - fac);
         }
         p->setPen(QPen(c, 1, Qt::SolidLine));

@@ -94,8 +94,9 @@ Group *GroupView::addNewGroup()
     bool ok = false;
     QString name = QInputDialog::getText(this, QString(), i18n("Please enter the group name."), QLineEdit::Normal, QString(), &ok);
 
-    if (name.isEmpty() || name.length() == 0 || !ok)
+    if (name.isEmpty() || name.length() == 0 || !ok) {
         return nullptr;
+    }
 
     if (gman->find(name)) {
         KMessageBox::error(this, i18n("The group %1 already exists.", name));
@@ -133,15 +134,17 @@ void GroupView::showContextMenu(const QPoint &p)
     open_in_new_tab->setEnabled(g != nullptr);
 
     QMenu *menu = gui->getTorrentActivity()->part()->menu(QStringLiteral("GroupsMenu"));
-    if (menu)
+    if (menu) {
         menu->popup(viewport()->mapToGlobal(p));
+    }
 }
 
 void GroupView::onItemClicked(const QModelIndex &index)
 {
     Group *g = model->groupForIndex(index);
-    if (g)
+    if (g) {
         Q_EMIT currentGroupChanged(g);
+    }
 }
 
 void GroupView::editGroupPolicy()
@@ -149,8 +152,9 @@ void GroupView::editGroupPolicy()
     Group *g = model->groupForIndex(selectionModel()->currentIndex());
     if (g) {
         GroupPolicyDlg dlg(g, this);
-        if (dlg.exec() == QDialog::Accepted)
+        if (dlg.exec() == QDialog::Accepted) {
             gman->saveGroups();
+        }
     }
 }
 
@@ -205,10 +209,11 @@ void GroupView::expandGroups(const QStringList &groupPaths)
 
 void GroupView::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
         onItemClicked(selectionModel()->currentIndex());
-    else
+    } else {
         QTreeView::keyPressEvent(event);
+    }
 }
 
 void GroupView::updateGroupCount()
@@ -219,8 +224,9 @@ void GroupView::updateGroupCount()
 void GroupView::openInNewTab()
 {
     Group *g = model->groupForIndex(selectionModel()->currentIndex());
-    if (g)
+    if (g) {
         Q_EMIT openTab(g);
+    }
 }
 }
 

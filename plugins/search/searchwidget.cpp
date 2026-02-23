@@ -142,10 +142,11 @@ void SearchWidget::restore(const QUrl &url, const QString &text, const QString &
 {
     Q_UNUSED(text);
 
-    if (url.scheme() == QLatin1String("home"))
+    if (url.scheme() == QLatin1String("home")) {
         webview->home();
-    else
+    } else {
         webview->openUrl(url);
+    }
 
     search_text->lineEdit()->setText(sb_text);
 
@@ -154,11 +155,13 @@ void SearchWidget::restore(const QUrl &url, const QString &text, const QString &
 
 void SearchWidget::search(const QString &text, int engine)
 {
-    if (search_text->lineEdit()->text() != text)
+    if (search_text->lineEdit()->text() != text) {
         search_text->lineEdit()->setText(text);
+    }
 
-    if (search_engine->currentIndex() != engine)
+    if (search_engine->currentIndex() != engine) {
         search_engine->setCurrentIndex(engine);
+    }
 
     QUrl url = sp->getSearchEngineList()->search(engine, text);
 
@@ -185,11 +188,13 @@ void SearchWidget::setSearchBarEngine(int engine)
 
 void SearchWidget::loadProgress(int perc)
 {
-    if (!prog)
+    if (!prog) {
         prog = sp->getGUI()->getStatusBar()->createProgressBar();
+    }
 
-    if (prog)
+    if (prog) {
         prog->setValue(perc);
+    }
 }
 
 void SearchWidget::loadStarted()
@@ -197,8 +202,9 @@ void SearchWidget::loadStarted()
     if (!prog) {
         prog = sp->getGUI()->getStatusBar()->createProgressBar();
 
-        if (prog)
+        if (prog) {
             prog->setValue(0);
+        }
     }
 }
 
@@ -262,8 +268,9 @@ bool SearchWidget::backAvailable() const
 void SearchWidget::loadSearchHistory()
 {
     QFile fptr(kt::DataDir() + QLatin1String("search_history"));
-    if (!fptr.open(QIODevice::ReadOnly))
+    if (!fptr.open(QIODevice::ReadOnly)) {
         return;
+    }
 
     KCompletion *comp = search_text->completionObject();
 
@@ -271,8 +278,9 @@ void SearchWidget::loadSearchHistory()
     QTextStream in(&fptr);
     while (!in.atEnd() && cnt < 50) {
         QString line = in.readLine();
-        if (line.isEmpty())
+        if (line.isEmpty()) {
             break;
+        }
 
         if (!search_text->contains(line)) {
             comp->addItem(line);
@@ -287,8 +295,9 @@ void SearchWidget::loadSearchHistory()
 void SearchWidget::saveSearchHistory()
 {
     QFile fptr(kt::DataDir() + QLatin1String("search_history"));
-    if (!fptr.open(QIODevice::WriteOnly))
+    if (!fptr.open(QIODevice::WriteOnly)) {
         return;
+    }
 
     QTextStream out(&fptr);
     KCompletion *comp = search_text->completionObject();

@@ -39,20 +39,23 @@ LinkDownloader::LinkDownloader(const QUrl &url,
     , move_on_completion(move_on_completion)
 {
     base_url = url.scheme() + QStringLiteral("://") + url.host();
-    if (url.port(80) != 80)
+    if (url.port(80) != 80) {
         base_url += QLatin1Char(':') + QString::number(url.port(80));
+    }
 
     QString path = url.path();
     if (path.size() > 0) {
         int idx = -1;
-        if (path.endsWith(QLatin1Char('/')))
+        if (path.endsWith(QLatin1Char('/'))) {
             base_url += (!path.startsWith(QStringLiteral("/")) ? QStringLiteral("/") : QString()) + path;
-        else if ((idx = path.lastIndexOf(QStringLiteral("/"))) != -1)
+        } else if ((idx = path.lastIndexOf(QStringLiteral("/"))) != -1) {
             base_url += path.mid(0, idx + 1);
-        else
+        } else {
             base_url += QLatin1Char('/');
-    } else
+        }
+    } else {
         base_url += QLatin1Char('/');
+    }
 }
 
 LinkDownloader::LinkDownloader(CoreInterface *core, const LinkLoadParams &params)
@@ -70,8 +73,9 @@ void LinkDownloader::downloadFinished(KJob *j)
     KIO::StoredTransferJob *job = (KIO::StoredTransferJob *)j;
     if (job->error()) {
         Out(SYS_SYN | LOG_NOTICE) << "Failed to download " << url.toDisplayString() << " : " << job->errorString() << endl;
-        if (verbose)
+        if (verbose) {
             job->uiDelegate()->showErrorMessage();
+        }
 
         Q_EMIT finished(this, false);
         deleteLater();
@@ -86,8 +90,9 @@ void LinkDownloader::downloadFinished(KJob *j)
         }
         bt::TorrentInterface *tc = core->load(job->data(), url, group, location, options);
 
-        if (tc && !move_on_completion.isEmpty())
+        if (tc && !move_on_completion.isEmpty()) {
             tc->setMoveWhenCompletedDir(move_on_completion);
+        }
 
         Q_EMIT finished(this, true);
         deleteLater();
@@ -128,8 +133,9 @@ bool LinkDownloader::isTorrent(const QByteArray &data) const
     try {
         BDecoder decoder(data, false);
         const std::unique_ptr<BNode> node = decoder.decode();
-        if (node)
+        if (node) {
             ret = true;
+        }
     } catch (...) {
         ret = false;
     }
@@ -155,15 +161,17 @@ void LinkDownloader::handleHtmlPage(const QByteArray &data)
             deleteLater();
             return;
         } else if (!href_link.startsWith(QStringLiteral("http://")) && !href_link.startsWith(QStringLiteral("https://"))) {
-            if (!href_link.startsWith(QStringLiteral("/")))
+            if (!href_link.startsWith(QStringLiteral("/"))) {
                 href_link = base_url + href_link;
-            else
+            } else {
                 href_link = url.scheme() + QStringLiteral("://") + url.authority() + href_link;
+            }
         }
 
         link_url = QUrl(href_link);
-        if (link_url.isValid())
+        if (link_url.isValid()) {
             links.append(link_url);
+        }
 
         pos += rx.matchedLength();
     }
@@ -211,8 +219,9 @@ void LinkDownloader::tryNextLink()
 {
     if (links.count() == 0) {
         Out(SYS_SYN | LOG_DEBUG) << "Couldn't find a valid link to a torrent on " << url.toDisplayString() << endl;
-        if (verbose)
+        if (verbose) {
             KMessageBox::error(nullptr, i18n("Could not find a valid link to a torrent on %1", url.toDisplayString()));
+        }
 
         Q_EMIT finished(this, false);
         deleteLater();
@@ -234,13 +243,15 @@ void LinkDownloader::torrentDownloadFinished(KJob *j)
     if (j->error()) {
         if (links.count() == 0) {
             Out(SYS_SYN | LOG_NOTICE) << "Failed to download torrent: " << job->errorString() << endl;
-            if (verbose)
+            if (verbose) {
                 job->uiDelegate()->showErrorMessage();
+            }
 
             Q_EMIT finished(this, false);
             deleteLater();
-        } else
+        } else {
             tryTorrentLinks();
+        }
     } else if (isTorrent(job->data())) {
         Q_EMIT entryDownloadFinished(this, true);
         CoreInterface::LoadOptions options = CoreInterface::LoadOption::Default;
@@ -249,13 +260,15 @@ void LinkDownloader::torrentDownloadFinished(KJob *j)
         }
         bt::TorrentInterface *tc = core->load(job->data(), link_url, group, location, options);
 
-        if (tc && !move_on_completion.isEmpty())
+        if (tc && !move_on_completion.isEmpty()) {
             tc->setMoveWhenCompletedDir(move_on_completion);
+        }
 
         Q_EMIT finished(this, true);
         deleteLater();
-    } else
+    } else {
         tryTorrentLinks();
+    }
 }
 }
 

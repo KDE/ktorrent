@@ -53,8 +53,9 @@ void PrefDialog::addPrefPage(PrefPageInterface *page)
     KPageWidgetItem *p = addPage(area, page->config(), page->pageName(), page->pageIcon());
     area->page_widget_item = p;
     pages.append(area);
-    if (!isHidden())
+    if (!isHidden()) {
         page->loadSettings();
+    }
 }
 
 void PrefDialog::removePrefPage(PrefPageInterface *page)
@@ -82,20 +83,23 @@ void PrefDialog::updateWidgetsAndShow()
 
 void PrefDialog::updateWidgets()
 {
-    for (PrefPageScrollArea *area : std::as_const(pages))
+    for (PrefPageScrollArea *area : std::as_const(pages)) {
         area->page->loadSettings();
+    }
 }
 
 void PrefDialog::updateWidgetsDefault()
 {
-    for (PrefPageScrollArea *area : std::as_const(pages))
+    for (PrefPageScrollArea *area : std::as_const(pages)) {
         area->page->loadDefaults();
+    }
 }
 
 void PrefDialog::updateSettings()
 {
-    for (PrefPageScrollArea *area : std::as_const(pages))
+    for (PrefPageScrollArea *area : std::as_const(pages)) {
         area->page->updateSettings();
+    }
 }
 
 void PrefDialog::calculateRecommendedSettings()
@@ -127,12 +131,15 @@ void PrefDialog::saveState(KSharedConfigPtr cfg)
 
 bool PrefDialog::hasChanged()
 {
-    if (KConfigDialog::hasChanged())
+    if (KConfigDialog::hasChanged()) {
         return true;
+    }
 
-    for (PrefPageScrollArea *area : std::as_const(pages))
-        if (area->page->customWidgetsChanged())
+    for (PrefPageScrollArea *area : std::as_const(pages)) {
+        if (area->page->customWidgetsChanged()) {
             return true;
+        }
+    }
 
     return false;
 }

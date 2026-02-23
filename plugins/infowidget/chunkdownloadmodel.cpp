@@ -82,8 +82,9 @@ ChunkDownloadModel::~ChunkDownloadModel()
 
 void ChunkDownloadModel::downloadAdded(bt::ChunkDownloadInterface *cd)
 {
-    if (!tc)
+    if (!tc) {
         return;
+    }
 
     bt::ChunkDownloadInterface::Stats stats;
     cd->getStats(stats);
@@ -93,13 +94,15 @@ void ChunkDownloadModel::downloadAdded(bt::ChunkDownloadInterface *cd)
         for (Uint32 i = 0; i < tc.data()->getNumFiles(); i++) {
             const bt::TorrentFileInterface &tf = tc.data()->getTorrentFile(i);
             if (stats.chunk_index >= tf.getFirstChunk() && stats.chunk_index <= tf.getLastChunk()) {
-                if (n > 0)
+                if (n > 0) {
                     files += QStringLiteral(", ");
+                }
 
                 files += tf.getUserModifiedPath();
                 n++;
-            } else if (stats.chunk_index < tf.getFirstChunk())
+            } else if (stats.chunk_index < tf.getFirstChunk()) {
                 break;
+            }
         }
     }
 
@@ -150,38 +153,43 @@ void ChunkDownloadModel::update()
 
     for (Item *i : std::as_const(items)) {
         if (i->changed()) {
-            if (lowest == -1)
+            if (lowest == -1) {
                 lowest = idx;
+            }
             highest = idx;
         }
         idx++;
     }
 
     // emit only one data changed signal
-    if (lowest != -1)
+    if (lowest != -1) {
         Q_EMIT dataChanged(index(lowest, 1), index(highest, 3));
+    }
 }
 
 int ChunkDownloadModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return items.count();
+    }
 }
 
 int ChunkDownloadModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return 5;
+    }
 }
 
 QVariant ChunkDownloadModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation != Qt::Horizontal)
+    if (orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole) {
         switch (section) {
@@ -220,21 +228,24 @@ QVariant ChunkDownloadModel::headerData(int section, Qt::Orientation orientation
 
 QModelIndex ChunkDownloadModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (!hasIndex(row, column, parent) || parent.isValid())
+    if (!hasIndex(row, column, parent) || parent.isValid()) {
         return QModelIndex();
-    else
+    } else {
         return createIndex(row, column, items[row]);
+    }
 }
 
 QVariant ChunkDownloadModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() >= items.count() || index.row() < 0)
+    if (!index.isValid() || index.row() >= items.count() || index.row() < 0) {
         return QVariant();
+    }
 
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole) {
         return items[index.row()]->data(index.column());
-    else if (role == Qt::UserRole)
+    } else if (role == Qt::UserRole) {
         return items[index.row()]->sortData(index.column());
+    }
 
     return QVariant();
 }
@@ -242,8 +253,9 @@ QVariant ChunkDownloadModel::data(const QModelIndex &index, int role) const
 bool ChunkDownloadModel::removeRows(int row, int count, const QModelIndex & /*parent*/)
 {
     beginRemoveRows(QModelIndex(), row, row + count - 1);
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < count; i++) {
         delete items[row + i];
+    }
     items.remove(row, count);
     endRemoveRows();
     return true;

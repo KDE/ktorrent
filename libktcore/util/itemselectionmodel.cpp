@@ -25,14 +25,17 @@ void ItemSelectionModel::select(const QModelIndex &index, QItemSelectionModel::S
 
 void ItemSelectionModel::select(const QItemSelection &sel, QItemSelectionModel::SelectionFlags command)
 {
-    if (command == NoUpdate)
+    if (command == NoUpdate) {
         return;
+    }
 
-    if (command & QItemSelectionModel::Clear)
+    if (command & QItemSelectionModel::Clear) {
         selection.clear();
+    }
 
-    for (const QItemSelectionRange &r : sel)
+    for (const QItemSelectionRange &r : sel) {
         doRange(r, command);
+    }
 
     QItemSelectionModel::select(sel, command);
 }
@@ -41,18 +44,20 @@ void ItemSelectionModel::doRange(const QItemSelectionRange r, QItemSelectionMode
 {
     for (int i = r.topLeft().row(); i <= r.bottomRight().row(); i++) {
         void *item = model()->index(i, 0).internalPointer();
-        if (!item)
+        if (!item) {
             continue;
+        }
 
         if (command & QItemSelectionModel::Select) {
             selection.insert(item);
         } else if (command & QItemSelectionModel::Deselect) {
             selection.remove(item);
         } else if (command & QItemSelectionModel::Toggle) {
-            if (selection.contains(item))
+            if (selection.contains(item)) {
                 selection.remove(item);
-            else
+            } else {
                 selection.insert(item);
+            }
         }
     }
 }

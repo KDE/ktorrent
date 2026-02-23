@@ -81,8 +81,9 @@ StatusTab::~StatusTab()
 
 void StatusTab::changeTC(bt::TorrentInterface *tc)
 {
-    if (tc == curr_tc.data())
+    if (tc == curr_tc.data()) {
         return;
+    }
 
     curr_tc = tc;
 
@@ -96,14 +97,16 @@ void StatusTab::changeTC(bt::TorrentInterface *tc)
 
         // Don't allow multiple lines in the comments field
         QString text = tc->getComments();
-        if (text.contains(QLatin1String("\n")))
+        if (text.contains(QLatin1String("\n"))) {
             text = text.replace(QLatin1Char('\n'), QLatin1Char(' '));
+        }
 
         // Make links clickable
         QStringList words = text.split(QLatin1Char(' '), Qt::KeepEmptyParts);
         for (QString &w : words) {
-            if (w.startsWith(QLatin1String("http://")) || w.startsWith(QLatin1String("https://")) || w.startsWith(QLatin1String("ftp://")))
+            if (w.startsWith(QLatin1String("http://")) || w.startsWith(QLatin1String("https://")) || w.startsWith(QLatin1String("ftp://"))) {
                 w = QStringLiteral("<a href=\"") + w + QStringLiteral("\">") + w + QStringLiteral("</a>");
+            }
         }
 
         comments->setText(words.join(QStringLiteral(" ")));
@@ -145,8 +148,9 @@ void StatusTab::changeTC(bt::TorrentInterface *tc)
 
 void StatusTab::update()
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     bt::TorrentInterface *tc = curr_tc.data();
     const bt::TorrentStats &s = tc->getStats();
@@ -155,11 +159,13 @@ void StatusTab::update()
     availability_bar->updateBar();
 
     float ratio = s.shareRatio();
-    if (!ratio_limit->hasFocus())
+    if (!ratio_limit->hasFocus()) {
         maxRatioUpdate();
+    }
 
-    if (!time_limit->hasFocus())
+    if (!time_limit->hasFocus()) {
         maxSeedTimeUpdate();
+    }
 
     static QLocale locale;
     share_ratio->setText(QStringLiteral("<font color=\"%1\">%2</font>")
@@ -179,10 +185,11 @@ void StatusTab::update()
         avg_down_speed->setText(BytesPerSecToString(0));
     } else {
         double r = 0;
-        if (s.imported_bytes <= s.bytes_downloaded)
+        if (s.imported_bytes <= s.bytes_downloaded) {
             r = (double)(s.bytes_downloaded - s.imported_bytes);
-        else
+        } else {
             r = (double)s.bytes_downloaded;
+        }
 
         avg_down_speed->setText(BytesPerSecToString(r / secs));
     }
@@ -190,16 +197,18 @@ void StatusTab::update()
 
 void StatusTab::maxRatioChanged(double v)
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     curr_tc.data()->setMaxShareRatio(v);
 }
 
 void StatusTab::useRatioLimitToggled(bool state)
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     bt::TorrentInterface *tc = curr_tc.data();
 
@@ -225,22 +234,25 @@ void StatusTab::useRatioLimitToggled(bool state)
 
 void StatusTab::maxRatioUpdate()
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     float ratio = curr_tc.data()->getMaxShareRatio();
     if (ratio > 0.00f) {
         // only update when needed
-        if (ratio_limit->isEnabled() && use_ratio_limit->isChecked() && ratio_limit->value() == ratio)
+        if (ratio_limit->isEnabled() && use_ratio_limit->isChecked() && ratio_limit->value() == ratio) {
             return;
+        }
 
         ratio_limit->setEnabled(true);
         use_ratio_limit->setChecked(true);
         ratio_limit->setValue(ratio);
     } else {
         // only update when needed
-        if (!ratio_limit->isEnabled() && !use_ratio_limit->isChecked() && ratio_limit->value() != 0.00f)
+        if (!ratio_limit->isEnabled() && !use_ratio_limit->isChecked() && ratio_limit->value() != 0.00f) {
             return;
+        }
 
         ratio_limit->setEnabled(false);
         use_ratio_limit->setChecked(false);
@@ -250,22 +262,25 @@ void StatusTab::maxRatioUpdate()
 
 void StatusTab::maxSeedTimeUpdate()
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     float time = curr_tc.data()->getMaxSeedTime();
     if (time > 0.00f) {
         // only update when needed
-        if (time_limit->isEnabled() && use_time_limit->isChecked() && time_limit->value() == time)
+        if (time_limit->isEnabled() && use_time_limit->isChecked() && time_limit->value() == time) {
             return;
+        }
 
         time_limit->setEnabled(true);
         use_time_limit->setChecked(true);
         time_limit->setValue(time);
     } else {
         // only update when needed
-        if (!time_limit->isEnabled() && !use_time_limit->isChecked() && time_limit->value() != 0.00f)
+        if (!time_limit->isEnabled() && !use_time_limit->isChecked() && time_limit->value() != 0.00f) {
             return;
+        }
 
         time_limit->setEnabled(false);
         use_time_limit->setChecked(false);
@@ -275,8 +290,9 @@ void StatusTab::maxSeedTimeUpdate()
 
 void StatusTab::useTimeLimitToggled(bool on)
 {
-    if (!curr_tc)
+    if (!curr_tc) {
         return;
+    }
 
     bt::TorrentInterface *tc = curr_tc.data();
     time_limit->setEnabled(on);
@@ -293,8 +309,9 @@ void StatusTab::useTimeLimitToggled(bool on)
 
 void StatusTab::maxTimeChanged(double v)
 {
-    if (curr_tc)
+    if (curr_tc) {
         curr_tc.data()->setMaxSeedTime(v);
+    }
 }
 
 void StatusTab::linkActivated(const QString &link)

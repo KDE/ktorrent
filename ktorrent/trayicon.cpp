@@ -64,8 +64,9 @@ TrayIcon::~TrayIcon()
 
 void TrayIcon::hide()
 {
-    if (!status_notifier_item)
+    if (!status_notifier_item) {
         return;
+    }
 
     delete status_notifier_item;
     status_notifier_item = nullptr;
@@ -113,14 +114,16 @@ void TrayIcon::show()
     status_notifier_item->setContextMenu(menu);
 
     queue_suspended = core->getQueueManager()->getSuspendedState();
-    if (queue_suspended)
+    if (queue_suspended) {
         status_notifier_item->setOverlayIconByName(QStringLiteral("kt-pause"));
+    }
 }
 
 void TrayIcon::updateStats(const CurrentStats &stats)
 {
-    if (!status_notifier_item)
+    if (!status_notifier_item) {
         return;
+    }
 
     status_notifier_item->setStatus(core->getQueueManager()->getNumRunning(QueueManager::DOWNLOADS) > 0 ? KStatusNotifierItem::Active
                                                                                                         : KStatusNotifierItem::Passive);
@@ -139,30 +142,34 @@ void TrayIcon::updateStats(const CurrentStats &stats)
 
 void TrayIcon::showPassivePopup(const QString &msg, const QString &title)
 {
-    if (status_notifier_item)
+    if (status_notifier_item) {
         status_notifier_item->showMessage(title, msg, QStringLiteral("ktorrent"));
+    }
 }
 
 void TrayIcon::cannotLoadTorrentSilently(const QString &msg)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     KNotification::event(QStringLiteral("CannotLoadSilently"), msg, QPixmap());
 }
 
 void TrayIcon::dhtNotEnabled(const QString &msg)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     KNotification::event(QStringLiteral("DHTNotEnabled"), msg, QPixmap());
 }
 
 void TrayIcon::torrentSilentlyOpened(bt::TorrentInterface *tc)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     QString msg = i18n("<b>%1</b> was silently opened.", tc->getDisplayName());
     KNotification::event(QStringLiteral("TorrentSilentlyOpened"), msg, QPixmap());
@@ -170,8 +177,9 @@ void TrayIcon::torrentSilentlyOpened(bt::TorrentInterface *tc)
 
 void TrayIcon::finished(bt::TorrentInterface *tc)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     const TorrentStats &s = tc->getStats();
     double speed_up = (double)s.bytes_uploaded;
@@ -189,8 +197,9 @@ void TrayIcon::finished(bt::TorrentInterface *tc)
 
 void TrayIcon::maxShareRatioReached(bt::TorrentInterface *tc)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     const TorrentStats &s = tc->getStats();
     double speed_up = (double)s.bytes_uploaded;
@@ -208,8 +217,9 @@ void TrayIcon::maxShareRatioReached(bt::TorrentInterface *tc)
 
 void TrayIcon::maxSeedTimeReached(bt::TorrentInterface *tc)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     const TorrentStats &s = tc->getStats();
     double speed_up = (double)s.bytes_uploaded;
@@ -227,8 +237,9 @@ void TrayIcon::maxSeedTimeReached(bt::TorrentInterface *tc)
 
 void TrayIcon::torrentStoppedByError(bt::TorrentInterface *tc, QString msg)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2", tc->getDisplayName(), msg);
 
@@ -237,8 +248,9 @@ void TrayIcon::torrentStoppedByError(bt::TorrentInterface *tc, QString msg)
 
 void TrayIcon::corruptedData(bt::TorrentInterface *tc)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     QString err_msg = i18n(
         "Corrupted data has been found in the torrent <b>%1</b>"
@@ -250,33 +262,36 @@ void TrayIcon::corruptedData(bt::TorrentInterface *tc)
 
 void TrayIcon::queuingNotPossible(bt::TorrentInterface *tc)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     const TorrentStats &s = tc->getStats();
 
     QString msg;
 
-    if (tc->overMaxRatio())
+    if (tc->overMaxRatio()) {
         msg = i18n(
             "<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
             "<br>Remove the limit manually if you want to continue seeding.",
             tc->getDisplayName(),
             QLocale().toString(s.max_share_ratio, 'f', 2));
-    else
+    } else {
         msg = i18n(
             "<b>%1</b> has reached its maximum seed time of %2 hours and cannot be enqueued. "
             "<br>Remove the limit manually if you want to continue seeding.",
             tc->getDisplayName(),
             QLocale().toString(s.max_seed_time, 'f', 2));
+    }
 
     KNotification::event(QStringLiteral("QueueNotPossible"), msg, QPixmap());
 }
 
 void TrayIcon::canNotStart(bt::TorrentInterface *tc, bt::TorrentStartResponse reason)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     QString msg = i18n("Cannot start <b>%1</b>: <br>", tc->getDisplayName());
     switch (reason) {
@@ -301,13 +316,15 @@ void TrayIcon::canNotStart(bt::TorrentInterface *tc, bt::TorrentStartResponse re
 
 void TrayIcon::lowDiskSpace(bt::TorrentInterface *tc, bool stopped)
 {
-    if (!Settings::showPopups())
+    if (!Settings::showPopups()) {
         return;
+    }
 
     QString msg = i18n("Your disk is running out of space.<br /><b>%1</b> is being downloaded to '%2'.", tc->getDisplayName(), tc->getDataDir());
 
-    if (stopped)
+    if (stopped) {
         msg.prepend(i18n("Torrent has been stopped.<br />"));
+    }
 
     KNotification::event(QStringLiteral("LowDiskSpace"), msg);
 }
@@ -342,25 +359,27 @@ void SetMaxRate::makeMenu()
     int delta = 0;
     int maxBandwidthRounded;
 
-    if (type == UPLOAD)
+    if (type == UPLOAD) {
         setTitle(i18n("Upload speed limit in KiB/s"));
-    else
+    } else {
         setTitle(i18n("Download speed limit in KiB/s"));
+    }
 
     unlimited = addAction(i18n("Unlimited"));
     unlimited->setCheckable(true);
     unlimited->setChecked(rate == 0);
 
-    if ((maxBandwidth % 5) >= 3)
+    if ((maxBandwidth % 5) >= 3) {
         maxBandwidthRounded = maxBandwidth + 5 - (maxBandwidth % 5);
-    else
+    } else {
         maxBandwidthRounded = maxBandwidth - (maxBandwidth % 5);
+    }
 
     QList<int> values;
     for (int i = 0; i < 15; i++) {
-        if (delta == 0)
+        if (delta == 0) {
             values.append(maxBandwidth);
-        else {
+        } else {
             if ((maxBandwidth % 5) != 0) {
                 values.append(maxBandwidthRounded - delta);
                 values.append(maxBandwidthRounded + delta);
@@ -392,10 +411,11 @@ void SetMaxRate::update()
 void SetMaxRate::onTriggered(QAction *act)
 {
     int rate;
-    if (act == unlimited)
+    if (act == unlimited) {
         rate = 0;
-    else
+    } else {
         rate = act->text().remove(QLatin1Char('&')).toInt(); // remove ampersands
+    }
 
     if (type == UPLOAD) {
         Settings::setMaxUploadRate(rate);
@@ -410,8 +430,9 @@ void SetMaxRate::onTriggered(QAction *act)
 void TrayIcon::suspendStateChanged(bool suspended)
 {
     queue_suspended = suspended;
-    if (status_notifier_item)
+    if (status_notifier_item) {
         status_notifier_item->setOverlayIconByName(suspended ? QStringLiteral("kt-pause") : QString());
+    }
 }
 
 void TrayIcon::secondaryActivate(const QPoint &pos)

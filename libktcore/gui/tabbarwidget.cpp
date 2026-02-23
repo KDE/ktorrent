@@ -39,12 +39,14 @@ void ActionGroup::removeAction(QAction *act)
 void ActionGroup::toggled(bool on)
 {
     QAction *act = qobject_cast<QAction *>(sender());
-    if (!act)
+    if (!act) {
         return;
+    }
 
     for (QAction *a : std::as_const(actions)) {
-        if (a != act)
+        if (a != act) {
             a->setChecked(false);
+        }
     }
 
     act->setChecked(on);
@@ -98,8 +100,9 @@ void TabBarWidget::addTab(QWidget *ti, const QString &text, const QString &icon,
 void TabBarWidget::removeTab(QWidget *ti)
 {
     QMap<QWidget *, QAction *>::iterator itr = widget_to_action.find(ti);
-    if (itr == widget_to_action.end())
+    if (itr == widget_to_action.end()) {
         return;
+    }
 
     tab_bar->removeAction(itr.value());
     action_group->removeAction(itr.value());
@@ -128,8 +131,9 @@ void TabBarWidget::removeTab(QWidget *ti)
 void TabBarWidget::changeTabIcon(QWidget *ti, const QString &icon)
 {
     QMap<QWidget *, QAction *>::iterator itr = widget_to_action.find(ti);
-    if (itr == widget_to_action.end())
+    if (itr == widget_to_action.end()) {
         return;
+    }
 
     itr.value()->setIcon(QIcon::fromTheme(icon));
 }
@@ -137,8 +141,9 @@ void TabBarWidget::changeTabIcon(QWidget *ti, const QString &icon)
 void TabBarWidget::changeTabText(QWidget *ti, const QString &text)
 {
     QMap<QWidget *, QAction *>::iterator itr = widget_to_action.find(ti);
-    if (itr == widget_to_action.end())
+    if (itr == widget_to_action.end()) {
         return;
+    }
 
     itr.value()->setText(text);
 }
@@ -160,25 +165,29 @@ void TabBarWidget::onActionTriggered(QAction *act)
     QWidget *ti = nullptr;
     QMap<QWidget *, QAction *>::iterator i = widget_to_action.begin();
     while (i != widget_to_action.end() && !ti) {
-        if (i.value() == act)
+        if (i.value() == act) {
             ti = i.key();
+        }
         i++;
     }
 
-    if (!ti)
+    if (!ti) {
         return;
+    }
 
     if (ti == widget_stack->currentWidget()) {
         // it is the current tab
-        if (act->isChecked())
+        if (act->isChecked()) {
             unshrink();
-        else
+        } else {
             shrink();
+        }
     } else {
         // change the current in stack
         widget_stack->setCurrentWidget(ti);
-        if (shrunken)
+        if (shrunken) {
             unshrink();
+        }
     }
 }
 
@@ -188,8 +197,9 @@ void TabBarWidget::saveState(KSharedConfigPtr cfg, const QString &group)
 
     KConfigGroup g = cfg->group(group);
     g.writeEntry("shrunken", shrunken);
-    if (current)
+    if (current) {
         g.writeEntry("current_tab", widget_to_action[current]->text());
+    }
 }
 
 void TabBarWidget::loadState(KSharedConfigPtr cfg, const QString &group)
@@ -198,10 +208,11 @@ void TabBarWidget::loadState(KSharedConfigPtr cfg, const QString &group)
 
     bool tmp = g.readEntry("shrunken", true);
     if (tmp != shrunken) {
-        if (tmp)
+        if (tmp) {
             shrink();
-        else
+        } else {
             unshrink();
+        }
     }
 
     QString ctab = g.readPathEntry("current_tab", QString());
@@ -216,8 +227,9 @@ void TabBarWidget::loadState(KSharedConfigPtr cfg, const QString &group)
 
 void TabBarWidget::toolButtonStyleChanged(Qt::ToolButtonStyle style)
 {
-    if (style != Qt::ToolButtonTextBesideIcon)
+    if (style != Qt::ToolButtonTextBesideIcon) {
         QTimer::singleShot(0, this, &TabBarWidget::setToolButtonStyle);
+    }
 }
 
 void TabBarWidget::setToolButtonStyle()

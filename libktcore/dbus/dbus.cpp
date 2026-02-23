@@ -58,8 +58,9 @@ DBus::DBus(GUIInterface *gui, CoreInterface *core, QObject *parent)
     connect(gman, &kt::GroupManager::groupRemoved, this, &DBus::groupRemoved);
     kt::GroupManager::Itr i = gman->begin();
     while (i != gman->end()) {
-        if (i->second->groupFlags() & Group::CUSTOM_GROUP)
+        if (i->second->groupFlags() & Group::CUSTOM_GROUP) {
             groupAdded(i->second);
+        }
         i++;
     }
 
@@ -85,8 +86,9 @@ QStringList DBus::torrents()
 void DBus::start(const QString &info_hash)
 {
     DBusTorrent *tc = torrent_map.find(info_hash);
-    if (!tc)
+    if (!tc) {
         return;
+    }
 
     core->getQueueManager()->start(tc->torrent());
 }
@@ -94,8 +96,9 @@ void DBus::start(const QString &info_hash)
 void DBus::stop(const QString &info_hash)
 {
     DBusTorrent *tc = torrent_map.find(info_hash);
-    if (!tc)
+    if (!tc) {
         return;
+    }
 
     core->getQueueManager()->stop(tc->torrent());
 }
@@ -161,8 +164,9 @@ QStringList DBus::groups() const
     kt::GroupManager *gman = core->getGroupManager();
     kt::GroupManager::Itr i = gman->begin();
     while (i != gman->end()) {
-        if (i->second->groupFlags() & Group::CUSTOM_GROUP)
+        if (i->second->groupFlags() & Group::CUSTOM_GROUP) {
             ret << i->first;
+        }
         i++;
     }
     return ret;
@@ -178,8 +182,9 @@ bool DBus::removeGroup(const QString &group)
 {
     kt::GroupManager *gman = core->getGroupManager();
     Group *g = gman->find(group);
-    if (!g)
+    if (!g) {
         return false;
+    }
 
     gman->removeGroup(g);
     return true;
@@ -187,8 +192,9 @@ bool DBus::removeGroup(const QString &group)
 
 void DBus::groupAdded(kt::Group *g)
 {
-    if (g->groupFlags() & Group::CUSTOM_GROUP)
+    if (g->groupFlags() & Group::CUSTOM_GROUP) {
         group_map.insert(g, new DBusGroup(g, core->getGroupManager(), this));
+    }
 }
 
 void DBus::groupRemoved(kt::Group *g)
@@ -206,8 +212,9 @@ QObject *DBus::group(const QString &name)
     kt::GroupManager *gman = core->getGroupManager();
     kt::GroupManager::Itr i = gman->begin();
     while (i != gman->end()) {
-        if (i->first == name)
+        if (i->first == name) {
             return group_map.find(i->second);
+        }
         i++;
     }
     return nullptr;
@@ -221,8 +228,9 @@ void DBus::log(const QString &line)
 void DBus::remove(const QString &info_hash, bool data_to)
 {
     DBusTorrent *tc = torrent_map.find(info_hash);
-    if (!tc)
+    if (!tc) {
         return;
+    }
 
     core->remove(tc->torrent(), data_to);
 }
@@ -235,8 +243,9 @@ void DBus::removeDelayed(const QString &info_hash, bool data_to)
 
 void DBus::delayedTorrentRemoval()
 {
-    for (QMap<QString, bool>::const_iterator i = delayed_removal_map.cbegin(); i != delayed_removal_map.cend(); i++)
+    for (QMap<QString, bool>::const_iterator i = delayed_removal_map.cbegin(); i != delayed_removal_map.cend(); i++) {
         remove(i.key(), i.value());
+    }
 
     delayed_removal_map.clear();
 }

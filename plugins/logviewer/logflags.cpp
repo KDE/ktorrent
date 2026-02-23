@@ -37,8 +37,9 @@ bool LogFlags::checkFlags(unsigned int arg)
     QList<LogFlag>::iterator i = log_flags.begin();
     while (i != log_flags.end()) {
         const LogFlag &f = *i;
-        if (f.id & arg)
+        if (f.id & arg) {
             return f.flag & arg;
+        }
         i++;
     }
 
@@ -61,15 +62,17 @@ void LogFlags::updateFlags()
 
 QString LogFlags::getFormattedMessage(unsigned int arg, const QString &line)
 {
-    if ((arg & LOG_ALL) == LOG_ALL)
+    if ((arg & LOG_ALL) == LOG_ALL) {
         return line;
+    }
 
     if (arg & 0x04) { // Debug
         return QStringLiteral("<font color=\"#646464\">%1</font>").arg(line);
     }
 
-    if (arg & 0x02) // Notice
+    if (arg & 0x02) { // Notice
         return line;
+    }
 
     if (arg & 0x01) { // Important
         return QStringLiteral("<b>%1</b>").arg(line);
@@ -80,24 +83,27 @@ QString LogFlags::getFormattedMessage(unsigned int arg, const QString &line)
 
 int LogFlags::rowCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return log_flags.count();
-    else
+    } else {
         return 0;
+    }
 }
 
 int LogFlags::columnCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return 2;
-    else
+    } else {
         return 0;
+    }
 }
 
 QVariant LogFlags::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+    if (role != Qt::DisplayRole || orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:
@@ -111,8 +117,9 @@ QVariant LogFlags::headerData(int section, Qt::Orientation orientation, int role
 
 QVariant LogFlags::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole) {
         const LogFlag &f = log_flags.at(index.row());
@@ -134,12 +141,14 @@ QVariant LogFlags::data(const QModelIndex &index, int role) const
 
 bool LogFlags::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() || role != Qt::EditRole || index.column() != 1)
+    if (!index.isValid() || role != Qt::EditRole || index.column() != 1) {
         return false;
+    }
 
     bt::Uint32 flag = value.toUInt();
-    if (flag != LOG_ALL && flag != LOG_NONE && flag != LOG_DEBUG && flag != LOG_NOTICE && flag != LOG_IMPORTANT)
+    if (flag != LOG_ALL && flag != LOG_NONE && flag != LOG_DEBUG && flag != LOG_NOTICE && flag != LOG_IMPORTANT) {
         return false;
+    }
 
     LogFlag &f = log_flags[index.row()];
     f.flag = flag;
@@ -154,13 +163,15 @@ bool LogFlags::setData(const QModelIndex &index, const QVariant &value, int role
 
 Qt::ItemFlags LogFlags::flags(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return Qt::ItemIsEnabled;
+    }
 
-    if (index.column() == 1)
+    if (index.column() == 1) {
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
-    else
+    } else {
         return QAbstractItemModel::flags(index);
+    }
 }
 
 bool LogFlags::removeRows(int row, int count, const QModelIndex &parent)

@@ -144,8 +144,9 @@ void ScheduleEditor::addItem()
         clear_action->setEnabled(true);
         view->addScheduleItem(item);
         Q_EMIT scheduleChanged();
-    } else
+    } else {
         delete item;
+    }
 }
 
 void ScheduleEditor::removeItem()

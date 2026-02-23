@@ -28,10 +28,11 @@ AvailabilityChunkBar::~AvailabilityChunkBar()
 
 const bt::BitSet &AvailabilityChunkBar::getBitSet() const
 {
-    if (curr_tc)
+    if (curr_tc) {
         return curr_tc->availableChunksBitSet();
-    else
+    } else {
         return bt::BitSet::null;
+    }
 }
 
 void AvailabilityChunkBar::setTC(bt::TorrentInterface *tc)

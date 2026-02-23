@@ -19,8 +19,9 @@ namespace kt
 static QString RandomID()
 {
     Uint32 data[5];
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++) {
         data[i] = QRandomGenerator::global()->generate();
+    }
     return QStringLiteral("filter:%1").arg(SHA1Hash::generate(reinterpret_cast<Uint8 *>(data), 20).toString());
 }
 
@@ -75,12 +76,14 @@ bool Filter::getSeasonAndEpisode(const QString &title, int &season, int &episode
             QString e = exp.cap(2); // Episode
             bool ok = false;
             season = s.toInt(&ok);
-            if (!ok)
+            if (!ok) {
                 continue;
+            }
 
             episode = e.toInt(&ok);
-            if (!ok)
+            if (!ok) {
                 continue;
+            }
 
             return true;
         }
@@ -103,18 +106,20 @@ bool Filter::match(Syndication::ItemPtr item)
         tmp.setCaseSensitivity(case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
         tmp.setPatternSyntax(use_regular_expressions ? QRegExp::RegExp : QRegExp::Wildcard);
         if (all_word_matches_must_match) {
-            if (!match(item->title(), tmp))
+            if (!match(item->title(), tmp)) {
                 return false;
-            else
+            } else {
                 found_match = true;
+            }
         } else if (match(item->title(), tmp)) {
             found_match = true;
             break;
         }
     }
 
-    if (!found_match)
+    if (!found_match) {
         return false;
+    }
 
     found_match = false;
     for (const QRegExp &exp : std::as_const(exclusion_patterns)) {
@@ -125,20 +130,24 @@ bool Filter::match(Syndication::ItemPtr item)
             if (!match(item->title(), tmp)) {
                 found_match = false;
                 break;
-            } else
+            } else {
                 found_match = true;
-        } else if (match(item->title(), tmp))
+            }
+        } else if (match(item->title(), tmp)) {
             return false;
+        }
     }
 
-    if (found_match)
+    if (found_match) {
         return false;
+    }
 
     if (use_season_and_episode_matching) {
         int season = 0;
         int episode = 0;
-        if (!getSeasonAndEpisode(item->title(), season, episode))
+        if (!getSeasonAndEpisode(item->title(), season, episode)) {
             return false;
+        }
 
         bool found = false;
         for (const Range &r : std::as_const(seasons)) {
@@ -148,8 +157,9 @@ bool Filter::match(Syndication::ItemPtr item)
             }
         }
 
-        if (!found)
+        if (!found) {
             return false;
+        }
 
         found = false;
         for (const Range &r : std::as_const(episodes)) {
@@ -159,13 +169,15 @@ bool Filter::match(Syndication::ItemPtr item)
             }
         }
 
-        if (!found)
+        if (!found) {
             return false;
+        }
 
         if (no_duplicate_se_matches) {
             MatchedSeasonAndEpisode se = {season, episode};
-            if (se_matches.contains(se))
+            if (se_matches.contains(se)) {
                 return false;
+            }
 
             se_matches.append(se);
         }
@@ -200,18 +212,21 @@ bool Filter::stringToRange(const QString &s, Range &r)
     if (tmp.contains(QLatin1Char('-'))) {
         // It's a range
         QStringList parts = s.split(QStringLiteral("-"));
-        if (parts.count() != 2)
+        if (parts.count() != 2) {
             return false;
+        }
 
         bool ok = false;
         int start = parts[0].trimmed().toInt(&ok);
-        if (!ok || start < 0)
+        if (!ok || start < 0) {
             return false;
+        }
 
         ok = false;
         int end = parts[1].trimmed().toInt(&ok);
-        if (!ok || end < 0)
+        if (!ok || end < 0) {
             return false;
+        }
 
         r.start = start;
         r.end = end;
@@ -219,8 +234,9 @@ bool Filter::stringToRange(const QString &s, Range &r)
         // It's a number
         bool ok = false;
         int num = tmp.toInt(&ok);
-        if (!ok || num < 0)
+        if (!ok || num < 0) {
             return false;
+        }
 
         r.start = r.end = num;
     }
@@ -234,10 +250,11 @@ bool Filter::parseNumbersString(const QString &s, QList<Range> &numbers)
     const QStringList parts = s.split(QStringLiteral(","));
     for (const QString &p : parts) {
         Range r = {0, 0};
-        if (stringToRange(p, r))
+        if (stringToRange(p, r)) {
             results.append(r);
-        else
+        } else {
             return false;
+        }
     }
 
     numbers.clear();
@@ -280,13 +297,15 @@ void Filter::save(bt::BEncoder &enc)
     enc.write(QByteArrayLiteral("exclusion_all_must_match"), exclusion_all_must_match);
     enc.write(QByteArrayLiteral("word_matches"));
     enc.beginList();
-    for (const QRegExp &exp : std::as_const(word_matches))
+    for (const QRegExp &exp : std::as_const(word_matches)) {
         enc.write(exp.pattern().toUtf8());
+    }
     enc.end();
     enc.write(QByteArrayLiteral("exclusion_patterns"));
     enc.beginList();
-    for (const QRegExp &exp : std::as_const(exclusion_patterns))
+    for (const QRegExp &exp : std::as_const(exclusion_patterns)) {
         enc.write(exp.pattern().toUtf8());
+    }
     enc.end();
     enc.write(QByteArrayLiteral("use_season_and_episode_matching"), use_season_and_episode_matching);
     enc.write(QByteArrayLiteral("no_duplicate_se_matches"), no_duplicate_se_matches);
@@ -294,12 +313,15 @@ void Filter::save(bt::BEncoder &enc)
     enc.write(QByteArrayLiteral("episodes"), episodes_string.toUtf8());
     enc.write(QByteArrayLiteral("download_matching"), download_matching);
     enc.write(QByteArrayLiteral("download_non_matching"), download_non_matching);
-    if (!dest_group.isEmpty())
+    if (!dest_group.isEmpty()) {
         enc.write(QByteArrayLiteral("group"), dest_group.toUtf8());
-    if (!download_location.isEmpty())
+    }
+    if (!download_location.isEmpty()) {
         enc.write(QByteArrayLiteral("download_location"), download_location.toUtf8());
-    if (!move_on_completion_location.isEmpty())
+    }
+    if (!move_on_completion_location.isEmpty()) {
         enc.write(QByteArrayLiteral("move_on_completion_location"), move_on_completion_location.toUtf8());
+    }
     enc.write(QByteArrayLiteral("silently"), silent);
     enc.write(QByteArrayLiteral("use_regular_expressions"), use_regular_expressions);
     enc.write(QByteArrayLiteral("exclusion_reg_exp"), exclusion_reg_exp);
@@ -309,115 +331,136 @@ void Filter::save(bt::BEncoder &enc)
 bool Filter::load(bt::BDictNode *dict)
 {
     BValueNode *vn = dict->getValue("name");
-    if (!vn)
+    if (!vn) {
         return false;
+    }
 
     name = vn->data().toString();
 
     vn = dict->getValue("id");
-    if (vn)
+    if (vn) {
         id = vn->data().toString();
+    }
 
     vn = dict->getValue("case_sensitive");
-    if (!vn)
+    if (!vn) {
         return false;
+    }
 
     case_sensitive = vn->data().toInt() == 1;
 
     vn = dict->getValue("all_word_matches_must_match");
-    if (!vn)
+    if (!vn) {
         return false;
+    }
 
     all_word_matches_must_match = vn->data().toInt() == 1;
 
     vn = dict->getValue("exclusion_case_sensitive");
-    if (vn)
+    if (vn) {
         exclusion_case_sensitive = vn->data().toInt() == 1;
+    }
 
     vn = dict->getValue("exclusion_all_must_match");
-    if (vn)
+    if (vn) {
         exclusion_all_must_match = vn->data().toInt() == 1;
+    }
 
     BListNode *ln = dict->getList("word_matches");
-    if (!ln)
+    if (!ln) {
         return false;
+    }
 
     for (Uint32 i = 0; i < ln->getNumChildren(); i++) {
         vn = ln->getValue(i);
-        if (vn)
+        if (vn) {
             word_matches.append(QRegExp(vn->data().toString(), case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
+        }
     }
 
     ln = dict->getList("exclusion_patterns");
     if (ln) {
         for (Uint32 i = 0; i < ln->getNumChildren(); i++) {
             vn = ln->getValue(i);
-            if (vn)
+            if (vn) {
                 exclusion_patterns.append(QRegExp(vn->data().toString(), exclusion_case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
+            }
         }
     }
 
     vn = dict->getValue("use_season_and_episode_matching");
-    if (!vn)
+    if (!vn) {
         return false;
+    }
 
     use_season_and_episode_matching = vn->data().toInt() == 1;
 
     vn = dict->getValue("no_duplicate_se_matches");
-    if (vn)
+    if (vn) {
         no_duplicate_se_matches = vn->data().toInt() == 1;
-    else
+    } else {
         no_duplicate_se_matches = true;
+    }
 
     vn = dict->getValue("seasons");
-    if (!vn)
+    if (!vn) {
         return false;
+    }
 
     setSeasons(vn->data().toString());
 
     vn = dict->getValue("episodes");
-    if (!vn)
+    if (!vn) {
         return false;
+    }
 
     setEpisodes(vn->data().toString());
 
     vn = dict->getValue("download_matching");
-    if (!vn)
+    if (!vn) {
         return false;
+    }
 
     download_matching = vn->data().toInt() == 1;
 
     vn = dict->getValue("download_non_matching");
-    if (!vn)
+    if (!vn) {
         return false;
+    }
 
     download_non_matching = vn->data().toInt() == 1;
 
     vn = dict->getValue("group");
-    if (vn)
+    if (vn) {
         setGroup(vn->data().toString());
+    }
 
     vn = dict->getValue("download_location");
-    if (vn)
+    if (vn) {
         setDownloadLocation(vn->data().toString());
+    }
 
     vn = dict->getValue("move_on_completion_location");
-    if (vn)
+    if (vn) {
         setMoveOnCompletionLocation(vn->data().toString());
+    }
 
     vn = dict->getValue("silently");
-    if (!vn)
+    if (!vn) {
         return false;
+    }
 
     silent = vn->data().toInt() == 1;
 
     vn = dict->getValue("use_regular_expressions");
-    if (vn)
+    if (vn) {
         use_regular_expressions = vn->data().toInt() == 1;
+    }
 
     vn = dict->getValue("exclusion_reg_exp");
-    if (vn)
+    if (vn) {
         exclusion_reg_exp = vn->data().toInt() == 1;
+    }
 
     return true;
 }

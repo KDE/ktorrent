@@ -102,8 +102,9 @@ void RecommendedSettingsDlg::calculate()
     max_downloads = ceil((float)(max_torrents * 2 / 3));
     max_seeds = std::max(max_torrents - max_downloads, (bt::Uint32)1);
 
-    if (m_chk_avg_speed_slot->isChecked())
+    if (m_chk_avg_speed_slot->isChecked()) {
         avg_slot_up = (qreal)m_avg_speed_slot->value();
+    }
 
     if (m_chk_sim_torrents->isChecked()) {
         max_downloads = m_sim_torrents->value();
@@ -113,8 +114,9 @@ void RecommendedSettingsDlg::calculate()
 
     max_slots = floor(upload_rate / (max_torrents * avg_slot_up));
 
-    if (m_chk_slots->isChecked())
+    if (m_chk_slots->isChecked()) {
         max_slots = m_slots->value();
+    }
 
     if (m_chk_avg_speed_slot->isChecked() && m_chk_sim_torrents->isChecked()) {
         max_slots = floor(max_upload_speed / (max_torrents * avg_slot_up));
@@ -132,8 +134,9 @@ void RecommendedSettingsDlg::calculate()
         avg_slot_up = ceil((float)(max_upload_speed / (max_slots * max_torrents))); // real number after the slots have been multiplied with the torrents
     }
 
-    if (max_downloads == 0)
+    if (max_downloads == 0) {
         max_downloads = 1;
+    }
 
     max_conn_glob = std::round(std::min((double)pow((int)(upload_rate * 8), 0.8) + 50, 900.0));
     max_conn_tor = std::round(std::min((qreal)(max_conn_glob * 1.2 / max_torrents), (qreal)max_conn_glob));

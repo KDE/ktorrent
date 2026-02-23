@@ -62,8 +62,9 @@ void SpeedLimitsModel::onTorrentRemoved(bt::TorrentInterface *tc)
     int idx = 0;
     QList<bt::TorrentInterface *>::iterator itr = qman->begin();
     while (itr != qman->end()) {
-        if (*itr == tc)
+        if (*itr == tc) {
             break;
+        }
         idx++;
         itr++;
     }
@@ -74,24 +75,27 @@ void SpeedLimitsModel::onTorrentRemoved(bt::TorrentInterface *tc)
 
 int SpeedLimitsModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return core->getQueueManager()->count();
+    }
 }
 
 int SpeedLimitsModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return 5;
+    }
 }
 
 QVariant SpeedLimitsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+    if (role != Qt::DisplayRole || orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:
@@ -111,12 +115,14 @@ QVariant SpeedLimitsModel::headerData(int section, Qt::Orientation orientation, 
 
 QVariant SpeedLimitsModel::data(const QModelIndex &index, int role) const
 {
-    if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::UserRole)
+    if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::UserRole) {
         return QVariant();
+    }
 
     bt::TorrentInterface *tc = torrentForIndex(index);
-    if (!tc)
+    if (!tc) {
         return QVariant();
+    }
 
     const Limits &lim = limits[tc];
 
@@ -124,25 +130,29 @@ QVariant SpeedLimitsModel::data(const QModelIndex &index, int role) const
     case 0:
         return tc->getDisplayName();
     case 1:
-        if (role == Qt::EditRole || role == Qt::UserRole)
+        if (role == Qt::EditRole || role == Qt::UserRole) {
             return lim.down / 1024;
-        else
+        } else {
             return lim.down == 0 ? i18n("No limit") : BytesPerSecToString(lim.down);
+        }
     case 2:
-        if (role == Qt::EditRole || role == Qt::UserRole)
+        if (role == Qt::EditRole || role == Qt::UserRole) {
             return lim.up / 1024;
-        else
+        } else {
             return lim.up == 0 ? i18n("No limit") : BytesPerSecToString(lim.up);
+        }
     case 3:
-        if (role == Qt::EditRole || role == Qt::UserRole)
+        if (role == Qt::EditRole || role == Qt::UserRole) {
             return lim.assured_down / 1024;
-        else
+        } else {
             return lim.assured_down == 0 ? i18n("No assured speed") : BytesPerSecToString(lim.assured_down);
+        }
     case 4:
-        if (role == Qt::EditRole || role == Qt::UserRole)
+        if (role == Qt::EditRole || role == Qt::UserRole) {
             return lim.assured_up / 1024;
-        else
+        } else {
             return lim.assured_up == 0 ? i18n("No assured speed") : BytesPerSecToString(lim.assured_up);
+        }
     default:
         return QVariant();
     }
@@ -150,12 +160,14 @@ QVariant SpeedLimitsModel::data(const QModelIndex &index, int role) const
 
 bool SpeedLimitsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (role != Qt::EditRole)
+    if (role != Qt::EditRole) {
         return false;
+    }
 
     bt::TorrentInterface *tc = torrentForIndex(index);
-    if (!tc || !limits.contains(tc))
+    if (!tc || !limits.contains(tc)) {
         return false;
+    }
 
     bool ok = false;
     Limits &lim = limits[tc];
@@ -188,13 +200,15 @@ bool SpeedLimitsModel::setData(const QModelIndex &index, const QVariant &value, 
 
 Qt::ItemFlags SpeedLimitsModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return Qt::ItemIsEnabled;
+    }
 
-    if (index.column() > 0)
+    if (index.column() > 0) {
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
-    else
+    } else {
         return QAbstractItemModel::flags(index);
+    }
 }
 
 bt::TorrentInterface *SpeedLimitsModel::torrentForIndex(const QModelIndex &index) const
@@ -204,10 +218,11 @@ bt::TorrentInterface *SpeedLimitsModel::torrentForIndex(const QModelIndex &index
     QList<bt::TorrentInterface *>::iterator itr = qman->begin();
     itr += r;
 
-    if (itr == qman->end())
+    if (itr == qman->end()) {
         return nullptr;
-    else
+    } else {
         return *itr;
+    }
 }
 
 void SpeedLimitsModel::apply()

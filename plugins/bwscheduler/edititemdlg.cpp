@@ -74,8 +74,9 @@ EditItemDlg::~EditItemDlg()
 void EditItemDlg::fromChanged(const QTime &time)
 {
     // ensure that from is always smaller then to
-    if (time >= m_to->time())
+    if (time >= m_to->time()) {
         m_to->setTime(time.addSecs(60));
+    }
 
     fillItem();
     m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
@@ -84,8 +85,9 @@ void EditItemDlg::fromChanged(const QTime &time)
 void EditItemDlg::toChanged(const QTime &time)
 {
     // ensure that from is always smaller then to
-    if (time <= m_from->time())
+    if (time <= m_from->time()) {
         m_from->setTime(time.addSecs(-60));
+    }
 
     fillItem();
     m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
@@ -94,8 +96,9 @@ void EditItemDlg::toChanged(const QTime &time)
 void EditItemDlg::startDayChanged(int idx)
 {
     // Make sure end day is >= start day
-    if (idx > m_end_day->currentIndex())
+    if (idx > m_end_day->currentIndex()) {
         m_end_day->setCurrentIndex(idx);
+    }
 
     fillItem();
     m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
@@ -104,8 +107,9 @@ void EditItemDlg::startDayChanged(int idx)
 void EditItemDlg::endDayChanged(int idx)
 {
     // Make sure end day is >= start day
-    if (idx < m_start_day->currentIndex())
+    if (idx < m_start_day->currentIndex()) {
         m_start_day->setCurrentIndex(idx);
+    }
 
     fillItem();
     m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!schedule->conflicts(item));
@@ -128,8 +132,9 @@ void EditItemDlg::screensaverLimitsToggled(bool on)
 void EditItemDlg::accept()
 {
     fillItem();
-    if (!schedule->conflicts(item))
+    if (!schedule->conflicts(item)) {
         QDialog::accept();
+    }
 }
 
 void EditItemDlg::fillItem()

@@ -55,8 +55,9 @@ void ShutdownPlugin::load()
 {
     rules = new ShutdownRuleSet(getCore(), this);
     rules->load(kt::DataDir() + QStringLiteral("shutdown_rules"));
-    if (rules->enabled())
+    if (rules->enabled()) {
         shutdown_enabled->setChecked(true);
+    }
     connect(rules, &ShutdownRuleSet::shutdown, this, &ShutdownPlugin::shutdownComputer);
     connect(rules, &ShutdownRuleSet::lock, this, &ShutdownPlugin::lock);
     connect(rules, &ShutdownRuleSet::suspendToDisk, this, &ShutdownPlugin::suspendToDisk);
@@ -102,12 +103,14 @@ void ShutdownPlugin::shutdownToggled(bool on)
 {
     if (on && !rules->valid()) {
         configureShutdown();
-        if (rules->valid())
+        if (rules->valid()) {
             rules->setEnabled(on);
-        else
+        } else {
             shutdown_enabled->setChecked(false);
-    } else
+        }
+    } else {
         rules->setEnabled(on);
+    }
 }
 
 void ShutdownPlugin::configureShutdown()

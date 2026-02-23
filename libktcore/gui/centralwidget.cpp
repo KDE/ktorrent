@@ -28,8 +28,9 @@ void CentralWidget::loadState(KSharedConfigPtr cfg)
     KConfigGroup g = cfg->group(QStringLiteral("MainWindow"));
     int idx = g.readEntry("current_activity", 0);
     Activity *act = (Activity *)widget(idx);
-    if (act)
+    if (act) {
         setCurrentActivity(act);
+    }
 
     const QList<QAction *> actions = activity_switching_group->actions();
     for (QAction *a : actions) {

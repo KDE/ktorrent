@@ -149,20 +149,23 @@ bool VideoWidget::eventFilter(QObject *dst, QEvent *event)
 
 void VideoWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if (!fullscreen)
+    if (!fullscreen) {
         return;
+    }
 
     bool streaming = player->isTorrentSource();
     if (slider->isVisible()) {
         int bh = height() - slider->height();
         int th = streaming ? chunk_bar->height() : 0;
-        if (event->position().y() < bh - 10 && event->position().y() > th + 10) // use a 10 pixel safety buffer to avoid fibrilation
+        if (event->position().y() < bh - 10 && event->position().y() > th + 10) { // use a 10 pixel safety buffer to avoid fibrilation
             setControlsVisible(false);
+        }
     } else {
         int bh = height() - slider->height();
         int th = streaming ? chunk_bar->height() : 0;
-        if (event->position().y() >= bh || event->position().y() <= th)
+        if (event->position().y() >= bh || event->position().y() <= th) {
             setControlsVisible(true);
+        }
     }
 }
 
@@ -194,8 +197,9 @@ void VideoWidget::inhibitScreenSaver(bool on)
             if (reply.isValid()) {
                 screensaver_cookie = reply.value();
                 Out(SYS_MPL | LOG_NOTICE) << "Screensaver inhibited (cookie " << screensaver_cookie << ")" << endl;
-            } else
+            } else {
                 Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress screensaver" << endl;
+            }
         });
 
         auto pendingReply2 = powerManagement.Inhibit(QStringLiteral("ktorrent"), msg);
@@ -205,8 +209,9 @@ void VideoWidget::inhibitScreenSaver(bool on)
             if (reply.isValid()) {
                 screensaver_cookie = reply.value();
                 Out(SYS_MPL | LOG_NOTICE) << "PowerManagement inhibited (cookie " << powermanagement_cookie << ")" << endl;
-            } else
+            } else {
                 Out(SYS_GEN | LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
+            }
         });
     } else {
         auto pendingReply = screensaver.UnInhibit(screensaver_cookie);
@@ -216,8 +221,9 @@ void VideoWidget::inhibitScreenSaver(bool on)
             if (reply.isValid()) {
                 screensaver_cookie = 0;
                 Out(SYS_MPL | LOG_NOTICE) << "Screensaver uninhibited" << endl;
-            } else
+            } else {
                 Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit screensaver" << endl;
+            }
         });
 
         auto pendingReply2 = powerManagement.UnInhibit(powermanagement_cookie);
@@ -227,8 +233,9 @@ void VideoWidget::inhibitScreenSaver(bool on)
             if (reply.isValid()) {
                 powermanagement_cookie = 0;
                 Out(SYS_MPL | LOG_NOTICE) << "Power management uninhibited" << endl;
-            } else
+            } else {
                 Out(SYS_MPL | LOG_IMPORTANT) << "Failed uninhibit power management" << endl;
+            }
         });
     }
 }
@@ -236,8 +243,9 @@ void VideoWidget::inhibitScreenSaver(bool on)
 void VideoWidget::timerTick(qint64 time)
 {
     time_label->setText(formatTime(time, player->mediaPlayer()->duration()));
-    if (chunk_bar->isVisible())
+    if (chunk_bar->isVisible()) {
         chunk_bar->timeElapsed(time);
+    }
 }
 
 QString VideoWidget::formatTime(qint64 cur, qint64 total)
@@ -250,10 +258,11 @@ QString VideoWidget::formatTime(qint64 cur, qint64 total)
 void VideoWidget::playing(const MediaFileRef &mfile)
 {
     bool stream = player->isTorrentSource();
-    if (fullscreen && stream)
+    if (fullscreen && stream) {
         chunk_bar->setVisible(slider->isVisible());
-    else
+    } else {
         chunk_bar->setVisible(stream);
+    }
 
     chunk_bar->setMediaFile(mfile);
 }

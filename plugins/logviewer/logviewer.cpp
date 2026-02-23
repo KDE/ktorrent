@@ -47,8 +47,9 @@ LogViewer::~LogViewer()
 
 void LogViewer::message(const QString &line, unsigned int arg)
 {
-    if (suspended)
+    if (suspended) {
         return;
+    }
 
     /*
         IMPORTANT: because QTextBrowser is not thread safe, we must use the Qt event mechanism
@@ -56,8 +57,9 @@ void LogViewer::message(const QString &line, unsigned int arg)
         thread.
     */
     if (arg == 0x00 || flags->checkFlags(arg)) {
-        if (!mutex.tryLock()) // Drop the message if we cannot acquire the lock, no deadlocks
+        if (!mutex.tryLock()) { // Drop the message if we cannot acquire the lock, no deadlocks
             return;
+        }
 
         if (use_rich_text) {
             pending.append(flags->getFormattedMessage(arg, line));
@@ -65,8 +67,9 @@ void LogViewer::message(const QString &line, unsigned int arg)
             pending.append(line);
         }
 
-        while (pending.size() > max_block_count)
+        while (pending.size() > max_block_count) {
             pending.pop_front();
+        }
         mutex.unlock();
     }
 }
@@ -76,8 +79,9 @@ void LogViewer::processPending()
     // Copy to tmp list so that we do not get a deadlock when Qt tries to print something when we add lines to the output
     QStringList tmp;
     {
-        if (!mutex.tryLock()) // No deadlocks
+        if (!mutex.tryLock()) { // No deadlocks
             return;
+        }
 
         tmp = pending;
         pending.clear();
@@ -117,10 +121,11 @@ void LogViewer::suspend(bool on)
 {
     suspended = on;
     QTextCharFormat fm = output->currentCharFormat();
-    if (on)
+    if (on) {
         output->append(i18n("<font color=\"#FF0000\">Logging output suspended</font>"));
-    else
+    } else {
         output->append(i18n("<font color=\"#00FF00\">Logging output resumed</font>"));
+    }
     output->setCurrentCharFormat(fm);
 }
 

@@ -154,24 +154,27 @@ void QueueManagerModel::onTorrentStatusChanged(bt::TorrentInterface *tc)
 
 int QueueManagerModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return queue.count();
+    }
 }
 
 int QueueManagerModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
-    else
+    } else {
         return 4;
+    }
 }
 
 QVariant QueueManagerModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+    if (role != Qt::DisplayRole || orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:
@@ -191,18 +194,20 @@ QVariant QueueManagerModel::headerData(int section, Qt::Orientation orientation,
 
 QVariant QueueManagerModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() >= queue.count() || index.row() < 0)
+    if (!index.isValid() || index.row() >= queue.count() || index.row() < 0) {
         return QVariant();
+    }
 
     const bt::TorrentInterface *tc = queue.at(index.row()).tc;
     if (role == Qt::ForegroundRole) {
         if (index.column() == 2) {
-            if (tc->getStats().running)
+            if (tc->getStats().running) {
                 return QColor(40, 205, 40); // green
-            else if (tc->getStats().status == bt::QUEUED)
+            } else if (tc->getStats().status == bt::QUEUED) {
                 return QColor(255, 174, 0); // yellow
-            else
+            } else {
                 return QVariant();
+            }
         }
         return QVariant();
     } else if (role == Qt::DisplayRole) {
@@ -212,22 +217,25 @@ QVariant QueueManagerModel::data(const QModelIndex &index, int role) const
         case 1:
             return tc->getDisplayName();
         case 2:
-            if (tc->getStats().running)
+            if (tc->getStats().running) {
                 return i18n("Running");
-            else if (tc->getStats().status == bt::QUEUED)
+            } else if (tc->getStats().status == bt::QUEUED) {
                 return i18n("Queued");
-            else
+            } else {
                 return i18n("Not queued");
+            }
             break;
         case 3: {
-            if (!tc->getStats().running)
+            if (!tc->getStats().running) {
                 return QVariant();
+            }
 
             Int64 stalled_time = queue.at(index.row()).stalled_time;
-            if (stalled_time >= 1)
+            if (stalled_time >= 1) {
                 return i18n("%1", DurationToString(stalled_time));
-            else
+            } else {
                 return QVariant();
+            }
         } break;
         case 4:
             return tc->getPriority();
@@ -237,14 +245,16 @@ QVariant QueueManagerModel::data(const QModelIndex &index, int role) const
     } else if (role == Qt::ToolTipRole && index.column() == 0) {
         return i18n("Order of a torrent in the queue.\nUse drag and drop or the move up and down buttons on the right to change the order.");
     } else if (role == Qt::DecorationRole && index.column() == 1) {
-        if (!tc->getStats().completed)
+        if (!tc->getStats().completed) {
             return QIcon::fromTheme(QStringLiteral("arrow-down"));
-        else
+        } else {
             return QIcon::fromTheme(QStringLiteral("arrow-up"));
+        }
     } else if (role == Qt::FontRole && !search_text.isEmpty()) {
         QFont f = QApplication::font();
-        if (tc->getDisplayName().contains(search_text, Qt::CaseInsensitive))
+        if (tc->getDisplayName().contains(search_text, Qt::CaseInsensitive)) {
             f.setBold(true);
+        }
 
         return f;
     }
@@ -256,10 +266,11 @@ Qt::ItemFlags QueueManagerModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractTableModel::flags(index);
 
-    if (index.isValid())
+    if (index.isValid()) {
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
-    else
+    } else {
         return Qt::ItemIsDropEnabled | defaultFlags;
+    }
 }
 
 Qt::DropActions QueueManagerModel::supportedDropActions() const
@@ -281,8 +292,9 @@ QMimeData *QueueManagerModel::mimeData(const QModelIndexList &indexes) const
     dragged_items.clear();
 
     for (const QModelIndex &index : indexes) {
-        if (index.isValid() && !dragged_items.contains(index.row()))
+        if (index.isValid() && !dragged_items.contains(index.row())) {
             dragged_items.append(index.row());
+        }
     }
 
     mimeData->setData(QStringLiteral("application/vnd.text.list"), QByteArrayLiteral("stuff"));
@@ -292,11 +304,13 @@ QMimeData *QueueManagerModel::mimeData(const QModelIndexList &indexes) const
 bool QueueManagerModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     Q_UNUSED(column);
-    if (action == Qt::IgnoreAction)
+    if (action == Qt::IgnoreAction) {
         return true;
+    }
 
-    if (!data->hasFormat(QStringLiteral("application/vnd.text.list")))
+    if (!data->hasFormat(QStringLiteral("application/vnd.text.list"))) {
         return false;
+    }
 
     int begin_row = row;
     if (row != -1) {
@@ -312,14 +326,16 @@ bool QueueManagerModel::dropMimeData(const QMimeData *data, Qt::DropAction actio
     int count = dragged_items.count();
     if (from < begin_row) {
         while (from < begin_row) {
-            for (int i = count - 1; i >= 0; i--)
+            for (int i = count - 1; i >= 0; i--) {
                 swapItems(from + i, from + i + 1);
+            }
             from++;
         }
     } else {
         while (from > begin_row) {
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++) {
                 swapItems(from + i, from + i - 1);
+            }
             from--;
         }
     }
@@ -349,8 +365,9 @@ bool QueueManagerModel::insertRows(int row, int count, const QModelIndex &parent
 
 void QueueManagerModel::moveUp(int row, int count)
 {
-    if (row <= 0 || row > qman->count())
+    if (row <= 0 || row > qman->count()) {
         return;
+    }
 
     beginResetModel();
     for (int i = 0; i < count; i++) {
@@ -366,8 +383,9 @@ void QueueManagerModel::moveUp(int row, int count)
 
 void QueueManagerModel::moveDown(int row, int count)
 {
-    if (row < 0 || row >= qman->count() - 1)
+    if (row < 0 || row >= qman->count() - 1) {
         return;
+    }
 
     beginResetModel();
     for (int i = count - 1; i >= 0; i--) {
@@ -383,8 +401,9 @@ void QueueManagerModel::moveDown(int row, int count)
 
 void QueueManagerModel::moveTop(int row, int count)
 {
-    if (row < 0 || row >= qman->count())
+    if (row < 0 || row >= qman->count()) {
         return;
+    }
 
     beginResetModel();
     while (row > 0) {
@@ -403,8 +422,9 @@ void QueueManagerModel::moveTop(int row, int count)
 
 void QueueManagerModel::moveBottom(int row, int count)
 {
-    if (row < 0 || row >= qman->count())
+    if (row < 0 || row >= qman->count()) {
         return;
+    }
 
     beginResetModel();
     while (row + count < queue.count()) {
@@ -433,8 +453,9 @@ void QueueManagerModel::dumpQueue()
 void QueueManagerModel::updatePriorities()
 {
     int idx = queue.size();
-    for (const Item &i : std::as_const(queue))
+    for (const Item &i : std::as_const(queue)) {
         i.tc->setPriority(idx--);
+    }
 }
 
 void QueueManagerModel::update()
@@ -450,10 +471,11 @@ void QueueManagerModel::update()
             }
         } else {
             Int64 stalled_time = 0;
-            if (tc->getStats().completed)
+            if (tc->getStats().completed) {
                 stalled_time = (now - tc->getStats().last_upload_activity_time) / 1000;
-            else
+            } else {
                 stalled_time = (now - tc->getStats().last_download_activity_time) / 1000;
+            }
 
             if (i.stalled_time != stalled_time) {
                 i.stalled_time = stalled_time;
@@ -491,22 +513,26 @@ QModelIndex QueueManagerModel::find(const QString &text)
 
 bool QueueManagerModel::visible(const bt::TorrentInterface *tc)
 {
-    if (!show_uploads && tc->getStats().completed)
+    if (!show_uploads && tc->getStats().completed) {
         return false;
+    }
 
-    if (!show_downloads && !tc->getStats().completed)
+    if (!show_downloads && !tc->getStats().completed) {
         return false;
+    }
 
-    if (!show_not_queud && !tc->isAllowedToStart())
+    if (!show_not_queud && !tc->isAllowedToStart()) {
         return false;
+    }
 
     return true;
 }
 
 void QueueManagerModel::swapItems(int a, int b)
 {
-    if (a < 0 || a >= queue.count() || b < 0 || b >= queue.count())
+    if (a < 0 || a >= queue.count() || b < 0 || b >= queue.count()) {
         return;
+    }
 
     queue.swapItemsAt(a, b);
 }

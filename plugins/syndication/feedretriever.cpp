@@ -38,8 +38,9 @@ void FeedRetriever::setAuthenticationCookie(const QString &cookie)
 
 void FeedRetriever::abort()
 {
-    if (job)
+    if (job) {
         job->kill(KJob::EmitResult);
+    }
 }
 
 int FeedRetriever::errorCode() const

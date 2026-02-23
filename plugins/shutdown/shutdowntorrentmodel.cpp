@@ -56,12 +56,14 @@ void ShutdownTorrentModel::torrentRemoved(bt::TorrentInterface *tc)
 
 QVariant ShutdownTorrentModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= conds.count())
+    if (!index.isValid() || index.row() < 0 || index.row() >= conds.count()) {
         return QVariant();
+    }
 
     if (role == Qt::CheckStateRole) {
-        if (index.column() != 0)
+        if (index.column() != 0) {
             return QVariant();
+        }
 
         return conds.at(index.row()).checked ? Qt::Checked : Qt::Unchecked;
     } else if (role == Qt::DisplayRole) {
@@ -70,16 +72,18 @@ QVariant ShutdownTorrentModel::data(const QModelIndex &index, int role) const
         case 0:
             return cond.tc->getDisplayName();
         case 1:
-            if (cond.trigger == DOWNLOADING_COMPLETED)
+            if (cond.trigger == DOWNLOADING_COMPLETED) {
                 return i18n("Downloading finishes");
-            else
+            } else {
                 return i18n("Seeding finishes");
+            }
         default:
             return QVariant();
         }
     } else if (role == Qt::EditRole) {
-        if (index.column() == 1)
+        if (index.column() == 1) {
             return conds.at(index.row()).trigger;
+        }
     }
 
     return QVariant();
@@ -97,8 +101,9 @@ int ShutdownTorrentModel::rowCount(const QModelIndex &parent) const
 
 bool ShutdownTorrentModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= conds.count())
+    if (!index.isValid() || index.row() < 0 || index.row() >= conds.count()) {
         return false;
+    }
 
     if (role == Qt::CheckStateRole) {
         TriggerItem &cond = conds[index.row()];
@@ -108,8 +113,9 @@ bool ShutdownTorrentModel::setData(const QModelIndex &index, const QVariant &val
         return true;
     } else if (role == Qt::EditRole) {
         int v = value.toInt();
-        if (v < 0 || v > 1)
+        if (v < 0 || v > 1) {
             return false;
+        }
 
         Trigger trigger = (Trigger)v;
         TriggerItem &cond = conds[index.row()];
@@ -122,8 +128,9 @@ bool ShutdownTorrentModel::setData(const QModelIndex &index, const QVariant &val
 
 QVariant ShutdownTorrentModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+    if (role != Qt::DisplayRole || orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:
@@ -156,15 +163,18 @@ bool ShutdownTorrentModel::removeRows(int row, int count, const QModelIndex &par
 
 Qt::ItemFlags ShutdownTorrentModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= conds.count())
+    if (!index.isValid() || index.row() < 0 || index.row() >= conds.count()) {
         return {};
+    }
 
     Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
-    if (index.column() == 0)
+    if (index.column() == 0) {
         flags |= Qt::ItemIsUserCheckable;
+    }
 
-    if (index.column() == 1)
+    if (index.column() == 1) {
         flags |= Qt::ItemIsEditable;
+    }
 
     return flags;
 }
@@ -173,8 +183,9 @@ void ShutdownTorrentModel::applyRules(Action action, kt::ShutdownRuleSet *rules)
 {
     rules->clear();
     for (const TriggerItem &c : std::as_const(conds)) {
-        if (c.checked)
+        if (c.checked) {
             rules->addRule(action, SPECIFIC_TORRENT, c.trigger, c.tc);
+        }
     }
 }
 
@@ -239,8 +250,9 @@ void ShutdownTorrentDelegate::updateEditorGeometry(QWidget *editor, const QStyle
 {
     Q_UNUSED(index);
     QRect r = option.rect;
-    if (option.rect.height() < editor->sizeHint().height())
+    if (option.rect.height() < editor->sizeHint().height()) {
         r.setHeight(editor->sizeHint().height());
+    }
     editor->setGeometry(r);
 }
 

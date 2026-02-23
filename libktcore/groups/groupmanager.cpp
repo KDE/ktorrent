@@ -128,8 +128,9 @@ GroupManager::GroupManager()
                                                            QStringLiteral("/all/passive/uploads"));
     defaults << new UngroupedGroup(this);
 
-    for (Group *g : std::as_const(defaults))
+    for (Group *g : std::as_const(defaults)) {
         groups.insert(g->groupName(), g);
+    }
 }
 
 GroupManager::~GroupManager()
@@ -138,8 +139,9 @@ GroupManager::~GroupManager()
 
 Group *GroupManager::newGroup(const QString &name)
 {
-    if (groups.find(name))
+    if (groups.find(name)) {
         return nullptr;
+    }
 
     TorrentGroup *g = new TorrentGroup(name);
     connect(g, &TorrentGroup::torrentAdded, this, &GroupManager::customGroupChanged);
@@ -176,8 +178,9 @@ QStringList GroupManager::customGroupNames()
     Itr it = groups.begin();
 
     while (it != end()) {
-        if (it->second->groupFlags() & Group::CUSTOM_GROUP)
+        if (it->second->groupFlags() & Group::CUSTOM_GROUP) {
             groupNames << it->first;
+        }
         ++it;
     }
 
@@ -198,8 +201,9 @@ void GroupManager::saveGroups()
 
         enc.beginList();
         for (CItr i = groups.begin(); i != groups.end(); i++) {
-            if (i->second->groupFlags() & Group::CUSTOM_GROUP)
+            if (i->second->groupFlags() & Group::CUSTOM_GROUP) {
                 i->second->save(&enc);
+            }
         }
         enc.end();
     } catch (bt::Error &err) {
@@ -224,14 +228,16 @@ void GroupManager::loadGroups()
 
         BDecoder dec(data, false);
         const std::unique_ptr<BListNode> n = dec.decodeList();
-        if (!n)
+        if (!n) {
             throw bt::Error(QStringLiteral("groups file corrupt"));
+        }
 
         BListNode *ln = n.get();
         for (Uint32 i = 0; i < ln->getNumChildren(); i++) {
             BDictNode *dn = ln->getDict(i);
-            if (!dn)
+            if (!dn) {
                 continue;
+            }
 
             TorrentGroup *g = new TorrentGroup(QStringLiteral("dummy"));
             connect(g, &TorrentGroup::torrentAdded, this, &GroupManager::customGroupChanged);
@@ -244,10 +250,11 @@ void GroupManager::loadGroups()
                 throw;
             }
 
-            if (!find(g->groupName()))
+            if (!find(g->groupName())) {
                 groups.insert(g->groupName(), g);
-            else
+            } else {
                 delete g;
+            }
         }
 
     } catch (bt::Error &err) {
@@ -265,8 +272,9 @@ void GroupManager::torrentRemoved(TorrentInterface *ti)
 void GroupManager::renameGroup(const QString &old_name, const QString &new_name)
 {
     Group *g = find(old_name);
-    if (!g)
+    if (!g) {
         return;
+    }
 
     groups.setAutoDelete(false);
     groups.erase(old_name);
@@ -280,8 +288,9 @@ void GroupManager::renameGroup(const QString &old_name, const QString &new_name)
 
 void GroupManager::addDefaultGroup(Group *g)
 {
-    if (find(g->groupName()))
+    if (find(g->groupName())) {
         return;
+    }
 
     groups.insert(g->groupName(), g);
     Q_EMIT groupAdded(g);
@@ -300,8 +309,9 @@ void GroupManager::torrentsLoaded(QueueManager *qman)
     for (CItr i = groups.begin(); i != groups.end(); i++) {
         if (i->second->groupFlags() & Group::CUSTOM_GROUP) {
             TorrentGroup *tg = dynamic_cast<TorrentGroup *>(i->second);
-            if (tg)
+            if (tg) {
                 tg->loadTorrents(qman);
+            }
         }
     }
 }
@@ -309,8 +319,9 @@ void GroupManager::torrentsLoaded(QueueManager *qman)
 Group *GroupManager::findByPath(const QString &path)
 {
     for (CItr i = groups.begin(); i != groups.end(); i++) {
-        if (i->second->groupPath() == path)
+        if (i->second->groupPath() == path) {
             return i->second;
+        }
     }
 
     return nullptr;
@@ -318,8 +329,9 @@ Group *GroupManager::findByPath(const QString &path)
 
 void GroupManager::updateCount(QueueManager *qman)
 {
-    for (CItr i = groups.begin(); i != groups.end(); i++)
+    for (CItr i = groups.begin(); i != groups.end(); i++) {
         i->second->updateCount(qman);
+    }
 }
 
 }

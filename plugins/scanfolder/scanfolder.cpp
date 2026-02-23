@@ -51,16 +51,19 @@ ScanFolder::~ScanFolder()
 
 void ScanFolder::scanDir(const QString &path)
 {
-    if (!QFileInfo(path).isDir())
+    if (!QFileInfo(path).isDir()) {
         return;
+    }
 
     QDir dir(path);
-    if (!recursive && dir != QDir(scan_directory.toLocalFile()))
+    if (!recursive && dir != QDir(scan_directory.toLocalFile())) {
         return;
+    }
 
     // ignore loaded directories
-    if (dir.dirName() == i18nc("folder name part", "loaded"))
+    if (dir.dirName() == i18nc("folder name part", "loaded")) {
         return;
+    }
 
     Out(SYS_SNF | LOG_NOTICE) << "Directory dirty: " << path << endl;
     scanner->addDirectory(QUrl::fromLocalFile(path), false);

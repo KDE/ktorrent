@@ -102,8 +102,9 @@ void IPFilterWidget::add()
 void IPFilterWidget::remove()
 {
     QModelIndexList idx = m_ip_list->selectionModel()->selectedRows();
-    if (idx.count() == 0)
+    if (idx.count() == 0) {
         return;
+    }
 
     filter_list->remove(idx.at(0).row(), idx.count());
 }
@@ -117,8 +118,9 @@ void IPFilterWidget::open()
 {
     QString lf = QFileDialog::getOpenFileName(this, i18n("Choose a file"), i18n("Text files") + QLatin1String(" (*.txt)"));
 
-    if (lf.isEmpty())
+    if (lf.isEmpty()) {
         return;
+    }
 
     clear();
 
@@ -129,8 +131,9 @@ void IPFilterWidget::save()
 {
     QString sf = QFileDialog::getSaveFileName(this, i18n("Choose a filename to save under"), i18n("Text files") + QStringLiteral(" (*.txt)"));
 
-    if (sf.isEmpty())
+    if (sf.isEmpty()) {
         return;
+    }
 
     saveFilter(sf);
 }
@@ -186,8 +189,9 @@ void IPFilterWidget::loadFilter(const QString &fn)
         }
     }
 
-    if (err)
+    if (err) {
         Out(SYS_IPF | LOG_NOTICE) << "Some lines could not be loaded. Check your filter file..." << endl;
+    }
 
     dat.close();
 }

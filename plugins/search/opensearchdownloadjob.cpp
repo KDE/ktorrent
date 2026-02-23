@@ -64,13 +64,15 @@ void OpenSearchDownloadJob::getFinished(KJob *j)
         while (i.hasNext()) {
             QString link_tag = i.next().captured(1);
             // exit when we find the description
-            if (checkLinkTagContent(link_tag))
+            if (checkLinkTagContent(link_tag)) {
                 return;
+            }
         }
     } else {
         if (str.contains(QStringLiteral("<OpenSearchDescription")) && str.contains(QStringLiteral("</OpenSearchDescription>"))) {
-            if (startXMLDownload(url))
+            if (startXMLDownload(url)) {
                 return;
+            }
         }
 
         setError(KIO::ERR_INTERNAL);
@@ -101,12 +103,14 @@ bool OpenSearchDownloadJob::startXMLDownload(const QUrl &url)
 
 bool OpenSearchDownloadJob::checkLinkTagContent(const QString &content)
 {
-    if (htmlParam(QStringLiteral("type"), content) != QLatin1String("application/opensearchdescription+xml"))
+    if (htmlParam(QStringLiteral("type"), content) != QLatin1String("application/opensearchdescription+xml")) {
         return false;
+    }
 
     QString href = htmlParam(QStringLiteral("href"), content);
-    if (href.isEmpty())
+    if (href.isEmpty()) {
         return false;
+    }
 
     if (href.startsWith(QLatin1String("//"))) { // href may point to other domain without protocol like "//not_here.com/search.xml"
         href = url.scheme() + QLatin1Char(':') + href;

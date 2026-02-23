@@ -22,8 +22,9 @@ JobTracker::~JobTracker()
 void JobTracker::registerJob(KJob *job)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
-    if (!j)
+    if (!j) {
         return;
+    }
 
     KJobTrackerInterface::registerJob(job);
     jobRegistered(j);
@@ -32,8 +33,9 @@ void JobTracker::registerJob(KJob *job)
 void JobTracker::unregisterJob(KJob *job)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
-    if (!j)
+    if (!j) {
         return;
+    }
 
     KJobTrackerInterface::unregisterJob(job);
     jobUnregistered(j);
@@ -65,78 +67,92 @@ void JobTracker::resumed(KJob *job)
 void JobTracker::description(KJob *job, const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
-    if (!j)
+    if (!j) {
         return;
+    }
 
     ActiveJobs::iterator i = widgets.find(j);
-    if (i != widgets.end())
+    if (i != widgets.end()) {
         i.value()->description(title, field1, field2);
+    }
 }
 
 void JobTracker::infoMessage(KJob *job, const QString &message)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
-    if (!j)
+    if (!j) {
         return;
+    }
 
     ActiveJobs::iterator i = widgets.find(j);
-    if (i != widgets.end())
+    if (i != widgets.end()) {
         i.value()->infoMessage(message);
+    }
 }
 
 void JobTracker::warning(KJob *job, const QString &message)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
-    if (!j)
+    if (!j) {
         return;
+    }
 
     ActiveJobs::iterator i = widgets.find(j);
-    if (i != widgets.end())
+    if (i != widgets.end()) {
         i.value()->warning(message);
+    }
 }
 
 void JobTracker::totalAmount(KJob *job, KJob::Unit unit, qulonglong amount)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
-    if (!j)
+    if (!j) {
         return;
+    }
 
     ActiveJobs::iterator i = widgets.find(j);
-    if (i != widgets.end())
+    if (i != widgets.end()) {
         i.value()->totalAmount(unit, amount);
+    }
 }
 
 void JobTracker::processedAmount(KJob *job, KJob::Unit unit, qulonglong amount)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
-    if (!j)
+    if (!j) {
         return;
+    }
 
     ActiveJobs::iterator i = widgets.find(j);
-    if (i != widgets.end())
+    if (i != widgets.end()) {
         i.value()->processedAmount(unit, amount);
+    }
 }
 
 void JobTracker::percent(KJob *job, long unsigned int percent)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
-    if (!j)
+    if (!j) {
         return;
+    }
 
     ActiveJobs::iterator i = widgets.find(j);
-    if (i != widgets.end())
+    if (i != widgets.end()) {
         i.value()->percent(percent);
+    }
 }
 
 void JobTracker::speed(KJob *job, long unsigned int value)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
-    if (!j)
+    if (!j) {
         return;
+    }
 
     ActiveJobs::iterator i = widgets.find(j);
-    if (i != widgets.end())
+    if (i != widgets.end()) {
         i.value()->speed(value);
+    }
 }
 }
 

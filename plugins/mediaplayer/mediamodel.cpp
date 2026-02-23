@@ -39,10 +39,11 @@ MediaModel::~MediaModel()
 
 int MediaModel::rowCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return items.count();
-    else
+    } else {
         return 0;
+    }
 }
 
 int MediaModel::columnCount(const QModelIndex &parent) const
@@ -61,8 +62,9 @@ QVariant MediaModel::headerData(int section, Qt::Orientation orientation, int ro
 
 QVariant MediaModel::data(const QModelIndex &index, int role) const
 {
-    if (index.column() != 0 || index.row() < 0 || index.row() >= items.count())
+    if (index.column() != 0 || index.row() < 0 || index.row() >= items.count()) {
         return QVariant();
+    }
 
     MediaFile::Ptr mf = items.at(index.row());
     switch (role) {
@@ -87,8 +89,9 @@ QVariant MediaModel::data(const QModelIndex &index, int role) const
 
 bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return false;
+    }
 
     beginRemoveRows(QModelIndex(), row, row + count - 1);
     for (int i = 0; i < count; i++) {
@@ -102,8 +105,9 @@ bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 
 bool MediaModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return false;
+    }
 
     beginInsertRows(QModelIndex(), row, row + count - 1);
     endInsertRows();
@@ -122,8 +126,9 @@ void MediaModel::onTorrentAdded(bt::TorrentInterface *tc)
             }
         }
 
-        if (cnt)
+        if (cnt) {
             insertRows(items.count() - 1, cnt, QModelIndex());
+        }
     } else if (tc->isMultimedia()) {
         MediaFile::Ptr p(new MediaFile(tc));
         items.append(p);
@@ -142,8 +147,9 @@ void MediaModel::onTorrentRemoved(bt::TorrentInterface *tc)
                 // start of the range
                 start = row;
                 cnt = 1;
-            } else
+            } else {
                 cnt++; // Still in the middle of the media files of this torrent
+            }
         } else if (start != -1) {
             // We have found the end
             break;
@@ -152,24 +158,27 @@ void MediaModel::onTorrentRemoved(bt::TorrentInterface *tc)
         row++;
     }
 
-    if (cnt > 0)
+    if (cnt > 0) {
         removeRows(start, cnt, QModelIndex());
+    }
 }
 
 MediaFileRef MediaModel::fileForIndex(const QModelIndex &idx) const
 {
-    if (idx.row() < 0 || idx.row() >= items.count())
+    if (idx.row() < 0 || idx.row() >= items.count()) {
         return MediaFileRef(QString());
-    else
+    } else {
         return MediaFileRef(items.at(idx.row()));
+    }
 }
 
 QModelIndex MediaModel::indexForPath(const QString &path) const
 {
     Uint32 idx = 0;
     for (MediaFile::Ptr mf : std::as_const(items)) {
-        if (mf->path() == path)
+        if (mf->path() == path) {
             return index(idx, 0, QModelIndex());
+        }
         idx++;
     }
 
@@ -179,8 +188,9 @@ QModelIndex MediaModel::indexForPath(const QString &path) const
 MediaFileRef MediaModel::find(const QString &path)
 {
     for (MediaFile::Ptr mf : std::as_const(items)) {
-        if (mf->path() == path)
+        if (mf->path() == path) {
             return MediaFileRef(mf);
+        }
     }
 
     return MediaFileRef(path);
@@ -190,10 +200,11 @@ Qt::ItemFlags MediaModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
 
-    if (index.isValid())
+    if (index.isValid()) {
         return Qt::ItemIsDragEnabled | defaultFlags;
-    else
+    } else {
         return defaultFlags;
+    }
 }
 
 QStringList MediaModel::mimeTypes() const
@@ -208,8 +219,9 @@ QMimeData *MediaModel::mimeData(const QModelIndexList &indexes) const
     QMimeData *data = new QMimeData();
     QList<QUrl> urls;
     for (const QModelIndex &idx : indexes) {
-        if (!idx.isValid() || idx.row() < 0 || idx.row() >= items.count())
+        if (!idx.isValid() || idx.row() < 0 || idx.row() >= items.count()) {
             continue;
+        }
 
         MediaFile::Ptr p = items.at(idx.row());
         urls << QUrl::fromLocalFile(p->path());
@@ -220,8 +232,9 @@ QMimeData *MediaModel::mimeData(const QModelIndexList &indexes) const
 
 QModelIndex MediaModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (row < 0 || row >= items.count() || column != 0 || parent.isValid())
+    if (row < 0 || row >= items.count() || column != 0 || parent.isValid()) {
         return QModelIndex();
+    }
 
     return createIndex(row, column);
 }

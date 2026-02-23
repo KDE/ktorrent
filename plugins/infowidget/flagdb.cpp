@@ -72,8 +72,9 @@ const QPixmap &kt::FlagDB::getFlag(const QString &country)
 {
     const QString &c = country.toLower();
     auto it = db.constFind(c);
-    if (it != db.constEnd())
+    if (it != db.constEnd()) {
         return *it;
+    }
 
     QImage img;
     QPixmap pixmap;

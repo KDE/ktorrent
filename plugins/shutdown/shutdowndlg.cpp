@@ -32,15 +32,19 @@ ShutdownDlg::ShutdownDlg(ShutdownRuleSet *rules, CoreInterface *core, QWidget *p
 
     auto pendingSuspendReply = powerManagement.CanSuspend();
     pendingSuspendReply.waitForFinished();
-    if (!pendingSuspendReply.isError())
-        if (pendingSuspendReply.value())
+    if (!pendingSuspendReply.isError()) {
+        if (pendingSuspendReply.value()) {
             m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend")), i18n("Sleep (suspend to RAM)"), SUSPEND_TO_RAM);
+        }
+    }
 
     auto pendingHibernateReply = powerManagement.CanHibernate();
     pendingHibernateReply.waitForFinished();
-    if (!pendingHibernateReply.isError())
-        if (pendingHibernateReply.value())
+    if (!pendingHibernateReply.isError()) {
+        if (pendingHibernateReply.value()) {
             m_action->addItem(QIcon::fromTheme(QStringLiteral("system-suspend-hibernate")), i18n("Hibernate (suspend to disk)"), SUSPEND_TO_DISK);
+        }
+    }
 
     m_time_to_execute->addItem(i18n("When all torrents finish downloading"));
     m_time_to_execute->addItem(i18n("When all torrents finish seeding"));
@@ -101,16 +105,17 @@ kt::Action ShutdownDlg::indexToAction(int idx)
     int suspend_to_ram = m_action->findData(SUSPEND_TO_RAM);
     int suspend_to_disk = m_action->findData(SUSPEND_TO_DISK);
 
-    if (idx == 0)
+    if (idx == 0) {
         return SHUTDOWN;
-    else if (idx == 1)
+    } else if (idx == 1) {
         return LOCK;
-    else if (idx == suspend_to_ram)
+    } else if (idx == suspend_to_ram) {
         return SUSPEND_TO_RAM;
-    else if (idx == suspend_to_disk)
+    } else if (idx == suspend_to_disk) {
         return SUSPEND_TO_DISK;
-    else
+    } else {
         return SHUTDOWN;
+    }
 }
 
 int ShutdownDlg::actionToIndex(Action act)

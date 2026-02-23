@@ -86,11 +86,13 @@ void SearchPrefPage::loadDefaults()
 void SearchPrefPage::addClicked()
 {
     QString name = QInputDialog::getText(this, i18n("Add a Search Engine"), i18n("Enter the hostname of the search engine (for example www.google.com):"));
-    if (name.isEmpty())
+    if (name.isEmpty()) {
         return;
+    }
 
-    if (!name.startsWith(QLatin1String("http://")) || !name.startsWith(QLatin1String("https://")))
+    if (!name.startsWith(QLatin1String("http://")) || !name.startsWith(QLatin1String("https://"))) {
         name = QLatin1String("http://") + name;
+    }
 
     QUrl url(name);
     QString dir = kt::DataDir() + QLatin1String("searchengines/") + url.host();

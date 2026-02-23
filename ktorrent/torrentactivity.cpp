@@ -223,8 +223,9 @@ void TorrentActivity::updateActions()
 void TorrentActivity::update()
 {
     view->update();
-    if (qm->isVisible())
+    if (qm->isVisible()) {
         qm->update();
+    }
     group_switcher->update();
 }
 

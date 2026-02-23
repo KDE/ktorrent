@@ -164,8 +164,9 @@ public:
     template<class Operation>
     void apply(Operation op)
     {
-        for (ScheduleItem *i : std::as_const(items))
+        for (ScheduleItem *i : std::as_const(items)) {
             op(i);
+        }
     }
 
     /// Remove a ScheduleItem, item will be deleted

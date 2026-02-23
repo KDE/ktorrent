@@ -45,9 +45,11 @@ MissingFilesDlg::MissingFilesDlg(const QString &text, const QStringList &missing
 
     m_dnd->setEnabled(tc->getStats().multi_file_torrent);
     int disabled_files = 0;
-    for (bt::Uint32 i = 0; i < tc->getNumFiles(); i++)
-        if (tc->getTorrentFile(i).getPriority() == bt::EXCLUDED)
+    for (bt::Uint32 i = 0; i < tc->getNumFiles(); i++) {
+        if (tc->getTorrentFile(i).getPriority() == bt::EXCLUDED) {
             disabled_files++;
+        }
+    }
     // select new is only possible if all files are missing
     m_select_new->setEnabled(!tc->getStats().multi_file_torrent || missing.count() == (int)tc->getNumFiles() - disabled_files);
 }
@@ -71,25 +73,27 @@ void MissingFilesDlg::selectNewPressed()
                                               i18n("Select the directory where the data now is."),
                                               KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
-        if (dir.isEmpty())
+        if (dir.isEmpty()) {
             return;
+        }
 
-        if (!recentDirClass.isEmpty())
+        if (!recentDirClass.isEmpty()) {
             KRecentDirs::add(recentDirClass, dir);
+        }
 
         QString old = tc->getStats().output_path;
         tc->changeOutputDir(dir, bt::TorrentInterface::FULL_PATH);
         QStringList dummy;
         if (tc->hasMissingFiles(dummy)) {
             int ans = KMessageBox::SecondaryAction;
-            if ((bt::Uint32)dummy.count() == tc->getNumFiles())
+            if ((bt::Uint32)dummy.count() == tc->getNumFiles()) {
                 ans = KMessageBox::questionTwoActions(
                     this,
                     i18n("The data files are not present in the location you selected. Do you want to create all the files in the selected directory?"),
                     QString(),
                     KGuiItem(i18nc("@action:button", "Create"), QStringLiteral("document-new")),
                     KStandardGuiItem::cancel());
-            else
+            } else {
                 ans = KMessageBox::questionTwoActions(
                     this,
                     i18n("Not all files were found in the new location; some are still missing. Do you want to create the missing "
@@ -97,13 +101,15 @@ void MissingFilesDlg::selectNewPressed()
                     QString(),
                     KGuiItem(i18nc("@action:button", "Create"), QStringLiteral("document-new")),
                     KStandardGuiItem::cancel());
+            }
 
             if (ans == KMessageBox::PrimaryAction) {
                 tc->recreateMissingFiles();
                 ret = NEW_LOCATION_SELECTED;
                 accept();
-            } else
+            } else {
                 tc->changeOutputDir(old, bt::TorrentInterface::FULL_PATH);
+            }
         } else {
             ret = NEW_LOCATION_SELECTED;
             accept();
@@ -115,11 +121,13 @@ void MissingFilesDlg::selectNewPressed()
                                               i18n("Select the directory where the data now is."),
                                               KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
-        if (dir.isEmpty())
+        if (dir.isEmpty()) {
             return;
+        }
 
-        if (!recentDirClass.isEmpty())
+        if (!recentDirClass.isEmpty()) {
             KRecentDirs::add(recentDirClass, dir);
+        }
 
         QString old = tc->getDataDir();
         tc->changeOutputDir(dir);
@@ -135,8 +143,9 @@ void MissingFilesDlg::selectNewPressed()
                 tc->recreateMissingFiles();
                 ret = NEW_LOCATION_SELECTED;
                 accept();
-            } else
+            } else {
                 tc->changeOutputDir(old);
+            }
         } else {
             ret = NEW_LOCATION_SELECTED;
             accept();

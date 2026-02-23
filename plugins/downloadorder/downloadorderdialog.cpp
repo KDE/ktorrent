@@ -55,8 +55,9 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin *plugin, bt::Torren
     m_order->setDragDropMode(QAbstractItemView::InternalMove);
 
     model = new DownloadOrderModel(tor, this);
-    if (dom)
+    if (dom) {
         model->initOrder(dom->downloadOrder());
+    }
     m_order->setModel(model);
 
     QSize s = KSharedConfig::openConfig()->group(QStringLiteral("DownloadOrderDialog")).readEntry("size", size());
@@ -179,8 +180,9 @@ void DownloadOrderDialog::search(const QString &text)
         model->clearHighLights();
     } else {
         QModelIndex idx = model->find(text);
-        if (idx.isValid())
+        if (idx.isValid()) {
             m_order->scrollTo(idx);
+        }
     }
 }
 }

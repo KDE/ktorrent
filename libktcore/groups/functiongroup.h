@@ -32,10 +32,11 @@ public:
 
     bool isMember(TorrentInterface *tor) override
     {
-        if (!tor)
+        if (!tor) {
             return false;
-        else
+        } else {
             return fn(tor);
+        }
     }
 };
 

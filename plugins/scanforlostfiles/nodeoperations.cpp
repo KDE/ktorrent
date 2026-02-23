@@ -28,8 +28,9 @@ FNode *NodeOperations::addChild(FNode *root, const QString &name, bool is_dir)
         root->first_child = n;
     } else {
         FNode *last_child = root->first_child;
-        while (last_child->next)
+        while (last_child->next) {
             last_child = last_child->next;
+        }
         last_child->next = n;
         n->prev = last_child;
     }
@@ -66,13 +67,15 @@ FNode *NodeOperations::makePath(FNode *root, const QString &fname, bool is_dir)
 
     if (idx == -1) {
         existing = getChild(root, fname, is_dir);
-        if (existing)
+        if (existing) {
             return existing;
+        }
         return addChild(root, fname, is_dir);
     } else {
         existing = getChild(root, fname.left(idx), true);
-        if (!existing)
+        if (!existing) {
             existing = addChild(root, fname.left(idx), true);
+        }
         return makePath(existing, fname.right(fname.size() - 1 - idx), is_dir);
     }
 }
@@ -84,8 +87,9 @@ FNode *NodeOperations::findChild(FNode *root, const QString &fname, bool is_dir)
         return getChild(root, fname, is_dir);
     } else {
         FNode *n = getChild(root, fname.left(idx), true);
-        if (n)
+        if (n) {
             n = findChild(n, fname.right(fname.size() - 1 - idx), is_dir);
+        }
         return n;
     }
 }
@@ -121,10 +125,11 @@ void NodeOperations::subtractTreesOnFiles(FNode *tree1, FNode *tree2)
     while (c) {
         FNode *f = getChild(tree1, c->name, c->is_dir);
         if (f) {
-            if (c->is_dir)
+            if (c->is_dir) {
                 subtractTreesOnFiles(f, c);
-            else
+            } else {
                 removeNode(f);
+            }
         }
         c = c->next;
     }
@@ -134,8 +139,9 @@ void NodeOperations::pruneEmptyFolders(FNode *start_folder)
 {
     FNode *c = start_folder->first_child;
     while (c) {
-        if (c->is_dir)
+        if (c->is_dir) {
             pruneEmptyFolders(c);
+        }
         c = c->next;
     }
 

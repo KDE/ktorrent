@@ -71,8 +71,9 @@ void Feed::parseUrl(const QString &feed_url)
     if (sl.size() == 2) {
         url = QUrl(sl.first());
         cookie = sl.last();
-    } else
+    } else {
         url = QUrl(feed_url);
+    }
 }
 
 QDateTime Feed::getLastUpdated() const
@@ -99,13 +100,15 @@ void Feed::save()
     }
     enc.write(QByteArrayLiteral("filters"));
     enc.beginList();
-    for (Filter *f : std::as_const(filters))
+    for (Filter *f : std::as_const(filters)) {
         enc.write(f->filterID().toUtf8());
+    }
     enc.end();
     enc.write(QByteArrayLiteral("loaded"));
     enc.beginList();
-    for (const QString &id : std::as_const(loaded))
+    for (const QString &id : std::as_const(loaded)) {
         enc.write(id.toUtf8());
+    }
     enc.end();
     enc.write(QByteArrayLiteral("downloaded_se_items"));
     enc.beginList();
@@ -123,8 +126,9 @@ void Feed::save()
         i++;
     }
     enc.end();
-    if (!custom_name.isEmpty())
+    if (!custom_name.isEmpty()) {
         enc.write(QByteArrayLiteral("custom_name"), custom_name.toUtf8());
+    }
     enc.write(QByteArrayLiteral("refresh_rate"), refresh_rate);
     enc.end();
 }
@@ -155,8 +159,9 @@ void Feed::load(FilterList *filter_list)
         if (fl) {
             for (Uint32 i = 0; i < fl->getNumChildren(); i++) {
                 Filter *f = filter_list->filterByID(fl->getString(i));
-                if (f)
+                if (f) {
                     filters.append(f);
+                }
             }
         }
 
@@ -171,12 +176,14 @@ void Feed::load(FilterList *filter_list)
         if (se_list) {
             for (Uint32 i = 0; i < se_list->getNumChildren(); i += 2) {
                 BListNode *se = se_list->getList(i + 1);
-                if (!se)
+                if (!se) {
                     continue;
+                }
 
                 Filter *f = filter_list->filterByID(se_list->getString(i));
-                if (!f)
+                if (!f) {
                     continue;
+                }
 
                 QList<SeasonEpisodeItem> &sel = downloaded_se_items[f];
                 for (Uint32 j = 0; j < se->getNumChildren(); j += 2) {
@@ -194,10 +201,11 @@ void Feed::load(FilterList *filter_list)
     Out(SYS_SYN | LOG_DEBUG) << "Loaded feed from " << file << " : " << endl;
     status = OK;
 
-    if (bt::Exists(dir + QStringLiteral("feed.xml")))
+    if (bt::Exists(dir + QStringLiteral("feed.xml"))) {
         loadFromDisk();
-    else
+    } else {
         refresh();
+    }
 }
 
 void Feed::loadingComplete(Syndication::Loader *loader, Syndication::FeedPtr feed, Syndication::ErrorCode status)
@@ -221,8 +229,9 @@ void Feed::loadingComplete(Syndication::Loader *loader, Syndication::FeedPtr fee
     // refresh cache of feed_items_ids
     feed_items_id.clear();
     const QList<Syndication::ItemPtr> feedItems = feed->items();
-    for (const Syndication::ItemPtr &item : feedItems)
+    for (const Syndication::ItemPtr &item : feedItems) {
         feed_items_id.insert(item->id());
+    }
 
     checkLoaded();
     runFilters();
@@ -236,8 +245,9 @@ void Feed::refresh()
     update_timer.stop();
     Syndication::Loader *loader = Syndication::Loader::create(this, SLOT(loadingComplete(Syndication::Loader *, Syndication::FeedPtr, Syndication::ErrorCode)));
     FeedRetriever *retr = new FeedRetriever(dir + QStringLiteral("feed.xml"));
-    if (!cookie.isEmpty())
+    if (!cookie.isEmpty()) {
         retr->setAuthenticationCookie(cookie);
+    }
     loader->loadFrom(url, retr);
     Q_EMIT updated();
 }
@@ -260,10 +270,11 @@ void Feed::loadFromDisk()
 
 QString Feed::title() const
 {
-    if (feed)
+    if (feed) {
         return feed->title();
-    else
+    } else {
         return url.toDisplayString();
+    }
 }
 
 QString Feed::newFeedDir(const QString &base)
@@ -306,8 +317,9 @@ bool Feed::needToDownload(Syndication::ItemPtr item, Filter *filter)
                 // If we have already downloaded this season and episode, return
                 QList<SeasonEpisodeItem> &ses = downloaded_se_items[filter];
                 SeasonEpisodeItem se(s, e);
-                if (ses.contains(se))
+                if (ses.contains(se)) {
                     return false;
+                }
 
                 ses.append(se);
             }
@@ -321,8 +333,9 @@ bool Feed::needToDownload(Syndication::ItemPtr item, Filter *filter)
 
 void Feed::runFilters()
 {
-    if (!feed)
+    if (!feed) {
         return;
+    }
 
     Out(SYS_SYN | LOG_NOTICE) << "Running filters on " << feed->title() << endl;
     for (Filter *f : std::as_const(filters)) {
@@ -418,11 +431,13 @@ void Feed::checkLoaded()
         }
     }
 
-    for (const QString &itemToRemove : std::as_const(itemsToRemove))
+    for (const QString &itemToRemove : std::as_const(itemsToRemove)) {
         loaded.remove(itemToRemove);
+    }
 
-    if (need_to_save)
+    if (need_to_save) {
         save();
+    }
 }
 
 bool Feed::downloaded(Syndication::ItemPtr item) const
@@ -437,12 +452,13 @@ bool Feed::failed(Syndication::ItemPtr item) const
 
 QString Feed::displayName() const
 {
-    if (!custom_name.isEmpty())
+    if (!custom_name.isEmpty()) {
         return custom_name;
-    else if (ok())
+    } else if (ok()) {
         return feed->title();
-    else
+    } else {
         return url.toDisplayString();
+    }
 }
 
 void Feed::setDisplayName(const QString &dname)
@@ -521,11 +537,13 @@ QString SyndicationErrorString(Syndication::ErrorCode err)
 
 QString Feed::filterNamesString() const
 {
-    if (filters.empty())
+    if (filters.empty()) {
         return i18n("None");
+    }
     QStringList names;
-    for (Filter *f : std::as_const(filters))
+    for (Filter *f : std::as_const(filters)) {
         names << f->filterName();
+    }
     return names.join(QStringLiteral(", "));
 }
 

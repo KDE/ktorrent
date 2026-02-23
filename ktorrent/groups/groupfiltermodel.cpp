@@ -43,10 +43,11 @@ bool GroupFilterModel::filterAcceptsColumn(int source_column, const QModelIndex 
 bool GroupFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     Q_UNUSED(source_parent);
-    if (!group)
+    if (!group) {
         return true;
-    else
+    } else {
         return group->isMember(view_model->torrentFromRow(source_row));
+    }
 }
 
 }

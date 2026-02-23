@@ -67,8 +67,9 @@ SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface *current, Core *core, QWidge
         int idx = 0;
         QList<bt::TorrentInterface *>::iterator itr = qman->begin();
         while (itr != qman->end()) {
-            if (*itr == current)
+            if (*itr == current) {
                 break;
+            }
 
             idx++;
             itr++;

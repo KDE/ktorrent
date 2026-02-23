@@ -112,9 +112,11 @@ public:
     void visit(Action &a)
     {
         for (Item *item : std::as_const(torrents)) {
-            if (item->visible(group, filter_string))
-                if (!a(item->tc))
+            if (item->visible(group, filter_string)) {
+                if (!a(item->tc)) {
                     break;
+                }
+            }
         }
     }
 

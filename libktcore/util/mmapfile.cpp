@@ -38,8 +38,9 @@ MMapFile::MMapFile()
 
 MMapFile::~MMapFile()
 {
-    if (fptr)
+    if (fptr) {
         close();
+    }
 }
 
 bool MMapFile::open(const QString &file, QIODevice::OpenModeFlag mode)
@@ -143,12 +144,14 @@ void MMapFile::flush()
 
 Uint32 MMapFile::write(const void *buf, Uint32 buf_size)
 {
-    if (!fptr || mode == QIODevice::ReadOnly)
+    if (!fptr || mode == QIODevice::ReadOnly) {
         return 0;
+    }
 
     // check if data fits in memory mapping
-    if (ptr + buf_size > size)
+    if (ptr + buf_size > size) {
         throw Error(i18n("Cannot write beyond end of the mmap buffer."));
+    }
 
     Out(SYS_GEN | LOG_DEBUG) << "MMapFile::write : " << (ptr + buf_size) << " " << file_size << endl;
     // enlarge the file if necessary
@@ -161,8 +164,9 @@ Uint32 MMapFile::write(const void *buf, Uint32 buf_size)
     // update ptr
     ptr += buf_size;
     // update file size if necessary
-    if (ptr >= size)
+    if (ptr >= size) {
         size = ptr;
+    }
 
     return buf_size;
 }
@@ -179,18 +183,20 @@ void MMapFile::growFile(Uint64 new_size)
     // write data until to_write is 0
     while (to_write > 0) {
         ssize_t w = fptr->write((const char *)buf, to_write > 1024 ? 1024 : to_write);
-        if (w > 0)
+        if (w > 0) {
             to_write -= w;
-        else if (w < 0)
+        } else if (w < 0) {
             break;
+        }
     }
     file_size = new_size;
 }
 
 Uint32 MMapFile::read(void *buf, Uint32 buf_size)
 {
-    if (!fptr || mode == QIODevice::WriteOnly)
+    if (!fptr || mode == QIODevice::WriteOnly) {
         return 0;
+    }
 
     // check if we aren't going to read past the end of the file
     Uint32 to_read = ptr + buf_size >= size ? size - ptr : buf_size;
@@ -204,10 +210,12 @@ Uint64 MMapFile::seek(SeekPos from, Int64 num)
 {
     switch (from) {
     case BEGIN:
-        if (num > 0)
+        if (num > 0) {
             ptr = num;
-        if (ptr >= size)
+        }
+        if (ptr >= size) {
             ptr = size - 1;
+        }
         break;
     case END: {
         Int64 np = (size - 1) + num;
@@ -259,8 +267,9 @@ Uint64 MMapFile::getSize() const
 
 Uint8 *MMapFile::getData(Uint64 off)
 {
-    if (off >= size)
+    if (off >= size) {
         return nullptr;
+    }
     return &data[off];
 }
 }

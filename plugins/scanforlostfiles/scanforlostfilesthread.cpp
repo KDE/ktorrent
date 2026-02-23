@@ -37,8 +37,9 @@ void ScanForLostFilesThread::run()
     if (qman) {
         QList<bt::TorrentInterface *>::iterator it = qman->begin();
         while (it != qman->end()) {
-            if (isInterruptionRequested())
+            if (isInterruptionRequested()) {
                 break;
+            }
 
             bt::TorrentInterface *tor = *it;
             if (tor->getStats().multi_file_torrent) {
@@ -51,8 +52,9 @@ void ScanForLostFilesThread::run()
                     QString out_folder = folderpath.left(idx - 1);
                     NodeOperations::makePath(torrent_folders, out_folder, true);
                 }
-            } else
+            } else {
                 NodeOperations::makePath(torrent_files, tor->getStats().output_path, false);
+            }
 
             it++;
         }

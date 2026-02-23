@@ -127,11 +127,13 @@ void QueueManagerWidget::moveUpClicked()
 {
     const QModelIndexList sel = view->selectionModel()->selectedRows();
     QList<int> rows;
-    for (const QModelIndex &idx : sel)
+    for (const QModelIndex &idx : sel) {
         rows.append(idx.row());
+    }
 
-    if (rows.isEmpty() || rows.front() == 0)
+    if (rows.isEmpty() || rows.front() == 0) {
         return;
+    }
 
     model->moveUp(rows.front(), rows.count());
 
@@ -141,8 +143,9 @@ void QueueManagerWidget::moveUpClicked()
     QModelIndex bottom_right = model->index(rows.back() - 1, cols - 1);
     nsel.select(top_left, bottom_right);
     view->selectionModel()->select(nsel, QItemSelectionModel::Select);
-    if (!indexVisible(top_left))
+    if (!indexVisible(top_left)) {
         view->scrollTo(top_left, QAbstractItemView::PositionAtCenter);
+    }
 
     updateButtons();
 }
@@ -151,12 +154,14 @@ void QueueManagerWidget::moveDownClicked()
 {
     const QModelIndexList sel = view->selectionModel()->selectedRows();
     QList<int> rows;
-    for (const QModelIndex &idx : sel)
+    for (const QModelIndex &idx : sel) {
         rows.append(idx.row());
+    }
 
     int rowcount = model->rowCount(QModelIndex());
-    if (rows.isEmpty() || rows.back() == rowcount - 1)
+    if (rows.isEmpty() || rows.back() == rowcount - 1) {
         return;
+    }
 
     model->moveDown(rows.front(), rows.count());
 
@@ -166,8 +171,9 @@ void QueueManagerWidget::moveDownClicked()
     QModelIndex bottom_right = model->index(rows.back() + 1, cols - 1);
     nsel.select(top_left, bottom_right);
     view->selectionModel()->select(nsel, QItemSelectionModel::Select);
-    if (!indexVisible(top_left))
+    if (!indexVisible(top_left)) {
         view->scrollTo(top_left, QAbstractItemView::PositionAtCenter);
+    }
 
     updateButtons();
 }
@@ -176,11 +182,13 @@ void QueueManagerWidget::moveTopClicked()
 {
     const QModelIndexList sel = view->selectionModel()->selectedRows();
     QList<int> rows;
-    for (const QModelIndex &idx : sel)
+    for (const QModelIndex &idx : sel) {
         rows.append(idx.row());
+    }
 
-    if (rows.isEmpty() || rows.front() == 0)
+    if (rows.isEmpty() || rows.front() == 0) {
         return;
+    }
 
     model->moveTop(rows.front(), rows.count());
 
@@ -197,12 +205,14 @@ void QueueManagerWidget::moveBottomClicked()
 {
     const QModelIndexList sel = view->selectionModel()->selectedRows();
     QList<int> rows;
-    for (const QModelIndex &idx : sel)
+    for (const QModelIndex &idx : sel) {
         rows.append(idx.row());
+    }
 
     int rowcount = model->rowCount(QModelIndex());
-    if (rows.isEmpty() || rows.back() == rowcount - 1)
+    if (rows.isEmpty() || rows.back() == rowcount - 1) {
         return;
+    }
 
     model->moveBottom(rows.front(), rows.count());
 
@@ -231,12 +241,14 @@ void QueueManagerWidget::loadState(KSharedConfigPtr cfg)
 {
     KConfigGroup g = cfg->group(QStringLiteral("QueueManagerWidget"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("view_state", QByteArray()));
-    if (!s.isEmpty())
+    if (!s.isEmpty()) {
         view->header()->restoreState(s);
+    }
 
     QString st = g.readEntry("search_text", QString());
-    if (!st.isEmpty())
+    if (!st.isEmpty()) {
         search->setText(st);
+    }
 
     show_search->setChecked(g.readEntry("search_bar_visible", false));
     show_downloads->setChecked(g.readEntry("show_downloads", true));

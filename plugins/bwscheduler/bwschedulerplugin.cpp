@@ -125,8 +125,9 @@ void BWSchedulerPlugin::setNormalLimits()
     getCore()->setSuspendedState(false);
     net::SocketMonitor::setDownloadCap(1024 * dlim);
     net::SocketMonitor::setUploadCap(1024 * ulim);
-    if (m_editor)
+    if (m_editor) {
         m_editor->updateStatusText(ulim, dlim, false, m_schedule->isEnabled());
+    }
 
     PeerManager::connectionLimits().setLimits(Settings::maxTotalConnections(), Settings::maxConnections());
 }
@@ -147,8 +148,9 @@ void BWSchedulerPlugin::timerTriggered()
             getCore()->setSuspendedState(true);
             net::SocketMonitor::setDownloadCap(1024 * Settings::maxDownloadRate());
             net::SocketMonitor::setUploadCap(1024 * Settings::maxUploadRate());
-            if (m_editor)
+            if (m_editor) {
                 m_editor->updateStatusText(Settings::maxUploadRate(), Settings::maxDownloadRate(), true, m_schedule->isEnabled());
+            }
         }
     } else {
         int ulim = item->upload_limit;
@@ -163,8 +165,9 @@ void BWSchedulerPlugin::timerTriggered()
 
         net::SocketMonitor::setDownloadCap(1024 * dlim);
         net::SocketMonitor::setUploadCap(1024 * ulim);
-        if (m_editor)
+        if (m_editor) {
             m_editor->updateStatusText(ulim, dlim, false, m_schedule->isEnabled());
+        }
     }
 
     if (item->set_conn_limits) {
@@ -185,8 +188,9 @@ void BWSchedulerPlugin::restartTimer()
     // now calculate the new interval
     int wait_time = m_schedule->getTimeToNextScheduleEvent(now) * 1000;
     Out(SYS_SCD | LOG_NOTICE) << "Timer will fire in " << wait_time << " ms" << endl;
-    if (wait_time < 1000)
+    if (wait_time < 1000) {
         wait_time = 1000;
+    }
     m_timer.stop();
     m_timer.start(wait_time);
 }

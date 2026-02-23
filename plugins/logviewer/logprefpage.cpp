@@ -39,8 +39,9 @@ void LogPrefPage::loadState()
 {
     KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("LogFlags"));
     QByteArray s = QByteArray::fromBase64(g.readEntry("logging_flags_view_state", QByteArray()));
-    if (!s.isEmpty())
+    if (!s.isEmpty()) {
         m_logging_flags->header()->restoreState(s);
+    }
 }
 
 void LogPrefPage::loadDefaults()

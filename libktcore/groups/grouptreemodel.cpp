@@ -25,8 +25,9 @@ GroupTreeModel::GroupTreeModel(kt::GroupManager *gman, QObject *parent)
     , root(QStringLiteral("all"), nullptr, 0, this)
     , gman(gman)
 {
-    for (GroupManager::CItr i = gman->begin(); i != gman->end(); i++)
+    for (GroupManager::CItr i = gman->begin(); i != gman->end(); i++) {
         root.insert(i->second, index(0, 0));
+    }
 
     root.insert(i18n("Custom Groups"), QStringLiteral("/all/custom"), index(0, 0));
     // root.dump();
@@ -42,8 +43,9 @@ GroupTreeModel::~GroupTreeModel()
 QVariant GroupTreeModel::data(const QModelIndex &index, int role) const
 {
     Item *item = (Item *)index.internalPointer();
-    if (!item)
+    if (!item) {
         return QVariant();
+    }
 
     switch (role) {
     case Qt::DisplayRole:
@@ -59,17 +61,20 @@ QVariant GroupTreeModel::data(const QModelIndex &index, int role) const
 
 bool GroupTreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (role != Qt::EditRole)
+    if (role != Qt::EditRole) {
         return false;
+    }
 
     Item *item = (Item *)index.internalPointer();
-    if (!item)
+    if (!item) {
         return false;
+    }
 
     Group *group = item->group;
     QString new_name = value.toString();
-    if (new_name.isEmpty() || gman->find(new_name))
+    if (new_name.isEmpty() || gman->find(new_name)) {
         return false;
+    }
 
     item->name = new_name;
     gman->renameGroup(group->groupName(), new_name);
@@ -85,14 +90,16 @@ int GroupTreeModel::columnCount(const QModelIndex &parent) const
 
 int GroupTreeModel::rowCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return 1;
+    }
 
     Item *item = (Item *)parent.internalPointer();
-    if (!item)
+    if (!item) {
         return 0;
-    else
+    } else {
         return item->children.size();
+    }
 }
 
 QModelIndex GroupTreeModel::parent(const QModelIndex &child) const
@@ -102,20 +109,23 @@ QModelIndex GroupTreeModel::parent(const QModelIndex &child) const
     }
 
     Item *item = (Item *)child.internalPointer();
-    if (!item || !item->parent)
+    if (!item || !item->parent) {
         return QModelIndex();
-    else
+    } else {
         return createIndex(item->parent->row, 0, (void *)item->parent);
+    }
 }
 
 QModelIndex GroupTreeModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return createIndex(row, column, (void *)&root);
+    }
 
     Item *item = (Item *)parent.internalPointer();
-    if (!item || row < 0 || row >= static_cast<int>(item->children.size()))
+    if (!item || row < 0 || row >= static_cast<int>(item->children.size())) {
         return QModelIndex();
+    }
 
     auto childItr = std::find_if(item->children.begin(), item->children.end(), [=](const auto &child) {
         return child.row == row;
@@ -132,12 +142,14 @@ bool GroupTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 {
     Q_UNUSED(data);
     Q_UNUSED(action);
-    if (row != -1 || column != -1)
+    if (row != -1 || column != -1) {
         return false;
+    }
 
     TorrentGroup *g = dynamic_cast<TorrentGroup *>(groupForIndex(parent));
-    if (!g)
+    if (!g) {
         return false;
+    }
 
     Q_EMIT addTorrentSelectionToGroup(g);
     return true;
@@ -162,10 +174,11 @@ Qt::ItemFlags GroupTreeModel::flags(const QModelIndex &index) const
     }
 
     Item *item = (Item *)index.internalPointer();
-    if (item && item->group && !item->group->isStandardGroup())
+    if (item && item->group && !item->group->isStandardGroup()) {
         return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDropEnabled;
-    else
+    } else {
         return Qt::ItemIsEnabled;
+    }
 }
 
 void GroupTreeModel::groupAdded(Group *g)
@@ -208,8 +221,9 @@ void GroupTreeModel::updateGroupCount(const QModelIndex &idx)
 bool GroupTreeModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Item *item = (Item *)parent.internalPointer();
-    if (!item)
+    if (!item) {
         return false;
+    }
 
     const int lastIndex = row + count - 1;
     if (row < 0 || lastIndex >= static_cast<int>(item->children.size()) || count < 1) {
@@ -221,8 +235,9 @@ bool GroupTreeModel::removeRows(int row, int count, const QModelIndex &parent)
     beginRemoveRows(parent, row, lastIndex);
     item->children.erase(firstIt, lastIt);
     int row_index = 0;
-    for (Item &i : item->children)
+    for (Item &i : item->children) {
         i.row = row_index++;
+    }
     endRemoveRows();
     return true;
 }
@@ -243,18 +258,20 @@ void GroupTreeModel::Item::insert(Group *g, const QModelIndex &idx)
 {
     QString group_path = g->groupPath();
     QString item_path = path();
-    if (!group_path.startsWith(item_path))
+    if (!group_path.startsWith(item_path)) {
         return;
+    }
 
     QString remainder = group_path.remove(0, item_path.size());
     if (remainder.isEmpty()) {
         group = g;
     } else {
         QString child_name;
-        if (remainder.indexOf(QLatin1Char('/')) == -1)
+        if (remainder.indexOf(QLatin1Char('/')) == -1) {
             child_name = remainder;
-        else
+        } else {
             child_name = remainder.section(QLatin1Char('/'), 1, 1);
+        }
 
         auto i = std::find(children.begin(), children.end(), child_name);
         if (i == children.end()) {
@@ -263,16 +280,18 @@ void GroupTreeModel::Item::insert(Group *g, const QModelIndex &idx)
             children.emplace_back(child_name, this, npos, model);
             children.back().insert(g, model->index(npos, 0, idx));
             model->endInsertRows();
-        } else
+        } else {
             i->insert(g, model->index(i->row, 0, idx));
+        }
     }
 }
 
 void GroupTreeModel::Item::insert(const QString &name, const QString &p, const QModelIndex &idx)
 {
     QString item_path = path();
-    if (!p.startsWith(item_path))
+    if (!p.startsWith(item_path)) {
         return;
+    }
 
     QString tmp = p;
     QString remainder = tmp.remove(0, item_path.size());
@@ -280,10 +299,11 @@ void GroupTreeModel::Item::insert(const QString &name, const QString &p, const Q
         display_name = name;
     } else {
         QString child_name;
-        if (remainder.indexOf(QLatin1Char('/')) == -1)
+        if (remainder.indexOf(QLatin1Char('/')) == -1) {
             child_name = remainder;
-        else
+        } else {
             child_name = remainder.section(QLatin1Char('/'), 1, 1);
+        }
 
         auto i = std::find(children.begin(), children.end(), child_name);
         if (i == children.end()) {
@@ -292,8 +312,9 @@ void GroupTreeModel::Item::insert(const QString &name, const QString &p, const Q
             children.emplace_back(child_name, this, npos, model);
             children.back().insert(name, p, model->index(npos, 0, idx));
             model->endInsertRows();
-        } else
+        } else {
             i->insert(name, p, model->index(i->row, 0, idx));
+        }
     }
 }
 
@@ -301,8 +322,9 @@ void GroupTreeModel::Item::remove(kt::Group *g, const QModelIndex &idx)
 {
     QString group_path = g->groupPath();
     QString item_path = path();
-    if (!group_path.startsWith(item_path))
+    if (!group_path.startsWith(item_path)) {
         return;
+    }
 
     QString remainder = group_path.remove(0, item_path.size());
     if (remainder.count(QLatin1Char('/')) == 1) {
@@ -313,8 +335,9 @@ void GroupTreeModel::Item::remove(kt::Group *g, const QModelIndex &idx)
     } else {
         QString child_name = remainder.section(QLatin1Char('/'), 1, 1);
         auto i = std::find(children.begin(), children.end(), child_name);
-        if (i != children.end())
+        if (i != children.end()) {
             i->remove(g, model->index(i->row, 0, idx));
+        }
     }
 }
 
@@ -325,39 +348,44 @@ bool GroupTreeModel::Item::operator==(const QString &n) const
 
 QVariant GroupTreeModel::Item::displayData()
 {
-    if (group)
+    if (group) {
         return QStringLiteral("%1 (%2/%3)").arg(group->groupName()).arg(group->runningTorrents()).arg(group->totalTorrents());
-    else
+    } else {
         return display_name;
+    }
 }
 
 QVariant GroupTreeModel::Item::decoration()
 {
-    if (group)
+    if (group) {
         return group->groupIcon();
-    else
+    } else {
         return QIcon::fromTheme(QStringLiteral("folder"));
+    }
 }
 
 QString GroupTreeModel::Item::path() const
 {
-    if (!parent)
+    if (!parent) {
         return QLatin1Char('/') + name;
-    else
+    } else {
         return parent->path() + QLatin1Char('/') + name;
+    }
 }
 
 QModelIndex GroupTreeModel::Item::findGroup(Group *g, const QModelIndex &idx)
 {
-    if (group == g)
+    if (group == g) {
         return idx;
+    }
 
     int row = 0;
     for (Item &i : children) {
         QModelIndex ret = i.findGroup(g, model->index(row, 0, idx));
         row++;
-        if (ret.isValid())
+        if (ret.isValid()) {
             return ret;
+        }
     }
 
     return QModelIndex();
@@ -369,10 +397,11 @@ void GroupTreeModel::Item::dump()
     int indentation = p.count(QLatin1Char('/')) - 1;
     QString indent = QStringLiteral("\t").repeated(indentation);
     Out(SYS_GEN | LOG_DEBUG) << indent << path() << endl;
-    if (group)
+    if (group) {
         Out(SYS_GEN | LOG_DEBUG) << indent << group->groupName() << endl;
-    else
+    } else {
         Out(SYS_GEN | LOG_DEBUG) << indent << name << endl;
+    }
 
     for (Item &i : children) {
         Out(SYS_GEN | LOG_DEBUG) << indent << "child " << i.row << endl;

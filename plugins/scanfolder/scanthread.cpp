@@ -113,8 +113,9 @@ void ScanThread::updateFolders()
     }
 
     for (const QString &folder : std::as_const(tmp)) {
-        if (scan_folders.find(folder))
+        if (scan_folders.find(folder)) {
             continue;
+        }
 
         if (QDir(folder).exists()) {
             // only add folder when it exists
@@ -149,8 +150,9 @@ bool ScanThread::alreadyLoaded(const QDir &d, const QString &torrent)
 
 void ScanThread::scan(const QUrl &dir, bool recursive)
 {
-    if (stop_requested)
+    if (stop_requested) {
         return;
+    }
 
     QStringList filters;
     filters << QStringLiteral("*.torrent");
@@ -159,14 +161,16 @@ void ScanThread::scan(const QUrl &dir, bool recursive)
 
     QList<QUrl> torrents;
     for (const QString &tor : files) {
-        if (!alreadyLoaded(d, tor))
+        if (!alreadyLoaded(d, tor)) {
             torrents.append(QUrl::fromLocalFile(d.absoluteFilePath(tor)));
+        }
     }
 
     Q_EMIT found(torrents);
 
-    if (stop_requested)
+    if (stop_requested) {
         return;
+    }
 
     if (recursive) {
         const QString loaded_localized = i18nc("folder name part", "loaded");

@@ -119,8 +119,9 @@ void LogViewerPlugin::removeLogViewerFromGUI()
 
 void LogViewerPlugin::guiUpdate()
 {
-    if (lv)
+    if (lv) {
         lv->processPending();
+    }
 }
 
 }

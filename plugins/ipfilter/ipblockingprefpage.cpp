@@ -46,10 +46,11 @@ void IPBlockingPrefPage::checkUseLevel1Toggled(bool check)
         m_plugin->unloadAntiP2P();
     }
 
-    if (m_plugin->loadedAndRunning() && check)
+    if (m_plugin->loadedAndRunning() && check) {
         m_status->setText(i18n("Status: Loaded and running."));
-    else
+    } else {
         m_status->setText(i18n("Status: Not loaded."));
+    }
 
     updateAutoUpdate();
 }
@@ -67,10 +68,11 @@ void IPBlockingPrefPage::updateSettings()
 void IPBlockingPrefPage::loadSettings()
 {
     if (IPBlockingPluginSettings::useLevel1()) {
-        if (m_plugin->loadedAndRunning())
+        if (m_plugin->loadedAndRunning()) {
             m_status->setText(i18n("Status: Loaded and running."));
-        else
+        } else {
             m_status->setText(i18n("Status: Not loaded."));
+        }
 
         kcfg_filterURL->setEnabled(true);
         m_download->setEnabled(true);
@@ -111,10 +113,11 @@ void IPBlockingPrefPage::downloadClicked()
 bool IPBlockingPrefPage::doAutoUpdate()
 {
     if (m_job) {
-        if (m_job->isAutoUpdate())
+        if (m_job->isAutoUpdate()) {
             return true; // if we are already auto updating, lets not start it again
-        else
+        } else {
             return false;
+        }
     }
 
     m_verbose = false;
@@ -130,16 +133,18 @@ void IPBlockingPrefPage::restoreGUI()
     kcfg_useLevel1->setEnabled(true);
     kcfg_filterURL->setEnabled(true);
 
-    if (m_plugin->loadedAndRunning())
+    if (m_plugin->loadedAndRunning()) {
         m_status->setText(i18n("Status: Loaded and running."));
-    else
+    } else {
         m_status->setText(i18n("Status: Not loaded."));
+    }
 }
 
 void IPBlockingPrefPage::downloadAndConvertFinished(KJob *j)
 {
-    if (j != m_job)
+    if (j != m_job) {
         return;
+    }
 
     KConfigGroup g = KSharedConfig::openConfig()->group(QStringLiteral("IPFilterAutoUpdate"));
     if (!j->error()) {
@@ -171,19 +176,21 @@ void IPBlockingPrefPage::updateAutoUpdate()
     bool ok = g.readEntry("last_update_ok", true);
     QDate last_updated = g.readEntry("last_updated", QDate());
 
-    if (last_updated.isNull())
+    if (last_updated.isNull()) {
         m_last_updated->setText(i18n("No update done yet."));
-    else if (ok)
+    } else if (ok) {
         m_last_updated->setText(last_updated.toString());
-    else
+    } else {
         m_last_updated->setText(i18n("%1 (Last update attempt failed.)", last_updated.toString()));
+    }
 
     if (kcfg_autoUpdate->isChecked()) {
         QDate next_update;
-        if (last_updated.isNull())
+        if (last_updated.isNull()) {
             next_update = QDate::currentDate().addDays(kcfg_autoUpdateInterval->value());
-        else
+        } else {
             next_update = last_updated.addDays(kcfg_autoUpdateInterval->value());
+        }
 
         m_next_update->setText(next_update.toString());
     } else {

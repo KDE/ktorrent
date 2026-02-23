@@ -230,8 +230,9 @@ int main(int argc, char **argv)
         auto handleCmdLine = [&widget, &parser](const QStringList &arguments, const QString &workingDirectory) {
             parser.parse(arguments);
             QString oldCurrent = QDir::currentPath();
-            if (!workingDirectory.isEmpty())
+            if (!workingDirectory.isEmpty()) {
                 QDir::setCurrent(workingDirectory);
+            }
 
             bool silent = parser.isSet(QStringLiteral("silent"));
             auto loadMethod = silent ? &kt::GUI::loadSilently : &kt::GUI::load;
@@ -241,8 +242,9 @@ int main(int argc, char **argv)
                 (widget.*loadMethod)(url);
             }
 
-            if (!workingDirectory.isEmpty())
+            if (!workingDirectory.isEmpty()) {
                 QDir::setCurrent(oldCurrent);
+            }
         };
         QObject::connect(&dbusService, &KDBusService::activateRequested, handleCmdLine);
         QObject::connect(&dbusService, &KDBusService::activateRequested, &widget, [&widget] {

@@ -23,66 +23,78 @@ Monitor::Monitor(bt::TorrentInterface *tc, PeerView *pv, ChunkDownloadView *cdv,
     , cdv(cdv)
     , fv(fv)
 {
-    if (tc)
+    if (tc) {
         tc->setMonitor(this);
+    }
 }
 
 Monitor::~Monitor()
 {
-    if (tc)
+    if (tc) {
         tc->setMonitor(nullptr);
+    }
 }
 
 void Monitor::downloadRemoved(bt::ChunkDownloadInterface *cd)
 {
-    if (cdv)
+    if (cdv) {
         cdv->downloadRemoved(cd);
+    }
 }
 
 void Monitor::downloadStarted(bt::ChunkDownloadInterface *cd)
 {
-    if (cdv)
+    if (cdv) {
         cdv->downloadAdded(cd);
+    }
 }
 
 void Monitor::peerAdded(bt::PeerInterface *peer)
 {
-    if (pv)
+    if (pv) {
         pv->peerAdded(peer);
+    }
 }
 
 void Monitor::peerRemoved(bt::PeerInterface *peer)
 {
-    if (pv)
+    if (pv) {
         pv->peerRemoved(peer);
+    }
 }
 
 void Monitor::stopped()
 {
-    if (pv)
+    if (pv) {
         pv->removeAll();
-    if (cdv)
+    }
+    if (cdv) {
         cdv->removeAll();
+    }
 }
 
 void Monitor::destroyed()
 {
-    if (pv)
+    if (pv) {
         pv->removeAll();
-    if (cdv)
+    }
+    if (cdv) {
         cdv->removeAll();
+    }
     tc = nullptr;
 }
 
 void Monitor::filePercentageChanged(bt::TorrentFileInterface *file, float percentage)
 {
-    if (fv)
+    if (fv) {
         fv->filePercentageChanged(file, percentage);
+    }
 }
 
 void Monitor::filePreviewChanged(bt::TorrentFileInterface *file, bool preview)
 {
-    if (fv)
+    if (fv) {
         fv->filePreviewChanged(file, preview);
+    }
 }
 }

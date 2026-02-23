@@ -51,8 +51,9 @@ PeerView::~PeerView()
 
 void PeerView::showContextMenu(const QPoint &pos)
 {
-    if (selectionModel()->selectedRows().count() == 0)
+    if (selectionModel()->selectedRows().count() == 0) {
         return;
+    }
 
     context_menu->popup(viewport()->mapToGlobal(pos));
 }
@@ -76,8 +77,9 @@ void PeerView::kickPeer()
     const QModelIndexList indices = selectionModel()->selectedRows();
     for (const QModelIndex &idx : indices) {
         bt::PeerInterface *peer = model->indexToPeer(pm->mapToSource(idx));
-        if (peer)
+        if (peer) {
             peer->kill();
+        }
     }
 }
 

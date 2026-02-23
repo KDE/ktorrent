@@ -147,8 +147,9 @@ QStringList DBusTorrent::trackers() const
 {
     const QList<bt::TrackerInterface *> trackers = ti->getTrackersList()->getTrackers();
     QStringList ret;
-    for (bt::TrackerInterface *t : trackers)
+    for (bt::TrackerInterface *t : trackers) {
         ret << t->trackerURL().toDisplayString();
+    }
     return ret;
 }
 
@@ -175,16 +176,18 @@ void DBusTorrent::setTrackerEnabled(const QString &tracker_url, bool enabled)
 
 bool DBusTorrent::addTracker(const QString &tracker_url)
 {
-    if (ti->getStats().priv_torrent)
+    if (ti->getStats().priv_torrent) {
         return false;
+    }
 
     return ti->getTrackersList()->addTracker(QUrl(tracker_url), true) != nullptr;
 }
 
 bool DBusTorrent::removeTracker(const QString &tracker_url)
 {
-    if (ti->getStats().priv_torrent)
+    if (ti->getStats().priv_torrent) {
         return false;
+    }
 
     ti->getTrackersList()->removeTracker(QUrl(tracker_url));
     return true;
@@ -324,86 +327,98 @@ void DBusTorrent::onTorrentStopped(bt::TorrentInterface *tor)
 
 QString DBusTorrent::filePath(uint file_index) const
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return QString();
-    else
+    } else {
         return ti->getTorrentFile(file_index).getPath();
+    }
 }
 
 QString DBusTorrent::filePathOnDisk(uint file_index) const
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return QString();
-    else
+    } else {
         return ti->getTorrentFile(file_index).getPathOnDisk();
+    }
 }
 
 qulonglong DBusTorrent::fileSize(uint file_index) const
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return 0;
-    else
+    } else {
         return ti->getTorrentFile(file_index).getSize();
+    }
 }
 
 int DBusTorrent::filePriority(uint file_index) const
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return 0;
-    else
+    } else {
         return ti->getTorrentFile(file_index).getPriority();
+    }
 }
 
 void DBusTorrent::setFilePriority(uint file_index, int prio)
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return;
+    }
 
-    if (prio > 60 || prio < 10)
+    if (prio > 60 || prio < 10) {
         return;
+    }
 
-    if (prio % 10 != 0)
+    if (prio % 10 != 0) {
         return;
+    }
 
     ti->getTorrentFile(file_index).setPriority((bt::Priority)prio);
 }
 
 int DBusTorrent::firstChunkOfFile(uint file_index) const
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return 0;
-    else
+    } else {
         return ti->getTorrentFile(file_index).getFirstChunk();
+    }
 }
 
 int DBusTorrent::lastChunkOfFile(uint file_index) const
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return 0;
-    else
+    } else {
         return ti->getTorrentFile(file_index).getLastChunk();
+    }
 }
 
 double DBusTorrent::filePercentage(uint file_index) const
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return 0;
-    else
+    } else {
         return ti->getTorrentFile(file_index).getDownloadPercentage();
+    }
 }
 
 bool DBusTorrent::isMultiMediaFile(uint file_index) const
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return false;
-    else
+    } else {
         return ti->getTorrentFile(file_index).isMultimedia();
+    }
 }
 
 void DBusTorrent::setDoNotDownload(uint file_index, bool dnd)
 {
-    if (file_index >= ti->getNumFiles())
+    if (file_index >= ti->getNumFiles()) {
         return;
+    }
 
     ti->getTorrentFile(file_index).setDoNotDownload(dnd);
 }

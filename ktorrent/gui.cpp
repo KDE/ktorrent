@@ -98,8 +98,9 @@ GUI::GUI()
     if (Settings::showSystemTrayIcon()) {
         tray_icon->updateMaxRateMenus();
         tray_icon->show();
-    } else
+    } else {
         tray_icon->hide();
+    }
 
     dbus_iface = new DBus(this, core, this);
     core->loadPlugins();
@@ -141,8 +142,9 @@ void GUI::addActivity(Activity *act)
 {
     unplugActionList(QStringLiteral("activities_list"));
     central->addActivity(act);
-    if (act->part())
+    if (act->part()) {
         part_manager->addPart(act->part(), false);
+    }
     plugActionList(QStringLiteral("activities_list"), central->activitySwitchingActions());
 }
 
@@ -150,8 +152,9 @@ void GUI::removeActivity(Activity *act)
 {
     unplugActionList(QStringLiteral("activities_list"));
     central->removeActivity(act);
-    if (act->part())
+    if (act->part()) {
         part_manager->removePart(act->part());
+    }
     plugActionList(QStringLiteral("activities_list"), central->activitySwitchingActions());
 }
 
@@ -180,8 +183,9 @@ void GUI::addPrefPage(PrefPageInterface *page)
 
 void GUI::removePrefPage(PrefPageInterface *page)
 {
-    if (pref_dlg)
+    if (pref_dlg) {
         pref_dlg->removePrefPage(page);
+    }
 }
 
 StatusBarInterface *GUI::getStatusBar()
@@ -228,8 +232,9 @@ void GUI::errorMsg(const QString &err)
 
 void GUI::errorMsg(KIO::Job *j)
 {
-    if (j->error())
+    if (j->error()) {
         j->uiDelegate()->showErrorMessage();
+    }
 }
 
 void GUI::infoMsg(const QString &info)
@@ -257,28 +262,33 @@ void GUI::openTorrent(bool silently)
 {
     QString recentDirClass;
     QUrl defaultUrl = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///openTorrent")), recentDirClass);
-    if (!QDir(defaultUrl.toLocalFile()).exists())
+    if (!QDir(defaultUrl.toLocalFile()).exists()) {
         defaultUrl = QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+    }
     const QList<QUrl> urls = QFileDialog::getOpenFileUrls(this, i18n("Open Location"), defaultUrl, kt::TorrentFileFilter(true));
 
-    if (urls.isEmpty())
+    if (urls.isEmpty()) {
         return;
+    }
 
-    if (!recentDirClass.isEmpty() && defaultUrl.toLocalFile() != urls.first().toLocalFile())
+    if (!recentDirClass.isEmpty() && defaultUrl.toLocalFile() != urls.first().toLocalFile()) {
         KRecentDirs::add(recentDirClass, QFileInfo(urls.first().toLocalFile()).absolutePath());
+    }
 
     if (urls.count() == 1 && !silently) {
         QUrl url = urls.front();
-        if (url.isValid())
+        if (url.isValid()) {
             load(url);
+        }
     } else {
         // load multiple torrents silently
         for (const QUrl &url : urls) {
             if (url.isValid()) {
-                if (silently || Settings::openMultipleTorrentsSilently())
+                if (silently || Settings::openMultipleTorrentsSilently()) {
                     loadSilently(url);
-                else
+                } else {
                     load(url);
+                }
             }
         }
     }
@@ -294,26 +304,30 @@ void GUI::pasteURL()
 
 void GUI::paste()
 {
-    if (!paste_action->isEnabled())
+    if (!paste_action->isEnabled()) {
         return;
+    }
 
     QClipboard *cb = QApplication::clipboard();
     QString text = cb->text(QClipboard::Clipboard);
-    if (text.length() == 0)
+    if (text.length() == 0) {
         return;
+    }
 
     QUrl url = QFile::exists(text) ? QUrl::fromLocalFile(text) : QUrl(text);
 
-    if (url.isValid())
+    if (url.isValid()) {
         load(url);
-    else
+    } else {
         KMessageBox::error(this, i18n("Invalid URL: %1", url.toDisplayString()));
+    }
 }
 
 void GUI::showPrefDialog()
 {
-    if (!pref_dlg)
+    if (!pref_dlg) {
         pref_dlg = new PrefDialog(this, core);
+    }
 
     pref_dlg->updateWidgetsAndShow();
 }
@@ -416,8 +430,9 @@ void GUI::update()
         if (Settings::showTotalSpeedInTitle()) {
             QString down_up_speed = i18n("D: %1 | U: %2", BytesPerSecToString((double)stats.download_speed), BytesPerSecToString((double)stats.upload_speed));
             setCaption(down_up_speed);
-        } else
+        } else {
             setCaption(core->getGroupManager()->allGroup()->groupName());
+        }
 
         tray_icon->updateStats(stats);
         core->updateGuiPlugins();
@@ -434,8 +449,9 @@ void GUI::applySettings()
     if (Settings::showSystemTrayIcon()) {
         tray_icon->updateMaxRateMenus();
         tray_icon->show();
-    } else
+    } else {
         tray_icon->hide();
+    }
 }
 
 void GUI::loadState(KSharedConfigPtr cfg)
@@ -473,8 +489,9 @@ void GUI::saveState(KSharedConfigPtr cfg)
     g.writeEntry("menubar_hidden", menuBar()->isHidden());
     torrent_activity->saveState(cfg);
     central->saveState(cfg);
-    if (pref_dlg)
+    if (pref_dlg) {
         pref_dlg->saveState(cfg);
+    }
     cfg->sync();
 }
 

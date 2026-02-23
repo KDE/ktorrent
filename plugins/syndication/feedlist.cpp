@@ -44,8 +44,9 @@ void FeedList::loadFeeds(FilterList *filter_list, DownloadQueue *activity)
     const QStringList sl = dir.entryList(filters, QDir::Dirs);
     for (const QString &s : sl) {
         QString idir = data_dir + s;
-        if (!idir.endsWith(DirSeparator()))
+        if (!idir.endsWith(DirSeparator())) {
             idir.append(DirSeparator());
+        }
 
         Out(SYS_GEN | LOG_NOTICE) << "Loading feed from directory " << idir << endl;
         Feed *feed = nullptr;
@@ -64,8 +65,9 @@ void FeedList::loadFeeds(FilterList *filter_list, DownloadQueue *activity)
 void FeedList::importOldFeeds()
 {
     QFile fptr(kt::DataDir() + QStringLiteral("rssfeeds.ktr"));
-    if (!fptr.open(QIODevice::ReadOnly))
+    if (!fptr.open(QIODevice::ReadOnly)) {
         return;
+    }
 
     QDataStream in(&fptr);
     int num_feeds;
@@ -136,12 +138,14 @@ int FeedList::rowCount(const QModelIndex &parent) const
 
 QVariant FeedList::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
     Feed *f = feeds.at(index.row());
-    if (!f->feedData())
+    if (!f->feedData()) {
         return QVariant();
+    }
 
     switch (role) {
     case Qt::EditRole:
@@ -150,15 +154,17 @@ QVariant FeedList::data(const QModelIndex &index, int role) const
     case Qt::UserRole:
         return i18np("%2\n1 active filter", "%2\n%1 active filters", f->numFilters(), f->displayName());
     case Qt::DecorationRole:
-        if (f->feedStatus() == Feed::FAILED_TO_DOWNLOAD)
+        if (f->feedStatus() == Feed::FAILED_TO_DOWNLOAD) {
             return QIcon::fromTheme(QStringLiteral("dialog-error"));
-        else
+        } else {
             return QIcon::fromTheme(QStringLiteral("application-rss+xml"));
+        }
     case Qt::ToolTipRole:
-        if (f->feedStatus() == Feed::FAILED_TO_DOWNLOAD)
+        if (f->feedStatus() == Feed::FAILED_TO_DOWNLOAD) {
             return i18n("<b>%1</b><br/><br/>Download failed: <b>%2</b>", f->feedData()->link(), f->errorString());
-        else if (f->ok())
+        } else if (f->ok()) {
             return i18n("<b>%1</b><br/><br/>%2", f->feedData()->link(), f->feedData()->description());
+        }
         break;
     }
 
@@ -167,8 +173,9 @@ QVariant FeedList::data(const QModelIndex &index, int role) const
 
 bool FeedList::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() || role != Qt::EditRole || !value.canConvert<QString>())
+    if (!index.isValid() || role != Qt::EditRole || !value.canConvert<QString>()) {
         return false;
+    }
 
     Feed *f = feeds.at(index.row());
     f->setDisplayName(value.toString());
@@ -178,25 +185,29 @@ bool FeedList::setData(const QModelIndex &index, const QVariant &value, int role
 
 Qt::ItemFlags FeedList::flags(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return {};
+    }
 
     return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 }
 
 Feed *FeedList::feedForIndex(const QModelIndex &idx)
 {
-    if (!idx.isValid())
+    if (!idx.isValid()) {
         return nullptr;
+    }
 
     return feeds.at(idx.row());
 }
 
 Feed *FeedList::feedForDirectory(const QString &dir)
 {
-    for (Feed *f : std::as_const(feeds))
-        if (f->directory() == dir)
+    for (Feed *f : std::as_const(feeds)) {
+        if (f->directory() == dir) {
             return f;
+        }
+    }
 
     return nullptr;
 }
@@ -222,8 +233,9 @@ void FeedList::removeFeeds(const QModelIndexList &idx)
     QList<Feed *> to_remove;
     for (const QModelIndex &i : idx) {
         Feed *f = feedForIndex(i);
-        if (f)
+        if (f) {
             to_remove.append(f);
+        }
     }
 
     beginResetModel();
@@ -239,21 +251,24 @@ void FeedList::feedUpdated()
 {
     Feed *f = (Feed *)sender();
     int idx = feeds.indexOf(f);
-    if (idx >= 0)
+    if (idx >= 0) {
         Q_EMIT dataChanged(index(idx, 0), index(idx, 0));
+    }
 }
 
 void FeedList::filterRemoved(Filter *f)
 {
-    for (Feed *feed : std::as_const(feeds))
+    for (Feed *feed : std::as_const(feeds)) {
         feed->removeFilter(f);
+    }
 }
 
 void FeedList::filterEdited(Filter *f)
 {
     for (Feed *feed : std::as_const(feeds)) {
-        if (feed->usingFilter(f))
+        if (feed->usingFilter(f)) {
             feed->runFilters();
+        }
     }
 }
 }

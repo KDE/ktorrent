@@ -67,21 +67,24 @@ FilterEditor::FilterEditor(Filter *filter, FilterList *filters, FeedList *feeds,
     m_add_to_group->setEnabled(groups.count() > 0);
     m_group->setEnabled(!group.isEmpty() && groups.count() > 0);
     m_group->addItems(groups);
-    if (!group.isEmpty())
+    if (!group.isEmpty()) {
         m_group->setCurrentIndex(groups.indexOf(group));
+    }
 
     QString dl = filter->downloadLocation();
     m_use_custom_download_location->setChecked(!dl.isEmpty());
     m_custom_download_location->setEnabled(!dl.isEmpty());
-    if (!dl.isEmpty())
+    if (!dl.isEmpty()) {
         m_custom_download_location->setUrl(QUrl(dl));
+    }
     m_custom_download_location->setMode(KFile::Directory);
 
     QString mloc = filter->moveOnCompletionLocation();
     m_move_on_completion->setChecked(!mloc.isEmpty());
     m_move_on_completion_location->setEnabled(!mloc.isEmpty());
-    if (!mloc.isEmpty())
+    if (!mloc.isEmpty()) {
         m_move_on_completion_location->setUrl(QUrl(mloc));
+    }
     m_move_on_completion_location->setMode(KFile::Directory);
 
     m_silently->setChecked(filter->openSilently());
@@ -132,8 +135,9 @@ FilterEditor::~FilterEditor()
 void FilterEditor::test()
 {
     Feed *f = feeds->feedForIndex(feeds->index(m_feed->currentIndex(), 0));
-    if (!f)
+    if (!f) {
         return;
+    }
 
     applyOnFilter(test_filter);
     if (!test_model) {
@@ -142,8 +146,9 @@ void FilterEditor::test()
         filter_model = new TestFilterModel(test_filter, test_model, this);
         m_test_results->setModel(filter_model);
     } else {
-        if (test_model->currentFeed() != f)
+        if (test_model->currentFeed() != f) {
             test_model->setCurrentFeed(f);
+        }
 
         test_filter->startMatching();
         filter_model->invalidate();
@@ -157,15 +162,18 @@ void FilterEditor::checkOKButton()
 
 bool FilterEditor::okIsPossible()
 {
-    if (m_name->text().isEmpty())
+    if (m_name->text().isEmpty()) {
         return false;
+    }
 
-    if (m_word_matches->count() == 0)
+    if (m_word_matches->count() == 0) {
         return false;
+    }
 
     if (m_use_se_matching->isChecked()) {
-        if (!Filter::validSeasonOrEpisodeString(m_seasons->text()) || !Filter::validSeasonOrEpisodeString(m_episodes->text()))
+        if (!Filter::validSeasonOrEpisodeString(m_seasons->text()) || !Filter::validSeasonOrEpisodeString(m_episodes->text())) {
             return false;
+        }
     }
 
     return true;
@@ -187,20 +195,23 @@ void FilterEditor::applyOnFilter(Filter *f)
     f->setDownloadNonMatching(m_download_non_matches->isChecked());
     f->setNoDuplicateSeasonAndEpisodeMatches(m_se_no_duplicates->isChecked());
 
-    if (m_add_to_group->isChecked())
+    if (m_add_to_group->isChecked()) {
         f->setGroup(m_group->currentText());
-    else
+    } else {
         f->setGroup(QString());
+    }
 
-    if (m_use_custom_download_location->isChecked())
+    if (m_use_custom_download_location->isChecked()) {
         f->setDownloadLocation(m_custom_download_location->url().toLocalFile());
-    else
+    } else {
         f->setDownloadLocation(QString());
+    }
 
-    if (m_move_on_completion->isChecked())
+    if (m_move_on_completion->isChecked()) {
         f->setMoveOnCompletionLocation(m_move_on_completion_location->url().toLocalFile());
-    else
+    } else {
         f->setMoveOnCompletionLocation(QString());
+    }
 
     f->setOpenSilently(m_silently->isChecked());
 
@@ -247,9 +258,10 @@ TestFilterModel::~TestFilterModel()
 bool TestFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     Syndication::ItemPtr item = feed_model->itemForIndex(feed_model->index(source_row, 0, source_parent));
-    if (!item)
+    if (!item) {
         return true;
-    else
+    } else {
         return filter->match(item);
+    }
 }
 }

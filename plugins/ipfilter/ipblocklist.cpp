@@ -55,26 +55,29 @@ IPBlockList::~IPBlockList()
 
 bool IPBlockList::blocked(const net::Address &addr) const
 {
-    if (addr.protocol() == QAbstractSocket::IPv6Protocol || blocks.empty())
+    if (addr.protocol() == QAbstractSocket::IPv6Protocol || blocks.empty()) {
         return false;
+    }
 
     // Binary search the list of blocks which are sorted
     quint32 ip = addr.toIPv4Address();
     int begin = 0;
     int end = blocks.size() - 1;
     while (true) {
-        if (begin == end)
+        if (begin == end) {
             return blocks[begin].contains(ip);
-        else if (begin == end - 1)
+        } else if (begin == end - 1) {
             return blocks[begin].contains(ip) || blocks[end].contains(ip);
+        }
 
         int pivot = begin + (end - begin) / 2;
-        if (blocks[pivot].contains(ip))
+        if (blocks[pivot].contains(ip)) {
             return true;
-        else if (ip < blocks[pivot].ip1)
+        } else if (ip < blocks[pivot].ip1) {
             end = pivot - 1; // continue in the range [begin, pivot - 1]
-        else // ip > blocks[pivot].ip2
+        } else { // ip > blocks[pivot].ip2
             begin = pivot + 1; // continue in the range [pivot + 1, end]
+        }
     }
     return false;
 }
@@ -92,10 +95,11 @@ bool IPBlockList::load(const QString &path)
     blocks.reserve(num_blocks);
     while (!file.atEnd() && blocks.size() < num_blocks) {
         IPBlock block;
-        if (file.read((char *)&block, sizeof(IPBlock)) == sizeof(IPBlock))
+        if (file.read((char *)&block, sizeof(IPBlock)) == sizeof(IPBlock)) {
             addBlock(block);
-        else
+        } else {
             break;
+        }
     }
 
     Out(SYS_IPF | LOG_NOTICE) << "Loaded " << blocks.size() << " blocked IP ranges" << endl;

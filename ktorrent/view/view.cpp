@@ -273,14 +273,16 @@ struct StartAndStopAllVisitor {
 
     bool operator()(bt::TorrentInterface *tc)
     {
-        if (tc->getJobQueue()->runningJobs())
+        if (tc->getJobQueue()->runningJobs()) {
             return true;
+        }
 
         const TorrentStats &s = tc->getStats();
-        if (s.running || (tc->isAllowedToStart() && !tc->overMaxRatio() && !tc->overMaxSeedTime()))
+        if (s.running || (tc->isAllowedToStart() && !tc->overMaxRatio() && !tc->overMaxSeedTime())) {
             stop_all->setEnabled(true);
-        else
+        } else {
             start_all->setEnabled(true);
+        }
 
         return !stop_all->isEnabled() || !start_all->isEnabled();
     }
@@ -303,32 +305,37 @@ void View::updateActions()
     for (bt::TorrentInterface *tc : std::as_const(sel)) {
         const TorrentStats &s = tc->getStats();
 
-        if (tc->readyForPreview() && !s.multi_file_torrent)
+        if (tc->readyForPreview() && !s.multi_file_torrent) {
             en_prev = true;
+        }
 
-        if (tc->getJobQueue()->runningJobs())
+        if (tc->getJobQueue()->runningJobs()) {
             continue;
+        }
 
         en_remove = true;
         if (!s.running) {
             if (qm_enabled) {
                 // Queued torrents can be stopped, and not started
-                if (s.queued)
+                if (s.queued) {
                     en_stop = true;
-                else
+                } else {
                     en_start = true;
+                }
             } else {
                 en_start = true;
             }
         } else {
             en_stop = true;
-            if (tc->announceAllowed())
+            if (tc->announceAllowed()) {
                 en_announce = true;
+            }
 
-            if (!s.paused)
+            if (!s.paused) {
                 en_pause = true;
-            else
+            } else {
                 en_start = true;
+            }
         }
 
         if (!s.priv_torrent) {
@@ -384,14 +391,16 @@ void View::setGroup(Group *g)
 
 void View::update()
 {
-    if (!uniformRowHeights() && !delegate->hasExtenders())
+    if (!uniformRowHeights() && !delegate->hasExtenders()) {
         setUniformRowHeights(true);
+    }
 
     if (!model->update(delegate)) {
         // model wasn't resorted, so update individual items
         const QModelIndexList &to_update = model->updateList();
-        for (const QModelIndex &idx : to_update)
+        for (const QModelIndex &idx : to_update) {
             QAbstractItemView::update(idx);
+        }
     }
 }
 
@@ -399,44 +408,50 @@ void View::startTorrents()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    if (sel.count() > 0)
+    if (sel.count() > 0) {
         core->start(sel);
+    }
 }
 
 void View::forceStartTorrents()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    if (sel.count() == 0)
+    if (sel.count() == 0) {
         return;
+    }
 
     QueueManager *qm = core->getQueueManager();
     if (qm->enabled()) {
         // Give everybody in the selection a high priority
         int prio = qm->count();
         int idx = 0;
-        for (bt::TorrentInterface *tc : std::as_const(sel))
+        for (bt::TorrentInterface *tc : std::as_const(sel)) {
             tc->setPriority(prio + sel.count() - idx++);
+        }
 
         core->start(sel);
-    } else
+    } else {
         core->start(sel);
+    }
 }
 
 void View::stopTorrents()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    if (sel.count() > 0)
+    if (sel.count() > 0) {
         core->stop(sel);
+    }
 }
 
 void View::pauseTorrents()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    if (sel.count() > 0)
+    if (sel.count() > 0) {
         core->pause(sel);
+    }
 }
 
 void View::removeTorrents()
@@ -458,10 +473,11 @@ void View::removeTorrents()
                                                                 KGuiItem(i18n("Delete Data")),
                                                                 KGuiItem(i18n("Keep Data")),
                                                                 KStandardGuiItem::cancel());
-                if (ret == KMessageBox::Cancel)
+                if (ret == KMessageBox::Cancel) {
                     return;
-                else if (ret == KMessageBox::PrimaryAction)
+                } else if (ret == KMessageBox::PrimaryAction) {
                     data_to = true;
+                }
             }
             core->remove(tc, data_to);
         }
@@ -472,8 +488,9 @@ void View::removeTorrentsAndData()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    if (sel.count() == 0)
+    if (sel.count() == 0) {
         return;
+    }
 
     QStringList names;
     for (bt::TorrentInterface *tc : std::as_const(sel)) {
@@ -516,8 +533,9 @@ void View::manualAnnounce()
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
     for (bt::TorrentInterface *tc : std::as_const(sel)) {
-        if (tc->getStats().running)
+        if (tc->getStats().running) {
             tc->updateTracker();
+        }
     }
 }
 
@@ -546,10 +564,11 @@ void View::openDataDir()
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
     for (bt::TorrentInterface *tc : std::as_const(sel)) {
-        if (tc->getStats().multi_file_torrent)
+        if (tc->getStats().multi_file_torrent) {
             openUrl(QUrl::fromLocalFile(tc->getStats().output_path));
-        else
+        } else {
             openUrl(QUrl::fromLocalFile(tc->getDataDir()));
+        }
     }
 }
 
@@ -566,8 +585,9 @@ void View::moveData()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    if (sel.count() == 0)
+    if (sel.count() == 0) {
         return;
+    }
 
     QString recentDirClass;
     QString dir =
@@ -575,15 +595,18 @@ void View::moveData()
                                           i18n("Select a directory to move the data to."),
                                           KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///saveTorrentData")), recentDirClass).toLocalFile());
 
-    if (dir.isEmpty())
+    if (dir.isEmpty()) {
         return;
+    }
 
-    if (!recentDirClass.isEmpty())
+    if (!recentDirClass.isEmpty()) {
         KRecentDirs::add(recentDirClass, dir);
+    }
 
     for (bt::TorrentInterface *tc : std::as_const(sel)) {
-        if (core->checkMissingFiles(tc))
+        if (core->checkMissingFiles(tc)) {
             tc->changeOutputDir(dir, bt::TorrentInterface::MOVE_FILES);
+        }
     }
 }
 
@@ -591,8 +614,9 @@ void View::showProperties()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    if (sel.count() == 0)
+    if (sel.count() == 0) {
         return;
+    }
 
     PropertiesDlg dlg(sel.front(), this);
     dlg.exec();
@@ -600,13 +624,15 @@ void View::showProperties()
 
 void View::removeFromGroup()
 {
-    if (!group || group->isStandardGroup())
+    if (!group || group->isStandardGroup()) {
         return;
+    }
 
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    for (bt::TorrentInterface *tc : std::as_const(sel))
+    for (bt::TorrentInterface *tc : std::as_const(sel)) {
         group->removeTorrent(tc);
+    }
     core->getGroupManager()->saveGroups();
     update();
     num_running++; // set these wrong so that the caption is updated on the next update
@@ -616,8 +642,9 @@ void View::removeFromGroup()
 void View::renameTorrent()
 {
     QModelIndexList indices = selectionModel()->selectedRows();
-    if (indices.count() == 0)
+    if (indices.count() == 0) {
         return;
+    }
 
     QModelIndex idx = indices.front();
     QTreeView::edit(model->index(idx.row(), 0));
@@ -629,8 +656,9 @@ void View::checkData()
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
     for (bt::TorrentInterface *tc : std::as_const(sel)) {
-        if (tc->getStats().status != bt::ALLOCATING_DISKSPACE)
+        if (tc->getStats().status != bt::ALLOCATING_DISKSPACE) {
             core->doDataCheck(tc);
+        }
     }
 
     core->startUpdateTimer(); // make sure update timer of core is running
@@ -639,8 +667,9 @@ void View::checkData()
 void View::showMenu(const QPoint &pos)
 {
     QMenu *view_menu = gui->getTorrentActivity()->part()->menu(QStringLiteral("ViewMenu"));
-    if (!view_menu)
+    if (!view_menu) {
         return;
+    }
 
     gui->getTorrentActivity()->part()->plugActionList(QStringLiteral("view_groups_list"), group_actions.values());
     gui->getTorrentActivity()->part()->unplugActionList(QStringLiteral("view_columns_list"));
@@ -673,8 +702,9 @@ void View::restoreState(const QByteArray &state)
         QAction *act = i.key();
         bool hidden = header()->isSectionHidden(i.value());
         act->setChecked(!hidden);
-        if (!hidden && header()->sectionSize(i.value()) == 0)
+        if (!hidden && header()->sectionSize(i.value()) == 0) {
             header()->resizeSection(i.value(), 20);
+        }
         i++;
     }
 }
@@ -694,10 +724,11 @@ void View::onCurrentItemChanged(const QModelIndex &current, const QModelIndex & 
 void View::onHeaderMenuItemTriggered(QAction *act)
 {
     int idx = column_idx_map[act];
-    if (act->isChecked())
+    if (act->isChecked()) {
         header()->showSection(idx);
-    else
+    } else {
         header()->hideSection(idx);
+    }
 }
 
 void View::onSelectionChanged(const QItemSelection & /*selected*/, const QItemSelection & /*deselected*/)
@@ -716,23 +747,26 @@ void View::closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 bool View::edit(const QModelIndex &index, EditTrigger trigger, QEvent *event)
 {
     bool ret = QTreeView::edit(index, trigger, event);
-    if (ret)
+    if (ret) {
         Q_EMIT editingItem(true);
+    }
 
     return ret;
 }
 
 void View::onDoubleClicked(const QModelIndex &index)
 {
-    if (index.column() == 0) // double clicking on column 0 will change the name of a torrent
+    if (index.column() == 0) { // double clicking on column 0 will change the name of a torrent
         return;
+    }
 
     bt::TorrentInterface *tc = model->torrentFromIndex(index);
     if (tc) {
-        if (tc->getStats().multi_file_torrent)
+        if (tc->getStats().multi_file_torrent) {
             openUrl(QUrl::fromLocalFile(tc->getStats().output_path));
-        else
+        } else {
             openUrl(QUrl::fromLocalFile(tc->getDataDir()));
+        }
     }
 }
 
@@ -740,8 +774,9 @@ void View::extend(TorrentInterface *tc, kt::Extender *widget, bool close_similar
 {
     setUniformRowHeights(false);
     delegate->extend(tc, widget, close_similar);
-    if (group && !group->isMember(tc))
+    if (group && !group->isMember(tc)) {
         delegate->hideExtender(tc);
+    }
 }
 
 void View::onCurrentGroupChanged(Group *g)
@@ -760,8 +795,9 @@ void View::onGroupAdded(Group *g)
 
 void View::onGroupRemoved(Group *g)
 {
-    if (group == g)
+    if (group == g) {
         setGroup(core->getGroupManager()->allGroup());
+    }
 
     gui->getTorrentActivity()->part()->unplugActionList(QStringLiteral("view_groups_list"));
     QMap<Group *, QAction *>::iterator i = group_actions.find(g);
@@ -776,8 +812,9 @@ void View::onGroupRemoved(Group *g)
 void View::onGroupRenamed(Group *g)
 {
     QMap<Group *, QAction *>::iterator j = group_actions.find(g);
-    if (j != group_actions.end())
+    if (j != group_actions.end()) {
         j.value()->setText(g->groupName());
+    }
 }
 
 void View::addToGroupItemTriggered()
@@ -786,13 +823,15 @@ void View::addToGroupItemTriggered()
     Group *g = nullptr;
     QMap<Group *, QAction *>::iterator j = group_actions.begin();
     while (j != group_actions.end() && !g) {
-        if (j.value() == s)
+        if (j.value() == s) {
             g = j.key();
+        }
         j++;
     }
 
-    if (!g)
+    if (!g) {
         return;
+    }
 
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
@@ -819,12 +858,14 @@ void View::copyTorrentURL()
 {
     QList<bt::TorrentInterface *> sel;
     getSelection(sel);
-    if (sel.count() == 0)
+    if (sel.count() == 0) {
         return;
+    }
 
     bt::TorrentInterface *tc = sel.front();
-    if (!tc->loadUrl().isValid())
+    if (!tc->loadUrl().isValid()) {
         return;
+    }
 
     QClipboard *cb = QApplication::clipboard();
     cb->setText(tc->loadUrl().toDisplayString());
@@ -851,11 +892,13 @@ void View::exportTorrent()
                                                   KFileWidget::getStartUrl(QUrl(QLatin1String("kfiledialog:///exportTorrent")), recentDirClass).toLocalFile(),
                                                   kt::TorrentFileFilter(false));
 
-        if (fn.isEmpty())
+        if (fn.isEmpty()) {
             return;
+        }
 
-        if (!recentDirClass.isEmpty())
+        if (!recentDirClass.isEmpty()) {
             KRecentDirs::add(recentDirClass, QFileInfo(fn).absolutePath());
+        }
 
         KIO::file_copy(QUrl::fromLocalFile(tc->getTorDir() + QLatin1String("torrent")), QUrl::fromLocalFile(fn), -1, KIO::Overwrite);
     }
@@ -872,8 +915,9 @@ void View::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Delete) {
         removeTorrents();
         event->accept();
-    } else
+    } else {
         QTreeView::keyPressEvent(event);
+    }
 }
 
 }

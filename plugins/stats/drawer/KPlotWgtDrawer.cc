@@ -375,8 +375,9 @@ void KPlotWgtDrawer::renderToImage()
 {
     QString saveloc = QFileDialog::getSaveFileName(this, i18n("Select path to save image…"), i18n("Image files") + QLatin1String(" (*.png)"));
 
-    if (!saveloc.length())
+    if (!saveloc.length()) {
         return;
+    }
 
     QImage qi(width(), height(), QImage::Format_RGB32);
     render(&qi);

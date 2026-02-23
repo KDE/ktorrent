@@ -78,8 +78,9 @@ void GroupSwitcher::loadState(KSharedConfig::Ptr cfg)
     }
 
     if (tabs.isEmpty()) {
-        for (const QString &group : std::as_const(default_groups))
+        for (const QString &group : std::as_const(default_groups)) {
             addTab(gman->findByPath(group));
+        }
     }
 
     int idx = 0;
@@ -113,8 +114,9 @@ void GroupSwitcher::saveState(KSharedConfig::Ptr cfg)
     int idx = 0;
     for (Tab &tab : tabs) {
         groups << tab.group->groupPath();
-        if (idx == current_tab)
+        if (idx == current_tab) {
             tab.view_settings = view->header()->saveState();
+        }
         g.writeEntry(QStringLiteral("tab%1_settings").arg(idx++), tab.view_settings);
     }
 
@@ -124,8 +126,9 @@ void GroupSwitcher::saveState(KSharedConfig::Ptr cfg)
 
 void GroupSwitcher::addTab(Group *group)
 {
-    if (!group)
+    if (!group) {
         return;
+    }
 
     QString name = group->groupName() + QStringLiteral(" %1/%2").arg(group->runningTorrents()).arg(group->totalTorrents());
     QAction *action = tool_bar->addAction(group->groupIcon(), name);
@@ -162,8 +165,9 @@ GroupSwitcher::TabList::iterator GroupSwitcher::closeTab(TabList::iterator i)
 
 void GroupSwitcher::closeTab()
 {
-    if (tabs.size() <= 1) // Need at least one tab visible
+    if (tabs.size() <= 1) { // Need at least one tab visible
         return;
+    }
 
     TabList::iterator i = tabs.begin();
     while (i != tabs.end()) {
@@ -210,8 +214,9 @@ void GroupSwitcher::currentGroupChanged(Group *group)
 
 void GroupSwitcher::updateGroupCount()
 {
-    for (Tab &tab : tabs)
+    for (Tab &tab : tabs) {
         tab.action->setText(tab.group->groupName() + QStringLiteral(" %1/%2").arg(tab.group->runningTorrents()).arg(tab.group->totalTorrents()));
+    }
 }
 
 void GroupSwitcher::groupRemoved(Group *group)
@@ -226,8 +231,9 @@ void GroupSwitcher::groupRemoved(Group *group)
                 i->action->setText(i->group->groupName() + QStringLiteral(" %1/%2").arg(i->group->runningTorrents()).arg(i->group->totalTorrents()));
                 i++;
             }
-        } else
+        } else {
             i++;
+        }
     }
 }
 
@@ -236,8 +242,9 @@ void GroupSwitcher::editGroupPolicy()
     Group *g = tabs[current_tab].group;
     if (g) {
         GroupPolicyDlg dlg(g, this);
-        if (dlg.exec() == QDialog::Accepted)
+        if (dlg.exec() == QDialog::Accepted) {
             gman->saveGroups();
+        }
     }
 }
 
