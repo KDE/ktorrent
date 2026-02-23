@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-17 00:44+0000\n"
+"POT-Creation-Date: 2026-02-23 00:44+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -6595,30 +6595,30 @@ msgstr "通过弹出窗口提供反馈"
 msgid "Media Player Menu"
 msgstr "媒体播放器菜单"
 
-#: plugins/mediaplayer/mediacontroller.cpp:29
-#: plugins/mediaplayer/mediacontroller.cpp:67
+#: plugins/mediaplayer/mediacontroller.cpp:31
+#: plugins/mediaplayer/mediacontroller.cpp:70
 #, kde-format
 msgid "Ready to play"
 msgstr "准备播放"
 
-#: plugins/mediaplayer/mediacontroller.cpp:77
-#: plugins/mediaplayer/mediacontroller.cpp:83
+#: plugins/mediaplayer/mediacontroller.cpp:80
+#: plugins/mediaplayer/mediacontroller.cpp:86
 #, kde-format
 msgid "Playing: <b>%1</b>"
 msgstr "正在播放：<b>%1</b>"
 
-#: plugins/mediaplayer/mediacontroller.cpp:96
+#: plugins/mediaplayer/mediacontroller.cpp:99
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
 msgstr "<b>%2</b> - <b>%1</b> (专辑：<b>%3</b>)"
 
-#: plugins/mediaplayer/mediacontroller.cpp:99
+#: plugins/mediaplayer/mediacontroller.cpp:102
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b>"
 msgstr "<b>%2</b> - <b>%1</b>"
 
-#: plugins/mediaplayer/mediacontroller.cpp:102
 #: plugins/mediaplayer/mediacontroller.cpp:105
+#: plugins/mediaplayer/mediacontroller.cpp:108
 #, kde-format
 msgid "<b>%1</b>"
 msgstr "<b>%1</b>"
@@ -6649,7 +6649,7 @@ msgid "Media Player"
 msgstr "媒体播放器"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:101
-#: plugins/mediaplayer/videowidget.cpp:59
+#: plugins/mediaplayer/videowidget.cpp:63
 #, kde-format
 msgid "Play"
 msgstr "播放"
@@ -6660,7 +6660,7 @@ msgid "Pause"
 msgstr "暂停"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:109
-#: plugins/mediaplayer/videowidget.cpp:62
+#: plugins/mediaplayer/videowidget.cpp:66
 #, kde-format
 msgid "Stop"
 msgstr "停止"
@@ -6755,7 +6755,7 @@ msgstr "年份"
 msgid "Random play order"
 msgstr "乱序播放顺序"
 
-#: plugins/mediaplayer/videowidget.cpp:183
+#: plugins/mediaplayer/videowidget.cpp:189
 #, kde-format
 msgid "KTorrent is playing a video."
 msgstr "KTorrent 正在播放视频。"

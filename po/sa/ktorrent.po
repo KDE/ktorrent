@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-17 00:44+0000\n"
+"POT-Creation-Date: 2026-02-23 00:44+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -6767,30 +6767,30 @@ msgstr "पॉपअपरूपेण प्रतिक्रियां द�
 msgid "Media Player Menu"
 msgstr "मीडिया प्लेयर मेनू"
 
-#: plugins/mediaplayer/mediacontroller.cpp:29
-#: plugins/mediaplayer/mediacontroller.cpp:67
+#: plugins/mediaplayer/mediacontroller.cpp:31
+#: plugins/mediaplayer/mediacontroller.cpp:70
 #, kde-format
 msgid "Ready to play"
 msgstr "क्रीडितुं सज्जाः"
 
-#: plugins/mediaplayer/mediacontroller.cpp:77
-#: plugins/mediaplayer/mediacontroller.cpp:83
+#: plugins/mediaplayer/mediacontroller.cpp:80
+#: plugins/mediaplayer/mediacontroller.cpp:86
 #, kde-format
 msgid "Playing: <b>%1</b>"
 msgstr "क्रीडनम् : <b>%1</b>"
 
-#: plugins/mediaplayer/mediacontroller.cpp:96
+#: plugins/mediaplayer/mediacontroller.cpp:99
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
 msgstr "<b>%2</b> - <b>%1</b> (एल्बम: <b>%3</b> )"
 
-#: plugins/mediaplayer/mediacontroller.cpp:99
+#: plugins/mediaplayer/mediacontroller.cpp:102
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b>"
 msgstr "<b>%2</b> - <b>%1</b>"
 
-#: plugins/mediaplayer/mediacontroller.cpp:102
 #: plugins/mediaplayer/mediacontroller.cpp:105
+#: plugins/mediaplayer/mediacontroller.cpp:108
 #, kde-format
 msgid "<b>%1</b>"
 msgstr "<b>%1</b>"
@@ -6821,7 +6821,7 @@ msgid "Media Player"
 msgstr "मीडिया प्लेयर"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:101
-#: plugins/mediaplayer/videowidget.cpp:59
+#: plugins/mediaplayer/videowidget.cpp:63
 #, kde-format
 msgid "Play"
 msgstr "क्रीडतु"
@@ -6832,7 +6832,7 @@ msgid "Pause"
 msgstr "विराम"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:109
-#: plugins/mediaplayer/videowidget.cpp:62
+#: plugins/mediaplayer/videowidget.cpp:66
 #, kde-format
 msgid "Stop"
 msgstr "विरमतु"
@@ -6927,7 +6927,7 @@ msgstr "वर्ष"
 msgid "Random play order"
 msgstr "यादृच्छिक क्रीडा क्रम"
 
-#: plugins/mediaplayer/videowidget.cpp:183
+#: plugins/mediaplayer/videowidget.cpp:189
 #, kde-format
 msgid "KTorrent is playing a video."
 msgstr "KTorrent एकं विडियो वादयति।"

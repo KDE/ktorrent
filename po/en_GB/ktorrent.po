@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-17 00:44+0000\n"
+"POT-Creation-Date: 2026-02-23 00:44+0000\n"
 "PO-Revision-Date: 2024-10-18 17:12+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -6821,30 +6821,30 @@ msgstr "Give feedback in form of a popup"
 msgid "Media Player Menu"
 msgstr "Media Player Menu"
 
-#: plugins/mediaplayer/mediacontroller.cpp:29
-#: plugins/mediaplayer/mediacontroller.cpp:67
+#: plugins/mediaplayer/mediacontroller.cpp:31
+#: plugins/mediaplayer/mediacontroller.cpp:70
 #, kde-format
 msgid "Ready to play"
 msgstr "Ready to play"
 
-#: plugins/mediaplayer/mediacontroller.cpp:77
-#: plugins/mediaplayer/mediacontroller.cpp:83
+#: plugins/mediaplayer/mediacontroller.cpp:80
+#: plugins/mediaplayer/mediacontroller.cpp:86
 #, kde-format
 msgid "Playing: <b>%1</b>"
 msgstr "Playing: <b>%1</b>"
 
-#: plugins/mediaplayer/mediacontroller.cpp:96
+#: plugins/mediaplayer/mediacontroller.cpp:99
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
 msgstr "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
 
-#: plugins/mediaplayer/mediacontroller.cpp:99
+#: plugins/mediaplayer/mediacontroller.cpp:102
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b>"
 msgstr "<b>%2</b> - <b>%1</b>"
 
-#: plugins/mediaplayer/mediacontroller.cpp:102
 #: plugins/mediaplayer/mediacontroller.cpp:105
+#: plugins/mediaplayer/mediacontroller.cpp:108
 #, kde-format
 msgid "<b>%1</b>"
 msgstr "<b>%1</b>"
@@ -6875,7 +6875,7 @@ msgid "Media Player"
 msgstr "Media Player"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:101
-#: plugins/mediaplayer/videowidget.cpp:59
+#: plugins/mediaplayer/videowidget.cpp:63
 #, kde-format
 msgid "Play"
 msgstr "Play"
@@ -6886,7 +6886,7 @@ msgid "Pause"
 msgstr "Pause"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:109
-#: plugins/mediaplayer/videowidget.cpp:62
+#: plugins/mediaplayer/videowidget.cpp:66
 #, kde-format
 msgid "Stop"
 msgstr "Stop"
@@ -6981,7 +6981,7 @@ msgstr "Year"
 msgid "Random play order"
 msgstr "Random play order"
 
-#: plugins/mediaplayer/videowidget.cpp:183
+#: plugins/mediaplayer/videowidget.cpp:189
 #, kde-format
 msgid "KTorrent is playing a video."
 msgstr "KTorrent is playing a video."
