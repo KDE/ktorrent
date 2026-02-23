@@ -241,27 +241,18 @@ void Schedule::save(const QString &file)
     enc.beginList();
     for (ScheduleItem *i : std::as_const(items)) {
         enc.beginDict();
-        enc.write("start_day");
-        enc.write((Uint32)i->start_day);
-        enc.write("end_day");
-        enc.write((Uint32)i->end_day);
-        enc.write("start");
-        enc.write(i->start.toString().toLatin1());
-        enc.write("end");
-        enc.write(i->end.toString().toLatin1());
-        enc.write("upload_limit");
-        enc.write(i->upload_limit);
-        enc.write("download_limit");
-        enc.write(i->download_limit);
-        enc.write("suspended");
-        enc.write((Uint32)(i->suspended ? 1 : 0));
+        enc.write("start_day", (Uint32)i->start_day);
+        enc.write("end_day", (Uint32)i->end_day);
+        enc.write("start", i->start.toString().toLatin1());
+        enc.write("end", i->end.toString().toLatin1());
+        enc.write("upload_limit", i->upload_limit);
+        enc.write("download_limit", i->download_limit);
+        enc.write("suspended", (Uint32)(i->suspended ? 1 : 0));
         if (i->set_conn_limits) {
             enc.write("conn_limits");
             enc.beginDict();
-            enc.write("global");
-            enc.write((Uint32)i->global_conn_limit);
-            enc.write("per_torrent");
-            enc.write((Uint32)i->torrent_conn_limit);
+            enc.write("global", (Uint32)i->global_conn_limit);
+            enc.write("per_torrent", (Uint32)i->torrent_conn_limit);
             enc.end();
         }
         enc.write("screensaver_limits", (Uint32)i->screensaver_limits);

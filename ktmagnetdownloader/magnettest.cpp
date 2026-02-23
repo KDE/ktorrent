@@ -111,8 +111,7 @@ void MagnetTest::foundMetaData(MagnetDownloader *md, const QByteArray &data)
         enc.beginDict();
         QList<QUrl> trs = mlink.trackers();
         if (trs.count()) {
-            enc.write("announce");
-            enc.write(trs.first().toEncoded());
+            enc.write("announce", trs.first().toEncoded());
             if (trs.count() > 1) {
                 enc.write("announce-list");
                 enc.beginList();

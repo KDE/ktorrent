@@ -45,10 +45,8 @@ void TorrentGroup::remove(TorrentInterface *tor)
 void TorrentGroup::save(bt::BEncoder *enc)
 {
     enc->beginDict();
-    enc->write("name");
-    enc->write(name.toLocal8Bit());
-    enc->write("icon");
-    enc->write(icon_name.toLocal8Bit());
+    enc->write("name", name.toLocal8Bit());
+    enc->write("icon", icon_name.toLocal8Bit());
     enc->write("hashes");
     enc->beginList();
     std::set<TorrentInterface *>::iterator i = torrents.begin();
@@ -66,20 +64,13 @@ void TorrentGroup::save(bt::BEncoder *enc)
     enc->end();
     enc->write("policy");
     enc->beginDict();
-    enc->write("default_save_location");
-    enc->write(policy.default_save_location.toUtf8());
-    enc->write("max_share_ratio");
-    enc->write(QByteArray::number(policy.max_share_ratio));
-    enc->write("max_seed_time");
-    enc->write(QByteArray::number(policy.max_seed_time));
-    enc->write("max_upload_rate");
-    enc->write(policy.max_upload_rate);
-    enc->write("max_download_rate");
-    enc->write(policy.max_download_rate);
-    enc->write("only_apply_on_new_torrents");
-    enc->write((bt::Uint32)(policy.only_apply_on_new_torrents ? 1 : 0));
-    enc->write("default_move_on_completion_location");
-    enc->write(policy.default_move_on_completion_location.toUtf8());
+    enc->write("default_save_location", policy.default_save_location.toUtf8());
+    enc->write("max_share_ratio", QByteArray::number(policy.max_share_ratio));
+    enc->write("max_seed_time", QByteArray::number(policy.max_seed_time));
+    enc->write("max_upload_rate", policy.max_upload_rate);
+    enc->write("max_download_rate", policy.max_download_rate);
+    enc->write("only_apply_on_new_torrents", (bt::Uint32)(policy.only_apply_on_new_torrents ? 1 : 0));
+    enc->write("default_move_on_completion_location", policy.default_move_on_completion_location.toUtf8());
     enc->end();
     enc->end();
 }

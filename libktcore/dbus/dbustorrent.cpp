@@ -277,11 +277,9 @@ QByteArray DBusTorrent::stats() const
     enc.write("max_seed_time", s.max_seed_time);
     enc.write("num_corrupted_chunks", s.num_corrupted_chunks);
     const bt::BitSet &bs = ti->downloadedChunksBitSet();
-    enc.write("downloaded_chunks");
-    enc.write(QByteArrayView{bs.getData(), bs.getNumBytes()});
+    enc.write("downloaded_chunks", QByteArrayView{bs.getData(), bs.getNumBytes()});
     const bt::BitSet &ebs = ti->excludedChunksBitSet();
-    enc.write("excluded_chunks");
-    enc.write(QByteArrayView{ebs.getData(), ebs.getNumBytes()});
+    enc.write("excluded_chunks", QByteArrayView{ebs.getData(), ebs.getNumBytes()});
     enc.end();
     return ret;
 }

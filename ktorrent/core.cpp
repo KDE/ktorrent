@@ -1251,8 +1251,7 @@ void Core::onMetadataDownloaded(const bt::MagnetLink &mlink, const QByteArray &d
     enc.beginDict();
     QList<QUrl> trs = mlink.trackers();
     if (trs.count()) {
-        enc.write("announce");
-        enc.write(trs.first().toDisplayString().toUtf8());
+        enc.write("announce", trs.first().toDisplayString().toUtf8());
         if (trs.count() > 1) {
             enc.write("announce-list");
             enc.beginList();

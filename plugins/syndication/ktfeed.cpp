@@ -92,11 +92,9 @@ void Feed::save()
 
     BEncoder enc(&fptr);
     enc.beginDict();
-    enc.write("url");
-    enc.write(url.toEncoded());
+    enc.write("url", url.toEncoded());
     if (!cookie.isEmpty()) {
-        enc.write("cookie");
-        enc.write(cookie.toUtf8());
+        enc.write("cookie", cookie.toUtf8());
     }
     enc.write("filters");
     enc.beginList();
