@@ -4,14 +4,16 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include "syndicationplugin.h"
+
 #include <QAction>
 
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <KPluginFactory>
 
+#include "downloadqueue.h"
 #include "syndicationactivity.h"
-#include "syndicationplugin.h"
 #include <interfaces/guiinterface.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
@@ -37,7 +39,8 @@ SyndicationPlugin::~SyndicationPlugin()
 
 void SyndicationPlugin::load()
 {
-    activity = new SyndicationActivity(this, nullptr);
+    dl_queue = std::make_unique<DownloadQueue>(this, nullptr);
+    activity = new SyndicationActivity(this, dl_queue.get(), nullptr);
     connect(add_feed, &QAction::triggered, activity, &SyndicationActivity::addFeed);
     connect(remove_feed, &QAction::triggered, activity, &SyndicationActivity::removeFeed);
     connect(manage_filters, &QAction::triggered, activity, &SyndicationActivity::manageFilters);
@@ -55,6 +58,7 @@ void SyndicationPlugin::unload()
     getGUI()->removeActivity(activity);
     delete activity;
     activity = nullptr;
+    dl_queue.reset(nullptr);
 }
 
 void SyndicationPlugin::setupActions()

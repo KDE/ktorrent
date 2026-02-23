@@ -12,10 +12,10 @@
 
 #include <KLocalizedString>
 
+#include "downloadqueue.h"
 #include "feedlist.h"
 #include "filterlist.h"
 #include "ktfeed.h"
-#include "syndicationactivity.h"
 #include <interfaces/functions.h>
 #include <util/fileops.h>
 #include <util/functions.h>
@@ -36,7 +36,7 @@ FeedList::~FeedList()
     qDeleteAll(feeds);
 }
 
-void FeedList::loadFeeds(FilterList *filter_list, SyndicationActivity *activity)
+void FeedList::loadFeeds(FilterList *filter_list, DownloadQueue *activity)
 {
     QDir dir(data_dir);
     QStringList filters;
@@ -51,7 +51,7 @@ void FeedList::loadFeeds(FilterList *filter_list, SyndicationActivity *activity)
         Feed *feed = nullptr;
         try {
             feed = new Feed(idir);
-            connect(feed, &Feed::downloadLink, activity, &SyndicationActivity::downloadLink);
+            connect(feed, &Feed::downloadLink, activity, &DownloadQueue::downloadLink);
             feed->load(filter_list);
             addFeed(feed);
 

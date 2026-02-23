@@ -231,6 +231,9 @@ void FeedWidget::updated()
     case Feed::DOWNLOADING:
         m_status->setText(i18n("<b>Downloading</b>"));
         break;
+    case Feed::AWAITING_RESOURCE:
+        m_status->setText(i18n("<b>Queued</b>"));
+        break;
     }
     Q_EMIT updateCaption(this, feed->title());
     m_active_filters->setText(QStringLiteral("<b>") + feed->filterNamesString() + QStringLiteral("</b>"));

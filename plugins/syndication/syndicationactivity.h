@@ -20,13 +20,14 @@ class FeedList;
 class SyndicationTab;
 class FeedWidget;
 class SyndicationPlugin;
+class DownloadQueue;
 
 class SyndicationActivity : public kt::Activity
 {
     Q_OBJECT
 
 public:
-    SyndicationActivity(SyndicationPlugin *sp, QWidget *parent);
+    SyndicationActivity(SyndicationPlugin *sp, DownloadQueue *queue, QWidget *parent);
     ~SyndicationActivity();
 
     void loadState(KSharedConfigPtr cfg);
@@ -36,7 +37,6 @@ public:
     void addFeed();
     void removeFeed();
     void showFeed(Feed *f);
-    void downloadLink(const QUrl &url, const QString &group, const QString &location, const QString &move_on_completion, bool silently);
     void addFilter();
     void removeFilter();
     void editFilter();
@@ -55,6 +55,7 @@ private:
     QSplitter *splitter;
     QMap<Syndication::Loader *, QString> downloads;
     SyndicationPlugin *sp;
+    DownloadQueue *dl_queue;
 };
 }
 

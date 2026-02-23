@@ -55,6 +55,11 @@ LinkDownloader::LinkDownloader(const QUrl &url,
         base_url += QLatin1Char('/');
 }
 
+LinkDownloader::LinkDownloader(CoreInterface *core, const LinkLoadParams &params)
+    : LinkDownloader(params.url, core, params.verbose, params.group, params.location, params.move_on_completion)
+{
+}
+
 LinkDownloader::~LinkDownloader()
 {
 }
@@ -68,12 +73,13 @@ void LinkDownloader::downloadFinished(KJob *j)
         if (verbose)
             job->uiDelegate()->showErrorMessage();
 
-        Q_EMIT finished(false);
+        Q_EMIT finished(this, false);
         deleteLater();
         return;
     }
 
     if (isTorrent(job->data())) {
+        Q_EMIT entryDownloadFinished(this, true);
         CoreInterface::LoadOptions options = CoreInterface::LoadOption::Default;
         if (!verbose) {
             options |= CoreInterface::LoadOption::Silently;
@@ -83,12 +89,19 @@ void LinkDownloader::downloadFinished(KJob *j)
         if (tc && !move_on_completion.isEmpty())
             tc->setMoveWhenCompletedDir(move_on_completion);
 
-        Q_EMIT finished(true);
+        Q_EMIT finished(this, true);
         deleteLater();
-    } else {
+        return;
+    }
+    {
         QMimeType data_type = QMimeDatabase().mimeTypeForData(job->data());
-        if (data_type.isValid() && data_type.name().contains(QStringLiteral("html")))
+        if (data_type.isValid() && data_type.name().contains(QStringLiteral("html"))) {
             handleHtmlPage(job->data());
+        } else {
+            Q_EMIT finished(this, false);
+            deleteLater();
+            return;
+        }
     }
 }
 
@@ -137,7 +150,8 @@ void LinkDownloader::handleHtmlPage(const QByteArray &data)
             options.location = location;
             options.move_on_completion = move_on_completion;
             core->load(bt::MagnetLink(href_link), options);
-            Q_EMIT finished(true);
+            Q_EMIT entryDownloadFinished(this, true);
+            Q_EMIT finished(this, true);
             deleteLater();
             return;
         } else if (!href_link.startsWith(QStringLiteral("http://")) && !href_link.startsWith(QStringLiteral("https://"))) {
@@ -188,6 +202,11 @@ void LinkDownloader::unregisterJob()
     startedJob = nullptr;
 }
 
+QUrl LinkDownloader::getUrl() const
+{
+    return url;
+}
+
 void LinkDownloader::tryNextLink()
 {
     if (links.count() == 0) {
@@ -195,7 +214,7 @@ void LinkDownloader::tryNextLink()
         if (verbose)
             KMessageBox::error(nullptr, i18n("Could not find a valid link to a torrent on %1", url.toDisplayString()));
 
-        Q_EMIT finished(false);
+        Q_EMIT finished(this, false);
         deleteLater();
         return;
     }
@@ -218,11 +237,12 @@ void LinkDownloader::torrentDownloadFinished(KJob *j)
             if (verbose)
                 job->uiDelegate()->showErrorMessage();
 
-            Q_EMIT finished(false);
+            Q_EMIT finished(this, false);
             deleteLater();
         } else
             tryTorrentLinks();
     } else if (isTorrent(job->data())) {
+        Q_EMIT entryDownloadFinished(this, true);
         CoreInterface::LoadOptions options = CoreInterface::LoadOption::Default;
         if (!verbose) {
             options |= CoreInterface::LoadOption::Silently;
@@ -232,7 +252,7 @@ void LinkDownloader::torrentDownloadFinished(KJob *j)
         if (tc && !move_on_completion.isEmpty())
             tc->setMoveWhenCompletedDir(move_on_completion);
 
-        Q_EMIT finished(true);
+        Q_EMIT finished(this, true);
         deleteLater();
     } else
         tryTorrentLinks();

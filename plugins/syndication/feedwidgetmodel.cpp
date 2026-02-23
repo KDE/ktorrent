@@ -102,8 +102,11 @@ QVariant FeedWidgetModel::data(const QModelIndex &index, int role) const
         default:
             return QVariant();
         }
-    } else if (role == Qt::DecorationRole && index.column() == 0 && feed->downloaded(item))
+    } else if (role == Qt::DecorationRole && index.column() == 0 && feed->downloaded(item)) {
         return QIcon::fromTheme(QStringLiteral("go-down"));
+    } else if (role == Qt::DecorationRole && index.column() == 0 && feed->failed(item)) {
+        return QIcon::fromTheme(QStringLiteral("data-error"));
+    }
 
     return QVariant();
 }

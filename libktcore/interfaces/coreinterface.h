@@ -29,6 +29,14 @@ struct CurrentStats {
     bt::Uint64 bytes_uploaded;
 };
 
+struct LinkLoadParams {
+    QUrl url;
+    bool verbose;
+    QString group;
+    QString location;
+    QString move_on_completion;
+};
+
 struct MagnetLinkLoadOptions {
     bool silently;
     QString group;

@@ -17,7 +17,8 @@ target_sources(SyndicationPlugin PRIVATE
 	filterlist.cpp
 	filterlistview.cpp
 	filterlistmodel.cpp
-	filtereditor.cpp)
+	filtereditor.cpp
+	downloadqueue.cpp)
 
 ki18n_wrap_ui(SyndicationPlugin feedwidget.ui managefiltersdlg.ui filtereditor.ui)
 

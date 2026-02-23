@@ -15,6 +15,7 @@ class KJob;
 namespace kt
 {
 class CoreInterface;
+struct LinkLoadParams;
 
 /**
     Class to download torrents from links in feeds. Seeing that the links may not directly point to the
@@ -26,6 +27,7 @@ class LinkDownloader : public QObject
     Q_OBJECT
 public:
     LinkDownloader(const QUrl &url, CoreInterface *core, bool verbose, const QString &group, const QString &location, const QString &move_on_completion);
+    LinkDownloader(CoreInterface *core, const LinkLoadParams &params);
     ~LinkDownloader();
 
     /// Start the download process
@@ -39,6 +41,8 @@ public:
     void downloadFinished(KJob *j);
     void torrentDownloadFinished(KJob *j);
 
+    QUrl getUrl() const;
+
 private:
     bool isTorrent(const QByteArray &data) const;
     void handleHtmlPage(const QByteArray &data);
@@ -48,7 +52,17 @@ private:
     void unregisterJob();
 
 Q_SIGNALS:
-    void finished(bool ok);
+    /*!
+     * Signal emitted when the LinkDownloader has finished all its tasks
+     * It will deleteLater by itself
+     */
+    void finished(LinkDownloader *downloader, bool ok);
+    /*!
+     * Signal emitted when the LinkDownloader has downloaded the correct link
+     * Any post-download blocking GUI functions will be called afer this
+     * This is useful to continue other work while the user is interacting with popups
+     */
+    void entryDownloadFinished(LinkDownloader *downloader, bool ok);
 
 private:
     QUrl url;

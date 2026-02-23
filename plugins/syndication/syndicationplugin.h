@@ -7,6 +7,8 @@
 #ifndef KTSYNDICATIONPLUGIN_H
 #define KTSYNDICATIONPLUGIN_H
 
+#include <memory>
+
 #include <interfaces/plugin.h>
 
 class QAction;
@@ -14,6 +16,7 @@ class QAction;
 namespace kt
 {
 class SyndicationActivity;
+class DownloadQueue;
 
 /**
     @author
@@ -39,6 +42,7 @@ private:
     QAction *edit_filter = nullptr;
     QAction *manage_filters = nullptr;
     SyndicationActivity *activity = nullptr;
+    std::unique_ptr<DownloadQueue> dl_queue;
 
     friend class SyndicationActivity;
 };

@@ -11,6 +11,7 @@
 #include <KMainWindow>
 #include <KMessageBox>
 
+#include "downloadqueue.h"
 #include "feedlist.h"
 #include "feedlistview.h"
 #include "feedretriever.h"
@@ -35,9 +36,11 @@
 
 namespace kt
 {
-SyndicationActivity::SyndicationActivity(SyndicationPlugin *sp, QWidget *parent)
+
+SyndicationActivity::SyndicationActivity(SyndicationPlugin *sp, DownloadQueue *queue, QWidget *parent)
     : Activity(i18n("Syndication"), QStringLiteral("application-rss+xml"), 30, parent)
     , sp(sp)
+    , dl_queue(queue)
 {
     QString ddir = kt::DataDir() + QStringLiteral("syndication/");
     if (!bt::Exists(ddir))
@@ -66,7 +69,7 @@ SyndicationActivity::SyndicationActivity(SyndicationPlugin *sp, QWidget *parent)
     connect(tab->filterView(), &kt::FilterListView::enableEdit, sp->edit_filter, &QAction::setEnabled);
 
     filter_list->loadFilters(kt::DataDir() + QStringLiteral("syndication/filters"));
-    feed_list->loadFeeds(filter_list, this);
+    feed_list->loadFeeds(filter_list, dl_queue);
     feed_list->importOldFeeds();
 }
 
@@ -138,7 +141,7 @@ void SyndicationActivity::loadingComplete(Syndication::Loader *loader, Syndicati
     try {
         QString ddir = kt::DataDir() + QStringLiteral("syndication/");
         Feed *f = new Feed(downloads[loader], feed, Feed::newFeedDir(ddir));
-        connect(f, &Feed::downloadLink, this, &SyndicationActivity::downloadLink);
+        connect(f, &Feed::downloadLink, dl_queue, &DownloadQueue::downloadLink);
         f->save();
         feed_list->addFeed(f);
         feed_widget->setFeed(f);
@@ -166,22 +169,6 @@ void SyndicationActivity::showFeed(Feed *f)
         return;
 
     feed_widget->setFeed(f);
-}
-
-void SyndicationActivity::downloadLink(const QUrl &url, const QString &group, const QString &location, const QString &move_on_completion, bool silently)
-{
-    if (url.scheme() == QStringLiteral("magnet")) {
-        MagnetLinkLoadOptions options;
-        options.silently = silently;
-        options.group = group;
-        options.location = location;
-        options.move_on_completion = move_on_completion;
-        sp->getCore()->load(bt::MagnetLink(url), options);
-    } else {
-        LinkDownloader *dlr = new LinkDownloader(url, sp->getCore(), !silently, group, location, move_on_completion);
-        connect(this, &SyndicationActivity::destroyed, dlr, &LinkDownloader::kill);
-        dlr->start();
-    }
 }
 
 Filter *SyndicationActivity::addNewFilter()

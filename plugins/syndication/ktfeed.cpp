@@ -4,6 +4,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include <QDateTime>
 #include <QDomElement>
 #include <QFile>
 
@@ -20,6 +21,9 @@
 #include <util/file.h>
 #include <util/fileops.h>
 #include <util/log.h>
+
+/// Number of times item download will be retried on failure
+constexpr int failure_retry_count = 5;
 
 using namespace bt;
 
@@ -326,8 +330,9 @@ void Feed::runFilters()
         const QList<Syndication::ItemPtr> items = feed->items();
         for (const Syndication::ItemPtr &item : items) {
             // Skip already loaded items
-            if (loaded.contains(item->id()))
+            if (loaded.contains(item->id())) {
                 continue;
+            }
 
             if (needToDownload(item, f)) {
                 Out(SYS_SYN | LOG_NOTICE) << "Downloading item " << item->title() << " (filter: " << f->filterName() << ")" << endl;
@@ -341,13 +346,56 @@ QString TorrentUrlFromItem(Syndication::ItemPtr item);
 
 void Feed::downloadItem(Syndication::ItemPtr item, const QString &group, const QString &location, const QString &move_on_completion, bool silently)
 {
-    loaded.insert(item->id());
-    QString url = TorrentUrlFromItem(item);
-    if (!url.isEmpty())
-        Q_EMIT downloadLink(QUrl(url), group, location, move_on_completion, silently);
-    else
-        Q_EMIT downloadLink(QUrl(item->link()), group, location, move_on_completion, silently);
-    save();
+    const QString url_str = TorrentUrlFromItem(item);
+    const QUrl item_url = url_str.isEmpty() ? QUrl(item->link()) : QUrl(url_str);
+    tried_loading.insert(item_url, ItemLoadAttempt{item->id(), QDateTime::currentDateTime(), Status::UNLOADED});
+    Q_EMIT downloadLink(item_url, group, location, move_on_completion, silently, this);
+    // User has retried, so remove from failed-list
+    failed_downloads.remove(item->id());
+}
+
+bool Feed::itemDownloadResponse(const QUrl &url, Status status)
+{
+    switch (status) {
+    case Status::OK:
+        // download complete
+        {
+            auto attempted_item = tried_loading.take(url);
+            loaded.insert(attempted_item.item_id);
+            save();
+            break;
+        }
+    case Status::DOWNLOADING:
+        [[fallthrough]];
+    case Status::AWAITING_RESOURCE: {
+        const auto tl_iter = tried_loading.find(url);
+        if (tl_iter == tried_loading.end()) {
+            Q_ASSERT(false);
+            break;
+        }
+        tl_iter.value().status = status;
+        break;
+    }
+    case Status::UNLOADED:
+        // Item download is not expected to be "UNLOADED" on Response
+        Q_ASSERT(false);
+        break;
+    case Status::FAILED_TO_DOWNLOAD: {
+        const auto tl_iter = tried_loading.find(url);
+        if (tl_iter == tried_loading.end()) {
+            Q_ASSERT(false);
+            break;
+        }
+        tl_iter.value().status = status;
+        if (++tl_iter.value().failure_count < failure_retry_count) {
+            // Consider additional decisions at this point: see issue #12
+            return true;
+        }
+        failed_downloads.insert(tried_loading.take(url).item_id, QDateTime::currentDateTime());
+        break;
+    }
+    }
+    return false;
 }
 
 void Feed::clearFilters()
@@ -380,6 +428,11 @@ void Feed::checkLoaded()
 bool Feed::downloaded(Syndication::ItemPtr item) const
 {
     return loaded.contains(item->id());
+}
+
+bool Feed::failed(Syndication::ItemPtr item) const
+{
+    return failed_downloads.contains(item->id());
 }
 
 QString Feed::displayName() const

@@ -15,7 +15,7 @@ namespace kt
 class Filter;
 class FilterList;
 class Feed;
-class SyndicationActivity;
+class DownloadQueue;
 
 /**
     List model which keeps track of all feeds
@@ -34,7 +34,7 @@ public:
     bool insertRows(int row, int count, const QModelIndex &parent) override;
 
     void addFeed(Feed *f);
-    void loadFeeds(FilterList *filters, SyndicationActivity *activity);
+    void loadFeeds(FilterList *filters, DownloadQueue *activity);
     Feed *feedForIndex(const QModelIndex &idx);
     Feed *feedForDirectory(const QString &dir);
     void removeFeeds(const QModelIndexList &idx);

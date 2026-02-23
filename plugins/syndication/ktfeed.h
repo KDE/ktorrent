@@ -55,6 +55,7 @@ public:
         OK,
         FAILED_TO_DOWNLOAD,
         DOWNLOADING,
+        AWAITING_RESOURCE,
     };
 
     /// Get the display name of the feed
@@ -147,8 +148,20 @@ public:
     /// Download an item from the feed
     void downloadItem(Syndication::ItemPtr item, const QString &group, const QString &location, const QString &move_on_completion, bool silently);
 
+    /*!
+     * \brief Set the response of the item being downloaded
+     * To be called by the download manager
+     * \param url to designate the item
+     * \param status the status responded by the downloader
+     * \return whether to retry download, in case of failure status
+     */
+    bool itemDownloadResponse(const QUrl &url, Status status);
+
     /// Check if an item is downloaded
     bool downloaded(Syndication::ItemPtr item) const;
+
+    /// Check if an item has failed downloading
+    bool failed(Syndication::ItemPtr item) const;
 
     /// Get the number of filters
     int numFilters() const
@@ -169,8 +182,8 @@ public:
     void setRefreshRate(bt::Uint32 r);
 
 Q_SIGNALS:
-    /// Emitted when a link must de downloaded
-    void downloadLink(const QUrl &link, const QString &group, const QString &location, const QString &move_on_completion, bool silently);
+    /// Emitted when a link must be downloaded
+    void downloadLink(const QUrl &link, const QString &group, const QString &location, const QString &move_on_completion, bool silently, Feed *sender);
 
     /// A feed has been renamed
     void feedRenamed(Feed *f);
@@ -202,6 +215,16 @@ private:
     QDateTime last_successful_update;
     QList<Filter *> filters;
     QSet<QString> loaded;
+    /// Id of failed feed item, along with time of last recorded failure
+    QMap<QString, QDateTime> failed_downloads;
+    struct ItemLoadAttempt {
+        QString item_id;
+        QDateTime time_tried;
+        Status status = UNLOADED;
+        int failure_count = 0;
+    };
+    /// Storage of all items currently being downloaded, by full download url
+    QMap<QUrl, ItemLoadAttempt> tried_loading;
     QMap<Filter *, QList<SeasonEpisodeItem>> downloaded_se_items;
     QString custom_name;
     bt::Uint32 refresh_rate;
