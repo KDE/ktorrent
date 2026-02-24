@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-23 00:44+0000\n"
+"POT-Creation-Date: 2026-02-24 00:44+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -28,104 +28,104 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "danishka@gmail.com"
 
-#: ktorrent/core.cpp:147
+#: ktorrent/core.cpp:149
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the TCP port %1 is already "
 "in use by another program."
 msgstr ""
 
-#: ktorrent/core.cpp:157
+#: ktorrent/core.cpp:159
 #, kde-format
 msgid ""
 "KTorrent is unable to accept connections because the UDP port %1 is already "
 "in use by another program."
 msgstr ""
 
-#: ktorrent/core.cpp:255
+#: ktorrent/core.cpp:267
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
 "following torrents. Torrents are not allowed to write to the same files. "
 msgstr ""
 
-#: ktorrent/core.cpp:833
+#: ktorrent/core.cpp:873
 #, kde-format
 msgid "KTorrent is running one or more torrents"
 msgstr "KTorrent විසින් එකකට වඩා ටොරෙන්ට් ධාවනය කරයි"
 
-#: ktorrent/core.cpp:920
+#: ktorrent/core.cpp:965
 #, kde-format
 msgid "Cannot create torrent: %1"
 msgstr "ටොරෙන්ට් නිර්මාණය කල නොහැක: %1"
 
-#: ktorrent/core.cpp:1016
+#: ktorrent/core.cpp:1064
 #, kde-format
 msgid ""
 "One or more storage volumes are not mounted. In order to start this torrent, "
 "they need to be mounted."
 msgstr ""
 
-#: ktorrent/core.cpp:1017
+#: ktorrent/core.cpp:1065
 #, kde-format
 msgid "Retry"
 msgstr ""
 
-#: ktorrent/core.cpp:1023
+#: ktorrent/core.cpp:1071
 #, kde-format
 msgid "Storage volume %1 is not mounted"
 msgstr ""
 
-#: ktorrent/core.cpp:1025
+#: ktorrent/core.cpp:1073
 #, kde-format
 msgid "Storage volumes %1 are not mounted"
 msgstr ""
 
-#: ktorrent/core.cpp:1036
+#: ktorrent/core.cpp:1086
 #, kde-format
 msgid ""
 "Several data files of the torrent \"%1\" are missing. \n"
 "Do you want to recreate them, or do you want to not download them?"
 msgstr ""
 
-#: ktorrent/core.cpp:1044 ktorrent/core.cpp:1052 ktorrent/core.cpp:1062
+#: ktorrent/core.cpp:1094 ktorrent/core.cpp:1102 ktorrent/core.cpp:1112
 #, kde-format
 msgid "Data files are missing"
 msgstr "දත්ත ගොනු සොයාගත නොහැක"
 
-#: ktorrent/core.cpp:1051
+#: ktorrent/core.cpp:1101
 #, kde-format
 msgid "Cannot deselect missing files: %1"
 msgstr "නොපවතින ගොනු තේරීම අවලංගු කල නොහැක: %1"
 
-#: ktorrent/core.cpp:1061
+#: ktorrent/core.cpp:1111
 #, kde-format
 msgid "Cannot recreate missing files: %1"
 msgstr "නොපවතින ගොනු නැවත නිර්‍මාණය කල නොහැක: %1"
 
-#: ktorrent/core.cpp:1071
+#: ktorrent/core.cpp:1121
 #, kde-format
 msgid ""
 "The file where the data is saved of the torrent \"%1\" is missing.\n"
 "Do you want to recreate it?"
 msgstr ""
 
-#: ktorrent/core.cpp:1078 ktorrent/core.cpp:1085
+#: ktorrent/core.cpp:1128 ktorrent/core.cpp:1135
 #, kde-format
 msgid "Data file is missing"
 msgstr "දත්ත ගොනුව සොයාගත නොහැක"
 
-#: ktorrent/core.cpp:1084
+#: ktorrent/core.cpp:1134
 #, kde-format
 msgid "Cannot recreate data file: %1"
 msgstr "දත්ත ගොනුව ප්‍රතිනිර්මාණය කල නොහැක: %1"
 
-#: ktorrent/core.cpp:1185
+#: ktorrent/core.cpp:1236
 #, kde-format
 msgid "Invalid magnet bittorrent link: %1"
 msgstr "වැරදි චුම්භක bittorrent සබැඳියක්: %1"
 
-#: ktorrent/core.cpp:1188
+#: ktorrent/core.cpp:1239
 #, kde-format
 msgid ""
 "You are attempting to download a magnet link, and DHT is not enabled. For "
@@ -201,27 +201,27 @@ msgstr "එක් කරන්න "
 msgid "Close"
 msgstr "වසන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:75
+#: ktorrent/dialogs/fileselectdlg.cpp:76
 #, kde-format
 msgid "Show a file tree"
 msgstr "ගොනු වෘක්‍ෂයක් පෙන්වන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:78
+#: ktorrent/dialogs/fileselectdlg.cpp:79
 #, kde-format
 msgid "Show a file list"
 msgstr "ගොනු ලැයිස්තුවක් පෙන්වන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:87 plugins/infowidget/fileview.cpp:66
+#: ktorrent/dialogs/fileselectdlg.cpp:88 plugins/infowidget/fileview.cpp:66
 #, kde-format
 msgid "Filter"
 msgstr "පෙරහන"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:105
+#: ktorrent/dialogs/fileselectdlg.cpp:107
 #, kde-format
 msgid "Opening %1"
 msgstr "%1 විවෘතකරමින්"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:200
+#: ktorrent/dialogs/fileselectdlg.cpp:206
 #, kde-format
 msgid ""
 "Some files of this torrent have been found in the completed downloads "
@@ -229,7 +229,7 @@ msgid ""
 "directory as the location?"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:204
+#: ktorrent/dialogs/fileselectdlg.cpp:210
 #, kde-format
 msgid ""
 "All files of this torrent have been found in the completed downloads "
@@ -237,60 +237,60 @@ msgid ""
 "directory as the location?"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:207
+#: ktorrent/dialogs/fileselectdlg.cpp:214
 #, kde-format
 msgid ""
 "The file <b>%1</b> was found in the completed downloads directory. Do you "
 "want to import this file?"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:214
+#: ktorrent/dialogs/fileselectdlg.cpp:222
 #, fuzzy, kde-format
 #| msgid "&Import"
 msgctxt "@action:button"
 msgid "Import"
 msgstr "ආයාත කරන්න (&I)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:225
-#: ktorrent/dialogs/fileselectdlg.cpp:243
+#: ktorrent/dialogs/fileselectdlg.cpp:233
+#: ktorrent/dialogs/fileselectdlg.cpp:252
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
 msgstr "%1 බහලුම නොපවතී, ඔබට එය නිර්මාණය කිරීමට ඇවැසිද?"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:227
-#: ktorrent/dialogs/fileselectdlg.cpp:245
-#: ktorrent/dialogs/missingfilesdlg.cpp:90
-#: ktorrent/dialogs/missingfilesdlg.cpp:98
-#: ktorrent/dialogs/missingfilesdlg.cpp:132
-#: ktorrent/dialogs/torrentcreatordlg.cpp:280
+#: ktorrent/dialogs/fileselectdlg.cpp:235
+#: ktorrent/dialogs/fileselectdlg.cpp:254
+#: ktorrent/dialogs/missingfilesdlg.cpp:94
+#: ktorrent/dialogs/missingfilesdlg.cpp:102
+#: ktorrent/dialogs/missingfilesdlg.cpp:140
+#: ktorrent/dialogs/torrentcreatordlg.cpp:281
 #, fuzzy, kde-format
 #| msgid "Recreate"
 msgctxt "@action:button"
 msgid "Create"
 msgstr "නැවත නිර්මාණය"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:274
+#: ktorrent/dialogs/fileselectdlg.cpp:285
 #, kde-format
 msgid ""
 "You have deselected the following existing files. You will lose all data in "
 "these files, are you sure you want to do this?"
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:280
+#: ktorrent/dialogs/fileselectdlg.cpp:291
 #, fuzzy, kde-format
 #| msgid "Delete File(s)"
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "ගොනු(ව) මකන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:281
+#: ktorrent/dialogs/fileselectdlg.cpp:292
 #, fuzzy, kde-format
 #| msgid "No, keep the files"
 msgctxt "@action:button"
 msgid "Keep the Files"
 msgstr "නැහැ, ගොනු තබාගන්න"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:304
+#: ktorrent/dialogs/fileselectdlg.cpp:318
 #, kde-format
 msgid ""
 "Opening the torrent <b>%1</b>, would share one or more files with the "
@@ -298,54 +298,54 @@ msgid ""
 "Please select a different location."
 msgstr ""
 
-#: ktorrent/dialogs/fileselectdlg.cpp:406 ktorrent/dialogs/pastedialog.cpp:61
+#: ktorrent/dialogs/fileselectdlg.cpp:424 ktorrent/dialogs/pastedialog.cpp:62
 #: ktorrent/dialogs/torrentcreatordlg.cpp:121 libktcore/groups/allgroup.cpp:12
 #, kde-format
 msgid "All Torrents"
 msgstr "සියලු ටොරන්ට්"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:475
+#: ktorrent/dialogs/fileselectdlg.cpp:500
 #, kde-format
 msgid "<b>Unable to determine free space</b>"
 msgstr "<b>නිදහස් ඉඩ හඳුනාගත නොහැකි විය</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:482
+#: ktorrent/dialogs/fileselectdlg.cpp:507
 #, kde-format
 msgid "%1 (%2 in use by existing files)"
 msgstr "%1 (%2 ක් පවතින ගොනු මගින් භාවිත වේ)"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:490
+#: ktorrent/dialogs/fileselectdlg.cpp:516
 #, kde-format
 msgctxt "We are %1 bytes short of what we need"
 msgid "%1 short"
 msgstr "%1 ඉතිරිව ඇත"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:517
+#: ktorrent/dialogs/fileselectdlg.cpp:545
 #, kde-format
 msgid "Existing files: <b>None</b>"
 msgstr "පවතින ගොනු: <b>නොමැත</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:519
+#: ktorrent/dialogs/fileselectdlg.cpp:547
 #, kde-format
 msgid "Existing files: <b>All</b>"
 msgstr "පවතින ගොනු: <b>සියල්ල</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:521
+#: ktorrent/dialogs/fileselectdlg.cpp:549
 #, kde-format
 msgid "Existing files: <b>%1</b> of <b>%2</b>"
 msgstr "පවතින ගොනු : <b>%1</b> හි <b>%2</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:525
+#: ktorrent/dialogs/fileselectdlg.cpp:554
 #, kde-format
 msgid "Existing file: <b>No</b>"
 msgstr "පවතින ගොනු: <b>නැත</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:528
+#: ktorrent/dialogs/fileselectdlg.cpp:557
 #, kde-format
 msgid "Existing file: <b>Yes</b>"
 msgstr "පවතින ගොනු: <b>ඔව්</b>"
 
-#: ktorrent/dialogs/fileselectdlg.cpp:590
+#: ktorrent/dialogs/fileselectdlg.cpp:624
 #, kde-format
 msgid "Clear History"
 msgstr "ඉතිහාසය පිරිසිදු කරන්න"
@@ -528,19 +528,19 @@ msgstr "භාවිතයට ඇති:"
 msgid "After download:"
 msgstr "බාගැනීමෙන් පසු:"
 
-#: ktorrent/dialogs/importdialog.cpp:197 ktorrent/dialogs/importdialog.cpp:223
+#: ktorrent/dialogs/importdialog.cpp:204 ktorrent/dialogs/importdialog.cpp:230
 #, kde-format
 msgid "Cannot load the torrent file: %1"
 msgstr "ටොරෙන්ට් ගොනුව පූර්ණය කල නොහැක: %1"
 
-#: ktorrent/dialogs/importdialog.cpp:249 plugins/ipfilter/convertthread.cpp:55
-#: plugins/ipfilter/convertthread.cpp:141
-#: plugins/search/searchenginelist.cpp:157
+#: ktorrent/dialogs/importdialog.cpp:256 plugins/ipfilter/convertthread.cpp:55
+#: plugins/ipfilter/convertthread.cpp:143
+#: plugins/search/searchenginelist.cpp:164
 #, kde-format
 msgid "Cannot open %1: %2"
 msgstr "%1 විවෘත කල නොහැක: %2"
 
-#: ktorrent/dialogs/importdialog.cpp:352 ktorrent/dialogs/importdialog.cpp:368
+#: ktorrent/dialogs/importdialog.cpp:367 ktorrent/dialogs/importdialog.cpp:384
 #, kde-format
 msgid "Failed to create %1: %2"
 msgstr "%1 නිර්මාණය අසාර්ථකයි: %2"
@@ -594,27 +594,27 @@ msgstr "ආයාත කරන්න (&I)"
 msgid "Ca&ncel"
 msgstr "අවලංගු (&n)"
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:71
-#: ktorrent/dialogs/missingfilesdlg.cpp:115
+#: ktorrent/dialogs/missingfilesdlg.cpp:73
+#: ktorrent/dialogs/missingfilesdlg.cpp:121
 #, kde-format
 msgid "Select the directory where the data now is."
 msgstr "දැනට දත්ත පවතින බහලුම තෝරන්න."
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:88
+#: ktorrent/dialogs/missingfilesdlg.cpp:92
 #, kde-format
 msgid ""
 "The data files are not present in the location you selected. Do you want to "
 "create all the files in the selected directory?"
 msgstr ""
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:95
+#: ktorrent/dialogs/missingfilesdlg.cpp:99
 #, kde-format
 msgid ""
 "Not all files were found in the new location; some are still missing. Do you "
 "want to create the missing files in the selected directory?"
 msgstr ""
 
-#: ktorrent/dialogs/missingfilesdlg.cpp:130
+#: ktorrent/dialogs/missingfilesdlg.cpp:138
 #, kde-format
 msgid ""
 "The data file is not present in the location you selected. Do you want to "
@@ -691,20 +691,20 @@ msgstr "අවලංගු"
 msgid "Open an URL"
 msgstr "URL විවෘත කරන්න"
 
-#: ktorrent/dialogs/pastedialog.cpp:114
+#: ktorrent/dialogs/pastedialog.cpp:117
 #, kde-format
 msgid "Error fetching tracker list"
 msgstr ""
 
-#: ktorrent/dialogs/pastedialog.cpp:115
+#: ktorrent/dialogs/pastedialog.cpp:118
 #, kde-format
 msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
 
-#: ktorrent/dialogs/pastedialog.cpp:134
-#: ktorrent/dialogs/torrentcreatordlg.cpp:240 ktorrent/gui.cpp:310
+#: ktorrent/dialogs/pastedialog.cpp:137
+#: ktorrent/dialogs/torrentcreatordlg.cpp:241 ktorrent/gui.cpp:322
 #, kde-format
 msgid "Invalid URL: %1"
 msgstr "සාවද්‍ය URL: %1"
@@ -785,8 +785,8 @@ msgstr "උපරිම බාගැනීම් වේගය:"
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, ratio_limit)
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, time_limit)
 #: ktorrent/dialogs/speedlimitsdlg.ui:77 ktorrent/dialogs/speedlimitsdlg.ui:100
-#: ktorrent/dialogs/speedlimitsmodel.cpp:130
-#: ktorrent/dialogs/speedlimitsmodel.cpp:135
+#: ktorrent/dialogs/speedlimitsmodel.cpp:136
+#: ktorrent/dialogs/speedlimitsmodel.cpp:142
 #: ktorrent/dialogs/spinboxdelegate.cpp:30 ktorrent/groups/grouppolicydlg.ui:81
 #: ktorrent/groups/grouppolicydlg.ui:101 ktorrent/groups/grouppolicydlg.ui:121
 #: ktorrent/groups/grouppolicydlg.ui:144 ktorrent/pref/networkpref.ui:81
@@ -843,35 +843,35 @@ msgstr " KiB/s"
 msgid "Maximum upload speed:"
 msgstr "උපරිම අපගත වේගය:"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:98
-#: plugins/shutdown/shutdowntorrentmodel.cpp:130
-#: plugins/syndication/feedwidgetmodel.cpp:79
+#: ktorrent/dialogs/speedlimitsmodel.cpp:102
+#: plugins/shutdown/shutdowntorrentmodel.cpp:137
+#: plugins/syndication/feedwidgetmodel.cpp:84
 #, kde-format
 msgid "Torrent"
 msgstr "ටොරන්ට්"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:100
+#: ktorrent/dialogs/speedlimitsmodel.cpp:104
 #, kde-format
 msgid "Download Limit"
 msgstr "බාගැනීමේ සීමාව"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:102
+#: ktorrent/dialogs/speedlimitsmodel.cpp:106
 #, kde-format
 msgid "Upload Limit"
 msgstr "අපගත සීමාව"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:104
+#: ktorrent/dialogs/speedlimitsmodel.cpp:108
 #, kde-format
 msgid "Assured Download Speed"
 msgstr "සහතික බාගැනීම් වේගය"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:106
+#: ktorrent/dialogs/speedlimitsmodel.cpp:110
 #, kde-format
 msgid "Assured Upload Speed"
 msgstr "සහතික අපගත වේගය"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:140
-#: ktorrent/dialogs/speedlimitsmodel.cpp:145
+#: ktorrent/dialogs/speedlimitsmodel.cpp:148
+#: ktorrent/dialogs/speedlimitsmodel.cpp:154
 #: ktorrent/dialogs/spinboxdelegate.cpp:32
 #, kde-format
 msgid "No assured speed"
@@ -882,29 +882,29 @@ msgstr "සහතික වේගයක් නොමැත"
 msgid "Create A Torrent"
 msgstr "ටොරෙන්ට් එකක් නිර්මාණය කරන්න"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:245
+#: ktorrent/dialogs/torrentcreatordlg.cpp:246
 #, fuzzy, kde-format
 #| msgid "Only HTTP is supported for webseeding."
 msgid "Only HTTP(S) is supported for webseeding."
 msgstr "HTTP පමණක් ජාල සීඩ් සඳහා සහාය දක්වයි."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:272
+#: ktorrent/dialogs/torrentcreatordlg.cpp:273
 #, kde-format
 msgid "You must select a file or a folder."
 msgstr "ඔබට ගොනුවක් හෝ බහලුමක් තෝරාගැනීමට සිදුවේ."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:278
+#: ktorrent/dialogs/torrentcreatordlg.cpp:279
 #, kde-format
 msgid ""
 "You have not added a tracker, are you sure you want to create this torrent?"
 msgstr "ඔබ හඹායන්නෙක් එක්කර නොමැත, ඔබට මෙම ටොරෙන්ටය නිර්මාණය කිරීමට ඇවැසි බව විශ්වාසද?"
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:286
+#: ktorrent/dialogs/torrentcreatordlg.cpp:288
 #, kde-format
 msgid "You must add at least one node."
 msgstr "ඔබට අවම තරමින් එක් නෝඩයක් ඇතුළත් කිරීමත සිදුවේ."
 
-#: ktorrent/dialogs/torrentcreatordlg.cpp:340
+#: ktorrent/dialogs/torrentcreatordlg.cpp:342
 #, kde-format
 msgid "Choose a file to save the torrent"
 msgstr "ටොරෙන්ට් සුරැකීමට ගොනුවක් තෝරන්න"
@@ -1032,7 +1032,7 @@ msgstr "සමුහයට ටොරෙන්ට් එක් කරන්න:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, m_tracker_tab)
 #: ktorrent/dialogs/torrentcreatordlg.ui:182
-#: plugins/infowidget/infowidgetplugin.cpp:224
+#: plugins/infowidget/infowidgetplugin.cpp:246
 #, kde-format
 msgid "Trackers"
 msgstr "හඹායන්නෝ"
@@ -1252,74 +1252,74 @@ msgstr "සමූහ ප්‍රතිපත්තිය"
 msgid "Please enter the group name."
 msgstr "කරුණාකර සමූහ නාමය ඇතුළත් කරන්න."
 
-#: ktorrent/groups/groupview.cpp:101
+#: ktorrent/groups/groupview.cpp:102
 #, kde-format
 msgid "The group %1 already exists."
 msgstr "%1 සමූහය දැනටමත් පවතී."
 
-#: ktorrent/gui.cpp:262
+#: ktorrent/gui.cpp:268
 #, kde-format
 msgid "Open Location"
 msgstr "ස්ථානය විවෘත"
 
-#: ktorrent/gui.cpp:360
+#: ktorrent/gui.cpp:374
 #, kde-format
 msgid "Create a new torrent"
 msgstr "නව ටොරෙන්ටයක් නිර්මාණය "
 
-#: ktorrent/gui.cpp:362
+#: ktorrent/gui.cpp:376
 #, kde-format
 msgid "Open a torrent"
 msgstr "ටොරන්ට් විවෘත කරන්න"
 
-#: ktorrent/gui.cpp:365
+#: ktorrent/gui.cpp:379
 #, kde-format
 msgid "Open Silently"
 msgstr "නිහඬව විවෘත කරන්න"
 
-#: ktorrent/gui.cpp:366
+#: ktorrent/gui.cpp:380
 #, kde-format
 msgid "Open a torrent without asking any questions"
 msgstr "ප්‍රශ්ණ විමසීමකින් තොරව ටොරෙන්ට විවෘත කරන්න"
 
-#: ktorrent/gui.cpp:381
+#: ktorrent/gui.cpp:395
 #, kde-format
 msgid "Open URL"
 msgstr "URL විවෘත කරන්න"
 
-#: ktorrent/gui.cpp:382
+#: ktorrent/gui.cpp:396
 #, kde-format
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "ටොරෙන්ටයක් වෙත යොමුවන සබැඳියක් විවෘත කරන්න, චුම්භක සබැඳි සහය දක්වයි"
 
-#: ktorrent/gui.cpp:387 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:19
 #: plugins/ipfilter/ipfilterplugin.cpp:44
-#: plugins/ipfilter/ipfilterplugin.cpp:57
+#: plugins/ipfilter/ipfilterplugin.cpp:58
 #, kde-format
 msgid "IP Filter"
 msgstr "IP පෙරහණ"
 
-#: ktorrent/gui.cpp:388
+#: ktorrent/gui.cpp:402
 #, kde-format
 msgid "Show the list of blocked IP addresses"
 msgstr "අවහිර කල IP ලිපින ලැයිස්තුව පෙන්වන්න"
 
-#: ktorrent/gui.cpp:393
+#: ktorrent/gui.cpp:407
 #, kde-format
 msgid "Import Torrent"
 msgstr "ටොරෙන්ට් ආයාත කරන්න"
 
-#: ktorrent/gui.cpp:394
+#: ktorrent/gui.cpp:408
 #, kde-format
 msgid "Import a torrent"
 msgstr "ටොරෙන්ටයක් නිර්යාත කරන්න"
 
-#: ktorrent/gui.cpp:399
+#: ktorrent/gui.cpp:413
 #, kde-format
 msgid "Show/Hide KTorrent"
 msgstr "KTorrent පෙන්වන්න/සඟවන්න"
 
-#: ktorrent/gui.cpp:417
+#: ktorrent/gui.cpp:431
 #, fuzzy, kde-format
 #| msgid "DHT: %1 nodes, %2 tasks"
 msgid "D: %1 | U: %2"
@@ -1338,18 +1338,18 @@ msgid ""
 "ranges like '200.10.10.0-200.10.10.40'."
 msgstr ""
 
-#: ktorrent/ipfilterwidget.cpp:118
+#: ktorrent/ipfilterwidget.cpp:119
 #, kde-format
 msgid "Choose a file"
 msgstr "ගොනුක් තෝරන්න"
 
-#: ktorrent/ipfilterwidget.cpp:118 ktorrent/ipfilterwidget.cpp:130
+#: ktorrent/ipfilterwidget.cpp:119 ktorrent/ipfilterwidget.cpp:132
 #, fuzzy, kde-format
 #| msgid "Torrent filter"
 msgid "Text files"
 msgstr "ටොරෙන්ට් පෙරහන"
 
-#: ktorrent/ipfilterwidget.cpp:130
+#: ktorrent/ipfilterwidget.cpp:132
 #, kde-format
 msgid "Choose a filename to save under"
 msgstr "සුරැකීමට ගොනු නමක් තෝරන්න"
@@ -3262,8 +3262,8 @@ msgstr "උපරිම හවුල් ප්‍රතිශතය:"
 msgid "Calculate Recommended Settings"
 msgstr "නිර්දේශිත සැකසුම් ගණනය කරන්න"
 
-#: ktorrent/pref/recommendedsettingsdlg.cpp:206
-#: ktorrent/pref/recommendedsettingsdlg.cpp:211
+#: ktorrent/pref/recommendedsettingsdlg.cpp:209
+#: ktorrent/pref/recommendedsettingsdlg.cpp:214
 #, kde-format
 msgid "(= %1/s)"
 msgstr "(= %1/s)"
@@ -3355,42 +3355,42 @@ msgstr "ටොරෙන්ට් අරඹන්න"
 msgid "Recommended settings:"
 msgstr "නිර්දේශිත සැකසුම් ගණනය කරන්න"
 
-#: ktorrent/statusbar.cpp:34 ktorrent/statusbar.cpp:66
+#: ktorrent/statusbar.cpp:34 ktorrent/statusbar.cpp:67
 #, kde-format
 msgid "Speed down: %1 / up: %2"
 msgstr "වේගය බාගැනීම්: %1 / අපගත: %2"
 
-#: ktorrent/statusbar.cpp:35 ktorrent/statusbar.cpp:77
+#: ktorrent/statusbar.cpp:35 ktorrent/statusbar.cpp:79
 #, kde-format
 msgid "Transferred down: %1 / up: %2"
 msgstr "හුවමාරු බාගැනීම්: %1 / අපගත: %2"
 
-#: ktorrent/statusbar.cpp:37 ktorrent/statusbar.cpp:92
+#: ktorrent/statusbar.cpp:37 ktorrent/statusbar.cpp:95
 #, kde-format
 msgid "DHT: off"
 msgstr "DHT: අක්‍රීය"
 
-#: ktorrent/statusbar.cpp:90
+#: ktorrent/statusbar.cpp:93
 #, kde-format
 msgid "%1 node"
 msgid_plural "%1 nodes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ktorrent/statusbar.cpp:90
+#: ktorrent/statusbar.cpp:93
 #, kde-format
 msgid "%1 task"
 msgid_plural "%1 tasks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ktorrent/statusbar.cpp:90
+#: ktorrent/statusbar.cpp:93
 #, fuzzy, kde-format
 #| msgid "DHT: %1 nodes, %2 tasks"
 msgid "DHT: %1, %2"
 msgstr "DHT: නෝඩ %1 , කාර්යය %2"
 
-#: ktorrent/statusbar.cpp:99
+#: ktorrent/statusbar.cpp:103
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
@@ -3401,35 +3401,35 @@ msgstr ""
 msgid "The desktop is offline"
 msgstr ""
 
-#: ktorrent/tools/magnetmodel.cpp:102
+#: ktorrent/tools/magnetmodel.cpp:107
 #, kde-format
 msgid "Magnet Link"
 msgstr "වුම්භක සබැඳිය"
 
-#: ktorrent/tools/magnetmodel.cpp:104 ktorrent/tools/queuemanagermodel.cpp:182
-#: ktorrent/trayicon.cpp:137 plugins/infowidget/trackermodel.cpp:123
-#: plugins/infowidget/webseedsmodel.cpp:110
+#: ktorrent/tools/magnetmodel.cpp:109 ktorrent/tools/queuemanagermodel.cpp:185
+#: ktorrent/trayicon.cpp:140 plugins/infowidget/trackermodel.cpp:131
+#: plugins/infowidget/webseedsmodel.cpp:114
 #, kde-format
 msgid "Status"
 msgstr "තත්වය"
 
-#: ktorrent/tools/magnetmodel.cpp:106
-#: plugins/infowidget/infowidgetplugin.cpp:186
+#: ktorrent/tools/magnetmodel.cpp:111
+#: plugins/infowidget/infowidgetplugin.cpp:208
 #, kde-format
 msgid "Peers"
 msgstr "ලබන්නන්"
 
-#: ktorrent/tools/magnetmodel.cpp:159
+#: ktorrent/tools/magnetmodel.cpp:167
 #, kde-format
 msgid "Downloading"
 msgstr "බාගනිමින්"
 
-#: ktorrent/tools/magnetmodel.cpp:162 ktorrent/tools/queuemanagermodel.cpp:218
+#: ktorrent/tools/magnetmodel.cpp:170 ktorrent/tools/queuemanagermodel.cpp:223
 #, kde-format
 msgid "Queued"
 msgstr "පෙළගැසූ"
 
-#: ktorrent/tools/magnetmodel.cpp:166
+#: ktorrent/tools/magnetmodel.cpp:174
 #, kde-format
 msgid "Stopped"
 msgstr "නවතා ඇත"
@@ -3455,45 +3455,45 @@ msgstr "චුම්භක URI පිටපත්"
 msgid "Remove Magnet"
 msgstr "චුම්භක ඉවත් කරන්න"
 
-#: ktorrent/tools/queuemanagermodel.cpp:178
+#: ktorrent/tools/queuemanagermodel.cpp:181
 #, kde-format
 msgid "Order"
 msgstr "පෙළගැස්ම"
 
-#: ktorrent/tools/queuemanagermodel.cpp:180 ktorrent/view/viewmodel.cpp:471
-#: plugins/downloadorder/downloadorderdialog.cpp:70
+#: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
+#: plugins/downloadorder/downloadorderdialog.cpp:71
 #, kde-format
 msgid "Name"
 msgstr "නම"
 
-#: ktorrent/tools/queuemanagermodel.cpp:184
+#: ktorrent/tools/queuemanagermodel.cpp:187
 #, kde-format
 msgid "Time Stalled"
 msgstr "නැවතූ කාලය"
 
-#: ktorrent/tools/queuemanagermodel.cpp:186
-#: plugins/infowidget/iwfilelistmodel.cpp:64
-#: plugins/infowidget/iwfiletreemodel.cpp:72
+#: ktorrent/tools/queuemanagermodel.cpp:189
+#: plugins/infowidget/iwfilelistmodel.cpp:67
+#: plugins/infowidget/iwfiletreemodel.cpp:74
 #, kde-format
 msgid "Priority"
 msgstr "ප්‍රමුඛතාව"
 
-#: ktorrent/tools/queuemanagermodel.cpp:216
+#: ktorrent/tools/queuemanagermodel.cpp:221
 #, kde-format
 msgid "Running"
 msgstr "ක්‍රියාත්මක වන"
 
-#: ktorrent/tools/queuemanagermodel.cpp:220
+#: ktorrent/tools/queuemanagermodel.cpp:225
 #, kde-format
 msgid "Not queued"
 msgstr "පෙළ නොගැසූ"
 
-#: ktorrent/tools/queuemanagermodel.cpp:228
+#: ktorrent/tools/queuemanagermodel.cpp:235
 #, kde-format
 msgid "%1"
 msgstr "%1"
 
-#: ktorrent/tools/queuemanagermodel.cpp:238
+#: ktorrent/tools/queuemanagermodel.cpp:246
 #, kde-format
 msgid ""
 "Order of a torrent in the queue.\n"
@@ -3502,7 +3502,7 @@ msgid ""
 msgstr ""
 
 #: ktorrent/tools/queuemanagerwidget.cpp:52
-#: plugins/search/searchactivity.cpp:65 plugins/search/webview.cpp:109
+#: plugins/search/searchactivity.cpp:65 plugins/search/webview.cpp:114
 #, kde-format
 msgid "Search"
 msgstr "සෙවුම"
@@ -3645,128 +3645,128 @@ msgstr "ටොරෙන්ට පෙරන්න"
 msgid "Filter torrents based on filter string"
 msgstr ""
 
-#: ktorrent/trayicon.cpp:89
+#: ktorrent/trayicon.cpp:90
 #, kde-format
 msgid "Set max upload speed"
 msgstr "උපරිම අපගත වේගය සකසන්න"
 
-#: ktorrent/trayicon.cpp:91
+#: ktorrent/trayicon.cpp:92
 #, kde-format
 msgid "Set max download speed"
 msgstr "උපරිම බාගත වේගය සකසන්න"
 
-#: ktorrent/trayicon.cpp:128
+#: ktorrent/trayicon.cpp:131
 #, kde-format
 msgid ""
 "Download speed: <b>%1</b><br/>Upload speed: <b>%2</b><br/>Received: <b>%3</"
 "b><br/>Transmitted: <b>%4</b>"
 msgstr ""
 
-#: ktorrent/trayicon.cpp:167
+#: ktorrent/trayicon.cpp:174
 #, fuzzy, kde-format
 #| msgid "Torrent <b>%1</b> already loaded."
 msgid "<b>%1</b> was silently opened."
 msgstr "<b>%1</b> ටොරෙන්ටය දැනටමත් පූර්ණිතයි ."
 
-#: ktorrent/trayicon.cpp:181
+#: ktorrent/trayicon.cpp:189
 #, kde-format
 msgid "<b>%1</b> has completed downloading.<br>Average speed: %2 DL / %3 UL."
 msgstr "<b>%1</b> බාගැනීම සම්පූර්ණ කර ඇත.<br>සාමාන්‍යය වේගය: %2 DL / %3 UL."
 
-#: ktorrent/trayicon.cpp:199
+#: ktorrent/trayicon.cpp:208
 #, kde-format
 msgid ""
 "<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
 "<br>Uploaded %3 at an average speed of %4."
 msgstr ""
 
-#: ktorrent/trayicon.cpp:218
+#: ktorrent/trayicon.cpp:228
 #, kde-format
 msgid ""
 "<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
 "<br>Uploaded %3 at an average speed of %4."
 msgstr ""
 
-#: ktorrent/trayicon.cpp:233
+#: ktorrent/trayicon.cpp:244
 #, kde-format
 msgid "<b>%1</b> has been stopped with the following error: <br>%2"
 msgstr "<b>%1</b> පහත දෝශය සමඟ නවතා ඇත: <br>%2"
 
-#: ktorrent/trayicon.cpp:244
+#: ktorrent/trayicon.cpp:256
 #, kde-format
 msgid ""
 "Corrupted data has been found in the torrent <b>%1</b><br>It would be a good "
 "idea to do a data integrity check on the torrent."
 msgstr ""
 
-#: ktorrent/trayicon.cpp:262
+#: ktorrent/trayicon.cpp:275
 #, kde-format
 msgid ""
 "<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
 "<br>Remove the limit manually if you want to continue seeding."
 msgstr ""
 
-#: ktorrent/trayicon.cpp:268
+#: ktorrent/trayicon.cpp:281
 #, kde-format
 msgid ""
 "<b>%1</b> has reached its maximum seed time of %2 hours and cannot be "
 "enqueued. <br>Remove the limit manually if you want to continue seeding."
 msgstr ""
 
-#: ktorrent/trayicon.cpp:281
+#: ktorrent/trayicon.cpp:296
 #, kde-format
 msgid "Cannot start <b>%1</b>: <br>"
 msgstr "<b>%1</b> ඇරඹිය නොහැක: <br>"
 
-#: ktorrent/trayicon.cpp:286
+#: ktorrent/trayicon.cpp:301
 #, kde-format
 msgid "Cannot seed more than 1 torrent. <br>"
 msgid_plural "Cannot seed more than %1 torrents. <br>"
 msgstr[0] "1 ටොරෙන්ටයකට වඩා සීඩ් කල නොහැක. <br>"
 msgstr[1] "%1 ටොරෙන්ටයකට වඩා සීඩ් කල නොහැක. <br>"
 
-#: ktorrent/trayicon.cpp:288
+#: ktorrent/trayicon.cpp:303
 #, kde-format
 msgid "Cannot download more than 1 torrent. <br>"
 msgid_plural "Cannot download more than %1 torrents. <br>"
 msgstr[0] "1 ටොරෙන්ටයකට වඩා බාගත නොහැක. <br>"
 msgstr[1] "%1 ටොරෙන්ටයකට වඩා බාගත නොහැක. <br>"
 
-#: ktorrent/trayicon.cpp:290
+#: ktorrent/trayicon.cpp:305
 #, kde-format
 msgid "Go to Settings -> Configure KTorrent, if you want to change the limits."
 msgstr "සීමා වෙනස් කිරීමට සැකසුම් -> KTorrent සකසන්න වෙත යන්න."
 
-#: ktorrent/trayicon.cpp:294
+#: ktorrent/trayicon.cpp:309
 #, kde-format
 msgid "There is not enough diskspace available."
 msgstr "ප්‍රමාණවත් තැටි ඉඩක් නොපවතී"
 
-#: ktorrent/trayicon.cpp:307
+#: ktorrent/trayicon.cpp:323
 #, kde-format
 msgid ""
 "Your disk is running out of space.<br /><b>%1</b> is being downloaded to "
 "'%2'."
 msgstr "ඔබේ තැටියේ ඉඩ අඩුවෙමින් පවතී.<br /><b>%1</b> '%2' වෙත බාගැනෙමින් ."
 
-#: ktorrent/trayicon.cpp:310
+#: ktorrent/trayicon.cpp:326
 #, kde-format
 msgid "Torrent has been stopped.<br />"
 msgstr "ටොරෙන්ටය නවතා ඇත.<br />"
 
-#: ktorrent/trayicon.cpp:346
+#: ktorrent/trayicon.cpp:363
 #, fuzzy, kde-format
 #| msgid "Speed limit in KiB/s"
 msgid "Upload speed limit in KiB/s"
 msgstr "KiB/s මගින් වේග සීමාව"
 
-#: ktorrent/trayicon.cpp:348
+#: ktorrent/trayicon.cpp:365
 #, fuzzy, kde-format
 #| msgid "Speed limit in KiB/s"
 msgid "Download speed limit in KiB/s"
 msgstr "KiB/s මගින් වේග සීමාව"
 
-#: ktorrent/trayicon.cpp:350 plugins/bwscheduler/schedulegraphicsitem.cpp:77
+#: ktorrent/trayicon.cpp:368 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
 #, kde-format
 msgid "Unlimited"
@@ -4125,271 +4125,271 @@ msgstr "ටොරෙන්ට් නිර්යාත කරන්න"
 msgid "Set the speed limits of individual torrents"
 msgstr "එක් එක් ටොරෙන්ටය සඳහා වේග සීමා සකසන්න"
 
-#: ktorrent/view/view.cpp:452
+#: ktorrent/view/view.cpp:467
 #, kde-format
 msgid ""
 "The torrent <b>%1</b> has not finished downloading, do you want to delete "
 "the incomplete data, too?"
 msgstr ""
 
-#: ktorrent/view/view.cpp:457
+#: ktorrent/view/view.cpp:472
 #, kde-format
 msgid "Remove Download"
 msgstr "බාගැනීම් මකන්න"
 
-#: ktorrent/view/view.cpp:458
+#: ktorrent/view/view.cpp:473
 #, kde-format
 msgid "Delete Data"
 msgstr "දත්ත මකන්න"
 
-#: ktorrent/view/view.cpp:459
+#: ktorrent/view/view.cpp:474
 #, kde-format
 msgid "Keep Data"
 msgstr "දත්ත තබාගන්න"
 
-#: ktorrent/view/view.cpp:483
+#: ktorrent/view/view.cpp:500
 #, kde-format
 msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
 msgstr ""
 
-#: ktorrent/view/view.cpp:484
+#: ktorrent/view/view.cpp:501
 #, kde-format
 msgid "Remove Torrent"
 msgstr "ටොරන්ට් ඉවත් කරන්න"
 
-#: ktorrent/view/view.cpp:575 plugins/infowidget/fileview.cpp:367
-#: plugins/infowidget/fileview.cpp:391
+#: ktorrent/view/view.cpp:595 plugins/infowidget/fileview.cpp:378
+#: plugins/infowidget/fileview.cpp:405
 #, kde-format
 msgid "Select a directory to move the data to."
 msgstr "දත්ත මාරු කිරීමට බහලුමක් තෝරන්න."
 
-#: ktorrent/view/viewdelegate.cpp:332
+#: ktorrent/view/viewdelegate.cpp:344
 #, fuzzy, kde-format
 #| msgid "%1 %"
 msgctxt "Progress bar percentage label"
 msgid "%1%"
 msgstr "%1 %"
 
-#: ktorrent/view/viewmodel.cpp:182
+#: ktorrent/view/viewmodel.cpp:185
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:473 plugins/infowidget/peerviewmodel.cpp:315
-#: plugins/infowidget/webseedsmodel.cpp:108
+#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:326
+#: plugins/infowidget/webseedsmodel.cpp:112
 #, kde-format
 msgid "Downloaded"
 msgstr "බාගත්"
 
-#: ktorrent/view/viewmodel.cpp:475
+#: ktorrent/view/viewmodel.cpp:493
 #, fuzzy, kde-format
 #| msgid "Times Downloaded"
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
 msgstr "බාගත් වාර"
 
-#: ktorrent/view/viewmodel.cpp:477
-#: libktcore/torrent/torrentfilelistmodel.cpp:65
-#: libktcore/torrent/torrentfiletreemodel.cpp:358
+#: ktorrent/view/viewmodel.cpp:495
+#: libktcore/torrent/torrentfilelistmodel.cpp:68
+#: libktcore/torrent/torrentfiletreemodel.cpp:384
 #, kde-format
 msgid "Size"
 msgstr "ප්‍රමාණය"
 
-#: ktorrent/view/viewmodel.cpp:479 plugins/infowidget/peerviewmodel.cpp:317
+#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:328
 #, kde-format
 msgid "Uploaded"
 msgstr "අපගත කල"
 
-#: ktorrent/view/viewmodel.cpp:481
+#: ktorrent/view/viewmodel.cpp:499
 #, fuzzy, kde-format
 #| msgid "Uploaded"
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
 msgstr "අපගත කල"
 
-#: ktorrent/view/viewmodel.cpp:483
+#: ktorrent/view/viewmodel.cpp:501
 #, fuzzy, kde-format
 #| msgid "Left:"
 msgctxt "Bytes left to downloaded"
 msgid "Left"
 msgstr "වම:"
 
-#: ktorrent/view/viewmodel.cpp:485
-#: plugins/infowidget/chunkdownloadmodel.cpp:195
-#: plugins/infowidget/peerviewmodel.cpp:297
+#: ktorrent/view/viewmodel.cpp:503
+#: plugins/infowidget/chunkdownloadmodel.cpp:203
+#: plugins/infowidget/peerviewmodel.cpp:308
 #, kde-format
 msgid "Down Speed"
 msgstr "බාගත වේගය"
 
-#: ktorrent/view/viewmodel.cpp:487 plugins/infowidget/peerviewmodel.cpp:299
+#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:310
 #, kde-format
 msgid "Up Speed"
 msgstr "අපගත වේගය"
 
-#: ktorrent/view/viewmodel.cpp:489
+#: ktorrent/view/viewmodel.cpp:507
 #, kde-format
 msgid "Time Left"
 msgstr "ඉතිරි කාලය"
 
-#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/trackermodel.cpp:125
+#: ktorrent/view/viewmodel.cpp:509 plugins/infowidget/trackermodel.cpp:133
 #, kde-format
 msgid "Seeders"
 msgstr "සීඩර්"
 
-#: ktorrent/view/viewmodel.cpp:493 plugins/infowidget/trackermodel.cpp:127
+#: ktorrent/view/viewmodel.cpp:511 plugins/infowidget/trackermodel.cpp:135
 #, kde-format
 msgid "Leechers"
 msgstr "ලීචර්"
 
-#: ktorrent/view/viewmodel.cpp:496
+#: ktorrent/view/viewmodel.cpp:514
 #, fuzzy, no-c-format, kde-format
 #| msgid "% Complete"
 msgid "% Complete"
 msgstr "% සම්පූර්ණයි"
 
-#: ktorrent/view/viewmodel.cpp:498
+#: ktorrent/view/viewmodel.cpp:516
 #, kde-format
 msgid "Share Ratio"
 msgstr "හවුල් ප්‍රතිශතය"
 
-#: ktorrent/view/viewmodel.cpp:500
+#: ktorrent/view/viewmodel.cpp:518
 #, kde-format
 msgid "Time Downloaded"
 msgstr "බාගත් කාලය"
 
-#: ktorrent/view/viewmodel.cpp:502
+#: ktorrent/view/viewmodel.cpp:520
 #, kde-format
 msgid "Time Seeded"
 msgstr "සීඩ් කල කාලය"
 
-#: ktorrent/view/viewmodel.cpp:504
+#: ktorrent/view/viewmodel.cpp:522
 #, kde-format
 msgid "Location"
 msgstr "ස්ථානය"
 
-#: ktorrent/view/viewmodel.cpp:506
+#: ktorrent/view/viewmodel.cpp:524
 #, kde-format
 msgid "Added"
 msgstr "එක් කල"
 
-#: ktorrent/view/viewmodel.cpp:508
+#: ktorrent/view/viewmodel.cpp:526
 #, fuzzy, kde-format
 #| msgid "Separate activity"
 msgid "Last Activity"
 msgstr "වෙන්වූ ක්‍රියාකාරීත්වය"
 
-#: ktorrent/view/viewmodel.cpp:515
+#: ktorrent/view/viewmodel.cpp:533
 #, kde-format
 msgid "How much data we have downloaded of the torrent"
 msgstr "මෙම ටොරෙන්ටයෙන් කොපමණ දත්ත බාගෙන ඇතිද යන්න"
 
-#: ktorrent/view/viewmodel.cpp:517
+#: ktorrent/view/viewmodel.cpp:535
 #, fuzzy, kde-format
 #| msgid "How much data we have downloaded of the torrent"
 msgid "How much data we have downloaded of the torrent this session"
 msgstr "මෙම ටොරෙන්ටයෙන් කොපමණ දත්ත බාගෙන ඇතිද යන්න"
 
-#: ktorrent/view/viewmodel.cpp:519
+#: ktorrent/view/viewmodel.cpp:537
 #, kde-format
 msgid "Total size of the torrent, excluded files are not included"
 msgstr "අයත් නොවන ගොනු හැර, ටොරෙන්ටයේ සම්පූර්ණ ප්‍රමාණය"
 
-#: ktorrent/view/viewmodel.cpp:521
+#: ktorrent/view/viewmodel.cpp:539
 #, kde-format
 msgid "How much data we have uploaded"
 msgstr "අප අපගත කල දත්ත ප්‍රමාණය"
 
-#: ktorrent/view/viewmodel.cpp:523
+#: ktorrent/view/viewmodel.cpp:541
 #, fuzzy, kde-format
 #| msgid "How much data we have uploaded to this peer"
 msgid "How much data we have uploaded this session"
 msgstr "මෙම ලබන්නාවෙත අප කොතරම් දත්ත අපගත කර ඇතිද"
 
-#: ktorrent/view/viewmodel.cpp:525
+#: ktorrent/view/viewmodel.cpp:543
 #, fuzzy, kde-format
 #| msgid "How much data we have uploaded"
 msgid "How much data left to download"
 msgstr "අප අපගත කල දත්ත ප්‍රමාණය"
 
-#: ktorrent/view/viewmodel.cpp:527
+#: ktorrent/view/viewmodel.cpp:545
 #, kde-format
 msgid "Current download speed"
 msgstr "වත්මන් බාගත වේගය"
 
-#: ktorrent/view/viewmodel.cpp:529
+#: ktorrent/view/viewmodel.cpp:547
 #, kde-format
 msgid "Current upload speed"
 msgstr "වත්මන් අපගත වේගය"
 
-#: ktorrent/view/viewmodel.cpp:531
+#: ktorrent/view/viewmodel.cpp:549
 #, kde-format
 msgid ""
 "How much time is left before the torrent is finished or before the maximum "
 "share ratio is reached, if that is enabled"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:533
+#: ktorrent/view/viewmodel.cpp:551
 #, kde-format
 msgid ""
 "How many seeders we are connected to (How many seeders there are according "
 "to the tracker)"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:535
+#: ktorrent/view/viewmodel.cpp:553
 #, kde-format
 msgid ""
 "How many leechers we are connected to (How many leechers there are according "
 "to the tracker)"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:538
+#: ktorrent/view/viewmodel.cpp:556
 #, kde-format
 msgid ""
 "The percentage of data we have of the whole torrent, not including excluded "
 "files"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:540
+#: ktorrent/view/viewmodel.cpp:558
 #, kde-format
 msgid ""
 "Share ratio is the number of bytes uploaded divided by the number of bytes "
 "downloaded"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:542
+#: ktorrent/view/viewmodel.cpp:560
 #, kde-format
 msgid "How long we have been downloading the torrent"
 msgstr "අප ටොරෙන්ටය බාගනිමින් සිටි කාලය"
 
-#: ktorrent/view/viewmodel.cpp:544
+#: ktorrent/view/viewmodel.cpp:562
 #, kde-format
 msgid "How long we have been seeding the torrent"
 msgstr "අප ටොරෙන්ටය සීඩ් කල කාලය"
 
-#: ktorrent/view/viewmodel.cpp:546
+#: ktorrent/view/viewmodel.cpp:564
 #, kde-format
 msgid "The location of the torrent's data on disk"
 msgstr "තැටිය මත ටොරෙන්ට දත්ත පවතින ස්ථානය"
 
-#: ktorrent/view/viewmodel.cpp:548
+#: ktorrent/view/viewmodel.cpp:566
 #, kde-format
 msgid "When this torrent was added"
 msgstr "මෙම ටොරෙන්ටය එක් කල විටදී"
 
-#: ktorrent/view/viewmodel.cpp:550
+#: ktorrent/view/viewmodel.cpp:568
 #, kde-format
 msgid "Time since last download or upload activity"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:592
+#: ktorrent/view/viewmodel.cpp:614
 #, kde-format
 msgid "%1<br>Url: <b>%2</b>"
 msgstr "%1<br>Url: <b>%2</b>"
 
-#: ktorrent/view/viewmodel.cpp:598
+#: ktorrent/view/viewmodel.cpp:621
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>හඹායන්නා සබඳකරගත නොහැකි විය."
@@ -4465,12 +4465,12 @@ msgstr "ඉදිරියට අවලංගු කරන්න"
 msgid "Verbose mode"
 msgstr ""
 
-#: libktcore/dbus/dbustorrent.cpp:304
+#: libktcore/dbus/dbustorrent.cpp:307
 #, kde-format
 msgid "Maximum share ratio reached."
 msgstr "උපරිම හවුල් ප්‍රතිශතය ලඟාවිය."
 
-#: libktcore/dbus/dbustorrent.cpp:307
+#: libktcore/dbus/dbustorrent.cpp:310
 #, kde-format
 msgid "Maximum seed time reached."
 msgstr "උපරිම සීඩ් කාලය ලඟාවිය."
@@ -4535,7 +4535,7 @@ msgstr "නිශ්ක්‍රීය බාගැනීම්"
 msgid "Passive Uploads"
 msgstr "නිශ්ක්‍රීය අපගත"
 
-#: libktcore/groups/grouptreemodel.cpp:31
+#: libktcore/groups/grouptreemodel.cpp:32
 #, kde-format
 msgid "Custom Groups"
 msgstr "රුචි සමූහ"
@@ -4545,14 +4545,14 @@ msgstr "රුචි සමූහ"
 msgid "Ungrouped Torrents"
 msgstr "සමූහ නොකල ටොරෙන්ට්"
 
-#: libktcore/interfaces/functions.cpp:148
+#: libktcore/interfaces/functions.cpp:155
 #, fuzzy, kde-format
 #| msgid "Torrents"
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "ටොරෙන්ට"
 
-#: libktcore/interfaces/functions.cpp:150
+#: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
 msgstr "සියලු ගොනු"
@@ -4799,36 +4799,36 @@ msgstr "බාගැනීම් පෙන්වන්න"
 msgid "Excluded Chunks"
 msgstr "අයත් නොවේ:"
 
-#: libktcore/torrent/queuemanager.cpp:104
+#: libktcore/torrent/queuemanager.cpp:106
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio and its maximum seed "
 "time. Ignore the limit and start seeding anyway?"
 msgstr ""
 
-#: libktcore/torrent/queuemanager.cpp:107
+#: libktcore/torrent/queuemanager.cpp:109
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum share ratio. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
 
-#: libktcore/torrent/queuemanager.cpp:109
+#: libktcore/torrent/queuemanager.cpp:111
 #, kde-format
 msgid ""
 "The torrent \"%1\" has reached its maximum seed time. Ignore the limit and "
 "start seeding anyway?"
 msgstr ""
 
-#: libktcore/torrent/queuemanager.cpp:116
+#: libktcore/torrent/queuemanager.cpp:119
 #, kde-format
 msgid "Limits reached."
 msgstr "සීමාවන්ට ලඟාවිය."
 
-#: libktcore/torrent/queuemanager.cpp:117
-#: libktcore/torrent/queuemanager.cpp:227
-#: libktcore/torrent/queuemanager.cpp:266
-#: libktcore/torrent/queuemanager.cpp:295
+#: libktcore/torrent/queuemanager.cpp:120
+#: libktcore/torrent/queuemanager.cpp:238
+#: libktcore/torrent/queuemanager.cpp:279
+#: libktcore/torrent/queuemanager.cpp:310
 #, fuzzy, kde-format
 #| msgctxt "@action Start all selected torrents in the current tab"
 #| msgid "Start"
@@ -4836,62 +4836,62 @@ msgctxt "@action:button"
 msgid "Start"
 msgstr "අරඹන්න"
 
-#: libktcore/torrent/queuemanager.cpp:142
+#: libktcore/torrent/queuemanager.cpp:148
 #, kde-format
 msgid ""
 "You don't have enough disk space to download this torrent. Are you sure you "
 "want to continue?"
 msgstr ""
 
-#: libktcore/torrent/queuemanager.cpp:145
+#: libktcore/torrent/queuemanager.cpp:151
 #, kde-format
 msgid "Insufficient disk space for %1"
 msgstr "%1 සඳහා ප්‍රමාණවත් නොවන තැටි ඉඩ"
 
-#: libktcore/torrent/queuemanager.cpp:224
+#: libktcore/torrent/queuemanager.cpp:235
 #, kde-format
 msgid ""
 "Not enough disk space for the following torrents. Do you want to start them "
 "anyway?"
 msgstr "පහත ටොරෙන්ට් බාගැනීමට ප්‍රමාණවත් ඉඩක් නොමැත. ඔබට ඒවා කෙසේහෝ ඇරඹීමට ඇවැසිද?"
 
-#: libktcore/torrent/queuemanager.cpp:263
+#: libktcore/torrent/queuemanager.cpp:276
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum seed time. Do you want to "
 "start them anyway?"
 msgstr ""
 
-#: libktcore/torrent/queuemanager.cpp:292
+#: libktcore/torrent/queuemanager.cpp:307
 #, kde-format
 msgid ""
 "The following torrents have reached their maximum share ratio. Do you want "
 "to start them anyway?"
 msgstr ""
 
-#: libktcore/torrent/queuemanager.cpp:708
+#: libktcore/torrent/queuemanager.cpp:753
 #, kde-format
 msgid "Error starting torrent %1: %2"
 msgstr "%1 ආරම්භ කිරීමේ දෝශය: %2"
 
-#: libktcore/torrent/queuemanager.cpp:709
-#: libktcore/torrent/queuemanager.cpp:720
+#: libktcore/torrent/queuemanager.cpp:754
+#: libktcore/torrent/queuemanager.cpp:765
 #, kde-format
 msgid "Error"
 msgstr "දෝෂය"
 
-#: libktcore/torrent/queuemanager.cpp:719
+#: libktcore/torrent/queuemanager.cpp:764
 #, kde-format
 msgid "Error stopping torrent %1: %2"
 msgstr "%1 ටොරෙන්ටය නැවතීමේ දෝශය: %2"
 
-#: libktcore/torrent/torrentfilelistmodel.cpp:63
-#: libktcore/torrent/torrentfiletreemodel.cpp:356
+#: libktcore/torrent/torrentfilelistmodel.cpp:66
+#: libktcore/torrent/torrentfiletreemodel.cpp:382
 #, kde-format
 msgid "File"
 msgstr "ගොනුව"
 
-#: libktcore/util/mmapfile.cpp:151
+#: libktcore/util/mmapfile.cpp:153
 #, kde-format
 msgid "Cannot write beyond end of the mmap buffer."
 msgstr "mmap බෆරය අවසානයට වඩා ලිවිය නොහැක."
@@ -5087,7 +5087,7 @@ msgstr "සබඳතා සීමා සකසන්න"
 msgid "Bandwidth Schedule"
 msgstr "කලාප පළල කාලසටහන"
 
-#: plugins/bwscheduler/schedule.cpp:114 plugins/bwscheduler/schedule.cpp:227
+#: plugins/bwscheduler/schedule.cpp:114 plugins/bwscheduler/schedule.cpp:232
 #, kde-format
 msgid "Cannot open file %1: %2"
 msgstr "%1 ගොනුව විවෘත කල නොහැක: %2"
@@ -5148,7 +5148,7 @@ msgstr "කාලසටහන්කරු සක්‍රීය හෝ අක්
 msgid "KTorrent scheduler files"
 msgstr "KTorrent කාලසටහන් ගොනු"
 
-#: plugins/bwscheduler/scheduleeditor.cpp:166
+#: plugins/bwscheduler/scheduleeditor.cpp:167
 #, kde-format
 msgid ""
 "This item conflicts with another item in the schedule, we cannot change it."
@@ -5168,37 +5168,37 @@ msgstr ""
 "%1 බාගත\n"
 "%2 අපගත"
 
-#: plugins/bwscheduler/weekscene.cpp:59
+#: plugins/bwscheduler/weekscene.cpp:60
 #, kde-format
 msgid "Current schedule: suspended"
 msgstr "වත්මන් කාලසටහන: අත්හිටුවා ඇත"
 
-#: plugins/bwscheduler/weekscene.cpp:61
+#: plugins/bwscheduler/weekscene.cpp:62
 #, kde-format
 msgid "Current schedule: %1/s download, %2/s upload"
 msgstr "වත්මන් කාලසටහන: %1/s බාගත්, %2/s අපගත"
 
-#: plugins/bwscheduler/weekscene.cpp:63
+#: plugins/bwscheduler/weekscene.cpp:64
 #, kde-format
 msgid "Current schedule: unlimited download, %1/s upload"
 msgstr "වත්මන් කාලසටහන: අසීමිත බාගැනීම්, %1/s අපගත"
 
-#: plugins/bwscheduler/weekscene.cpp:65
+#: plugins/bwscheduler/weekscene.cpp:66
 #, kde-format
 msgid "Current schedule: %1/s download, unlimited upload"
 msgstr "වත්මන් කාලසටහන: %1/s බාගත්, සීමාරහිත අපගත"
 
-#: plugins/bwscheduler/weekscene.cpp:67
+#: plugins/bwscheduler/weekscene.cpp:68
 #, kde-format
 msgid "Current schedule: unlimited upload and download"
 msgstr "වත්මන් කාලසටහන: අසීමිත බාගැනීම්, අසීමිත අපගත"
 
-#: plugins/bwscheduler/weekscene.cpp:70
+#: plugins/bwscheduler/weekscene.cpp:72
 #, kde-format
 msgid " (scheduler disabled)"
 msgstr " (කාලසටහන් කරු අක්‍රීයයි)"
 
-#: plugins/bwscheduler/weekscene.cpp:88
+#: plugins/bwscheduler/weekscene.cpp:91
 #, kde-format
 msgid "Current schedule:"
 msgstr "වත්මන් කාලසටහන: "
@@ -5216,12 +5216,12 @@ msgstr "ගොනු බාගත පෙළගැස්ම"
 msgid "File download order for <b>%1</b>:"
 msgstr "<b>%1</b> සඳහා ගොනු බාගැනීම් පෙළගැස්ම:"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr ""
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, fuzzy, kde-format
 #| msgid "Add Trackers"
 msgid "Album Track Order"
@@ -5285,47 +5285,47 @@ msgstr "භාවිතයට ඇති:"
 msgid "Unavailable Chunks"
 msgstr "භාවිතයට ඇති:"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:189
+#: plugins/infowidget/chunkdownloadmodel.cpp:197
 #, kde-format
 msgid "Chunk"
 msgstr "Chunk"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:191
+#: plugins/infowidget/chunkdownloadmodel.cpp:199
 #, kde-format
 msgid "Progress"
 msgstr "ප්‍රගතිය"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:193
+#: plugins/infowidget/chunkdownloadmodel.cpp:201
 #, kde-format
 msgid "Peer"
 msgstr "ලබන්නා"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:197
+#: plugins/infowidget/chunkdownloadmodel.cpp:205
 #, kde-format
 msgid "Files"
 msgstr "ගොනු"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:204
+#: plugins/infowidget/chunkdownloadmodel.cpp:212
 #, kde-format
 msgid "Number of the chunk"
 msgstr "chunk ගණන"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:206
+#: plugins/infowidget/chunkdownloadmodel.cpp:214
 #, kde-format
 msgid "Download progress of the chunk"
 msgstr "chunk බාගැනීම් ප්‍රගතිය"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:208
+#: plugins/infowidget/chunkdownloadmodel.cpp:216
 #, kde-format
 msgid "Which peer we are downloading it from"
 msgstr "අප බාගන්නේ කුමන සේවාදායකයෙක්ගෙන්ද"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:210
+#: plugins/infowidget/chunkdownloadmodel.cpp:218
 #, kde-format
 msgid "Download speed of the chunk"
 msgstr "chunk බාගැනීම් වේගය"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:212
+#: plugins/infowidget/chunkdownloadmodel.cpp:220
 #, kde-format
 msgid "Which files the chunk is located in"
 msgstr "chunk ගබඩාකර ඇති ගොනු"
@@ -5333,7 +5333,7 @@ msgstr "chunk ගබඩාකර ඇති ගොනු"
 #. i18n: ectx: property (text), widget (QLabel, hdr_chunks)
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChunkDownloadView)
 #: plugins/infowidget/chunkdownloadview.ui:13
-#: plugins/infowidget/infowidgetplugin.cpp:205
+#: plugins/infowidget/infowidgetplugin.cpp:227
 #: plugins/infowidget/statustab.ui:181
 #, kde-format
 msgid "Chunks"
@@ -5369,88 +5369,88 @@ msgstr "වම:"
 msgid "Size:"
 msgstr "ප්‍රමාණය:"
 
-#: plugins/infowidget/fileview.cpp:113
+#: plugins/infowidget/fileview.cpp:114
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
 msgstr "විවෘත කරන්න"
 
-#: plugins/infowidget/fileview.cpp:115
+#: plugins/infowidget/fileview.cpp:116
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
 msgstr "සමඟ විවෘත කරන්න"
 
-#: plugins/infowidget/fileview.cpp:116
+#: plugins/infowidget/fileview.cpp:117
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "ප්‍රතිනම්"
 
-#: plugins/infowidget/fileview.cpp:117
+#: plugins/infowidget/fileview.cpp:118
 #, kde-format
 msgid "Check File"
 msgstr "ගොනුව පිරික්සන්න"
 
-#: plugins/infowidget/fileview.cpp:119
+#: plugins/infowidget/fileview.cpp:120
 #, kde-format
 msgid "Download first"
 msgstr "ප්‍රථමයෙන් බාගන්න"
 
-#: plugins/infowidget/fileview.cpp:120
+#: plugins/infowidget/fileview.cpp:121
 #, kde-format
 msgid "Download normally"
 msgstr "සාමාන්‍ය ලෙස බාගන්න"
 
-#: plugins/infowidget/fileview.cpp:121
+#: plugins/infowidget/fileview.cpp:122
 #, kde-format
 msgid "Download last"
 msgstr "අවසන බාගන්න"
 
-#: plugins/infowidget/fileview.cpp:123
+#: plugins/infowidget/fileview.cpp:124
 #, fuzzy, kde-format
 #| msgid "Do Not Download"
 msgid "Do not download"
 msgstr "බාගන්න එපා"
 
-#: plugins/infowidget/fileview.cpp:124
+#: plugins/infowidget/fileview.cpp:125
 #, kde-format
 msgid "Delete File(s)"
 msgstr "ගොනු(ව) මකන්න"
 
-#: plugins/infowidget/fileview.cpp:126
+#: plugins/infowidget/fileview.cpp:127
 #, kde-format
 msgid "Move File"
 msgstr "ගොනුව ගෙනයන්න"
 
-#: plugins/infowidget/fileview.cpp:128
+#: plugins/infowidget/fileview.cpp:129
 #, kde-format
 msgid "Collapse Folder Tree"
 msgstr "බහලුම් වෘක්‍ෂය හකුළන්න"
 
-#: plugins/infowidget/fileview.cpp:129
+#: plugins/infowidget/fileview.cpp:130
 #, kde-format
 msgid "Expand Folder Tree"
 msgstr "බහලුම් වෘක්‍ෂය දිගහරින්න"
 
-#: plugins/infowidget/fileview.cpp:132
+#: plugins/infowidget/fileview.cpp:133
 #, kde-format
 msgid "File Tree"
 msgstr "ගොනු වෘක්‍ෂය"
 
-#: plugins/infowidget/fileview.cpp:134
+#: plugins/infowidget/fileview.cpp:135
 #, kde-format
 msgid "File List"
 msgstr "ගොනු ලැයිස්තුව"
 
-#: plugins/infowidget/fileview.cpp:144
+#: plugins/infowidget/fileview.cpp:145
 #, kde-format
 msgid "Show Filter"
 msgstr "පෙරහන පෙන්වන්න"
 
-#: plugins/infowidget/fileview.cpp:346
-#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:185
+#: plugins/infowidget/fileview.cpp:355
+#: plugins/scanforlostfiles/scanforlostfileswidget.cpp:186
 #, kde-format
 msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
@@ -5458,7 +5458,7 @@ msgid_plural ""
 msgstr[0] "ඔබට මෙම ගොනුවේ සියළු දත්ත අහිමි වනු ඇත. ඔබට මෙය සිදුකිරීමට ඇවැසිද?"
 msgstr[1] "ඔබට මෙම ගොනුවල සියළු දත්ත අහිමි වනු ඇත. ඔබට මෙය සිදුකිරීමට ඇවැසිද?"
 
-#: plugins/infowidget/fileview.cpp:476
+#: plugins/infowidget/fileview.cpp:496
 #, kde-format
 msgid ""
 "Not enough data downloaded for opening the file.\n"
@@ -5467,7 +5467,7 @@ msgid ""
 "higher priority?"
 msgstr ""
 
-#: plugins/infowidget/fileview.cpp:479
+#: plugins/infowidget/fileview.cpp:499
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
@@ -5501,107 +5501,107 @@ msgstr "ගොනු"
 msgid "Shows all the files in a torrent"
 msgstr "ටොරෙන්ට් හි සියළුම ගොනු පෙන්වන්න"
 
-#: plugins/infowidget/infowidgetplugin.cpp:186
+#: plugins/infowidget/infowidgetplugin.cpp:208
 #, kde-format
 msgid "Displays all the peers you are connected to for a torrent"
 msgstr "ටොරෙන්ට් සඳහා සබඳවී ඇති සියළු ලබන්නන් පෙන්වයි"
 
-#: plugins/infowidget/infowidgetplugin.cpp:205
+#: plugins/infowidget/infowidgetplugin.cpp:227
 #, kde-format
 msgid "Displays all the chunks you are downloading, of a torrent"
 msgstr "ඔබ බාගන්නා සියළු chunk පෙන්වයි"
 
-#: plugins/infowidget/infowidgetplugin.cpp:224
+#: plugins/infowidget/infowidgetplugin.cpp:246
 #, kde-format
 msgid "Displays information about all the trackers of a torrent"
 msgstr "ටොරෙන්ටයක හඹායන්නන් පිළිබඳ සියළු තොරතුරු පෙන්වයි"
 
-#: plugins/infowidget/infowidgetplugin.cpp:240
+#: plugins/infowidget/infowidgetplugin.cpp:262
 #, kde-format
 msgid "Webseeds"
 msgstr "ජාල සීඩ්"
 
-#: plugins/infowidget/infowidgetplugin.cpp:240
+#: plugins/infowidget/infowidgetplugin.cpp:262
 #, kde-format
 msgid "Displays all the webseeds of a torrent"
 msgstr "ටොරෙන්ටයේ සියළු ජාල සීඩ් පෙන්වන්න"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:66
-#: plugins/infowidget/iwfiletreemodel.cpp:74
+#: plugins/infowidget/iwfilelistmodel.cpp:69
+#: plugins/infowidget/iwfiletreemodel.cpp:76
 #, kde-format
 msgctxt "@title:column"
 msgid "Preview"
 msgstr "පෙරදැක්ම"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:69
-#: plugins/infowidget/iwfiletreemodel.cpp:77
+#: plugins/infowidget/iwfilelistmodel.cpp:72
+#: plugins/infowidget/iwfiletreemodel.cpp:79
 #, kde-format
 msgctxt "Percent of File Downloaded"
 msgid "% Complete"
 msgstr "% නිමයි"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:80
-#: plugins/infowidget/iwfiletreemodel.cpp:88
+#: plugins/infowidget/iwfilelistmodel.cpp:83
+#: plugins/infowidget/iwfiletreemodel.cpp:90
 #, kde-format
 msgctxt "Download first"
 msgid "First"
 msgstr "පළමු"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:83
-#: plugins/infowidget/iwfiletreemodel.cpp:91
+#: plugins/infowidget/iwfilelistmodel.cpp:86
+#: plugins/infowidget/iwfiletreemodel.cpp:93
 #, kde-format
 msgctxt "Download last"
 msgid "Last"
 msgstr "අවසන්"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:89
+#: plugins/infowidget/iwfilelistmodel.cpp:92
 #, kde-format
 msgctxt "Download Normal (not as first or last)"
 msgid "Normal"
 msgstr "සාමාන්‍ය"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:138
-#: plugins/infowidget/iwfilelistmodel.cpp:157
-#: plugins/infowidget/iwfiletreemodel.cpp:182
+#: plugins/infowidget/iwfilelistmodel.cpp:144
+#: plugins/infowidget/iwfilelistmodel.cpp:165
+#: plugins/infowidget/iwfiletreemodel.cpp:191
 #, kde-format
 msgctxt "Preview available"
 msgid "Available"
 msgstr "භාවිතයට ඇති"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:140
-#: plugins/infowidget/iwfilelistmodel.cpp:159
-#: plugins/infowidget/iwfiletreemodel.cpp:164
-#: plugins/infowidget/iwfiletreemodel.cpp:184
+#: plugins/infowidget/iwfilelistmodel.cpp:146
+#: plugins/infowidget/iwfilelistmodel.cpp:167
+#: plugins/infowidget/iwfiletreemodel.cpp:170
+#: plugins/infowidget/iwfiletreemodel.cpp:193
 #, kde-format
 msgctxt "Preview pending"
 msgid "Pending"
 msgstr "පොරොත්තු වෙමින්"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:142
-#: plugins/infowidget/iwfilelistmodel.cpp:161
-#: plugins/infowidget/iwfiletreemodel.cpp:166
-#: plugins/infowidget/iwfiletreemodel.cpp:186
+#: plugins/infowidget/iwfilelistmodel.cpp:149
+#: plugins/infowidget/iwfilelistmodel.cpp:170
+#: plugins/infowidget/iwfiletreemodel.cpp:173
+#: plugins/infowidget/iwfiletreemodel.cpp:196
 #, kde-format
 msgctxt "No preview available"
 msgid "No"
 msgstr "නැත"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:145
-#: plugins/infowidget/iwfilelistmodel.cpp:164
-#: plugins/infowidget/iwfiletreemodel.cpp:171
-#: plugins/infowidget/iwfiletreemodel.cpp:188
-#: plugins/infowidget/iwfiletreemodel.cpp:193
+#: plugins/infowidget/iwfilelistmodel.cpp:153
+#: plugins/infowidget/iwfilelistmodel.cpp:174
+#: plugins/infowidget/iwfiletreemodel.cpp:179
+#: plugins/infowidget/iwfiletreemodel.cpp:199
+#: plugins/infowidget/iwfiletreemodel.cpp:204
 #, kde-format
 msgid "%1 %"
 msgstr "%1 %"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:97
+#: plugins/infowidget/iwfiletreemodel.cpp:99
 #, kde-format
 msgctxt "Download normally(not as first or last)"
 msgid "Normal"
 msgstr "සාමාන්‍ය"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:162
+#: plugins/infowidget/iwfiletreemodel.cpp:168
 #, kde-format
 msgctxt "preview available"
 msgid "Available"
@@ -5726,214 +5726,214 @@ msgstr "ලබන්නා ඉවත් කරන්න"
 msgid "Ban Peer"
 msgstr "ලබන්නා වලකන්න"
 
-#: plugins/infowidget/peerviewmodel.cpp:85
+#: plugins/infowidget/peerviewmodel.cpp:86
 #, kde-format
 msgid " (µTP)"
 msgstr " (µTP)"
 
-#: plugins/infowidget/peerviewmodel.cpp:103
+#: plugins/infowidget/peerviewmodel.cpp:107
 #, kde-format
 msgctxt "Choked"
 msgid "Yes"
 msgstr "ඔව්"
 
-#: plugins/infowidget/peerviewmodel.cpp:103
+#: plugins/infowidget/peerviewmodel.cpp:107
 #, kde-format
 msgctxt "Not choked"
 msgid "No"
 msgstr "නැත"
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:109
 #, kde-format
 msgctxt "Snubbed"
 msgid "Yes"
 msgstr "ඔව්"
 
-#: plugins/infowidget/peerviewmodel.cpp:105
+#: plugins/infowidget/peerviewmodel.cpp:109
 #, kde-format
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "නැත"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:111
 #, fuzzy, kde-format
 #| msgid "%1 %"
 msgctxt "File percentage stat"
 msgid "%1%"
 msgstr "%1 %"
 
-#: plugins/infowidget/peerviewmodel.cpp:121
+#: plugins/infowidget/peerviewmodel.cpp:125
 #, kde-format
 msgctxt "Interested"
 msgid "Yes"
 msgstr "ඔව්"
 
-#: plugins/infowidget/peerviewmodel.cpp:121
+#: plugins/infowidget/peerviewmodel.cpp:125
 #, kde-format
 msgctxt "Not Interested"
 msgid "No"
 msgstr "නැත"
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:127
 #, kde-format
 msgctxt "Interesting"
 msgid "Yes"
 msgstr "ඔව්"
 
-#: plugins/infowidget/peerviewmodel.cpp:123
+#: plugins/infowidget/peerviewmodel.cpp:127
 #, kde-format
 msgctxt "Not Interesting"
 msgid "No"
 msgstr "නැත"
 
-#: plugins/infowidget/peerviewmodel.cpp:291
+#: plugins/infowidget/peerviewmodel.cpp:302
 #, kde-format
 msgid "Address"
 msgstr "ලිපිනය"
 
-#: plugins/infowidget/peerviewmodel.cpp:293
+#: plugins/infowidget/peerviewmodel.cpp:304
 #, kde-format
 msgid "Country"
 msgstr "රට"
 
-#: plugins/infowidget/peerviewmodel.cpp:295
+#: plugins/infowidget/peerviewmodel.cpp:306
 #, kde-format
 msgid "Client"
 msgstr "සේවාලාභියා"
 
-#: plugins/infowidget/peerviewmodel.cpp:301
+#: plugins/infowidget/peerviewmodel.cpp:312
 #, kde-format
 msgid "Choked"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:303
+#: plugins/infowidget/peerviewmodel.cpp:314
 #, kde-format
 msgid "Snubbed"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:305
+#: plugins/infowidget/peerviewmodel.cpp:316
 #, kde-format
 msgid "Availability"
 msgstr "පැවත්ම"
 
-#: plugins/infowidget/peerviewmodel.cpp:307
+#: plugins/infowidget/peerviewmodel.cpp:318
 #, kde-format
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/infowidget/peerviewmodel.cpp:309
+#: plugins/infowidget/peerviewmodel.cpp:320
 #, kde-format
 msgid "Score"
 msgstr "ලකුණු"
 
-#: plugins/infowidget/peerviewmodel.cpp:311
+#: plugins/infowidget/peerviewmodel.cpp:322
 #, kde-format
 msgid "Upload Slot"
 msgstr "අපගත ඉඩ"
 
-#: plugins/infowidget/peerviewmodel.cpp:313
+#: plugins/infowidget/peerviewmodel.cpp:324
 #, kde-format
 msgid "Requests"
 msgstr "ඉල්ලීම්"
 
-#: plugins/infowidget/peerviewmodel.cpp:319
+#: plugins/infowidget/peerviewmodel.cpp:330
 #, kde-format
 msgid "Interested"
 msgstr "සිත්ගත්"
 
-#: plugins/infowidget/peerviewmodel.cpp:321
+#: plugins/infowidget/peerviewmodel.cpp:332
 #, kde-format
 msgid "Interesting"
 msgstr "සිත්ගන්නා සුළු"
 
-#: plugins/infowidget/peerviewmodel.cpp:328
+#: plugins/infowidget/peerviewmodel.cpp:339
 #, kde-format
 msgid "IP address of the peer"
 msgstr "ලබන්නාගේ IP ලිපිනය"
 
-#: plugins/infowidget/peerviewmodel.cpp:330
+#: plugins/infowidget/peerviewmodel.cpp:341
 #, kde-format
 msgid "Country the peer is in"
 msgstr "ලබන්නාගේ රට"
 
-#: plugins/infowidget/peerviewmodel.cpp:332
+#: plugins/infowidget/peerviewmodel.cpp:343
 #, kde-format
 msgid "Which client the peer is using"
 msgstr "ලබන්නා භාවිත කරන වැඩසටහන"
 
-#: plugins/infowidget/peerviewmodel.cpp:334
+#: plugins/infowidget/peerviewmodel.cpp:345
 #, kde-format
 msgid "Download speed"
 msgstr "බාගැනීම් වේගය"
 
-#: plugins/infowidget/peerviewmodel.cpp:336
+#: plugins/infowidget/peerviewmodel.cpp:347
 #, kde-format
 msgid "Upload speed"
 msgstr "අපගත වේගය"
 
-#: plugins/infowidget/peerviewmodel.cpp:338
+#: plugins/infowidget/peerviewmodel.cpp:349
 #, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
 "send us any data"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:340
+#: plugins/infowidget/peerviewmodel.cpp:351
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:342
+#: plugins/infowidget/peerviewmodel.cpp:353
 #, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr "ලබන්නා සතුව ඇති මෙම ටොරෙන්ටයේ දත්ත ප්‍රමාණය"
 
-#: plugins/infowidget/peerviewmodel.cpp:344
+#: plugins/infowidget/peerviewmodel.cpp:355
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr "ලබන්නා DHT සක්‍රීය කර ඇතිද යන්න"
 
-#: plugins/infowidget/peerviewmodel.cpp:346
+#: plugins/infowidget/peerviewmodel.cpp:357
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:348
+#: plugins/infowidget/peerviewmodel.cpp:359
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:350
+#: plugins/infowidget/peerviewmodel.cpp:361
 #, kde-format
 msgid "The number of download and upload requests"
 msgstr "බාගැනීම් සහ අපගත ඉල්ලීම් ගණන"
 
-#: plugins/infowidget/peerviewmodel.cpp:352
+#: plugins/infowidget/peerviewmodel.cpp:363
 #, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr "මෙම ලබන්නාගෙන් කොපමණ දත්ත බාගෙන ඇතිද යන්න"
 
-#: plugins/infowidget/peerviewmodel.cpp:354
+#: plugins/infowidget/peerviewmodel.cpp:365
 #, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr "මෙම ලබන්නාවෙත අප කොතරම් දත්ත අපගත කර ඇතිද"
 
-#: plugins/infowidget/peerviewmodel.cpp:356
+#: plugins/infowidget/peerviewmodel.cpp:367
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr ""
 
-#: plugins/infowidget/peerviewmodel.cpp:358
+#: plugins/infowidget/peerviewmodel.cpp:369
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr ""
 
-#: plugins/infowidget/statustab.cpp:95
+#: plugins/infowidget/statustab.cpp:96
 #, kde-format
 msgid "Private"
 msgstr "පුද්ගලික"
 
-#: plugins/infowidget/statustab.cpp:95
+#: plugins/infowidget/statustab.cpp:96
 #, kde-format
 msgid "Public"
 msgstr "පොදු"
@@ -6007,18 +6007,18 @@ msgstr "ප්‍රතිශත සීමාව:"
 msgid "Time limit:"
 msgstr "කාල සීමාව:"
 
-#: plugins/infowidget/trackermodel.cpp:121
-#: plugins/infowidget/webseedsmodel.cpp:104
+#: plugins/infowidget/trackermodel.cpp:129
+#: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
 msgid "URL"
 msgstr "URL"
 
-#: plugins/infowidget/trackermodel.cpp:129
+#: plugins/infowidget/trackermodel.cpp:137
 #, kde-format
 msgid "Times Downloaded"
 msgstr "බාගත් වාර"
 
-#: plugins/infowidget/trackermodel.cpp:131
+#: plugins/infowidget/trackermodel.cpp:139
 #, kde-format
 msgid "Next Update"
 msgstr "ඊලඟ යාවත්"
@@ -6029,22 +6029,22 @@ msgstr "ඊලඟ යාවත්"
 msgid "Copy Tracker URL"
 msgstr "ටොරෙන්ට් URL පිටපත් කරන්න"
 
-#: plugins/infowidget/trackerview.cpp:64
+#: plugins/infowidget/trackerview.cpp:65
 #, kde-format
 msgid "Copy Tracker status"
 msgstr ""
 
-#: plugins/infowidget/trackerview.cpp:115
+#: plugins/infowidget/trackerview.cpp:121
 #, kde-format
 msgid "Several URL's could not be added because they are malformed:"
 msgstr ""
 
-#: plugins/infowidget/trackerview.cpp:129
+#: plugins/infowidget/trackerview.cpp:136
 #, kde-format
 msgid "There already is a tracker named <b>%1</b>."
 msgstr "දැනටමත් <b>%1</b> නම් හඹායන්නෙක් පවතී."
 
-#: plugins/infowidget/trackerview.cpp:131
+#: plugins/infowidget/trackerview.cpp:138
 #, kde-format
 msgid "The following duplicate trackers were not added:"
 msgstr "පහත පිටපත් හඹායන්නන් එක් නොවිනි:"
@@ -6079,17 +6079,17 @@ msgstr "හඹායන්නා යාවත් කරන්න"
 msgid "Restore Defaults"
 msgstr "පෙරනිමි වෙත ප්‍රථිස්ථාපනය"
 
-#: plugins/infowidget/webseedsmodel.cpp:106
+#: plugins/infowidget/webseedsmodel.cpp:110
 #, kde-format
 msgid "Speed"
 msgstr "වේගය"
 
-#: plugins/infowidget/webseedstab.cpp:87
+#: plugins/infowidget/webseedstab.cpp:89
 #, kde-format
 msgid "Cannot add the webseed %1, it is already part of the list of webseeds."
 msgstr "ජාල සීඩ් %1 එක්කල නොහැක, එය දැනටමත් ජාල සීඩ් ලැයිස්තුවේ පවතී."
 
-#: plugins/infowidget/webseedstab.cpp:103
+#: plugins/infowidget/webseedstab.cpp:106
 #, kde-format
 msgid "Cannot remove webseed %1, it is part of the torrent."
 msgstr "ජාල සීඩ් %1 ඉවත්කල නොහැක, එය ටොරෙන්ට් හි කොටසකි."
@@ -6169,7 +6169,7 @@ msgid "Disable All"
 msgstr "සියල්ල අක්‍රීය කරන්න"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
-#: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:146
+#: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:148
 #, fuzzy, kde-format
 #| msgid "Converting..."
 msgid "Converting…"
@@ -6193,45 +6193,45 @@ msgstr "අවලංගු (&a)"
 msgid "Loading txt file…"
 msgstr "පෙළ ගොනුව පූර්ණයකරමින්..."
 
-#: plugins/ipfilter/convertthread.cpp:131
+#: plugins/ipfilter/convertthread.cpp:133
 #, kde-format
 msgid "There are no IP addresses to convert in %1"
 msgstr "%1 වෙත හැරවීමට කිසිඳු IP ලිපිනයක් නොමැත"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:68
-#: plugins/ipfilter/downloadandconvertjob.cpp:102
-#: plugins/ipfilter/downloadandconvertjob.cpp:162
-#: plugins/ipfilter/downloadandconvertjob.cpp:224
+#: plugins/ipfilter/downloadandconvertjob.cpp:70
+#: plugins/ipfilter/downloadandconvertjob.cpp:105
+#: plugins/ipfilter/downloadandconvertjob.cpp:167
+#: plugins/ipfilter/downloadandconvertjob.cpp:229
 #, kde-format
 msgid "Automatic update of IP filter failed: %1"
 msgstr "IP පෙරහනෙහි ස්වයංක්‍රීය යාවත් අසාර්ථකයි: %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:124
+#: plugins/ipfilter/downloadandconvertjob.cpp:127
 #, kde-format
 msgid "7z files are not supported"
 msgstr ""
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:143
+#: plugins/ipfilter/downloadandconvertjob.cpp:147
 #, kde-format
 msgid "Cannot determine file type of <b>%1</b>"
 msgstr ""
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:175
+#: plugins/ipfilter/downloadandconvertjob.cpp:180
 #, kde-format
 msgid "Cannot open zip file %1."
 msgstr "%1 සිප් ගොනුව විවෘත කල නොහැක."
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:177
+#: plugins/ipfilter/downloadandconvertjob.cpp:182
 #, kde-format
 msgid "Automatic update of IP filter failed: cannot open zip file %1"
 msgstr "IP පෙරහනේ ස්වයංක්‍රීය යාවත් අසාර්ථක විය: %1 සිප් ගොනුව විවෘත කල නොහැක"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:197
+#: plugins/ipfilter/downloadandconvertjob.cpp:202
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
 msgstr "%1 සිප් ගොනුව සඳහා අවහිර ගොනුව සොයාගත නොහැක."
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:199
+#: plugins/ipfilter/downloadandconvertjob.cpp:204
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"
@@ -6246,37 +6246,37 @@ msgstr[0] " දිනය"
 msgstr[1] " දින"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:50
-#: plugins/ipfilter/ipblockingprefpage.cpp:71
-#: plugins/ipfilter/ipblockingprefpage.cpp:134
+#: plugins/ipfilter/ipblockingprefpage.cpp:72
+#: plugins/ipfilter/ipblockingprefpage.cpp:137
 #, kde-format
 msgid "Status: Loaded and running."
 msgstr "තත්වය: පූර්ණිත හා ධාවනය වේ."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:52
-#: plugins/ipfilter/ipblockingprefpage.cpp:73
-#: plugins/ipfilter/ipblockingprefpage.cpp:82
-#: plugins/ipfilter/ipblockingprefpage.cpp:136
+#: plugins/ipfilter/ipblockingprefpage.cpp:74
+#: plugins/ipfilter/ipblockingprefpage.cpp:84
+#: plugins/ipfilter/ipblockingprefpage.cpp:139
 #, kde-format
 msgid "Status: Not loaded."
 msgstr "තත්වය: පූර්ණිත නොමැත"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:100
+#: plugins/ipfilter/ipblockingprefpage.cpp:102
 #, fuzzy, kde-format
 #| msgid "Status: Downloading and converting new block list..."
 msgid "Status: Downloading and converting new block list…"
 msgstr "තත්වය: බාගනිමින් හා නව අවහිර ලැයිස්තුව පරිවර්තනය කරමින්..."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:175
+#: plugins/ipfilter/ipblockingprefpage.cpp:180
 #, kde-format
 msgid "No update done yet."
 msgstr "තවම කිසිඳු යාවත් කිරීමක් නොමැත."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:179
+#: plugins/ipfilter/ipblockingprefpage.cpp:184
 #, kde-format
 msgid "%1 (Last update attempt failed.)"
 msgstr "%1 (අවසන් යාවත් උත්සාහය අසාර්ථකයි.)"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:190
+#: plugins/ipfilter/ipblockingprefpage.cpp:197
 #, kde-format
 msgid "Never"
 msgstr "කිසිවිටක නැත"
@@ -6391,38 +6391,38 @@ msgstr "මට්ටම1 පෙරහන භාවිත කරන්නද?"
 msgid "Use rich log text"
 msgstr "පොහොසත් වාර්තා පෙළ භාවිත කරන්න"
 
-#: plugins/logviewer/logflags.cpp:104
+#: plugins/logviewer/logflags.cpp:110
 #, kde-format
 msgid "System"
 msgstr "පද්ධතිය"
 
-#: plugins/logviewer/logflags.cpp:106
+#: plugins/logviewer/logflags.cpp:112
 #, kde-format
 msgid "Log Level"
 msgstr "වාර්ථා මට්ටම"
 
-#: plugins/logviewer/logflags.cpp:188 plugins/logviewer/logflagsdelegate.cpp:31
+#: plugins/logviewer/logflags.cpp:199 plugins/logviewer/logflagsdelegate.cpp:31
 #, kde-format
 msgid "Debug"
 msgstr "දෝශ නිරාකරණ"
 
-#: plugins/logviewer/logflags.cpp:190 plugins/logviewer/logflagsdelegate.cpp:30
+#: plugins/logviewer/logflags.cpp:201 plugins/logviewer/logflagsdelegate.cpp:30
 #, kde-format
 msgid "Notice"
 msgstr "දැන්වීම"
 
-#: plugins/logviewer/logflags.cpp:192 plugins/logviewer/logflagsdelegate.cpp:29
+#: plugins/logviewer/logflags.cpp:203 plugins/logviewer/logflagsdelegate.cpp:29
 #, kde-format
 msgid "Important"
 msgstr "වැදගත්"
 
-#: plugins/logviewer/logflags.cpp:194 plugins/logviewer/logflagsdelegate.cpp:28
+#: plugins/logviewer/logflags.cpp:205 plugins/logviewer/logflagsdelegate.cpp:28
 #, kde-format
 msgid "All"
 msgstr "සියලු"
 
-#: plugins/logviewer/logflags.cpp:196 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:472
+#: plugins/logviewer/logflags.cpp:207 plugins/logviewer/logflagsdelegate.cpp:32
+#: plugins/syndication/ktfeed.cpp:541
 #, kde-format
 msgid "None"
 msgstr "කිසිවක් නැත"
@@ -6524,12 +6524,12 @@ msgstr "KTorrent වෙතින් ජනනය කල වාර්ථා ප�
 msgid "Suspend Output"
 msgstr "ප්‍රතිදානය අත්හිටුවන්න"
 
-#: plugins/logviewer/logviewer.cpp:121
+#: plugins/logviewer/logviewer.cpp:125
 #, kde-format
 msgid "<font color=\"#FF0000\">Logging output suspended</font>"
 msgstr "<font color=\"#FF0000\">වාර්ථා ප්‍රතිදානය අත්හිටුවා ඇත</font>"
 
-#: plugins/logviewer/logviewer.cpp:123
+#: plugins/logviewer/logviewer.cpp:127
 #, kde-format
 msgid "<font color=\"#00FF00\">Logging output resumed</font>"
 msgstr "<font color=\"#00FF00\">වාර්තා ප්‍රතිදානය නැවත ඇරඹිනි</font>"
@@ -6581,7 +6581,7 @@ msgstr "පුද්ගලික ටොරෙන්ට් මත පමණක්
 msgid "Copy Magnet URI"
 msgstr "චුම්භක URI පිටපත්"
 
-#: plugins/magnetgenerator/magnetgeneratorplugin.cpp:115
+#: plugins/magnetgenerator/magnetgeneratorplugin.cpp:117
 #, kde-format
 msgid "Magnet link copied to clipboard"
 msgstr "චුම්භක සබැඳිය ක්ලිප්පුවරුවට පිටපත් විය"
@@ -6681,130 +6681,130 @@ msgstr "<b>%2</b> - <b>%1</b>"
 msgid "<b>%1</b>"
 msgstr "<b>%1</b>"
 
-#: plugins/mediaplayer/mediamodel.cpp:70
+#: plugins/mediaplayer/mediamodel.cpp:72
 #, kde-format
 msgid "Available"
 msgstr "භාවිතයට ඇති"
 
-#: plugins/mediaplayer/mediamodel.cpp:70
+#: plugins/mediaplayer/mediamodel.cpp:72
 #, kde-format
 msgid "Pending"
 msgstr "පොරොත්තු වෙමින්"
 
-#: plugins/mediaplayer/mediamodel.cpp:71
+#: plugins/mediaplayer/mediamodel.cpp:73
 #, kde-format
 msgid "<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %"
 msgstr "<b>%1</b><br/>පෙරදැක්ම: %2<br/>බාගත්: %3 %"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:39
 #: plugins/mediaplayer/mediaplayeractivity.cpp:56
-#: plugins/mediaplayer/mediaplayeractivity.cpp:147
-#: plugins/mediaplayer/mediaplayeractivity.cpp:333
+#: plugins/mediaplayer/mediaplayeractivity.cpp:149
+#: plugins/mediaplayer/mediaplayeractivity.cpp:347
 #: plugins/mediaplayer/mediaplayerplugin.cpp:34
 #: plugins/mediaplayer/mediaplayerplugin.cpp:45
 #, kde-format
 msgid "Media Player"
 msgstr "මාධ්‍යය ධාවකය"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:101
+#: plugins/mediaplayer/mediaplayeractivity.cpp:102
 #: plugins/mediaplayer/videowidget.cpp:63
 #, kde-format
 msgid "Play"
 msgstr "දාවනය"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:105
+#: plugins/mediaplayer/mediaplayeractivity.cpp:106
 #, kde-format
 msgid "Pause"
 msgstr "විරාමය"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:109
+#: plugins/mediaplayer/mediaplayeractivity.cpp:110
 #: plugins/mediaplayer/videowidget.cpp:66
 #, kde-format
 msgid "Stop"
 msgstr "නවතන්න"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:113
+#: plugins/mediaplayer/mediaplayeractivity.cpp:114
 #, kde-format
 msgid "Previous"
 msgstr "පෙර"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:117
+#: plugins/mediaplayer/mediaplayeractivity.cpp:118
 #, kde-format
 msgid "Next"
 msgstr "මීළඟ"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:121
+#: plugins/mediaplayer/mediaplayeractivity.cpp:122
 #, kde-format
 msgid "Show Video"
 msgstr "වීඩියෝව පෙන්වන්න"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:125
+#: plugins/mediaplayer/mediaplayeractivity.cpp:126
 #: plugins/mediaplayer/playlistwidget.cpp:39
 #, kde-format
 msgid "Add Media"
 msgstr "මාධ්‍යය එක් කරන්න"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:129
+#: plugins/mediaplayer/mediaplayeractivity.cpp:130
 #: plugins/mediaplayer/playlistwidget.cpp:41
 #, kde-format
 msgid "Clear Playlist"
 msgstr "ධාවන ලැයිස්තුව පිරිසිදු"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:133
+#: plugins/mediaplayer/mediaplayeractivity.cpp:134
 #, kde-format
 msgid "Toggle Fullscreen"
 msgstr "සම්පූර්ණ තිරයට මාරුවන්න"
 
-#: plugins/mediaplayer/mediaplayeractivity.cpp:157
-#: plugins/mediaplayer/mediaplayeractivity.cpp:336
+#: plugins/mediaplayer/mediaplayeractivity.cpp:160
+#: plugins/mediaplayer/mediaplayeractivity.cpp:351
 #, kde-format
 msgid "Movie player"
 msgstr "මාධ්‍යය ධාවකය"
 
-#: plugins/mediaplayer/mediaview.cpp:84
+#: plugins/mediaplayer/mediaview.cpp:86
 #, kde-format
 msgid "Show incomplete files"
 msgstr "අසම්පූර්ණ ගොනු පෙන්වන්න"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_refresh)
-#: plugins/mediaplayer/mediaview.cpp:89 plugins/syndication/feedwidget.ui:124
+#: plugins/mediaplayer/mediaview.cpp:91 plugins/syndication/feedwidget.ui:124
 #, kde-format
 msgid "Refresh"
 msgstr "නැවුම්"
 
-#: plugins/mediaplayer/mediaview.cpp:90
+#: plugins/mediaplayer/mediaview.cpp:92
 #, fuzzy, kde-format
 #| msgid "Search media files"
 msgid "Refresh media files"
 msgstr "මාධ්‍යය ගොනු සොයන්න"
 
-#: plugins/mediaplayer/mediaview.cpp:94
+#: plugins/mediaplayer/mediaview.cpp:96
 #, kde-format
 msgid "Search media files"
 msgstr "මාධ්‍යය ගොනු සොයන්න"
 
-#: plugins/mediaplayer/playlist.cpp:87
-#: plugins/syndication/feedwidgetmodel.cpp:75
+#: plugins/mediaplayer/playlist.cpp:90
+#: plugins/syndication/feedwidgetmodel.cpp:80
 #, kde-format
 msgid "Title"
 msgstr "මාතෘකාව"
 
-#: plugins/mediaplayer/playlist.cpp:89
+#: plugins/mediaplayer/playlist.cpp:92
 #, kde-format
 msgid "Artist"
 msgstr "ශිල්පියා"
 
-#: plugins/mediaplayer/playlist.cpp:91
+#: plugins/mediaplayer/playlist.cpp:94
 #, kde-format
 msgid "Album"
 msgstr "ඇල්බමය"
 
-#: plugins/mediaplayer/playlist.cpp:93
+#: plugins/mediaplayer/playlist.cpp:96
 #, kde-format
 msgid "Length"
 msgstr "දිග"
 
-#: plugins/mediaplayer/playlist.cpp:95
+#: plugins/mediaplayer/playlist.cpp:98
 #, kde-format
 msgid "Year"
 msgstr "වසර"
@@ -6814,7 +6814,7 @@ msgstr "වසර"
 msgid "Random play order"
 msgstr "අහඹු ධාවන පෙළගැස්ම"
 
-#: plugins/mediaplayer/videowidget.cpp:189
+#: plugins/mediaplayer/videowidget.cpp:192
 #, kde-format
 msgid "KTorrent is playing a video."
 msgstr "KTorrent වීඩියෝවක් ධාවනය කරමින්."
@@ -6843,10 +6843,10 @@ msgstr "ගෙනයෑම් ක්‍රියාව සලකුණු කර
 msgid "Scan directories recursively."
 msgstr "සමාවර්තනීයව බහලුම් පරිලෝකනය"
 
-#: plugins/scanfolder/scanfolder.cpp:62 plugins/scanfolder/scanthread.cpp:172
-#: plugins/scanfolder/torrentloadqueue.cpp:139
-#: plugins/scanfolder/torrentloadqueue.cpp:140
-#: plugins/scanfolder/torrentloadqueue.cpp:143
+#: plugins/scanfolder/scanfolder.cpp:64 plugins/scanfolder/scanthread.cpp:176
+#: plugins/scanfolder/torrentloadqueue.cpp:148
+#: plugins/scanfolder/torrentloadqueue.cpp:149
+#: plugins/scanfolder/torrentloadqueue.cpp:153
 #, fuzzy, kde-format
 #| msgid "loaded"
 msgctxt "folder name part"
@@ -7076,17 +7076,17 @@ msgctxt "plugin name"
 msgid "Search"
 msgstr "සොයන්න"
 
-#: plugins/search/searchactivity.cpp:211
+#: plugins/search/searchactivity.cpp:214
 #, kde-format
 msgid "Search for %1"
 msgstr "%1 සඳහා සොයන්න"
 
-#: plugins/search/searchenginelist.cpp:181
+#: plugins/search/searchenginelist.cpp:190
 #, kde-format
 msgid "Failed to parse %1"
 msgstr "%1 වරනය අසාර්ථක විය"
 
-#: plugins/search/searchenginelist.cpp:314
+#: plugins/search/searchenginelist.cpp:333
 #, kde-format
 msgid "URL: <b>%1</b>"
 msgstr "URL: <b>%1</b>"
@@ -7224,7 +7224,7 @@ msgstr "සියළු පෙරනිමි සෙවුම් එළවුම
 msgid "Add Defau&lt"
 msgstr "පෙරනිමිය එක් කරන්න (&l)"
 
-#: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:124
+#: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:126
 #, kde-format
 msgid "Add a Search Engine"
 msgstr "සෙවුම් එළවුමක් එක් කරන්න"
@@ -7234,7 +7234,7 @@ msgstr "සෙවුම් එළවුමක් එක් කරන්න"
 msgid "Enter the hostname of the search engine (for example www.google.com):"
 msgstr "සෙවුම් එළවුමේ ධාරක නාමය ඇතුළත් කරන්න (උදාහරණයක් ලෙස www.google.com):"
 
-#: plugins/search/searchprefpage.cpp:121
+#: plugins/search/searchprefpage.cpp:123
 #, kde-format
 msgid ""
 "Opensearch is not supported by %1, you will need to enter the search URL "
@@ -7242,7 +7242,7 @@ msgid ""
 "by the thing you are searching for."
 msgstr ""
 
-#: plugins/search/searchprefpage.cpp:127
+#: plugins/search/searchprefpage.cpp:129
 #, kde-format
 msgid "The URL %1 does not contain {searchTerms}."
 msgstr "URL %1 හි {සෙවුම් වදන්} ඇතුළත් නොවේ ."
@@ -7252,58 +7252,58 @@ msgstr "URL %1 හි {සෙවුම් වදන්} ඇතුළත් න�
 msgid " Engine: "
 msgstr " එළවුම: "
 
-#: plugins/search/searchwidget.cpp:220
+#: plugins/search/searchwidget.cpp:226
 #, fuzzy, kde-format
 #| msgid "<b>Downloading</b>"
 msgid "Downloading:<br/><b>%1</b>"
 msgstr "<b>බාගනිමින්</b>"
 
-#: plugins/search/searchwidget.cpp:228
+#: plugins/search/searchwidget.cpp:234
 #, kde-format
 msgid "Do you want to download or save the torrent?"
 msgstr "ඔබට ටොරෙන්ටය බාගැනීමට හෝ සුරැකීමට ඇවැසිද?"
 
-#: plugins/search/searchwidget.cpp:229
+#: plugins/search/searchwidget.cpp:235
 #, kde-format
 msgid "Download Torrent"
 msgstr "ටොරෙන්ට් බාගන්න"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_download)
-#: plugins/search/searchwidget.cpp:230 plugins/syndication/feedwidget.ui:117
+#: plugins/search/searchwidget.cpp:236 plugins/syndication/feedwidget.ui:117
 #, kde-format
 msgid "Download"
 msgstr "බාගන්න"
 
-#: plugins/search/webview.cpp:105
+#: plugins/search/webview.cpp:110
 #, kde-format
 msgid "Home"
 msgstr "නිවෙස්"
 
-#: plugins/search/webview.cpp:106
+#: plugins/search/webview.cpp:111
 #, kde-format
 msgid "KTorrent"
 msgstr "KTorrent"
 
-#: plugins/search/webview.cpp:107
+#: plugins/search/webview.cpp:112
 #, kde-format
 msgctxt "KDE 4 tag line, see http://kde.org/img/kde40.png"
 msgid "Be free."
 msgstr "නිදහස් වන්න."
 
-#: plugins/search/webview.cpp:108
+#: plugins/search/webview.cpp:113
 #, kde-format
 msgid "Search the web for torrents."
 msgstr "ටොරෙන්ට් සඳහා ජාලය සොයන්න."
 
-#: plugins/search/webview.cpp:145
+#: plugins/search/webview.cpp:151
 #, kde-format
 msgid "Save %1 to"
 msgstr "%1 සුරකින්න"
 
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
-#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:127
-#: plugins/shutdown/shutdownruleset.cpp:239
+#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:130
+#: plugins/shutdown/shutdownruleset.cpp:250
 #, kde-format
 msgid "Shutdown"
 msgstr "වසාදමන්න"
@@ -7320,35 +7320,35 @@ msgctxt "@title:window"
 msgid "Configure Shutdown"
 msgstr "වසාදැමීම සකසන්න"
 
-#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:131
-#: plugins/shutdown/shutdownruleset.cpp:242
+#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:134
+#: plugins/shutdown/shutdownruleset.cpp:253
 #, kde-format
 msgid "Lock"
 msgstr "අගුළු දමන්න"
 
-#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:135
-#: plugins/shutdown/shutdownruleset.cpp:245
+#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:138
+#: plugins/shutdown/shutdownruleset.cpp:256
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "නිද්‍රා (RAM වෙත අත්හිටුවන්න)"
 
-#: plugins/shutdown/shutdowndlg.cpp:43 plugins/shutdown/shutdownplugin.cpp:139
-#: plugins/shutdown/shutdownruleset.cpp:248
+#: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
+#: plugins/shutdown/shutdownruleset.cpp:259
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "ශිශිරතරණය (තැටියට අත්හිටුවන්න)"
 
-#: plugins/shutdown/shutdowndlg.cpp:45
+#: plugins/shutdown/shutdowndlg.cpp:49
 #, kde-format
 msgid "When all torrents finish downloading"
 msgstr "සියළු ටොරෙන්ට් බාගැනීම අවසන් විට"
 
-#: plugins/shutdown/shutdowndlg.cpp:46
+#: plugins/shutdown/shutdowndlg.cpp:50
 #, kde-format
 msgid "When all torrents finish seeding"
 msgstr "සියළු ටොරෙන්ට් සීඩ් කිරීම අවසන් විට"
 
-#: plugins/shutdown/shutdowndlg.cpp:47
+#: plugins/shutdown/shutdowndlg.cpp:51
 #, kde-format
 msgid "When the events below happen"
 msgstr "පහත අවස්ථාවක් හටගත් විට"
@@ -7395,54 +7395,54 @@ msgstr "වසාදැමීම සක්‍රීයයි"
 msgid "Configure Shutdown"
 msgstr "වසාදැමීම සකසන්න"
 
-#: plugins/shutdown/shutdownruleset.cpp:233
+#: plugins/shutdown/shutdownruleset.cpp:244
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "ස්වයංක්‍රීය වසාදැමීම සක්‍රීය නැත"
 
-#: plugins/shutdown/shutdownruleset.cpp:253
+#: plugins/shutdown/shutdownruleset.cpp:264
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr " පහත සියළු අවස්ථා හටගත් විට:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:255
+#: plugins/shutdown/shutdownruleset.cpp:266
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr " පහත අවස්තාවකින් එකක් හටගත් විට:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:325
+#: plugins/shutdown/shutdownruleset.cpp:344
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "<b>සියළු ටොරෙන්ට</b> බාගැනීම සම්පූර්ණයි"
 
-#: plugins/shutdown/shutdownruleset.cpp:327
+#: plugins/shutdown/shutdownruleset.cpp:346
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "<b>සියළු ටොරෙන්ට</b> සීඩ් සම්පූර්ණයි"
 
-#: plugins/shutdown/shutdownruleset.cpp:329
+#: plugins/shutdown/shutdownruleset.cpp:348
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "<b>%1</b> බාගැනීම අවසන් කරයි"
 
-#: plugins/shutdown/shutdownruleset.cpp:331
+#: plugins/shutdown/shutdownruleset.cpp:350
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "<b>%1</b> සීඩ් අවසන් කරයි"
 
-#: plugins/shutdown/shutdowntorrentmodel.cpp:74
-#: plugins/shutdown/shutdowntorrentmodel.cpp:211
+#: plugins/shutdown/shutdowntorrentmodel.cpp:76
+#: plugins/shutdown/shutdowntorrentmodel.cpp:222
 #, kde-format
 msgid "Downloading finishes"
 msgstr "බාගැනීම සම්පූර්ණයි"
 
-#: plugins/shutdown/shutdowntorrentmodel.cpp:76
-#: plugins/shutdown/shutdowntorrentmodel.cpp:212
+#: plugins/shutdown/shutdowntorrentmodel.cpp:78
+#: plugins/shutdown/shutdowntorrentmodel.cpp:223
 #, kde-format
 msgid "Seeding finishes"
 msgstr "සීඩ් කිරීම සම්පූර්ණයි"
 
-#: plugins/shutdown/shutdowntorrentmodel.cpp:132
+#: plugins/shutdown/shutdowntorrentmodel.cpp:139
 #, kde-format
 msgid "Event"
 msgstr "අවස්ථාව"
@@ -7764,7 +7764,7 @@ msgid "Unknown"
 msgstr "නොදන්නා"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:309
-#: plugins/stats/drawer/PlainChartDrawer.cc:474
+#: plugins/stats/drawer/PlainChartDrawer.cc:475
 #, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
@@ -7772,7 +7772,7 @@ msgid ""
 msgstr ""
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:312
-#: plugins/stats/drawer/PlainChartDrawer.cc:477
+#: plugins/stats/drawer/PlainChartDrawer.cc:478
 #, kde-format
 msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
@@ -8211,7 +8211,7 @@ msgstr "සබඳතා ප්‍රස්ථාර"
 msgid "Displays charts about connections"
 msgstr "සබඳතා පිළිබඳ ප්‍රස්ථාර පෙන්වයි"
 
-#: plugins/syndication/feedlist.cpp:151
+#: plugins/syndication/feedlist.cpp:155
 #, kde-format
 msgid ""
 "%2\n"
@@ -8226,12 +8226,12 @@ msgstr[1] ""
 "%2\n"
 "%1 සක්‍රීය පෙරහන්"
 
-#: plugins/syndication/feedlist.cpp:159
+#: plugins/syndication/feedlist.cpp:164
 #, kde-format
 msgid "<b>%1</b><br/><br/>Download failed: <b>%2</b>"
 msgstr "<b>%1</b><br/><br/>බාගැනීම අසාර්ථකයි: <b>%2</b>"
 
-#: plugins/syndication/feedlist.cpp:161
+#: plugins/syndication/feedlist.cpp:166
 #, kde-format
 msgid "<b>%1</b><br/><br/>%2"
 msgstr "<b>%1</b><br/><br/>%2"
@@ -8250,22 +8250,22 @@ msgid ""
 "<p>%3</p>    </body>    </html>    "
 msgstr ""
 
-#: plugins/syndication/feedwidget.cpp:186
+#: plugins/syndication/feedwidget.cpp:193
 #, kde-format
 msgid "Authentication Cookie"
 msgstr "අවසරදීම් කුකී"
 
-#: plugins/syndication/feedwidget.cpp:186
+#: plugins/syndication/feedwidget.cpp:193
 #, kde-format
 msgid "Enter the new authentication cookie"
 msgstr "නව අවසරදීම් කුකී ඇතුළත් කරන්න"
 
-#: plugins/syndication/feedwidget.cpp:220
+#: plugins/syndication/feedwidget.cpp:228
 #, kde-format
 msgid "<b>OK</b>"
 msgstr "<b>හරි</b>"
 
-#: plugins/syndication/feedwidget.cpp:221
+#: plugins/syndication/feedwidget.cpp:229
 #, fuzzy, kde-format
 #| msgid "Last updated:"
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
@@ -8274,20 +8274,26 @@ msgid ""
 "%1"
 msgstr "අවසන් යාවත්:"
 
-#: plugins/syndication/feedwidget.cpp:226
+#: plugins/syndication/feedwidget.cpp:234
 #, kde-format
 msgid "<b>Not Loaded</b>"
 msgstr "<b>පූර්ණය නොවූ</b>"
 
-#: plugins/syndication/feedwidget.cpp:229
+#: plugins/syndication/feedwidget.cpp:237
 #, kde-format
 msgid "<b>Download Failed: %1</b>"
 msgstr "<b>බාගැනීම අසාර්ථකයි: %1</b>"
 
-#: plugins/syndication/feedwidget.cpp:232
+#: plugins/syndication/feedwidget.cpp:240
 #, kde-format
 msgid "<b>Downloading</b>"
 msgstr "<b>බාගනිමින්</b>"
+
+#: plugins/syndication/feedwidget.cpp:243
+#, fuzzy, kde-format
+#| msgid "<b>%1</b>"
+msgid "<b>Queued</b>"
+msgstr "<b>%1</b>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/feedwidget.ui:65
@@ -8338,18 +8344,18 @@ msgstr "කුකී"
 msgid "Filters"
 msgstr "පෙරහන්"
 
-#: plugins/syndication/feedwidgetmodel.cpp:77
+#: plugins/syndication/feedwidgetmodel.cpp:82
 #, kde-format
 msgid "Date Published"
 msgstr "ප්‍රකාශිත දිනය"
 
 #: plugins/syndication/filtereditor.cpp:38
-#: plugins/syndication/syndicationplugin.cpp:82
+#: plugins/syndication/syndicationplugin.cpp:86
 #, kde-format
 msgid "Edit Filter"
 msgstr "පෙරහන සකසන්න"
 
-#: plugins/syndication/filtereditor.cpp:226
+#: plugins/syndication/filtereditor.cpp:237
 #, kde-format
 msgid "There already is a filter named %1, filter names must be unique."
 msgstr "%1 නම් පෙරහනක් දැනටමත් පවතී, පෙරහන් නම අනන්‍ය විය යුතුයි."
@@ -8566,37 +8572,37 @@ msgstr "පිරික්සුම"
 msgid "filter on feed:"
 msgstr "පෝශක මත පෙරහන:"
 
-#: plugins/syndication/ktfeed.cpp:449
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "Aborted"
 msgstr "පිටවූ"
 
-#: plugins/syndication/ktfeed.cpp:451
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "පෝශකය බාගැනීමේ කල් ඉකුත්වීම"
 
-#: plugins/syndication/ktfeed.cpp:453
+#: plugins/syndication/ktfeed.cpp:522
 #, kde-format
 msgid "Unknown hostname"
 msgstr "නොදන්නා ධාරක නාමයක්"
 
-#: plugins/syndication/ktfeed.cpp:455
+#: plugins/syndication/ktfeed.cpp:524
 #, kde-format
 msgid "File not found"
 msgstr "ගොනුව හමු නොවිනි"
 
-#: plugins/syndication/ktfeed.cpp:457
+#: plugins/syndication/ktfeed.cpp:526
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "නොදන්නා නැවත ලබාගැනීමේ දෝශයක්"
 
-#: plugins/syndication/ktfeed.cpp:461
+#: plugins/syndication/ktfeed.cpp:530
 #, kde-format
 msgid "Invalid feed data"
 msgstr "වැරදි පෝශක දත්ත"
 
-#: plugins/syndication/ktfeed.cpp:463
+#: plugins/syndication/ktfeed.cpp:532
 #, kde-format
 msgid "Success"
 msgstr "සාර්ථකයි"
@@ -8608,13 +8614,13 @@ msgstr "සාර්ථකයි"
 msgid "Syndication Toolbar"
 msgstr "වසාදැමිම් මෙවලම් තීරුව"
 
-#: plugins/syndication/linkdownloader.cpp:196
+#: plugins/syndication/linkdownloader.cpp:223
 #, kde-format
 msgid "Could not find a valid link to a torrent on %1"
 msgstr ""
 
 #: plugins/syndication/managefiltersdlg.cpp:27
-#: plugins/syndication/syndicationplugin.cpp:70
+#: plugins/syndication/syndicationplugin.cpp:74
 #, kde-format
 msgid "Add/Remove Filters"
 msgstr "පෙරහන් එක්/ඉවත් කරන්න"
@@ -8656,69 +8662,69 @@ msgstr "සියල්ල ඉවත් කරන්න"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_new_filter)
 #: plugins/syndication/managefiltersdlg.ui:127
-#: plugins/syndication/syndicationactivity.cpp:189
+#: plugins/syndication/syndicationactivity.cpp:180
 #, kde-format
 msgid "New Filter"
 msgstr "නව පෙරහන"
 
-#: plugins/syndication/syndicationactivity.cpp:39
-#: plugins/syndication/syndicationplugin.cpp:30
-#: plugins/syndication/syndicationplugin.cpp:35
+#: plugins/syndication/syndicationactivity.cpp:41
+#: plugins/syndication/syndicationplugin.cpp:32
+#: plugins/syndication/syndicationplugin.cpp:37
 #, kde-format
 msgid "Syndication"
 msgstr ""
 
-#: plugins/syndication/syndicationactivity.cpp:46
+#: plugins/syndication/syndicationactivity.cpp:50
 #, kde-format
 msgid "Manages RSS and Atom feeds"
 msgstr "RSS හා Atom පෝශක පාලනය කරයි"
 
-#: plugins/syndication/syndicationactivity.cpp:108
+#: plugins/syndication/syndicationactivity.cpp:113
 #, kde-format
 msgid "Enter the URL"
 msgstr "URL ඇතුළත් කරන්න"
 
-#: plugins/syndication/syndicationactivity.cpp:109
+#: plugins/syndication/syndicationactivity.cpp:114
 #, kde-format
 msgid "Please enter the URL of the RSS or Atom feed."
 msgstr "කරුණාකර RSS හෝ Atom පෝශකයේ URL ඇතුළත් කරන්න."
 
-#: plugins/syndication/syndicationactivity.cpp:133
+#: plugins/syndication/syndicationactivity.cpp:139
 #, kde-format
 msgid "Failed to load feed %1: %2"
 msgstr "%1 පෝශකය පූර්ණය අසාර්ථකයි: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:146
+#: plugins/syndication/syndicationactivity.cpp:152
 #, kde-format
 msgid "Failed to create directory for feed %1: %2"
 msgstr "%1 පෝශකය සධා බහලුම නිර්මාණය කල නොහැකි විය: %2"
 
-#: plugins/syndication/syndicationactivity.cpp:191
+#: plugins/syndication/syndicationactivity.cpp:182
 #, kde-format
 msgid "Add New Filter"
 msgstr "නව පෙරහන එක් කරන්න"
 
-#: plugins/syndication/syndicationplugin.cpp:64
+#: plugins/syndication/syndicationplugin.cpp:68
 #, kde-format
 msgid "Add Feed"
 msgstr "පෝශකය එක් කරන්න"
 
-#: plugins/syndication/syndicationplugin.cpp:67
+#: plugins/syndication/syndicationplugin.cpp:71
 #, kde-format
 msgid "Remove Feed"
 msgstr "පෝශකය ඉවත් කරන්න"
 
-#: plugins/syndication/syndicationplugin.cpp:73
+#: plugins/syndication/syndicationplugin.cpp:77
 #, kde-format
 msgid "Rename"
 msgstr "ප්‍රතිනම්"
 
-#: plugins/syndication/syndicationplugin.cpp:76
+#: plugins/syndication/syndicationplugin.cpp:80
 #, kde-format
 msgid "Add Filter"
 msgstr "පෙරහන එක් කරන්න"
 
-#: plugins/syndication/syndicationplugin.cpp:79
+#: plugins/syndication/syndicationplugin.cpp:83
 #, kde-format
 msgid "Remove Filter"
 msgstr "පෙරහන ඉවත් කරන්න"
@@ -8729,17 +8735,17 @@ msgstr "පෙරහන ඉවත් කරන්න"
 msgid "Default UPnP device to use"
 msgstr "භාවිත පෙරනිමි UPnP උපකරණය"
 
-#: plugins/upnp/routermodel.cpp:57
+#: plugins/upnp/routermodel.cpp:60
 #, kde-format
 msgid "Device"
 msgstr "උපකරණය"
 
-#: plugins/upnp/routermodel.cpp:59
+#: plugins/upnp/routermodel.cpp:62
 #, kde-format
 msgid "Ports Forwarded"
 msgstr ""
 
-#: plugins/upnp/routermodel.cpp:98
+#: plugins/upnp/routermodel.cpp:105
 #, kde-format
 msgid ""
 "Model Name: <b>%1</b><br/>Manufacturer: <b>%2</b><br/>Model Description: <b>"
@@ -8748,7 +8754,7 @@ msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPWidget)
 #: plugins/upnp/upnpplugin.cpp:39 plugins/upnp/upnpplugin.cpp:43
-#: plugins/upnp/upnpplugin.cpp:53 plugins/upnp/upnpwidget.ui:13
+#: plugins/upnp/upnpplugin.cpp:54 plugins/upnp/upnpwidget.ui:13
 #, kde-format
 msgid "UPnP"
 msgstr "UPnP"
