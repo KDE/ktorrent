@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-01-22 14:08+0100\n"
+"PO-Revision-Date: 2026-02-24 12:04+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -8015,10 +8015,9 @@ msgid "<b>Downloading</b>"
 msgstr "<b>Discargante</b>"
 
 #: plugins/syndication/feedwidget.cpp:243
-#, fuzzy, kde-format
-#| msgid "<b>OK</b>"
+#, kde-format
 msgid "<b>Queued</b>"
-msgstr "<b>OK</b>"
+msgstr "<b>Ponite in cauda</b>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/feedwidget.ui:65
