@@ -977,10 +977,24 @@
     <release version="25.12.2" date="2026-02-05"/>
     <release version="25.12.1" date="2026-01-08"/>
     <release version="25.12.0" date="2025-12-11"/>
+    <description>
+      <ul>
+        <li>Fixed a bug causing the magnets file to be constantly updated</li>
+        <li>Fixed the progress bar highlight color</li>
+        <li>Fixed the log viewer settings tooltip showing raw HTML</li>
+      </ul>
+    </description>
     <release version="25.08.3" date="2025-11-06"/>
     <release version="25.08.2" date="2025-10-09"/>
     <release version="25.08.1" date="2025-09-11"/>
     <release version="25.08.0" date="2025-08-14"/>
+    <description>
+      <ul>
+        <li>Added a "Last Activity" column showing the time the torrent last had upload or download activity</li>
+        <li>Fixed the background color of the syndication widget's feed-item status panel</li>
+        <li>Added columns to the main view showing the number of bytes uploaded and downloaded in the current session</li>
+      </ul>
+    </description>
     <release version="25.04.3" date="2025-07-03"/>
     <release version="25.04.2" date="2025-06-05"/>
     <release version="25.04.1" date="2025-05-08"/>
@@ -989,16 +1003,55 @@
     <release version="24.12.2" date="2025-02-06"/>
     <release version="24.12.1" date="2025-01-09"/>
     <release version="24.12.0" date="2024-12-12"/>
+    <description>
+      <ul>
+        <li>The "Added" column now uses a shorter date format</li>
+        <li>Fixed a crash when closing the video widget</li>
+      </ul>
+    </description>
     <release version="24.08.3" date="2024-11-07"/>
+    <description>
+      <ul>
+        <li>Accept webseeds using HTTPS</li>
+        <li>Fixed charts having white text on a white background in the Statistics plugin</li>
+      </ul>
+    </description>
     <release version="24.08.2" date="2024-10-10"/>
+    <description>
+      <ul>
+        <li>Fixed the Import Torrent dialog not allowing .torrent files to be selected</li>
+      </ul>
+    </description>
     <release version="24.08.1" date="2024-09-12"/>
     <release version="24.08.0" date="2024-08-22"/>
     <release version="24.05.2" date="2024-07-04"/>
     <release version="24.05.1" date="2024-06-13"/>
     <release version="24.05.0" date="2024-05-23"/>
+    <description>
+      <ul>
+        <li>Added an action to rename files in the Info Widget context menu</li>
+        <li>Save the magnets file whenever it is updated, so that magnet data is not lost if the app crashes</li>
+        <li>Use a different icon for queued seeding and queued downloading</li>
+      </ul>
+    </description>
     <release version="24.02.2" date="2024-04-11"/>
     <release version="24.02.1" date="2024-03-21"/>
-    <release version="24.02.0" date="2024-02-28"/>
+    <release version="24.02.0" date="2024-02-28">
+      <description>
+        <ul>
+          <li>Ported to Qt 6</li>
+          <li>Use a symbolic tray icon</li>
+          <li>Improved the search plugin: removed redundant search bar; used removable tabs instead of a custom delete button; used icon-only buttons for Back, Forward and Reload</li>
+          <li>Improved the spacings of various widgets, and ported much of the UI to use a new frameless look</li>
+          <li>Fixed the country flags being in the Peers tab of the Info Widget</li>
+          <li>Fixed the Import Torrent dialog failing to copy the given .torrent file</li>
+          <li>Fixed the chunkbar tooltip not displaying the legend properly</li>
+          <li>Disable logging to file by default to avoid unnecessary writes to the filesystem, the commandline argument `--enable-logging` can be passed to enable logging to file</li>
+          <li>Fixed the chunkbar tooltip not displaying the legend properly</li>
+          <li>Fixed global shortcut actions</li>
+        </ul>
+      </description>
+    </release>
     <release version="23.08.5" date="2024-02-15"/>
   </releases>
   <content_rating type="oars-1.1"/>
