@@ -2,28 +2,28 @@
 # SPDX-License-Identifier: CC0-1.0
 
 Dependencies:
-- 'on': ['@all']
-  'require':
+ - 'on': ['@all']
+   'require':
     'frameworks/extra-cmake-modules': '@latest-kf6'
-    'frameworks/ki18n' : '@latest-kf6'
-    'frameworks/karchive' : '@latest-kf6'
-    'frameworks/kcrash' : '@latest-kf6'
-    'frameworks/kio' : '@latest-kf6'
-    'frameworks/knotifications' : '@latest-kf6'
-    'frameworks/knotifyconfig' : '@latest-kf6'
-    'frameworks/kcmutils' : '@latest-kf6'
-    'frameworks/kxmlgui' : '@latest-kf6'
-    'frameworks/kiconthemes' : '@latest-kf6'
-    'frameworks/ktextwidgets' : '@latest-kf6'
-    'frameworks/kparts' : '@latest-kf6'
-    'frameworks/kitemviews' : '@latest-kf6'
-    'frameworks/kplotting' : '@latest-kf6'
-    'frameworks/syndication' : '@latest-kf6'
-    'frameworks/kdnssd' : '@latest-kf6'
-    'frameworks/kcompletion' : '@latest-kf6'
-    'frameworks/kglobalaccel' : '@latest-kf6'
-    'frameworks/kstatusnotifieritem' : '@latest-kf6'
-    'network/libktorrent' : '@same'
+    'frameworks/ki18n': '@latest-kf6'
+    'frameworks/karchive': '@latest-kf6'
+    'frameworks/kcrash': '@latest-kf6'
+    'frameworks/kio': '@latest-kf6'
+    'frameworks/knotifications': '@latest-kf6'
+    'frameworks/knotifyconfig': '@latest-kf6'
+    'frameworks/kcmutils': '@latest-kf6'
+    'frameworks/kxmlgui': '@latest-kf6'
+    'frameworks/kiconthemes': '@latest-kf6'
+    'frameworks/ktextwidgets': '@latest-kf6'
+    'frameworks/kparts': '@latest-kf6'
+    'frameworks/kitemviews': '@latest-kf6'
+    'frameworks/kplotting': '@latest-kf6'
+    'frameworks/syndication': '@latest-kf6'
+    'frameworks/kdnssd': '@latest-kf6'
+    'frameworks/kcompletion': '@latest-kf6'
+    'frameworks/kglobalaccel': '@latest-kf6'
+    'frameworks/kstatusnotifieritem': '@latest-kf6'
+    'network/libktorrent': '@same'
 
 Options:
-  require-passing-tests-on: ['Linux', 'FreeBSD', 'Windows']
+ require-passing-tests-on: ['Linux', 'FreeBSD', 'Windows']

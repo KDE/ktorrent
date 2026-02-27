@@ -48,7 +48,7 @@ parts:
       - -DBUILD_TESTING=OFF
   ktorrent:
     after:
-    - libktorrent
+      - libktorrent
     parse-info:
       - usr/share/metainfo/org.kde.ktorrent.appdata.xml
     plugin: cmake
@@ -104,4 +104,3 @@ parts:
       for snap in "core24" "kf6-core24"; do
           cd "/snap/$snap/current" && find . -type f,l -exec rm -rf "${CRAFT_PRIME}/{}" \;
       done
-
