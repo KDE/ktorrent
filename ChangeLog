@@ -1,3 +1,72 @@
+Changes in 26.04.0:
+- Added a download queue manager for syndication feeds to handle sequential downloads, and retry failed downloads (509489)
+- Ported the media player plugin from Phonon to Qt Multimedia (498892)
+- Added a label in the syndication plugin to show the time a feed was last updated
+
+Changes in 25.12.0:
+- Fixed a bug causing the magnets file to be constantly updated (490894)
+- Fixed the progress bar highlight color
+- Fixed the log viewer settings tooltip showing raw HTML
+
+Changes in 25.08.0:
+- Added a "Last Activity" column showing the time the torrent last had upload or download activity
+- Fixed the background color of the syndication widget's feed-item status panel
+- Added columns to the main view showing the number of bytes uploaded and downloaded in the current session
+
+Changes in 24.12.0:
+- The "Added" column now uses a shorter date format
+- Fixed a crash when closing the video widget (490616)
+
+Changes in 24.08.3:
+- Accept webseeds using HTTPS (492399)
+- Fix charts having white text on a white background in the Statistics plugin
+
+Changes in 24.08.2:
+- Fixed the Import Torrent dialog not allowing .torrent files to be selected (383311)
+
+Changes in 24.05.0:
+- Added an action to rename files in the Info Widget context menu (208493)
+- Save the magnets file whenever it is updated, so that magnet data is not lost if the app crashes (415580)
+- Use a different icon for queued seeding and queued downloading (312607)
+
+Changes in 24.02.0:
+- Use a symbolic tray icon (480340)
+- Improved the search plugin: removed redundant search bar; used removable tabs instead of a custom delete button; used icon-only buttons for Back, Forward and Reload
+- Improved the spacings of various widgets, and ported much of the UI to use a new frameless look
+- Ported to Qt 6
+- Fixed the country flags being in the Peers tab of the Info Widget (430751)
+- Fixed the Import Torrent dialog failing to copy the given .torrent file (383310)
+- Disable logging to file by default to avoid unnecessary writes to the filesystem, the commandline argument `--enable-logging` can be passed to enable logging to file
+- Fixed the chunkbar tooltip not displaying the legend properly (445007)
+- Fixed global shortcut actions (384673)
+
+Changes in 23.08:
+- The main window is no longer hidden on startup, if the app was stopped whilst hidden to tray
+
+Changes in 22.08:
+- Fixed the torrent progress bar being vertical (455367)
+
+Changes in 21.12:
+- Removed scripting support via Kross
+- Fixed the background of the progress column
+
+Changes in 21.08:
+- Removed the broken custom GeoIP code (403054)
+
+Changes in 21.04:
+- Removed the old KDE 4 web interface plugin
+- Removed the old KDE 4 Plasma applet
+- Added the option to minimize to the system tray on startup
+
+Changes in 20.12:
+- KTorrent is now a part of KDE Gear and will follow its version scheme
+- Add an action to copy the magnet URL in the magnet downloader panel
+- Automatically announce when merging tracker lists
+- Allow adding a torrent by its info hash - it will be automatically converted to a magnet link
+- Add a preference page to change colors
+- Add a new plugin to scan for lost files
+- Allow creating torrent files with 16 MiB chunk size
+
 Changes in 5.0.1:
 - Store interface name as a string in cfg
 - Port stats plugin
