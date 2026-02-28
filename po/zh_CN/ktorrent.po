@@ -20,12 +20,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, 玛格丽特苏"
+msgstr "KDE 中国, Tyson Tan, 玛格丽特苏"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org, i@marguerite.su"
+msgstr "kde-china@kde.org, tds00@qq.com, i@marguerite.su"
 
 #: ktorrent/core.cpp:149
 #, kde-format
@@ -8166,7 +8166,7 @@ msgstr "<b>正在下载</b>"
 #: plugins/syndication/feedwidget.cpp:243
 #, kde-format
 msgid "<b>Queued</b>"
-msgstr ""
+msgstr "<b>队列</b>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/feedwidget.ui:65
