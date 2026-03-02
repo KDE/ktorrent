@@ -1041,15 +1041,105 @@
       <description>
         <ul>
           <li>Ported to Qt 6</li>
+          <li xml:lang="ar">نُقل إلى Qt6</li>
+          <li xml:lang="ca">Adaptació a les Qt6</li>
+          <li xml:lang="ca-valencia">Adaptació a les Qt6</li>
+          <li xml:lang="ka">გადატანილია Qt6-ზე</li>
+          <li xml:lang="nl">Overgezet naar Qt 6</li>
+          <li xml:lang="pt-BR">Porte para o Qt6</li>
+          <li xml:lang="sl">Preneseno v Qt 6</li>
+          <li xml:lang="tr">Qt6 geçişi yapıldı.</li>
+          <li xml:lang="uk">Портовано на Qt 6</li>
           <li>Use a symbolic tray icon</li>
+          <li xml:lang="ar">استخدم أيقونة رمزية في علبة الأدوات</li>
+          <li xml:lang="ca">Utilitza una icona simbòlica a la safata del sistema</li>
+          <li xml:lang="ca-valencia">Utilitza una icona simbòlica a la safata del sistema</li>
+          <li xml:lang="ka">სისტემის კუთხეში ხატულის ჩვენება</li>
+          <li xml:lang="nl">Een symbolisch systeemvakpictogram gebruiken</li>
+          <li xml:lang="pt-BR">Usar um ícone simbólico na bandeja do sistema</li>
+          <li xml:lang="sl">Uporabi simbolično ikono v sistemskem pladnju</li>
+          <li xml:lang="tr">Artık sembolik tepsi simgesi kullanılıyor.</li>
+          <li xml:lang="uk">Використано символічну піктограму лотка</li>
           <li>Improved the search plugin: removed redundant search bar; used removable tabs instead of a custom delete button; used icon-only buttons for Back, Forward and Reload</li>
+          <li xml:lang="ar">تحسين ملحق البحث: إزالة شريط البحث الزائد عن الحاجة؛ استخدام ألسنة قابلة للإزالة بدلاً من زر حذف مخصص؛ استخدام أزرار تحتوي على أيقونات فقط للرجوع إلى الخلف والتقدم إلى الأمام وإعادة التحميل.</li>
+          <li xml:lang="ca">Millora el connector de cerca: s'ha eliminat la barra de cerca redundant; s'han utilitzat pestanyes eliminables en lloc d'un botó de supressió personalitzat; s'han utilitzat botons de només icona per a Enrere, Endavant i Recarrega</li>
+          <li xml:lang="ca-valencia">Millora el connector de busca: s'ha eliminat la barra de busca redundant; s'han utilitzat pestanyes eliminables en lloc d'un botó de supressió personalitzat; s'han utilitzat botons de només icona per a Arrere, Avant i Torna a carregar</li>
+          <li xml:lang="ka">გაუმჯობესდა ძებნის დამატება: წაიშალა მეორე ძებნის პანელი. გამოიყენება წაშლადი ჩანართები მორგებული წაშლის ღილაკის მაგიერ. გამოიყენება მხოლოდ-ხატულების მქონე ღილაკები ქმედებებისთვის უკან, წინ და თავიდან ჩატვირთვა</li>
+          <li xml:lang="nl">De zoekplug-in is verbeterd: de overbodige zoekbalk is verwijderd; verwijderbare tabbladen worden gebruikt in plaats van een aangepaste verwijderknop; voor knoppen voor Terug, Vooruit en Herladen worden alleen pictogrammen gebruikt.</li>
+          <li xml:lang="pt-BR">Melhoria do plugin de busca: removida a barra de busca redundante; uso de abas removíveis em vez de um botão de exclusão personalizado; e utilização de botões com ícones para Voltar, Avançar e Recarregar</li>
+          <li xml:lang="sl">Izboljšan vtičnik za iskanje: odstranjena odvečna iskalna vrstica; uporabljeni odstranljivi zavihki namesto gumba za brisanje po meri; uporabljeni gumbi samo z ikonami za Nazaj, Naprej in Ponovno nalaganje</li>
+          <li xml:lang="tr">Arama eklentisi iyileştirildi: Gereksiz arama çubuğu kaldırıldı; özel silme düğmesi yerine çıkarılabilir sekmeler kullanıldı; Geri, İleri ve Yeniden Yükle için yalnızca simge içeren düğmeler kullanıldı.</li>
+          <li xml:lang="uk">Удосконалено додаток пошуку: вилучено зайвий рядок пошуку; використано придатні до вилучення вкладки замість кнопки вилучення; для дій «Назад», «Вперед» та «Перезавантажити» використано кнопки, на яких є лише піктограми.</li>
           <li>Improved the spacings of various widgets, and ported much of the UI to use a new frameless look</li>
+          <li xml:lang="ar">تحسين التباعد بين مختلف الأدوات، ونقل جزء كبير من واجهة المستخدم لاستخدام مظهر جديد بدون إطار.</li>
+          <li xml:lang="ca">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
+          <li xml:lang="ca-valencia">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
+          <li xml:lang="ka">გაუმჯობესდა სხვადასხვა ვიჯეტებს შორის დაშორება და ინტერფეისის უდიდესი ნაწილი გადატანილია უჩარჩოო ხედის გამოყენებაზე</li>
+          <li xml:lang="nl">De afstand tussen verschillende widgets is verbeterd en een groot deel van de gebruikersinterface is aangepast naar een nieuwe, frameloos uiterlijk.</li>
+          <li xml:lang="pt-BR">Melhoria do espaçamento de vários widgets e adaptação de grande parte da interface do usuário para um novo visual sem moldura</li>
+          <li xml:lang="sl">Izboljšani razmiki med različnimi pripomočki in prenos velikega dela uporabniškega vmesnika na nov videz brez okvirja</li>
+          <li xml:lang="tr">Çeşitli araç takımların aralıkları iyileştirildi ve kullanıcı arayüzünün büyük bir kısmı yeni, çerçevesiz bir görünüme kavuşturuldu.</li>
+          <li xml:lang="uk">Удосконалено інтервали між різними віджетами і портовано більшість інтерфейсу на використання нового компонування без рамок</li>
           <li>Fixed the country flags being in the Peers tab of the Info Widget</li>
+          <li xml:lang="ar">إصلاح مشكلة وجود أعلام الدول في علامة التبويب الأقران في أداة المعلومات</li>
+          <li xml:lang="ca">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
+          <li xml:lang="ca-valencia">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
+          <li xml:lang="ka">გასწორდა ქვეყნის ალმების ჩვენება ინფორმაციის ვიჯეტის პარტნიორების ჩანართში</li>
+          <li xml:lang="nl">Opgelost: het probleem met de landvlaggen in het tabblad 'Peers' van de infowidget.</li>
+          <li xml:lang="pt-BR">Corrigido o problema com as bandeiras dos países na aba "Pares" do widget de informações</li>
+          <li xml:lang="sl">Odpravljena napaka, zaradi katere so bile zastave držav na zavihku Vrstniki v gradnku za informacije</li>
+          <li xml:lang="tr">Bilgi araç takımının “Eşler” sekmesinde ülke bayraklarının görünmesi sorunu düzeltildi.</li>
+          <li xml:lang="uk">Виправлено прапорці країн на вкладці вузлів інформаційного віджета</li>
           <li>Fixed the Import Torrent dialog failing to copy the given .torrent file</li>
+          <li xml:lang="ar">إصلاح مشكلة فشل مربع حوار استيراد التورنت في نسخ ملف .torrent المحدد</li>
+          <li xml:lang="ca">S'ha corregit el diàleg d'importació de torrent que falla en copiar el fitxer .torrent indicat</li>
+          <li xml:lang="ca-valencia">S'ha corregit el diàleg d'importació de torrent que falla en copiar el fitxer «.torrent» indicat</li>
+          <li xml:lang="ka">გასწორდა ტორენტის შემოტანის დიალოგის შეცდომა გადაცემული .torrent ფაილის კოპირებაში</li>
+          <li xml:lang="nl">Opgelost: het probleem waarbij het dialoogvenster 'Torrent importeren' er niet in slaagde het opgegeven .torrent-bestand te kopiëren.</li>
+          <li xml:lang="pt-BR">Corrigido o problema na caixa de diálogo de importação de torrent ao copiar o arquivo .torrent fornecido</li>
+          <li xml:lang="sl">Popravljeno je pogovorno okno za uvoz torrenta, ki ni uspelo kopirati dane datoteke .torrent</li>
+          <li xml:lang="tr">Torrent içe aktarma iletişim kutusunun verilen .torrent dosyasını kopyalayamaması sorunu düzeltildi.</li>
+          <li xml:lang="uk">Виправлено можливість копіювання вказаного файла .torrent у вікні імпортування торентів</li>
           <li>Fixed the chunkbar tooltip not displaying the legend properly</li>
+          <li xml:lang="ar">إصلاح مشكلة عدم عرض تلميح شريط القطع بشكل صحيح</li>
+          <li xml:lang="ca">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
+          <li xml:lang="ca-valencia">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
+          <li xml:lang="ka">გასწორდა სეგმენტების მინიშნება, რომელიც ახსნას სწორად არ აჩვენებდა</li>
+          <li xml:lang="nl">Opgelost: het probleem waarbij de hulpballon van de balk met gedeelten de legenda niet correct weergaf.</li>
+          <li xml:lang="pt-BR">Corrigido o problema em que a legenda não era exibida corretamente na dica da barra de ferramentas</li>
+          <li xml:lang="sl">Popravljena napaka, zaradi katere opis orodja chunkbar ni pravilno prikazoval legende</li>
+          <li xml:lang="tr">Parça çubuğu araç ipucunun göstergeyi doğru şekilde görüntülememesi sorunu düzeltildi.</li>
+          <li xml:lang="uk">Виправлено показ умовних позначень у підказці панелі фрагментів</li>
           <li>Disable logging to file by default to avoid unnecessary writes to the filesystem, the commandline argument `--enable-logging` can be passed to enable logging to file</li>
+          <li xml:lang="ar">تعطيل التسجيل في الملف بشكل مبدئي لتجنب عمليات الكتابة غير الضرورية على نظام الملفات، يمكن تمرير وسيطة سطر الأوامر `--enable-logging` لتمكين التسجيل في الملف.</li>
+          <li xml:lang="ca">Desactiva el registre a fitxer de manera predeterminada per a evitar escriptures innecessàries al sistema de fitxers, es pot passar l'argument de la línia d'ordres `--enable-logging` per a activar el registre al fitxer</li>
+          <li xml:lang="ca-valencia">Desactiva el registre a fitxer de manera predeterminada per a evitar escriptures innecessàries al sistema de fitxers, es pot passar l'argument de la línia d'ordres `--enable-logging` per a activar el registre al fitxer</li>
+          <li xml:lang="ka">ჟურნალის ფაილში ჩაწერა გაითიშა ნაგულისხმევად ფაილურ სისტემაში ზედმეტი ჩაწერების თავიდან ასაცილებლად. ჩასართავად გამოიყენეთ ბრძანების სტრიქონის პარამეტრი '--enable-logging'</li>
+          <li xml:lang="nl">Het loggen naar een bestand is standaard uitgeschakeld om onnodige schrijfbewerkingen naar het bestandssysteem te voorkomen. Het opdrachtregelargument `--enable-logging` kan worden doorgegeven om het loggen naar een bestand in te schakelen.</li>
+          <li xml:lang="pt-BR">Desativado o registro em arquivo por padrão para evitar gravações desnecessárias no sistema de arquivos; o argumento de linha de comando `--enable-logging` pode ser passado para ativar o registro em arquivo</li>
+          <li xml:lang="sl">Privzeto onemogočeno beleženje v datoteko, da se izogn nepotrebnemu pisanju v datotečni sistem. Za omogočanje beleženja v datoteko lahko v ukazno vrstico lahko uporabite argument `--enable-logging`.</li>
+          <li xml:lang="tr">Dosya sistemine gereksiz yazma işlemlerini önlemek için öntanımlı olarak dosya günlük kaydı devre dışı bırakıldı; dosya günlük kaydını etkinleştirmek için `--enable-logging` komut satırı argümanı kullanılabilir.</li>
+          <li xml:lang="uk">Вимкнено записування журналу до типового файла, щоб уникнути непотрібного записування до файлової системи; щоб увімкнути запис журналу до файла, можна передати параметр командного рядка `--enable-logging`</li>
           <li>Fixed the chunkbar tooltip not displaying the legend properly</li>
+          <li xml:lang="ar">إصلاح مشكلة عدم عرض تلميح شريط القطع بشكل صحيح</li>
+          <li xml:lang="ca">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
+          <li xml:lang="ca-valencia">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
+          <li xml:lang="ka">გასწორდა სეგმენტების მინიშნება, რომელიც ახსნას სწორად არ აჩვენებდა</li>
+          <li xml:lang="nl">Opgelost: het probleem waarbij de hulpballon van de balk met gedeelten de legenda niet correct weergaf.</li>
+          <li xml:lang="pt-BR">Corrigido o problema em que a legenda não era exibida corretamente na dica da barra de ferramentas</li>
+          <li xml:lang="sl">Popravljena napaka, zaradi katere opis orodja chunkbar ni pravilno prikazoval legende</li>
+          <li xml:lang="tr">Parça çubuğu araç ipucunun göstergeyi doğru şekilde görüntülememesi sorunu düzeltildi.</li>
+          <li xml:lang="uk">Виправлено показ умовних позначень у підказці панелі фрагментів</li>
           <li>Fixed global shortcut actions</li>
+          <li xml:lang="ar">إصلاح إجراءات الاختصارات العالمية</li>
+          <li xml:lang="ca">Corregeix les accions de les dreceres globals</li>
+          <li xml:lang="ca-valencia">Corregix les accions de les dreceres globals</li>
+          <li xml:lang="ka">გასწორდა გლობალური მალსახმობის ქმედებები</li>
+          <li xml:lang="nl">Opgelost: globale sneltoetsacties</li>
+          <li xml:lang="pt-BR">Correção das ações de atalho globais</li>
+          <li xml:lang="sl">Popravljena globalna dejanja bližnjic</li>
+          <li xml:lang="tr">Global kısayol eylemleri onarıldı.</li>
+          <li xml:lang="uk">Виправлено дії для загальних клавіатурних скорочень</li>
         </ul>
       </description>
     </release>
