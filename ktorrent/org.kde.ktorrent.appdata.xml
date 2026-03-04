@@ -1044,6 +1044,7 @@
           <li xml:lang="ar">نُقل إلى Qt6</li>
           <li xml:lang="ca">Adaptació a les Qt6</li>
           <li xml:lang="ca-valencia">Adaptació a les Qt6</li>
+          <li xml:lang="fr">Portage vers Qt 6</li>
           <li xml:lang="he">הוסב ל־Qt 6</li>
           <li xml:lang="it">Conversione a Qt 6</li>
           <li xml:lang="ka">გადატანილია Qt6-ზე</li>
@@ -1058,6 +1059,7 @@
           <li xml:lang="ar">استخدم أيقونة رمزية في علبة الأدوات</li>
           <li xml:lang="ca">Utilitza una icona simbòlica a la safata del sistema</li>
           <li xml:lang="ca-valencia">Utilitza una icona simbòlica a la safata del sistema</li>
+          <li xml:lang="fr">Utiliser une boîte à miniatures symbolique</li>
           <li xml:lang="he">עברנו להשתמש בסמל שורת מערכת סמלי</li>
           <li xml:lang="it">Uso di un'icona del vassoio di sistema simbolica</li>
           <li xml:lang="ka">სისტემის კუთხეში ხატულის ჩვენება</li>
@@ -1072,6 +1074,7 @@
           <li xml:lang="ar">تحسين ملحق البحث: إزالة شريط البحث الزائد عن الحاجة؛ استخدام ألسنة قابلة للإزالة بدلاً من زر حذف مخصص؛ استخدام أزرار تحتوي على أيقونات فقط للرجوع إلى الخلف والتقدم إلى الأمام وإعادة التحميل.</li>
           <li xml:lang="ca">Millora el connector de cerca: s'ha eliminat la barra de cerca redundant; s'han utilitzat pestanyes eliminables en lloc d'un botó de supressió personalitzat; s'han utilitzat botons de només icona per a Enrere, Endavant i Recarrega</li>
           <li xml:lang="ca-valencia">Millora el connector de busca: s'ha eliminat la barra de busca redundant; s'han utilitzat pestanyes eliminables en lloc d'un botó de supressió personalitzat; s'han utilitzat botons de només icona per a Arrere, Avant i Torna a carregar</li>
+          <li xml:lang="fr">Amélioration du module externe de recherche : suppression de la barre de recherche redondante, utilisation d'onglets amovibles au lieu d'un bouton personnalisé de suppression, utilisation de boutons uniquement avec icônes pour les actions « Précédent », « Suivant » et « Recharger »</li>
           <li xml:lang="he">תוסף החיפוש השתפר: הוסר סרגל חיפוש מיותר, נעשה שימוש בלשוניות שניתן להסיר במקום כפתור מחיקה בהתאמה אישית, נעשה שימוש בכפתורים עם סמלים בלבד לחזרה, קדימה וריענון.</li>
           <li xml:lang="ka">გაუმჯობესდა ძებნის დამატება: წაიშალა მეორე ძებნის პანელი. გამოიყენება წაშლადი ჩანართები მორგებული წაშლის ღილაკის მაგიერ. გამოიყენება მხოლოდ-ხატულების მქონე ღილაკები ქმედებებისთვის უკან, წინ და თავიდან ჩატვირთვა</li>
           <li xml:lang="nl">De zoekplug-in is verbeterd: de overbodige zoekbalk is verwijderd; verwijderbare tabbladen worden gebruikt in plaats van een aangepaste verwijderknop; voor knoppen voor Terug, Vooruit en Herladen worden alleen pictogrammen gebruikt.</li>
@@ -1084,6 +1087,7 @@
           <li xml:lang="ar">تحسين التباعد بين مختلف الأدوات، ونقل جزء كبير من واجهة المستخدم لاستخدام مظهر جديد بدون إطار.</li>
           <li xml:lang="ca">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
           <li xml:lang="ca-valencia">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
+          <li xml:lang="fr">Amélioration des espacements de divers composants graphiques et portage d’une grande partie de l’interface utilisateur pour utiliser une nouvelle apparence sans cadre</li>
           <li xml:lang="he">הריווח של מגוון רחב של וידג׳טים השתפר והרבה מממשק המשתמש הוסב להשתמש במראה נטול מסגרות</li>
           <li xml:lang="ka">გაუმჯობესდა სხვადასხვა ვიჯეტებს შორის დაშორება და ინტერფეისის უდიდესი ნაწილი გადატანილია უჩარჩოო ხედის გამოყენებაზე</li>
           <li xml:lang="nl">De afstand tussen verschillende widgets is verbeterd en een groot deel van de gebruikersinterface is aangepast naar een nieuwe, frameloos uiterlijk.</li>
@@ -1096,6 +1100,7 @@
           <li xml:lang="ar">إصلاح مشكلة وجود أعلام الدول في علامة التبويب الأقران في أداة المعلومات</li>
           <li xml:lang="ca">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
           <li xml:lang="ca-valencia">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
+          <li xml:lang="fr">Correction des drapeaux des pays apparaissant dans l'onglet « Pairs » du composant graphique d'informations</li>
           <li xml:lang="he">תוקנו דגלי המדינות בלשונית העמיתים בווידג׳ט המידע</li>
           <li xml:lang="ka">გასწორდა ქვეყნის ალმების ჩვენება ინფორმაციის ვიჯეტის პარტნიორების ჩანართში</li>
           <li xml:lang="nl">Opgelost: het probleem met de landvlaggen in het tabblad 'Peers' van de infowidget.</li>
@@ -1108,6 +1113,7 @@
           <li xml:lang="ar">إصلاح مشكلة فشل مربع حوار استيراد التورنت في نسخ ملف .torrent المحدد</li>
           <li xml:lang="ca">S'ha corregit el diàleg d'importació de torrent que falla en copiar el fitxer .torrent indicat</li>
           <li xml:lang="ca-valencia">S'ha corregit el diàleg d'importació de torrent que falla en copiar el fitxer «.torrent» indicat</li>
+          <li xml:lang="fr">Correction de la boîte de dialogue d'importation échouant lors de la copie du fichier « .torrent » fourni</li>
           <li xml:lang="he">תוקנה בעיה שחלונית ייבוא טורנט נכשלה בהעתקת קובץ ה־‎.torrent הנתון</li>
           <li xml:lang="ka">გასწორდა ტორენტის შემოტანის დიალოგის შეცდომა გადაცემული .torrent ფაილის კოპირებაში</li>
           <li xml:lang="nl">Opgelost: het probleem waarbij het dialoogvenster 'Torrent importeren' er niet in slaagde het opgegeven .torrent-bestand te kopiëren.</li>
@@ -1120,6 +1126,7 @@
           <li xml:lang="ar">إصلاح مشكلة عدم عرض تلميح شريط القطع بشكل صحيح</li>
           <li xml:lang="ca">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
           <li xml:lang="ca-valencia">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
+          <li xml:lang="fr">Correction de l'infobulle de la barre de morceaux n'affichant pas correctement la légende</li>
           <li xml:lang="he">תוקנה בעיה שחלונית צצה בסרגל החלקים לא הציגה את המקרא כמו שצריך</li>
           <li xml:lang="ka">გასწორდა სეგმენტების მინიშნება, რომელიც ახსნას სწორად არ აჩვენებდა</li>
           <li xml:lang="nl">Opgelost: het probleem waarbij de hulpballon van de balk met gedeelten de legenda niet correct weergaf.</li>
@@ -1132,6 +1139,7 @@
           <li xml:lang="ar">تعطيل التسجيل في الملف بشكل مبدئي لتجنب عمليات الكتابة غير الضرورية على نظام الملفات، يمكن تمرير وسيطة سطر الأوامر `--enable-logging` لتمكين التسجيل في الملف.</li>
           <li xml:lang="ca">Desactiva el registre a fitxer de manera predeterminada per a evitar escriptures innecessàries al sistema de fitxers, es pot passar l'argument de la línia d'ordres `--enable-logging` per a activar el registre al fitxer</li>
           <li xml:lang="ca-valencia">Desactiva el registre a fitxer de manera predeterminada per a evitar escriptures innecessàries al sistema de fitxers, es pot passar l'argument de la línia d'ordres `--enable-logging` per a activar el registre al fitxer</li>
+          <li xml:lang="fr">Désactivez l'enregistrement dans un fichier par défaut pour éviter des écritures inutiles dans le système de fichiers. L'argument de ligne de commandes « --enable-logging » peut être passé pour activer l'enregistrement dans un fichier.</li>
           <li xml:lang="ka">ჟურნალის ფაილში ჩაწერა გაითიშა ნაგულისხმევად ფაილურ სისტემაში ზედმეტი ჩაწერების თავიდან ასაცილებლად. ჩასართავად გამოიყენეთ ბრძანების სტრიქონის პარამეტრი '--enable-logging'</li>
           <li xml:lang="nl">Het loggen naar een bestand is standaard uitgeschakeld om onnodige schrijfbewerkingen naar het bestandssysteem te voorkomen. Het opdrachtregelargument `--enable-logging` kan worden doorgegeven om het loggen naar een bestand in te schakelen.</li>
           <li xml:lang="pt-BR">Desativado o registro em arquivo por padrão para evitar gravações desnecessárias no sistema de arquivos; o argumento de linha de comando `--enable-logging` pode ser passado para ativar o registro em arquivo</li>
@@ -1143,6 +1151,7 @@
           <li xml:lang="ar">إصلاح مشكلة عدم عرض تلميح شريط القطع بشكل صحيح</li>
           <li xml:lang="ca">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
           <li xml:lang="ca-valencia">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
+          <li xml:lang="fr">Correction de l'infobulle de la barre de morceaux n'affichant pas correctement la légende</li>
           <li xml:lang="he">תוקנה בעיה שחלונית צצה בסרגל החלקים לא הציגה את המקרא כמו שצריך</li>
           <li xml:lang="ka">გასწორდა სეგმენტების მინიშნება, რომელიც ახსნას სწორად არ აჩვენებდა</li>
           <li xml:lang="nl">Opgelost: het probleem waarbij de hulpballon van de balk met gedeelten de legenda niet correct weergaf.</li>
@@ -1155,6 +1164,7 @@
           <li xml:lang="ar">إصلاح إجراءات الاختصارات العالمية</li>
           <li xml:lang="ca">Corregeix les accions de les dreceres globals</li>
           <li xml:lang="ca-valencia">Corregix les accions de les dreceres globals</li>
+          <li xml:lang="fr">Correction des actions de raccourcis globaux</li>
           <li xml:lang="he">תוקנו פעולות מקשי קיצור מקיפים</li>
           <li xml:lang="ka">გასწორდა გლობალური მალსახმობის ქმედებები</li>
           <li xml:lang="nl">Opgelost: globale sneltoetsacties</li>
