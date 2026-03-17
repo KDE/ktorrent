@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-03-17 00:43+0000\n"
 "PO-Revision-Date: 2026-03-02 05:27+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -4463,12 +4463,12 @@ msgstr "復原轉送"
 msgid "Verbose mode"
 msgstr "囉唆模式"
 
-#: libktcore/dbus/dbustorrent.cpp:307
+#: libktcore/dbus/dbustorrent.cpp:305
 #, kde-format
 msgid "Maximum share ratio reached."
 msgstr "已達最大分享比例限制。"
 
-#: libktcore/dbus/dbustorrent.cpp:310
+#: libktcore/dbus/dbustorrent.cpp:308
 #, kde-format
 msgid "Maximum seed time reached."
 msgstr "已達最大播種時間。"
@@ -6364,7 +6364,7 @@ msgid "All"
 msgstr "全部"
 
 #: plugins/logviewer/logflags.cpp:207 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:541
+#: plugins/syndication/ktfeed.cpp:539
 #, kde-format
 msgid "None"
 msgstr "無"
@@ -7261,7 +7261,7 @@ msgstr "儲存 %1 到"
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:130
-#: plugins/shutdown/shutdownruleset.cpp:250
+#: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Shutdown"
 msgstr "關機"
@@ -7279,19 +7279,19 @@ msgid "Configure Shutdown"
 msgstr "設定關機"
 
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:134
-#: plugins/shutdown/shutdownruleset.cpp:253
+#: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Lock"
 msgstr "鎖定"
 
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:138
-#: plugins/shutdown/shutdownruleset.cpp:256
+#: plugins/shutdown/shutdownruleset.cpp:254
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "睡眠（暫停並儲存到記憶體）"
 
 #: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
-#: plugins/shutdown/shutdownruleset.cpp:259
+#: plugins/shutdown/shutdownruleset.cpp:257
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "休眠（暫停並儲存到磁碟）"
@@ -7355,37 +7355,37 @@ msgstr "關機功能開啟"
 msgid "Configure Shutdown"
 msgstr "設定關機"
 
-#: plugins/shutdown/shutdownruleset.cpp:244
+#: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "自動關閉非作用中的"
 
-#: plugins/shutdown/shutdownruleset.cpp:264
+#: plugins/shutdown/shutdownruleset.cpp:262
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr "當以下事件全都發生時：<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:266
+#: plugins/shutdown/shutdownruleset.cpp:264
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr "當以下事件其中一件發生時：<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:344
+#: plugins/shutdown/shutdownruleset.cpp:342
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "<b>所有的 torrent</b> 完成下載時"
 
-#: plugins/shutdown/shutdownruleset.cpp:346
+#: plugins/shutdown/shutdownruleset.cpp:344
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "<b>所有的 torrent</b> 完成播種時"
 
-#: plugins/shutdown/shutdownruleset.cpp:348
+#: plugins/shutdown/shutdownruleset.cpp:346
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "<b>%1</b> 完成下載時"
 
-#: plugins/shutdown/shutdownruleset.cpp:350
+#: plugins/shutdown/shutdownruleset.cpp:348
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "<b>%1</b> 完成播種時"
@@ -8525,37 +8525,37 @@ msgstr "測試"
 msgid "filter on feed:"
 msgstr "Feed 上的過濾器："
 
-#: plugins/syndication/ktfeed.cpp:518
+#: plugins/syndication/ktfeed.cpp:516
 #, kde-format
 msgid "Aborted"
 msgstr "已中止"
 
-#: plugins/syndication/ktfeed.cpp:520
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "下載 feed 時發生逾時"
 
-#: plugins/syndication/ktfeed.cpp:522
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Unknown hostname"
 msgstr "未知的主機"
 
-#: plugins/syndication/ktfeed.cpp:524
+#: plugins/syndication/ktfeed.cpp:522
 #, kde-format
 msgid "File not found"
 msgstr "找不到檔案"
 
-#: plugins/syndication/ktfeed.cpp:526
+#: plugins/syndication/ktfeed.cpp:524
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "收取時發生未知的錯誤"
 
-#: plugins/syndication/ktfeed.cpp:530
+#: plugins/syndication/ktfeed.cpp:528
 #, kde-format
 msgid "Invalid feed data"
 msgstr "無效的 feed 資料"
 
-#: plugins/syndication/ktfeed.cpp:532
+#: plugins/syndication/ktfeed.cpp:530
 #, kde-format
 msgid "Success"
 msgstr "成功"

@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-03-17 00:43+0000\n"
 "PO-Revision-Date: 2026-02-24 08:45-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -4647,12 +4647,12 @@ msgstr "Desfazer Encaminhamento"
 msgid "Verbose mode"
 msgstr "Modo detalhado"
 
-#: libktcore/dbus/dbustorrent.cpp:307
+#: libktcore/dbus/dbustorrent.cpp:305
 #, kde-format
 msgid "Maximum share ratio reached."
 msgstr "Proporção de compartilhamento máxima atingida."
 
-#: libktcore/dbus/dbustorrent.cpp:310
+#: libktcore/dbus/dbustorrent.cpp:308
 #, kde-format
 msgid "Maximum seed time reached."
 msgstr "Tempo de semeação máximo atingido."
@@ -6591,7 +6591,7 @@ msgid "All"
 msgstr "Todos"
 
 #: plugins/logviewer/logflags.cpp:207 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:541
+#: plugins/syndication/ktfeed.cpp:539
 #, kde-format
 msgid "None"
 msgstr "Nenhuma"
@@ -7499,7 +7499,7 @@ msgstr "Salvar o %1 em"
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:130
-#: plugins/shutdown/shutdownruleset.cpp:250
+#: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Shutdown"
 msgstr "Desligar"
@@ -7517,19 +7517,19 @@ msgid "Configure Shutdown"
 msgstr "Configurar desligamento"
 
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:134
-#: plugins/shutdown/shutdownruleset.cpp:253
+#: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Lock"
 msgstr "Travar"
 
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:138
-#: plugins/shutdown/shutdownruleset.cpp:256
+#: plugins/shutdown/shutdownruleset.cpp:254
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "Dormir (suspender para a memória)"
 
 #: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
-#: plugins/shutdown/shutdownruleset.cpp:259
+#: plugins/shutdown/shutdownruleset.cpp:257
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "Hibernar (suspender para o disco)"
@@ -7594,37 +7594,37 @@ msgstr "Desligar habilitado"
 msgid "Configure Shutdown"
 msgstr "Configurar Desligamento"
 
-#: plugins/shutdown/shutdownruleset.cpp:244
+#: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "Encerramento automático não ativo"
 
-#: plugins/shutdown/shutdownruleset.cpp:264
+#: plugins/shutdown/shutdownruleset.cpp:262
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr " quando todos os seguintes eventos tiverem ocorrido:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:266
+#: plugins/shutdown/shutdownruleset.cpp:264
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr " quando um dos seguintes eventos tiver ocorrido:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:344
+#: plugins/shutdown/shutdownruleset.cpp:342
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "<b>Todos os torrents</b> concluírem o download"
 
-#: plugins/shutdown/shutdownruleset.cpp:346
+#: plugins/shutdown/shutdownruleset.cpp:344
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "<b>Todos os torrents</b> concluírem o envio"
 
-#: plugins/shutdown/shutdownruleset.cpp:348
+#: plugins/shutdown/shutdownruleset.cpp:346
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "<b>%1</b> concluírem o download"
 
-#: plugins/shutdown/shutdownruleset.cpp:350
+#: plugins/shutdown/shutdownruleset.cpp:348
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "<b>%1</b> concluírem o envio"
@@ -8782,37 +8782,37 @@ msgstr "Testar"
 msgid "filter on feed:"
 msgstr "filtro no feed:"
 
-#: plugins/syndication/ktfeed.cpp:518
+#: plugins/syndication/ktfeed.cpp:516
 #, kde-format
 msgid "Aborted"
 msgstr "Cancelado"
 
-#: plugins/syndication/ktfeed.cpp:520
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "Expirou o tempo limite ao baixar o feed"
 
-#: plugins/syndication/ktfeed.cpp:522
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Unknown hostname"
 msgstr "Nome da máquina desconhecido"
 
-#: plugins/syndication/ktfeed.cpp:524
+#: plugins/syndication/ktfeed.cpp:522
 #, kde-format
 msgid "File not found"
 msgstr "Arquivo não encontrado"
 
-#: plugins/syndication/ktfeed.cpp:526
+#: plugins/syndication/ktfeed.cpp:524
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "Erro de recepção desconhecido"
 
-#: plugins/syndication/ktfeed.cpp:530
+#: plugins/syndication/ktfeed.cpp:528
 #, kde-format
 msgid "Invalid feed data"
 msgstr "Os dados da fonte são inválidos"
 
-#: plugins/syndication/ktfeed.cpp:532
+#: plugins/syndication/ktfeed.cpp:530
 #, kde-format
 msgid "Success"
 msgstr "Sucesso"

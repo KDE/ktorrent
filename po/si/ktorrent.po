@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-03-17 00:43+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -4465,12 +4465,12 @@ msgstr "ඉදිරියට අවලංගු කරන්න"
 msgid "Verbose mode"
 msgstr ""
 
-#: libktcore/dbus/dbustorrent.cpp:307
+#: libktcore/dbus/dbustorrent.cpp:305
 #, kde-format
 msgid "Maximum share ratio reached."
 msgstr "උපරිම හවුල් ප්‍රතිශතය ලඟාවිය."
 
-#: libktcore/dbus/dbustorrent.cpp:310
+#: libktcore/dbus/dbustorrent.cpp:308
 #, kde-format
 msgid "Maximum seed time reached."
 msgstr "උපරිම සීඩ් කාලය ලඟාවිය."
@@ -6422,7 +6422,7 @@ msgid "All"
 msgstr "සියලු"
 
 #: plugins/logviewer/logflags.cpp:207 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:541
+#: plugins/syndication/ktfeed.cpp:539
 #, kde-format
 msgid "None"
 msgstr "කිසිවක් නැත"
@@ -7303,7 +7303,7 @@ msgstr "%1 සුරකින්න"
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:130
-#: plugins/shutdown/shutdownruleset.cpp:250
+#: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Shutdown"
 msgstr "වසාදමන්න"
@@ -7321,19 +7321,19 @@ msgid "Configure Shutdown"
 msgstr "වසාදැමීම සකසන්න"
 
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:134
-#: plugins/shutdown/shutdownruleset.cpp:253
+#: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Lock"
 msgstr "අගුළු දමන්න"
 
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:138
-#: plugins/shutdown/shutdownruleset.cpp:256
+#: plugins/shutdown/shutdownruleset.cpp:254
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "නිද්‍රා (RAM වෙත අත්හිටුවන්න)"
 
 #: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
-#: plugins/shutdown/shutdownruleset.cpp:259
+#: plugins/shutdown/shutdownruleset.cpp:257
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "ශිශිරතරණය (තැටියට අත්හිටුවන්න)"
@@ -7395,37 +7395,37 @@ msgstr "වසාදැමීම සක්‍රීයයි"
 msgid "Configure Shutdown"
 msgstr "වසාදැමීම සකසන්න"
 
-#: plugins/shutdown/shutdownruleset.cpp:244
+#: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "ස්වයංක්‍රීය වසාදැමීම සක්‍රීය නැත"
 
-#: plugins/shutdown/shutdownruleset.cpp:264
+#: plugins/shutdown/shutdownruleset.cpp:262
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr " පහත සියළු අවස්ථා හටගත් විට:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:266
+#: plugins/shutdown/shutdownruleset.cpp:264
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr " පහත අවස්තාවකින් එකක් හටගත් විට:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:344
+#: plugins/shutdown/shutdownruleset.cpp:342
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "<b>සියළු ටොරෙන්ට</b> බාගැනීම සම්පූර්ණයි"
 
-#: plugins/shutdown/shutdownruleset.cpp:346
+#: plugins/shutdown/shutdownruleset.cpp:344
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "<b>සියළු ටොරෙන්ට</b> සීඩ් සම්පූර්ණයි"
 
-#: plugins/shutdown/shutdownruleset.cpp:348
+#: plugins/shutdown/shutdownruleset.cpp:346
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "<b>%1</b> බාගැනීම අවසන් කරයි"
 
-#: plugins/shutdown/shutdownruleset.cpp:350
+#: plugins/shutdown/shutdownruleset.cpp:348
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "<b>%1</b> සීඩ් අවසන් කරයි"
@@ -8572,37 +8572,37 @@ msgstr "පිරික්සුම"
 msgid "filter on feed:"
 msgstr "පෝශක මත පෙරහන:"
 
-#: plugins/syndication/ktfeed.cpp:518
+#: plugins/syndication/ktfeed.cpp:516
 #, kde-format
 msgid "Aborted"
 msgstr "පිටවූ"
 
-#: plugins/syndication/ktfeed.cpp:520
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "පෝශකය බාගැනීමේ කල් ඉකුත්වීම"
 
-#: plugins/syndication/ktfeed.cpp:522
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Unknown hostname"
 msgstr "නොදන්නා ධාරක නාමයක්"
 
-#: plugins/syndication/ktfeed.cpp:524
+#: plugins/syndication/ktfeed.cpp:522
 #, kde-format
 msgid "File not found"
 msgstr "ගොනුව හමු නොවිනි"
 
-#: plugins/syndication/ktfeed.cpp:526
+#: plugins/syndication/ktfeed.cpp:524
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "නොදන්නා නැවත ලබාගැනීමේ දෝශයක්"
 
-#: plugins/syndication/ktfeed.cpp:530
+#: plugins/syndication/ktfeed.cpp:528
 #, kde-format
 msgid "Invalid feed data"
 msgstr "වැරදි පෝශක දත්ත"
 
-#: plugins/syndication/ktfeed.cpp:532
+#: plugins/syndication/ktfeed.cpp:530
 #, kde-format
 msgid "Success"
 msgstr "සාර්ථකයි"

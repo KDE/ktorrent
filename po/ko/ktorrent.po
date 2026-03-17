@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-03-17 00:43+0000\n"
 "PO-Revision-Date: 2025-07-20 01:44+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -4532,12 +4532,12 @@ msgstr "포워드 취소"
 msgid "Verbose mode"
 msgstr "자세히 알려주기"
 
-#: libktcore/dbus/dbustorrent.cpp:307
+#: libktcore/dbus/dbustorrent.cpp:305
 #, kde-format
 msgid "Maximum share ratio reached."
 msgstr "최대 공유 비율에 도달했습니다."
 
-#: libktcore/dbus/dbustorrent.cpp:310
+#: libktcore/dbus/dbustorrent.cpp:308
 #, kde-format
 msgid "Maximum seed time reached."
 msgstr "최대 시드 시간에 도달했습니다."
@@ -6452,7 +6452,7 @@ msgid "All"
 msgstr "모두"
 
 #: plugins/logviewer/logflags.cpp:207 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:541
+#: plugins/syndication/ktfeed.cpp:539
 #, kde-format
 msgid "None"
 msgstr "없음"
@@ -7353,7 +7353,7 @@ msgstr "%1을(를) 다른 이름으로 저장"
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:130
-#: plugins/shutdown/shutdownruleset.cpp:250
+#: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Shutdown"
 msgstr "시스템 종료"
@@ -7371,19 +7371,19 @@ msgid "Configure Shutdown"
 msgstr "시스템 종료 설정"
 
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:134
-#: plugins/shutdown/shutdownruleset.cpp:253
+#: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Lock"
 msgstr "잠금"
 
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:138
-#: plugins/shutdown/shutdownruleset.cpp:256
+#: plugins/shutdown/shutdownruleset.cpp:254
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "절전 모드(RAM 절전)"
 
 #: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
-#: plugins/shutdown/shutdownruleset.cpp:259
+#: plugins/shutdown/shutdownruleset.cpp:257
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "최대 절전 모드(디스크 절전)"
@@ -7447,37 +7447,37 @@ msgstr "시스템 종료 활성화"
 msgid "Configure Shutdown"
 msgstr "시스템 종료 설정"
 
-#: plugins/shutdown/shutdownruleset.cpp:244
+#: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "자동 시스템 종료 활성화되지 않음"
 
-#: plugins/shutdown/shutdownruleset.cpp:264
+#: plugins/shutdown/shutdownruleset.cpp:262
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr " 다음 이벤트가 발생했을 때:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:266
+#: plugins/shutdown/shutdownruleset.cpp:264
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr " 다음 이벤트 중 하나라도 발생했을 때:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:344
+#: plugins/shutdown/shutdownruleset.cpp:342
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "<b>모든 토렌트가</b> 다운로드 완료됨"
 
-#: plugins/shutdown/shutdownruleset.cpp:346
+#: plugins/shutdown/shutdownruleset.cpp:344
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "<b>모든 토렌트</b>가 시드를 마침"
 
-#: plugins/shutdown/shutdownruleset.cpp:348
+#: plugins/shutdown/shutdownruleset.cpp:346
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "<b>%1</b> 토렌트 다운로드 완료"
 
-#: plugins/shutdown/shutdownruleset.cpp:350
+#: plugins/shutdown/shutdownruleset.cpp:348
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "<b>%1</b> 토렌트 시드 완료"
@@ -8621,37 +8621,37 @@ msgstr "테스트"
 msgid "filter on feed:"
 msgstr "피드 필터:"
 
-#: plugins/syndication/ktfeed.cpp:518
+#: plugins/syndication/ktfeed.cpp:516
 #, kde-format
 msgid "Aborted"
 msgstr "종료됨"
 
-#: plugins/syndication/ktfeed.cpp:520
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "피드 다운로드 시간 초과"
 
-#: plugins/syndication/ktfeed.cpp:522
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Unknown hostname"
 msgstr "알 수 없는 호스트 이름"
 
-#: plugins/syndication/ktfeed.cpp:524
+#: plugins/syndication/ktfeed.cpp:522
 #, kde-format
 msgid "File not found"
 msgstr "파일을 찾을 수 없음"
 
-#: plugins/syndication/ktfeed.cpp:526
+#: plugins/syndication/ktfeed.cpp:524
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "알 수 없는 오류"
 
-#: plugins/syndication/ktfeed.cpp:530
+#: plugins/syndication/ktfeed.cpp:528
 #, kde-format
 msgid "Invalid feed data"
 msgstr "잘못된 피드 데이터"
 
-#: plugins/syndication/ktfeed.cpp:532
+#: plugins/syndication/ktfeed.cpp:530
 #, kde-format
 msgid "Success"
 msgstr "성공"

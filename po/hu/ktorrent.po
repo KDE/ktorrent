@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-03-17 00:43+0000\n"
 "PO-Revision-Date: 2025-11-08 22:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -4597,12 +4597,12 @@ msgstr "Előrelépés visszavonása"
 msgid "Verbose mode"
 msgstr "Részletes mód"
 
-#: libktcore/dbus/dbustorrent.cpp:307
+#: libktcore/dbus/dbustorrent.cpp:305
 #, kde-format
 msgid "Maximum share ratio reached."
 msgstr "A megosztási arány elérte a maximumot."
 
-#: libktcore/dbus/dbustorrent.cpp:310
+#: libktcore/dbus/dbustorrent.cpp:308
 #, kde-format
 msgid "Maximum seed time reached."
 msgstr "A feltöltési idő elérte a maximumot."
@@ -6532,7 +6532,7 @@ msgid "All"
 msgstr "Mind"
 
 #: plugins/logviewer/logflags.cpp:207 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:541
+#: plugins/syndication/ktfeed.cpp:539
 #, kde-format
 msgid "None"
 msgstr "Nincs"
@@ -7439,7 +7439,7 @@ msgstr "%1 mentése ide"
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:130
-#: plugins/shutdown/shutdownruleset.cpp:250
+#: plugins/shutdown/shutdownruleset.cpp:248
 #, kde-format
 msgid "Shutdown"
 msgstr "Leállítás"
@@ -7457,19 +7457,19 @@ msgid "Configure Shutdown"
 msgstr "Leállítás beállítása"
 
 #: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:134
-#: plugins/shutdown/shutdownruleset.cpp:253
+#: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Lock"
 msgstr "Zárolás"
 
 #: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:138
-#: plugins/shutdown/shutdownruleset.cpp:256
+#: plugins/shutdown/shutdownruleset.cpp:254
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "Altatás (felfüggesztés memóriába)"
 
 #: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
-#: plugins/shutdown/shutdownruleset.cpp:259
+#: plugins/shutdown/shutdownruleset.cpp:257
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "Hibernálás (felfüggesztés merevlemezre)"
@@ -7534,37 +7534,37 @@ msgstr "Leállítás engedélyezve"
 msgid "Configure Shutdown"
 msgstr "Leállítás beállítása"
 
-#: plugins/shutdown/shutdownruleset.cpp:244
+#: plugins/shutdown/shutdownruleset.cpp:242
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "Az automatikus leállítás nem aktív"
 
-#: plugins/shutdown/shutdownruleset.cpp:264
+#: plugins/shutdown/shutdownruleset.cpp:262
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr " ha az alábbi események bekövetkeznek:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:266
+#: plugins/shutdown/shutdownruleset.cpp:264
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr " ha az alábbi események egyike bekövetkezik:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:344
+#: plugins/shutdown/shutdownruleset.cpp:342
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "Az <b>összes torrent</b> letöltése befejeződött"
 
-#: plugins/shutdown/shutdownruleset.cpp:346
+#: plugins/shutdown/shutdownruleset.cpp:344
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "Az <b>összes torrent</b> feltöltése befejeződött"
 
-#: plugins/shutdown/shutdownruleset.cpp:348
+#: plugins/shutdown/shutdownruleset.cpp:346
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "<b>%1</b> letöltése befejeződött"
 
-#: plugins/shutdown/shutdownruleset.cpp:350
+#: plugins/shutdown/shutdownruleset.cpp:348
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "<b>%1</b> feltöltése befejeződött"
@@ -8719,37 +8719,37 @@ msgstr "Teszt"
 msgid "filter on feed:"
 msgstr "Hírcsatorna szűrése:"
 
-#: plugins/syndication/ktfeed.cpp:518
+#: plugins/syndication/ktfeed.cpp:516
 #, kde-format
 msgid "Aborted"
 msgstr "Megszakítva"
 
-#: plugins/syndication/ktfeed.cpp:520
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "Időtúllépés a hírcsatorna letöltésekor"
 
-#: plugins/syndication/ktfeed.cpp:522
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Unknown hostname"
 msgstr "Ismeretlen gépnév"
 
-#: plugins/syndication/ktfeed.cpp:524
+#: plugins/syndication/ktfeed.cpp:522
 #, kde-format
 msgid "File not found"
 msgstr "A fájl nem található"
 
-#: plugins/syndication/ktfeed.cpp:526
+#: plugins/syndication/ktfeed.cpp:524
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "Ismeretlen letöltési hiba"
 
-#: plugins/syndication/ktfeed.cpp:530
+#: plugins/syndication/ktfeed.cpp:528
 #, kde-format
 msgid "Invalid feed data"
 msgstr "Érvénytelen hírcsatorna adat"
 
-#: plugins/syndication/ktfeed.cpp:532
+#: plugins/syndication/ktfeed.cpp:530
 #, kde-format
 msgid "Success"
 msgstr "Sikeres"
