@@ -4,7 +4,7 @@ option(BUILD_WITH_GEOIP
     ON)
 
 if (BUILD_WITH_GEOIP)
-    set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+    list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
     find_package(MaxmindDB)
     set_package_properties(MaxmindDB PROPERTIES
         TYPE OPTIONAL
