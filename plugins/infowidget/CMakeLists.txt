@@ -13,6 +13,8 @@ if (BUILD_WITH_GEOIP)
     if (MaxmindDB_FOUND)
         message(STATUS "   Linking InfoWidget against system GeoIP library")
         set(geoip_link ${MaxmindDB_LIBRARIES})
+
+        find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS GuiAddons)
     else()
         set(BUILD_WITH_GEOIP OFF CACHE BOOL
           "GeoIP development files could not be found on this system. Forcing this option to OFF"
@@ -59,6 +61,7 @@ target_link_libraries(
     ktcore
     KTorrent6
     KF6::ConfigCore
+    KF6::GuiAddons
     KF6::I18n
     KF6::KIOFileWidgets
     KF6::KIOWidgets

@@ -26,7 +26,7 @@ namespace kt
 {
 static QIcon yes, no;
 static bool icons_loaded = false;
-static FlagDB flagDB(22, 18);
+static FlagDB flagDB;
 
 PeerViewModel::Item::Item(bt::PeerInterface *peer
 #if BUILD_WITH_GEOIP
@@ -41,11 +41,6 @@ PeerViewModel::Item::Item(bt::PeerInterface *peer
         yes = QIcon::fromTheme(QStringLiteral("dialog-ok"));
         no = QIcon::fromTheme(QStringLiteral("dialog-cancel"));
         icons_loaded = true;
-
-        QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kf5/locale/countries"), QStandardPaths::LocateDirectory);
-        if (!path.isEmpty()) {
-            flagDB.addFlagSource(path + QStringLiteral("/%1/flag.png"));
-        }
     }
 
 #if BUILD_WITH_GEOIP
