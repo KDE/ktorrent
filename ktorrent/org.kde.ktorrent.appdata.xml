@@ -985,6 +985,7 @@
           <li xml:lang="ca">S'ha corregit un error que provocava que el fitxer magnet s'actualitzés constantment</li>
           <li xml:lang="ca-valencia">S'ha corregit un error que provocava que el fitxer magnet s'actualitzara constantment</li>
           <li xml:lang="es">Arreglado un error que causaba que los archivos magnet se actualizaran constantemente</li>
+          <li xml:lang="fr">Correction d'un bogue provoquant la mise à jour permanente du fichier des aimants</li>
           <li xml:lang="he">תוקנה תקלה שגרמה לעדכון מחזורי של קובצי מגנטים</li>
           <li xml:lang="ka">გასწორდა შეცდომა, რომელიც მაგნიტების ფაილის მუდმივ განახლებას იწვევდა</li>
           <li xml:lang="nl">Een fout is verholpen waardoor het magnetenbestand constant werd bijgewerkt</li>
@@ -998,6 +999,7 @@
           <li xml:lang="ca">S'ha corregit el color de ressaltat de la barra de progrés</li>
           <li xml:lang="ca-valencia">S'ha corregit el color de ressaltat de la barra de progrés</li>
           <li xml:lang="es">Arreglado el color destacado de la barra de progreso</li>
+          <li xml:lang="fr">Correction de la couleur de mise en évidence de la barre de progression</li>
           <li xml:lang="he">צבע הדגשת סרגל ההתקדמות תוקן</li>
           <li xml:lang="ka">გასწორდა მიმდინარეობის ზოლის გამოკვეთის ფერი</li>
           <li xml:lang="nl">De accentueringskleur van de voortgangsbalk is gecorrigeerd</li>
@@ -1011,6 +1013,7 @@
           <li xml:lang="ca">S'ha corregit el consell d'eina de la configuració del visualitzador de registres que mostrava HTML en brut</li>
           <li xml:lang="ca-valencia">S'ha corregit el consell d'eina de la configuració del visor de registres que mostrava HTML en brut</li>
           <li xml:lang="es">Arreglado el menú emergente de preferencias del visor de registros que mostraba HTML crudo</li>
+          <li xml:lang="fr">Correction de l'infobulle de configuration de l'afficheur de journaux affichant du format « HTML » brut</li>
           <li xml:lang="he">תוקנה חלונית הגדרות מציג יומנים שהציגה HTML גולמי</li>
           <li xml:lang="ka">გასწორდა მოვლენების დამთვალიერებლის პარამეტრების მინიშნებაში დაუმუშავებელ HTML-ის ჩვენება</li>
           <li xml:lang="nl">De tekstballon in de instellingen van de logviewer die onbewerkte HTML weergaf, is nu correct.</li>
@@ -1033,6 +1036,7 @@
           <li xml:lang="ca">S'ha afegit una columna «Darrera activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
           <li xml:lang="ca-valencia">S'ha afegit una columna «Última activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
           <li xml:lang="es">Añadida la columna «Última actividad» que muestra la hora a la que el torrent tuvo su última actividad</li>
+          <li xml:lang="fr">Ajout d'une colonne « Dernière activité » affichant l'heure à laquelle le torrent a eu sa dernière activité de téléchargement ou de téléversement</li>
           <li xml:lang="he">נוספה עמודת „פעילות אחרונה” שמציגה את הזמן שבו הייתה פעילות העלאה או הורדה בטורנט בפעם האחרונה</li>
           <li xml:lang="ka">დაემატა 'ბოლო აქტივობის' სვეტი, რომელიც აჩვენებს, როდის ჰქონდა ტორენტს ბოლო ატვირთვის, ან გადმოწერის აქტივობა</li>
           <li xml:lang="nl">Een kolom 'Laatste activiteit' is toegevoegd die het tijdstip weergeeft waarop de torrent voor het laatst is geüpload of gedownload</li>
@@ -1046,6 +1050,7 @@
           <li xml:lang="ca">S'ha corregit el color de fons del plafó d'estat de l'element de canal del giny de sindicació</li>
           <li xml:lang="ca-valencia">S'ha corregit el color de fons del quadro d'estat de l'element de canal del giny de sindicació</li>
           <li xml:lang="es">Arreglado el color de fondo del panel de estado del complemento de sindicación</li>
+          <li xml:lang="fr">Correction de la couleur d'arrière-plan du panneau d'état pour l'élément de flux du composant graphique de syndication</li>
           <li xml:lang="he">תוקן צבע הרקע של לוח המצב של פריט ערוץ עדכונים בווידג׳ט הסינדיקציה</li>
           <li xml:lang="ka">გასწორდა ფონის ფერი ვიჯეტის ლენტის ელემენტის სტატუსის პანელისთვის</li>
           <li xml:lang="nl">De achtergrondkleur van het statuspaneel voor feeditems in het syndicatiewidget is gecorrigeerd</li>
@@ -1059,6 +1064,7 @@
           <li xml:lang="ca">S'han afegit columnes a la vista principal que mostren el nombre de bytes pujats i baixats a la sessió actual</li>
           <li xml:lang="ca-valencia">S'han afegit columnes en la vista principal que mostren el nombre de bytes pujats i baixats a la sessió actual</li>
           <li xml:lang="es">Añadidas columnas a la vista principal que muestran el número de bytes descargados y subidos en la sesión actual</li>
+          <li xml:lang="fr">Colonnes ajoutées à la vue principale affichant le nombre d'octets téléchargés et envoyés dans la session en cours</li>
           <li xml:lang="he">נוספו עמודות לתצוגת הראשית שמציגים את הבתים שהועלו וירדו בהפעלה הנוכחית</li>
           <li xml:lang="ka">დაემატა სვეტები მთავარ ხედში, რომლებიც მიმდინარე სესიაში გადმოწერილი, ან ატვირთული ბაიტების რაოდენობას აჩვენებს</li>
           <li xml:lang="nl">Er zijn kolommen toegevoegd aan de hoofdweergave die het aantal geüploade en gedownloade bytes in de huidige sessie weergeven</li>
@@ -1085,6 +1091,7 @@
           <li xml:lang="ca">La columna «Afegit» ara fa servir el format de data curta</li>
           <li xml:lang="ca-valencia">La columna «Afegit» ara utilitza el format de data curta</li>
           <li xml:lang="es">La columna añadida ahora usa el formato de fecha corta</li>
+          <li xml:lang="fr">La colonne « Ajouté » utilise désormais un format de date plus court</li>
           <li xml:lang="he">עמודת „הוספה” משתמשת מעתה בתבנית תאריך קצרה יותר</li>
           <li xml:lang="ka">'დამატებულია' სვეტი ახლა უფრო მოკლე თარიღის ფორმატს იყენებს</li>
           <li xml:lang="nl">De kolom 'Toegevoegd' gebruikt nu een korter datumformaat</li>
@@ -1098,6 +1105,7 @@
           <li xml:lang="ca">S'ha corregit una fallada en tancar el giny de vídeo</li>
           <li xml:lang="ca-valencia">S'ha corregit una fallada en tancar el giny de vídeo</li>
           <li xml:lang="es">Arreglado un error al cerrar el complemento de vídeo</li>
+          <li xml:lang="fr">Correction d'un plantage lors de la fermeture du composant graphique de vidéos</li>
           <li xml:lang="he">תוקנה קריסה בסגירת וידג׳ט הווידאו</li>
           <li xml:lang="ka">გასწორდა ავარიული დასრულება ვიდეოს ვიჯეტის დახურვისას</li>
           <li xml:lang="nl">Een crash bij het sluiten van het videowidget is verholpen</li>
@@ -1117,6 +1125,7 @@
           <li xml:lang="ca">Accepta sembrats web utilitzant HTTPS</li>
           <li xml:lang="ca-valencia">Accepta sembrats web utilitzant HTTPS</li>
           <li xml:lang="es">Se aceptan semillas web usando HTTPS</li>
+          <li xml:lang="fr">Accepter les webseeds utilisant le protocole « HTTPS »</li>
           <li xml:lang="he">קבלת מקורות רשת שמשתמשים ב־HTTPS</li>
           <li xml:lang="ka">ვებსიდების მიღება HTTPS-ით</li>
           <li xml:lang="nl">Accepteer webseeds via HTTPS</li>
@@ -1130,6 +1139,7 @@
           <li xml:lang="ca">S'han corregit els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
           <li xml:lang="ca-valencia">S'han corregit els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
           <li xml:lang="es">Arreglados los gráficos que mostraban texto en blanco sobre fondo blanco en el complemento de estadísticas</li>
+          <li xml:lang="fr">Correction des graphiques ayant du texte blanc sur un arrière-plan blanc dans le module externe « Statistiques »</li>
           <li xml:lang="he">תוקנה תקלה שבתרשימים הופיע טקסט לבן על רקע לבן בתוסף הסטטיסטיקה</li>
           <li xml:lang="ka">გასწორდა სტატისტიკის დამატებაში გრაფიკებში თეთრი ტექსტის თეთრ ფონზე დახატვა</li>
           <li xml:lang="nl">Het probleem met grafieken met witte tekst op een witte achtergrond in de statistiekenplug-in is opgelost</li>
@@ -1149,6 +1159,7 @@
           <li xml:lang="ca">S'ha corregit el diàleg d'importació de torrent que no permet seleccionar fitxers .torrent</li>
           <li xml:lang="ca-valencia">S'ha corregit el diàleg d'importació de torrent que no permet seleccionar fitxers «.torrent»</li>
           <li xml:lang="es">Arreglado el diálogo de importación torrent que no permitía seleccionar archivos .torrent</li>
+          <li xml:lang="fr">Correction de la boîte de dialogue d'importation de Torrent, ne permettant pas la sélection de de fichier « .torrent »</li>
           <li xml:lang="he">תוקנה בעיה שחלונית ייבוא הטורנט לא מרשה לבחור קובצי ‎.torrent</li>
           <li xml:lang="ka">გასწორდა ტორენტის შემოტანის დიალოგის შეცდომა გადაცემული .torrent ფაილის კოპირებაში</li>
           <li xml:lang="nl">Het probleem is opgelost waarbij het dialoogvenster 'Torrent importeren' het selecteren van .torrent-bestanden ongedaan maakte</li>
@@ -1172,6 +1183,7 @@
           <li xml:lang="ca">S'ha afegit una acció per a canviar el nom de fitxers en el menú contextual del giny d'informació</li>
           <li xml:lang="ca-valencia">S'ha afegit una acció per a canviar el nom de fitxers en el menú contextual del giny d'informació</li>
           <li xml:lang="es">Añadida una acción para renombrar archivos en el menú de contexto del complemento de información</li>
+          <li xml:lang="fr">Ajout d’une action pour le renommage des fichiers dans le menu contextuel du composant graphique d'informations</li>
           <li xml:lang="he">נוספה פעולה לשנות את שמות הקבצים בתפריט ההקשר של וידג׳ט המידע</li>
           <li xml:lang="ka">დაემატა ქმედება ინფორმაციის ვიჯეტის კონტექსტურ მენიუში ფაილების სახელის გადასარმევად</li>
           <li xml:lang="nl">Er is een actie toegevoegd om bestanden te hernoemen in het contextmenu van het Info-widget</li>
@@ -1185,6 +1197,7 @@
           <li xml:lang="ca">Desa el fitxer magnet sempre que s'actualitzi, de manera que les dades del magnet no es perdin si l'aplicació es bloqueja</li>
           <li xml:lang="ca-valencia">Guarda el fitxer magnet sempre que s'actualitze, de manera que les dades del magnet no es perden si l'aplicació es bloqueja</li>
           <li xml:lang="es">Se guardan los archivos magnet cuando se actualizan, de tal manera que los datos magnet no se pierdan si la aplicación se cierra inesperadamente</li>
+          <li xml:lang="fr">Enregistrez le fichier des aimants chaque fois qu'il est mis à jour. Ainsi, les données des aimants ne sont pas perdues si l'application plante</li>
           <li xml:lang="he">לשמור את קובצי המגנטים עם כל עדכון שלהם, כדי שנתוני המגנט לא הולכים לאיבוד אם היישום קורס</li>
           <li xml:lang="ka">მაგნიტების ფაილის შენახვა, როცა ის განახლდება, რომ მაგნიტური მონაცემები არ დაიკარგოს, თუ აპლიკაცია ავარიულად დასრულდება</li>
           <li xml:lang="nl">Sla het magnetenbestand op telkens wanneer het wordt bijgewerkt, zodat de magnetengegevens niet verloren gaan als de app crasht</li>
@@ -1198,6 +1211,7 @@
           <li xml:lang="ca">Usa una icona diferent per a la sembra en cua i la baixada en cua</li>
           <li xml:lang="ca-valencia">Utilitza una icona diferent per a la sembra en cua i la baixada en cua</li>
           <li xml:lang="es">Uso de un icono diferente para la descarga y subida encolada</li>
+          <li xml:lang="fr">Utilisez une icône différente pour la mise en file d'attente des germes et du téléchargement</li>
           <li xml:lang="he">נעשה שימוש בסמל שונה לתור זריעה ותור הורדה</li>
           <li xml:lang="ka">სხვადასხვა ხატულას გამოყენება სიდინგისთვის და გადმოწერის რიგისთვის</li>
           <li xml:lang="nl">Gebruik een ander pictogram voor het in de wachtrij plaatsen van seed-bestanden en het in de wachtrij plaatsen van download-bestanden</li>
