@@ -1,6 +1,6 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2023, 2024 Vít Pelčák <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2023, 2024, 2026 Vít Pelčák <vit@pelcak.org>
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
 # SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Vit Pelcak <vit@pelcak.org>
@@ -10,25 +10,27 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2024-10-18 11:13+0200\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2026-03-16 15:40+0100\n"
+"Last-Translator:  Vít Pelčák <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Jan Dobrovolný, Vít Pelčák, Tomáš Chvátal"
+msgstr "Jan Dobrovolný,Vít Pelčák,Tomáš Chvátal,Libor Filípek"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "dobrovolnyh@seznam.cz,vit@pelcak.org,tomas.chvatal@gmail.com"
+msgstr ""
+"dobrovolnyh@seznam.cz,vit@pelcak.org,tomas.chvatal@gmail.com,libor."
+"filipek@gmail.com"
 
 #: ktorrent/core.cpp:149
 #, kde-format
@@ -741,6 +743,8 @@ msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
+"Zkontrolujte prosím, zda je URL adresa v Nastavení → Pokročilé → Seznam URL "
+"adres trackerů je dostupný."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:241 ktorrent/gui.cpp:322
@@ -1154,6 +1158,10 @@ msgid ""
 "location in the dialog will be set to this. You can still override it, if "
 "you want to."
 msgstr ""
+"Výchozí umístění pro ukládání torrentů z této skupiny. <br/><br/>Toto se "
+"používá pouze v dialogovém okně pro výběr souborů. Když změníte skupinu, "
+"umístění pro stahování v dialogovém okně se nastaví na tuto hodnotu. Pokud "
+"chcete, můžete ji stále přepsat."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_location_enabled)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useSaveDir)
@@ -1177,6 +1185,10 @@ msgid ""
 "the move when completed location in the dialog will be set to this. You can "
 "still override it, if you want to."
 msgstr ""
+"Výchozí umístění pro přesun dokončených torrentů z této skupiny. <br/><br/"
+">Toto se používá pouze v dialogovém okně pro výběr souborů. Když změníte "
+"skupinu, bude v dialogovém okně nastaveno toto umístění pro přesun po "
+"dokončení. Pokud chcete, můžete to stále přepsat."
 
 #. i18n: ectx: property (toolTip), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:63
@@ -1231,6 +1243,11 @@ msgid ""
 "If this is not enabled, the settings will always be applied when you add a "
 "torrent to this group. "
 msgstr ""
+"Pokud je tato možnost povolena, budou tato nastavení použita pouze v "
+"případě, že je torrent přidán do skupiny v dialogovém okně pro výběr souborů "
+"nebo v dialogovém okně pro vytvoření torrentu.<p>\n"
+"Pokud tato možnost není povolena, budou nastavení vždy použita při přidání "
+"torrentu do této skupiny. "
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_only_new)
 #: ktorrent/groups/grouppolicydlg.ui:163
@@ -1515,7 +1532,7 @@ msgstr "BitTorrent klient od KDE"
 #, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
-msgstr ""
+msgstr "© 2005–2011 Joris Guisson a Ivan Vasic"
 
 #: ktorrent/main.cpp:110
 #, kde-format
@@ -1635,6 +1652,10 @@ msgid ""
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
+"Poskytovatel databáze IP-Country používané v pluginu InfoWidget.\n"
+"Data jsou licencována pod licencí Creative Commons Attribution 4.0 \n"
+"International License https://creativecommons.org/licenses/by/4.0/.\n"
+"Vlajky jsou převzaty z http://flags.blogpotato.de/, proto děkujeme také jim."
 
 #: ktorrent/main.cpp:134
 #, kde-format
@@ -1644,7 +1665,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:134
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "Knihovna maxminddb používaná pro plugin InfoWidget."
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -2027,6 +2048,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Povolit protokolování do standardního výstupu. Vyžaduje zadání parametru --"
+"enable-logging."
 
 #: ktorrent/main.cpp:182
 #, kde-format
@@ -2120,6 +2143,15 @@ msgid ""
 "might not actually reach this speed when this value is too high. Without a "
 "limit you can easily get above 3000 KiB/s on a LAN.</p>"
 msgstr ""
+"<p>Doba, po kterou budou síťová vlákna spát, když bude omezena rychlost. To "
+"nemá absolutně žádný vliv, pokud neexistují žádná rychlostní omezení.</p>\n"
+"<p><span style=\" font-weight:600;\">Poznámka:</span> Čím nižší je tato "
+"hodnota, tím více se využívá CPU. Nastavení vysoké hodnoty může vést ke "
+"snížení rychlosti v situacích s vysokou šířkou pásma. </p>\n"
+"<p>Například v síti LAN o rychlosti 100 Mbit, pokud nastavíte omezení na "
+"3000 KiB/s, může se stát, že této rychlosti nedosáhnete, pokud je tato "
+"hodnota příliš vysoká. Bez omezení můžete v síti LAN snadno dosáhnout "
+"rychlosti vyšší než 3000 KiB/s.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
@@ -2230,6 +2262,9 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
+"Seznam URL trackerů používaných při přidávání torrentu pomocí infohash\n"
+"POZNÁMKA: Každý tracker musí být na samostatném řádku. Prázdné řádky jsou "
+"ignorovány."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2485,6 +2520,8 @@ msgid ""
 "Color to use when at least one tracker is connected and replied no errors or "
 "warnings."
 msgstr ""
+"Barva, která se použije, když je připojen alespoň jeden tracker a nejsou "
+"žádné chyby ani varování."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/colorpref.ui:79
@@ -2498,6 +2535,8 @@ msgstr "Některé z trackerů jsou dosažitelné:"
 msgid ""
 "Color to use when the best attempt to connect to tracker results in warning."
 msgstr ""
+"Barva, která se použije, když nejlepší pokus o připojení k trackeru skončí "
+"varováním."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/colorpref.ui:93
@@ -2516,6 +2555,8 @@ msgstr "Dosažitelné trackery hlásí varování:"
 #, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
 msgstr ""
+"Barva, která se použije, když všechny trackery odpoví chybou nebo nejsou "
+"nalezeny."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
@@ -2530,6 +2571,8 @@ msgid ""
 "Color to use when the best attempt to connect to tracker results in timeout. "
 "Connection will be attempted again later."
 msgstr ""
+"Barva, která se použije, když nejlepší pokus o připojení k trackeru skončí "
+"vypršením časového limitu. Připojení bude zopakováno později."
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
@@ -2709,6 +2752,10 @@ msgid ""
 "desktop.iso</span>, the torrent will be displayed as <span style=\" font-"
 "weight:600;\">linux-desktop.</span></p>"
 msgstr ""
+"<p>Přejmenujte torrent s jedním souborem na název tohoto souboru.</p>\n"
+"<p>Pokud se například soubor jmenuje <span style=\" font-weight:600;\">linux-"
+"desktop.iso</span>, torrent se zobrazí jako <span style=\" font-weight:600;"
+"\">linux-desktop.</span></p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
 #: ktorrent/pref/generalpref.ui:163
@@ -2956,7 +3003,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:314
 #, kde-format
 msgid "Recommended Settings…"
-msgstr ""
+msgstr "Doporučené nastavení..."
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3227,6 +3274,10 @@ msgid ""
 "<p>This will allow the queue manager to run other torrents, when a torrent "
 "is doing nothing.</p>"
 msgstr ""
+"<p>Pokud je tato funkce povolena, správce fronty sníží prioritu torrentu, "
+"který je příliš dlouho pozastaven. </p>\n"
+"<p>To umožní správci fronty spustit jiné torrenty, když jeden torrent "
+"neprovádí žádnou činnost.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_decreasePriorityOfStalledTorrents)
 #: ktorrent/pref/qmpref.ui:134
@@ -3241,13 +3292,15 @@ msgid ""
 "<p>Time used for the stall timer. When a torrent is stalled longer than "
 "this, its priority will be decreased.</p>"
 msgstr ""
+"<p>Čas použitý pro časovač zastavení. Pokud je torrent zastaven déle než "
+"tento čas, jeho priorita bude snížena.</p>"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
 #, kde-format
 msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
-msgstr ""
+msgstr "Sdílím"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_keepSeeding)
 #: ktorrent/pref/qmpref.ui:165
@@ -3298,6 +3351,11 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Attention: </span>This is not used when "
 "downloading, only when seeding.</p>"
 msgstr ""
+"<p>Maximální poměr sdílení, pokud je tato hodnota dosažena, bude sdílení "
+"zastaveno. To se vztahuje pouze na nově otevřené torrenty, stávající "
+"torrenty nebudou touto změnou ovlivněny.</p>\n"
+"<p><span style=\" font-weight:600;\">Upozornění: </span>Toto se nepoužívá "
+"při stahování, pouze při sdílení.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/qmpref.ui:222
@@ -4031,7 +4089,7 @@ msgstr "Chyby:"
 #, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr ""
+msgstr "Filtrovat…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4245,7 +4303,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "před %1"
 
 #: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:326
 #: plugins/infowidget/webseedsmodel.cpp:112
@@ -4257,7 +4315,7 @@ msgstr "Staženo"
 #, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr ""
+msgstr "Staženo v relaci"
 
 #: ktorrent/view/viewmodel.cpp:495
 #: libktcore/torrent/torrentfilelistmodel.cpp:68
@@ -4275,7 +4333,7 @@ msgstr "Odesláno"
 #, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr ""
+msgstr "Odesláno v relaci"
 
 #: ktorrent/view/viewmodel.cpp:501
 #, kde-format
@@ -4343,7 +4401,7 @@ msgstr "Přidáno"
 #: ktorrent/view/viewmodel.cpp:526
 #, kde-format
 msgid "Last Activity"
-msgstr ""
+msgstr "Poslední aktivita"
 
 #: ktorrent/view/viewmodel.cpp:533
 #, kde-format
@@ -4353,7 +4411,7 @@ msgstr "Kolik dat torrentu už bylo staženo"
 #: ktorrent/view/viewmodel.cpp:535
 #, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr ""
+msgstr "Kolik dat jsme stáhli z torrentu během této relace"
 
 #: ktorrent/view/viewmodel.cpp:537
 #, kde-format
@@ -4368,7 +4426,7 @@ msgstr "Kolik dat bylo odesláno"
 #: ktorrent/view/viewmodel.cpp:541
 #, kde-format
 msgid "How much data we have uploaded this session"
-msgstr ""
+msgstr "Kolik dat jsme odeslali během této relace"
 
 #: ktorrent/view/viewmodel.cpp:543
 #, kde-format
@@ -4449,7 +4507,7 @@ msgstr "Kdy byl tento torrent přidán"
 #: ktorrent/view/viewmodel.cpp:568
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Čas od poslední aktivity stahování nebo odesílání"
 
 #: ktorrent/view/viewmodel.cpp:614
 #, kde-format
@@ -4474,7 +4532,7 @@ msgstr "Aplikace KTorrentu pro testování UPnP"
 #: ktupnptest/main.cpp:29
 #, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
-msgstr ""
+msgstr "© 2005–2007 Joris Guisson a Ivan Vasic"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, UPnPTestWidget)
 #: ktupnptest/upnptestwidget.ui:14
@@ -5333,6 +5391,8 @@ msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
 msgstr ""
+"Pořadí, v jakém se stahují soubory z torrentu. Nejprve se stáhne soubor "
+"nahoře, poté druhý, třetí..."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -6211,7 +6271,7 @@ msgstr "Zakázat vše"
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:148
 #, kde-format
 msgid "Converting…"
-msgstr ""
+msgstr "Konverze..."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6228,7 +6288,7 @@ msgstr "Z&rušit"
 #: plugins/ipfilter/convertthread.cpp:60
 #, kde-format
 msgid "Loading txt file…"
-msgstr ""
+msgstr "Načítání txt souboru..."
 
 #: plugins/ipfilter/convertthread.cpp:133
 #, kde-format
@@ -6302,7 +6362,7 @@ msgstr "Stav: nenačten."
 #: plugins/ipfilter/ipblockingprefpage.cpp:102
 #, kde-format
 msgid "Status: Downloading and converting new block list…"
-msgstr ""
+msgstr "Stav: Stahování a převádění nového seznamu bloků..."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:180
 #, kde-format
@@ -6500,6 +6560,28 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">None:</span> No messages are shown</p></html>"
 msgstr ""
+"<html>Poklepejte na úroveň záznamu, přejete-li si jej změnit. Dvě možné "
+"úrovně jsou:\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">Vše: </span>Všechny zprávy jsou zobrazeny</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">Důležité: </span>Pouze důležité zprávy jsou zobrazeny</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">Upozornění: </span>Pouze upozornění a důležité zprávy jsou "
+"zobrazeny</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">Ladění: </span>Ladění,  upozornění a důležité zprávy jsou "
+"zobrazeny</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">Nic:</span> Žádné zprávy nejsou zobrazeny</p></html>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:42
@@ -8229,6 +8311,10 @@ msgid ""
 "padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
 "<p>%3</p>    </body>    </html>    "
 msgstr ""
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; borde r-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>Název:</b> %1<br/>     <b>Datum:</b> %2<br/>     </"
+"div>    <p>%3</p>     </body>    </html>    "
 
 #: plugins/syndication/feedwidget.cpp:193
 #, kde-format
@@ -8246,13 +8332,14 @@ msgid "<b>OK</b>"
 msgstr "<b>OK</b>"
 
 #: plugins/syndication/feedwidget.cpp:229
-#, fuzzy, kde-format
-#| msgid "Last updated:"
+#, kde-format
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
 msgid ""
 "Last Updated:\n"
 "%1"
-msgstr "Naposledy aktualizováno:"
+msgstr ""
+"Naposledy aktualizováno:\n"
+"%1"
 
 #: plugins/syndication/feedwidget.cpp:234
 #, kde-format
@@ -8270,10 +8357,9 @@ msgid "<b>Downloading</b>"
 msgstr "<b>Stahuje se</b>"
 
 #: plugins/syndication/feedwidget.cpp:243
-#, fuzzy, kde-format
-#| msgid "<b>%1</b>"
+#, kde-format
 msgid "<b>Queued</b>"
-msgstr "<b>%1</b>"
+msgstr "<b>Ve frontě</b>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/feedwidget.ui:65
@@ -8309,7 +8395,7 @@ msgstr " minuty"
 #: plugins/syndication/feedwidget.ui:160
 #, kde-format
 msgid "Last successful update of the selected feed"
-msgstr ""
+msgstr "Poslední úspěšná aktualizace vybraného zdroje"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
 #: plugins/syndication/feedwidget.ui:183
