@@ -104,6 +104,7 @@
     <p xml:lang="bg">KTorrent е BitTorrent приложение на KDE, което ви позволява да изтегляте файлове чрез протокола BitTorrent. То ви дава възможност да стартирате няколко торента едновременно и притежава разширени функции, които го превръщат в пълноценен клиент за BitTorrent.</p>
     <p xml:lang="ca">El KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrents alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
     <p xml:lang="ca-valencia">KTorrent és una aplicació de BitTorrent creada per la comunitat KDE que us permetrà descarregar fitxers utilitzant el protocol BitTorrent. Permet executar múltiples torrent alhora i ve amb característiques esteses per a fer-lo un client complet per a BitTorrent.</p>
+    <p xml:lang="cs">KTorrent je aplikace BitTorrent od KDE, která umožňuje stahovat soubory pomocí protokolu BitTorrent. Umožňuje spouštět více torrentů současně a je vybavena rozšířenými funkcemi, díky nimž je plnohodnotným klientem pro BitTorrent.</p>
     <p xml:lang="da">KTorrent er et BitTorrent-program fra KDE, som lader dig downloade filer med BitTorrent-protokollen. Den lader dig køre flere torrents på samme tid og har udvidet funktionalitet som gør det til en komplet BitTorrent-klient.</p>
     <p xml:lang="de">KTorrent ist ein BitTorrent-Programm von KDE. Sie können damit Dateien über das BitTorrent-Protokoll herunterladen. Mehrere Torrents lassen sich gleichzeitig ausführen. KTorrent hat zusätzliche Fähigkeiten und ist damit ein mit allen Funktionen ausgestattetes Dienstprogramm für BitTorrent.</p>
     <p xml:lang="el">Το KTorrent είναι μια εφαρμογή BitTorrent από το KDE την οποία σας επιτρέπει να κάνετε λήψεις αρχείων με χρήση του πρωτοκόλλου BitTorrent. Σας δίνει τη δυνατότητα να εκτελείτε πολλά torrents ταυτόχρονα και συνοδεύεται με εκτεταμένες λειτουργίες για μια πλήρη χαρακτηριστικών εφαρμογή BitTorrent.</p>
@@ -229,6 +230,7 @@
       <li xml:lang="bg">Ограничение на скоростта глобално и на ниво отделен торент</li>
       <li xml:lang="ca">Límits de la velocitat global i per torrent</li>
       <li xml:lang="ca-valencia">Límits de la velocitat global i per torrent</li>
+      <li xml:lang="cs">Globální a torrentové omezení rychlosti</li>
       <li xml:lang="da">Hastighedsgrænser globalt og pr. torrent</li>
       <li xml:lang="de">Geschwindigkeitsbegrenzungen global und für den einzelnen Torrent</li>
       <li xml:lang="el">Καθολικά και ανά torrent όρια ταχύτητας</li>
@@ -269,6 +271,7 @@
       <li xml:lang="bg">Вграден преглед на определени типове файлове (видео и аудио)</li>
       <li xml:lang="ca">Vista prèvia de certs tipus de fitxer, integrada en construir (vídeo i àudio)</li>
       <li xml:lang="ca-valencia">Vista prèvia de certs tipus de fitxer, integrada en construir (vídeo i àudio)</li>
+      <li xml:lang="cs">Vestavěný náhled určitých typů souborů (video a audio)</li>
       <li xml:lang="da">Forhåndsvisning af visse filtyper indbygget (video og lyd)</li>
       <li xml:lang="de">Eingebaute Vorschau für bestimmte Dateitypen (Video und Audio)</li>
       <li xml:lang="el">Προεπισκόπηση συγκεκριμένων τύπων αρχείων, ενσωματωμένη (με βίντεο και ήχο)</li>
@@ -309,6 +312,7 @@
       <li xml:lang="bg">Внасяне на частично или изцяло изтеглени файлове</li>
       <li xml:lang="ca">Importació de fitxers descarregats parcialment o del tot</li>
       <li xml:lang="ca-valencia">Importació de fitxers descarregats parcialment o del tot</li>
+      <li xml:lang="cs">Import částečně nebo zcela stažených souborů</li>
       <li xml:lang="da">Import af delvist eller helt downloadede filer</li>
       <li xml:lang="de">Teilweise oder vollständig heruntergeladene Dateien werden importiert</li>
       <li xml:lang="el">Εισαγωγή αποσπασματικώς ή πλήρως ληφθέντων αρχείων</li>
@@ -349,6 +353,7 @@
       <li xml:lang="bg">Приоритизиране на файловете при многофайлови торенти</li>
       <li xml:lang="ca">Priorització de fitxers per als torrents amb múltiples fitxers</li>
       <li xml:lang="ca-valencia">Priorització de fitxers per als torrent amb múltiples fitxers</li>
+      <li xml:lang="cs">Prioritizace souborů pro torrenty s více soubory</li>
       <li xml:lang="da">Filprioritering for torrents med flere filer</li>
       <li xml:lang="de">Dateipriorisierung für Torrents mit mehreren Dateien</li>
       <li xml:lang="el">Παραχώρηση προτεραιότητας σε αρχείο σε torrent με πολλά αρχεία</li>
@@ -389,6 +394,7 @@
       <li xml:lang="bg">Избирателно изтегляне при многофайлови торенти</li>
       <li xml:lang="ca">Descàrrega selectiva per als torrents amb múltiples fitxers</li>
       <li xml:lang="ca-valencia">Descàrrega selectiva per als torrent amb múltiples fitxers</li>
+      <li xml:lang="cs">Selektivní stahování pro torrenty s více soubory</li>
       <li xml:lang="da">Selektiv download ved torrents med flere filer</li>
       <li xml:lang="de">In Torrents mit mehreren Dateien können einzelne Dateien zum Herunterladen ausgewählt werden.</li>
       <li xml:lang="el">Επιλεκτική λήψη για torrent με πολλά αρχεία</li>
@@ -429,6 +435,7 @@
       <li xml:lang="bg">Изгонвяне/изхвърляне на потребители с допълнителен диалогов прозорец за филтриране по IP, за целите на показване/редактиране</li>
       <li xml:lang="ca">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a finalitats de llista/edició</li>
       <li xml:lang="ca-valencia">Expulsa/veta els parells amb un diàleg de filtre d'IP addicional per a finalitats de llista/edició</li>
+      <li xml:lang="cs">Odstranění/zákaz peerů s dodatečným dialogovým oknem IP filtru pro účely seznamu/úpravy</li>
       <li xml:lang="da">Afbryd/bandlys peers med en yderligere IP-filterdialog til liste- og redigeringsformål</li>
       <li xml:lang="de">Gegenstellen zwangsweise trennen oder verbannen mit Hilfe eines zusätzlichen IP-Filterdialogs. Die IP-Einträge können in diesem Dialog angezeigt und bearbeitet werden.</li>
       <li xml:lang="el">Αποκλεισμός κόμβων με επιπλέον διάλογο IP φίλτρου για σκοπούς λίστας/επεξεργασίας</li>
@@ -841,6 +848,7 @@
       <li xml:lang="bg">Поддръжка на удостоверяване пред разпределящ сървър</li>
       <li xml:lang="ca">Suport d'autenticació del seguidor</li>
       <li xml:lang="ca-valencia">Suport d'autenticació del seguidor</li>
+      <li xml:lang="cs">Podpora autentizace na trackeru</li>
       <li xml:lang="da">Understøttelse af tracker-autentificering</li>
       <li xml:lang="de">Unterstützung für Tracker-Authentifizierung</li>
       <li xml:lang="el">Υποστήριξη ταυτοποίησης ανιχνευτή</li>
@@ -925,6 +933,7 @@
     <p xml:lang="bg">В допълнение към вградените функционалности за KTorrent са налични и някои приставки.</p>
     <p xml:lang="ca">Addicionalment a les funcionalitats integrades en construir, hi ha alguns connectors disponibles per al KTorrent.</p>
     <p xml:lang="ca-valencia">De manera addicional a les funcionalitats integrades en construir, hi ha alguns connectors disponibles per a KTorrent.</p>
+    <p xml:lang="cs">Kromě vestavěných funkcí existuje pro KTorrent několik pluginů.</p>
     <p xml:lang="da">Udover den indbyggede funktionalitet er der nogle plugins tilgængelige til KTorrent.</p>
     <p xml:lang="de">Zusätzlich zu den eingebauten Funktionen gibt es weitere Module für KTorrent.</p>
     <p xml:lang="el">Επιπλέον των ενσωματωμένων λειτουργιών, υπάρχουν κάποια πρόσθετα διαθέσιμα για το KTorrent.</p>
@@ -984,6 +993,7 @@
           <li xml:lang="ar">إصلاح خطأ كان يتسبب في تحديث ملف المغناطيسات باستمرار</li>
           <li xml:lang="ca">S'ha corregit un error que provocava que el fitxer magnet s'actualitzés constantment</li>
           <li xml:lang="ca-valencia">S'ha corregit un error que provocava que el fitxer magnet s'actualitzara constantment</li>
+          <li xml:lang="cs">Opravena chyba, kvůli které se soubor magnetů neustále aktualizoval</li>
           <li xml:lang="es">Arreglado un error que causaba que los archivos magnet se actualizaran constantemente</li>
           <li xml:lang="fr">Correction d'un bogue provoquant la mise à jour permanente du fichier des aimants</li>
           <li xml:lang="he">תוקנה תקלה שגרמה לעדכון מחזורי של קובצי מגנטים</li>
@@ -998,6 +1008,7 @@
           <li xml:lang="ar">إصلاح لون تمييز شريط التقدم</li>
           <li xml:lang="ca">S'ha corregit el color de ressaltat de la barra de progrés</li>
           <li xml:lang="ca-valencia">S'ha corregit el color de ressaltat de la barra de progrés</li>
+          <li xml:lang="cs">Barva zvýraznění v šabloně</li>
           <li xml:lang="es">Arreglado el color destacado de la barra de progreso</li>
           <li xml:lang="fr">Correction de la couleur de mise en évidence de la barre de progression</li>
           <li xml:lang="he">צבע הדגשת סרגל ההתקדמות תוקן</li>
@@ -1012,6 +1023,7 @@
           <li xml:lang="ar">إصلاح تلميح إعدادات عارض السجلات الذي كان يعرض كود HTML الخام</li>
           <li xml:lang="ca">S'ha corregit el consell d'eina de la configuració del visualitzador de registres que mostrava HTML en brut</li>
           <li xml:lang="ca-valencia">S'ha corregit el consell d'eina de la configuració del visor de registres que mostrava HTML en brut</li>
+          <li xml:lang="cs">Opravena chyba, kdy se v popisku nastavení prohlížeče protokolů zobrazoval nezpracovaný kód HTML</li>
           <li xml:lang="es">Arreglado el menú emergente de preferencias del visor de registros que mostraba HTML crudo</li>
           <li xml:lang="fr">Correction de l'infobulle de configuration de l'afficheur de journaux affichant du format « HTML » brut</li>
           <li xml:lang="he">תוקנה חלונית הגדרות מציג יומנים שהציגה HTML גולמי</li>
@@ -1035,6 +1047,7 @@
           <li xml:lang="ar"> إضافة عمود ”آخر نشاط“ يعرض الوقت الذي شهد فيه السيول آخر نشاط تحميل أو تنزيل</li>
           <li xml:lang="ca">S'ha afegit una columna «Darrera activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
           <li xml:lang="ca-valencia">S'ha afegit una columna «Última activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
+          <li xml:lang="cs">Byl přidán sloupec „Poslední aktivita“, který zobrazuje čas, kdy došlo k poslednímu nahrávání nebo stahování v rámci torrentu</li>
           <li xml:lang="es">Añadida la columna «Última actividad» que muestra la hora a la que el torrent tuvo su última actividad</li>
           <li xml:lang="fr">Ajout d'une colonne « Dernière activité » affichant l'heure à laquelle le torrent a eu sa dernière activité de téléchargement ou de téléversement</li>
           <li xml:lang="he">נוספה עמודת „פעילות אחרונה” שמציגה את הזמן שבו הייתה פעילות העלאה או הורדה בטורנט בפעם האחרונה</li>
@@ -1049,6 +1062,7 @@
           <li xml:lang="ar">إصلاح لون خلفية لوحة حالة عناصر الخلاصة في أداة التوزيع</li>
           <li xml:lang="ca">S'ha corregit el color de fons del plafó d'estat de l'element de canal del giny de sindicació</li>
           <li xml:lang="ca-valencia">S'ha corregit el color de fons del quadro d'estat de l'element de canal del giny de sindicació</li>
+          <li xml:lang="cs">Byla opravena barva pozadí panelu stavu položek kanálu v widgetu pro sdílení</li>
           <li xml:lang="es">Arreglado el color de fondo del panel de estado del complemento de sindicación</li>
           <li xml:lang="fr">Correction de la couleur d'arrière-plan du panneau d'état pour l'élément de flux du composant graphique de syndication</li>
           <li xml:lang="he">תוקן צבע הרקע של לוח המצב של פריט ערוץ עדכונים בווידג׳ט הסינדיקציה</li>
@@ -1063,6 +1077,7 @@
           <li xml:lang="ar">إضافة أعمدة إلى الشاشة الرئيسية تعرض عدد البايتات التي تم تحميلها وتنزيلها خلال الجلسة الحالية</li>
           <li xml:lang="ca">S'han afegit columnes a la vista principal que mostren el nombre de bytes pujats i baixats a la sessió actual</li>
           <li xml:lang="ca-valencia">S'han afegit columnes en la vista principal que mostren el nombre de bytes pujats i baixats a la sessió actual</li>
+          <li xml:lang="cs">Do hlavního zobrazení byly přidány sloupce, které zobrazují počet bajtů nahraných a stažených v aktuální relaci</li>
           <li xml:lang="es">Añadidas columnas a la vista principal que muestran el número de bytes descargados y subidos en la sesión actual</li>
           <li xml:lang="fr">Colonnes ajoutées à la vue principale affichant le nombre d'octets téléchargés et envoyés dans la session en cours</li>
           <li xml:lang="he">נוספו עמודות לתצוגת הראשית שמציגים את הבתים שהועלו וירדו בהפעלה הנוכחית</li>
@@ -1090,6 +1105,7 @@
           <li xml:lang="ar">يستخدم عمود ”المُضاف“ الآن تنسيقًا أقصر للتاريخ</li>
           <li xml:lang="ca">La columna «Afegit» ara fa servir el format de data curta</li>
           <li xml:lang="ca-valencia">La columna «Afegit» ara utilitza el format de data curta</li>
+          <li xml:lang="cs">Sloupec „Přidáno“ nyní používá zkrácený formát data</li>
           <li xml:lang="es">La columna añadida ahora usa el formato de fecha corta</li>
           <li xml:lang="fr">La colonne « Ajouté » utilise désormais un format de date plus court</li>
           <li xml:lang="he">עמודת „הוספה” משתמשת מעתה בתבנית תאריך קצרה יותר</li>
@@ -1104,6 +1120,7 @@
           <li xml:lang="ar"> إصلاح مشكلة تعطل التطبيق عند إغلاق أداة الفيديو</li>
           <li xml:lang="ca">S'ha corregit una fallada en tancar el giny de vídeo</li>
           <li xml:lang="ca-valencia">S'ha corregit una fallada en tancar el giny de vídeo</li>
+          <li xml:lang="cs">Opravena chyba, která způsobovala pád aplikace při zavírání widgetu videa</li>
           <li xml:lang="es">Arreglado un error al cerrar el complemento de vídeo</li>
           <li xml:lang="fr">Correction d'un plantage lors de la fermeture du composant graphique de vidéos</li>
           <li xml:lang="he">תוקנה קריסה בסגירת וידג׳ט הווידאו</li>
@@ -1124,6 +1141,7 @@
           <li xml:lang="ar">قبول ملفات مزودي الويب عبر ميفاق HTTPS</li>
           <li xml:lang="ca">Accepta sembrats web utilitzant HTTPS</li>
           <li xml:lang="ca-valencia">Accepta sembrats web utilitzant HTTPS</li>
+          <li xml:lang="cs">Příjem webových seedů přes HTTPS</li>
           <li xml:lang="es">Se aceptan semillas web usando HTTPS</li>
           <li xml:lang="fr">Accepter les webseeds utilisant le protocole « HTTPS »</li>
           <li xml:lang="he">קבלת מקורות רשת שמשתמשים ב־HTTPS</li>
@@ -1138,6 +1156,7 @@
           <li xml:lang="ar">إصلاح المخططات التي تظهر فيها النصوص باللون الأبيض على خلفية بيضاء في المكون الإضافي «الإحصائيات»</li>
           <li xml:lang="ca">S'han corregit els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
           <li xml:lang="ca-valencia">S'han corregit els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
+          <li xml:lang="cs">Opraveny grafy s bílým textem na bílém pozadí v pluginu Statistiky</li>
           <li xml:lang="es">Arreglados los gráficos que mostraban texto en blanco sobre fondo blanco en el complemento de estadísticas</li>
           <li xml:lang="fr">Correction des graphiques ayant du texte blanc sur un arrière-plan blanc dans le module externe « Statistiques »</li>
           <li xml:lang="he">תוקנה תקלה שבתרשימים הופיע טקסט לבן על רקע לבן בתוסף הסטטיסטיקה</li>
@@ -1158,6 +1177,7 @@
           <li xml:lang="ar">إصلاح مشكلة عدم السماح باختيار ملفات .torrent في مربع حوار استيراد السيول.</li>
           <li xml:lang="ca">S'ha corregit el diàleg d'importació de torrent que no permet seleccionar fitxers .torrent</li>
           <li xml:lang="ca-valencia">S'ha corregit el diàleg d'importació de torrent que no permet seleccionar fitxers «.torrent»</li>
+          <li xml:lang="cs">Opravena chyba, kvůli které nebylo možné v dialogovém okně „Importovat torrent“ vybrat soubory .torrent</li>
           <li xml:lang="es">Arreglado el diálogo de importación torrent que no permitía seleccionar archivos .torrent</li>
           <li xml:lang="fr">Correction de la boîte de dialogue d'importation de Torrent, ne permettant pas la sélection de de fichier « .torrent »</li>
           <li xml:lang="he">תוקנה בעיה שחלונית ייבוא הטורנט לא מרשה לבחור קובצי ‎.torrent</li>
@@ -1182,6 +1202,7 @@
           <li xml:lang="ar">إضافة إجراء لإعادة تسمية الملفات في قائمة السياق الخاصة بـ«Info Widget»</li>
           <li xml:lang="ca">S'ha afegit una acció per a canviar el nom de fitxers en el menú contextual del giny d'informació</li>
           <li xml:lang="ca-valencia">S'ha afegit una acció per a canviar el nom de fitxers en el menú contextual del giny d'informació</li>
+          <li xml:lang="cs">Do kontextového menu widgetu Info byla přidána akce pro přejmenování souborů</li>
           <li xml:lang="es">Añadida una acción para renombrar archivos en el menú de contexto del complemento de información</li>
           <li xml:lang="fr">Ajout d’une action pour le renommage des fichiers dans le menu contextuel du composant graphique d'informations</li>
           <li xml:lang="he">נוספה פעולה לשנות את שמות הקבצים בתפריט ההקשר של וידג׳ט המידע</li>
@@ -1196,6 +1217,7 @@
           <li xml:lang="ar">حفظ ملف المغناطيسات كلما حدثت أي تحديثات، حتى لا تضيع بيانات المغناطيسات في حالة تعطل التطبيق</li>
           <li xml:lang="ca">Desa el fitxer magnet sempre que s'actualitzi, de manera que les dades del magnet no es perdin si l'aplicació es bloqueja</li>
           <li xml:lang="ca-valencia">Guarda el fitxer magnet sempre que s'actualitze, de manera que les dades del magnet no es perden si l'aplicació es bloqueja</li>
+          <li xml:lang="cs">Soubor magnetů se ukládá při každé aktualizaci, aby nedošlo ke ztrátě dat magnetů v případě selhání aplikace</li>
           <li xml:lang="es">Se guardan los archivos magnet cuando se actualizan, de tal manera que los datos magnet no se pierdan si la aplicación se cierra inesperadamente</li>
           <li xml:lang="fr">Enregistrez le fichier des aimants chaque fois qu'il est mis à jour. Ainsi, les données des aimants ne sont pas perdues si l'application plante</li>
           <li xml:lang="he">לשמור את קובצי המגנטים עם כל עדכון שלהם, כדי שנתוני המגנט לא הולכים לאיבוד אם היישום קורס</li>
@@ -1210,6 +1232,7 @@
           <li xml:lang="ar">استخدم رمزًا مختلفًا لعمليات التوزيع المعلقة وعمليات التنزيل الملبثة</li>
           <li xml:lang="ca">Usa una icona diferent per a la sembra en cua i la baixada en cua</li>
           <li xml:lang="ca-valencia">Utilitza una icona diferent per a la sembra en cua i la baixada en cua</li>
+          <li xml:lang="cs">Pro načítání do fronty a stahování do fronty byla použita jiná ikona</li>
           <li xml:lang="es">Uso de un icono diferente para la descarga y subida encolada</li>
           <li xml:lang="fr">Utilisez une icône différente pour la mise en file d'attente des germes et du téléchargement</li>
           <li xml:lang="he">נעשה שימוש בסמל שונה לתור זריעה ותור הורדה</li>
@@ -1232,6 +1255,7 @@
           <li xml:lang="ar">نُقل إلى Qt6</li>
           <li xml:lang="ca">Adaptació a les Qt6</li>
           <li xml:lang="ca-valencia">Adaptació a les Qt6</li>
+          <li xml:lang="cs">Portování na Qt 6</li>
           <li xml:lang="es">Migración a Qt 6</li>
           <li xml:lang="fr">Portage vers Qt 6</li>
           <li xml:lang="he">הוסב ל־Qt 6</li>
@@ -1249,6 +1273,7 @@
           <li xml:lang="ar">استخدم أيقونة رمزية في علبة الأدوات</li>
           <li xml:lang="ca">Utilitza una icona simbòlica a la safata del sistema</li>
           <li xml:lang="ca-valencia">Utilitza una icona simbòlica a la safata del sistema</li>
+          <li xml:lang="cs">Ikona v systémové části</li>
           <li xml:lang="es">Uso de icono de papelera simbólico</li>
           <li xml:lang="fr">Utiliser une boîte à miniatures symbolique</li>
           <li xml:lang="he">עברנו להשתמש בסמל שורת מערכת סמלי</li>
@@ -1266,6 +1291,7 @@
           <li xml:lang="ar">تحسين ملحق البحث: إزالة شريط البحث الزائد عن الحاجة؛ استخدام ألسنة قابلة للإزالة بدلاً من زر حذف مخصص؛ استخدام أزرار تحتوي على أيقونات فقط للرجوع إلى الخلف والتقدم إلى الأمام وإعادة التحميل.</li>
           <li xml:lang="ca">Millora el connector de cerca: s'ha eliminat la barra de cerca redundant; s'han utilitzat pestanyes eliminables en lloc d'un botó de supressió personalitzat; s'han utilitzat botons de només icona per a Enrere, Endavant i Recarrega</li>
           <li xml:lang="ca-valencia">Millora el connector de busca: s'ha eliminat la barra de busca redundant; s'han utilitzat pestanyes eliminables en lloc d'un botó de supressió personalitzat; s'han utilitzat botons de només icona per a Arrere, Avant i Torna a carregar</li>
+          <li xml:lang="cs">Vylepšený vyhledávací plugin: odstraněna nadbytečná vyhledávací lišta; použity odnímatelné záložky namísto vlastního tlačítka pro smazání; použita tlačítka pouze s ikonami pro Zpět, Vpřed a Obnovit</li>
           <li xml:lang="es">Complemento de búsqueda mejorado: eliminada barra de búsqueda redundante, uso de pestañas eliminables en lugar de un botón de borrado personalizado, uso de botones de icono para Atrás, Adelante y Recarga</li>
           <li xml:lang="fr">Amélioration du module externe de recherche : suppression de la barre de recherche redondante, utilisation d'onglets amovibles au lieu d'un bouton personnalisé de suppression, utilisation de boutons uniquement avec icônes pour les actions « Précédent », « Suivant » et « Recharger »</li>
           <li xml:lang="he">תוסף החיפוש השתפר: הוסר סרגל חיפוש מיותר, נעשה שימוש בלשוניות שניתן להסיר במקום כפתור מחיקה בהתאמה אישית, נעשה שימוש בכפתורים עם סמלים בלבד לחזרה, קדימה וריענון.</li>
@@ -1281,6 +1307,7 @@
           <li xml:lang="ar">تحسين التباعد بين مختلف الأدوات، ونقل جزء كبير من واجهة المستخدم لاستخدام مظهر جديد بدون إطار.</li>
           <li xml:lang="ca">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
           <li xml:lang="ca-valencia">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
+          <li xml:lang="cs">Vylepšeny rozestupy různých widgetů a převedena velká část uživatelského rozhraní tak, aby využívalo nový bezrámový vzhled.</li>
           <li xml:lang="es">Espaciado de varios widgets mejorado.Migración de la UI a un nuevo aspecto sin marcos.</li>
           <li xml:lang="fr">Amélioration des espacements de divers composants graphiques et portage d’une grande partie de l’interface utilisateur pour utiliser une nouvelle apparence sans cadre</li>
           <li xml:lang="he">הריווח של מגוון רחב של וידג׳טים השתפר והרבה מממשק המשתמש הוסב להשתמש במראה נטול מסגרות</li>
@@ -1296,6 +1323,7 @@
           <li xml:lang="ar">إصلاح مشكلة وجود أعلام الدول في علامة التبويب الأقران في أداة المعلومات</li>
           <li xml:lang="ca">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
           <li xml:lang="ca-valencia">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
+          <li xml:lang="cs">Opraveny vlajky zemí v záložce Peers ve widgetu Info</li>
           <li xml:lang="es">Arreglo de las banderas de los países en la pestaña Pares del widget de información</li>
           <li xml:lang="fr">Correction des drapeaux des pays apparaissant dans l'onglet « Pairs » du composant graphique d'informations</li>
           <li xml:lang="he">תוקנו דגלי המדינות בלשונית העמיתים בווידג׳ט המידע</li>
@@ -1311,6 +1339,7 @@
           <li xml:lang="ar">إصلاح مشكلة فشل مربع حوار استيراد التورنت في نسخ ملف .torrent المحدد</li>
           <li xml:lang="ca">S'ha corregit el diàleg d'importació de torrent que falla en copiar el fitxer .torrent indicat</li>
           <li xml:lang="ca-valencia">S'ha corregit el diàleg d'importació de torrent que falla en copiar el fitxer «.torrent» indicat</li>
+          <li xml:lang="cs">Opravena chyba dialogového okna Importovat torrent, které nedokázalo zkopírovat zadaný soubor .torrent.</li>
           <li xml:lang="es">Arreglado el diálogo de importar torrent al fallar la copia de un archivo .torrent</li>
           <li xml:lang="fr">Correction de la boîte de dialogue d'importation échouant lors de la copie du fichier « .torrent » fourni</li>
           <li xml:lang="he">תוקנה בעיה שחלונית ייבוא טורנט נכשלה בהעתקת קובץ ה־‎.torrent הנתון</li>
@@ -1326,6 +1355,7 @@
           <li xml:lang="ar">إصلاح مشكلة عدم عرض تلميح شريط القطع بشكل صحيح</li>
           <li xml:lang="ca">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
           <li xml:lang="ca-valencia">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
+          <li xml:lang="cs">Opravena chyba, kdy se v popisku panelu fragmentů nezobrazovala správně legenda</li>
           <li xml:lang="es">La descripción emergente de la barra de trozos ahora muestra la leyenda</li>
           <li xml:lang="fr">Correction de l'infobulle de la barre de morceaux n'affichant pas correctement la légende</li>
           <li xml:lang="he">תוקנה בעיה שחלונית צצה בסרגל החלקים לא הציגה את המקרא כמו שצריך</li>
@@ -1341,6 +1371,7 @@
           <li xml:lang="ar">تعطيل التسجيل في الملف بشكل مبدئي لتجنب عمليات الكتابة غير الضرورية على نظام الملفات، يمكن تمرير وسيطة سطر الأوامر `--enable-logging` لتمكين التسجيل في الملف.</li>
           <li xml:lang="ca">Desactiva el registre a fitxer de manera predeterminada per a evitar escriptures innecessàries al sistema de fitxers, es pot passar l'argument de la línia d'ordres `--enable-logging` per a activar el registre al fitxer</li>
           <li xml:lang="ca-valencia">Desactiva el registre a fitxer de manera predeterminada per a evitar escriptures innecessàries al sistema de fitxers, es pot passar l'argument de la línia d'ordres `--enable-logging` per a activar el registre al fitxer</li>
+          <li xml:lang="cs">Výchozí nastavení zakazuje ukládání protokolů do souboru, aby se zabránilo zbytečnému zápisu do souborového systému. Pomocí argumentu příkazového řádku `--enable-logging` lze aktivovat ukládání protokolů do souboru.</li>
           <li xml:lang="es">Desactivados los registros a archivo por omisión para evitar escrituras innecesarias en disco. Se puede pasar la orden de comandos «--enable-loggin» para activar los registros.</li>
           <li xml:lang="fr">Désactivez l'enregistrement dans un fichier par défaut pour éviter des écritures inutiles dans le système de fichiers. L'argument de ligne de commandes « --enable-logging » peut être passé pour activer l'enregistrement dans un fichier.</li>
           <li xml:lang="he">השבתת תיעוד לקובץ כברירת מחדל כדי להימנע מכתיבות לא הכרחיות למערכת הקבצים, אפשר להעביר את ארגומנט שורת הפקודות `‎--enable-logging` כדי להפעיל תיעוד לקובץ</li>
@@ -1356,6 +1387,7 @@
           <li xml:lang="ar">إصلاح مشكلة عدم عرض تلميح شريط القطع بشكل صحيح</li>
           <li xml:lang="ca">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
           <li xml:lang="ca-valencia">S'ha corregit que l'indicador de la barra de fragments no mostra correctament la llegenda</li>
+          <li xml:lang="cs">Opravena chyba, kdy se v popisku panelu fragmentů nezobrazovala správně legenda</li>
           <li xml:lang="es">La descripción emergente de la barra de trozos ahora muestra la leyenda</li>
           <li xml:lang="fr">Correction de l'infobulle de la barre de morceaux n'affichant pas correctement la légende</li>
           <li xml:lang="he">תוקנה בעיה שחלונית צצה בסרגל החלקים לא הציגה את המקרא כמו שצריך</li>
@@ -1371,6 +1403,7 @@
           <li xml:lang="ar">إصلاح إجراءات الاختصارات العالمية</li>
           <li xml:lang="ca">Corregeix les accions de les dreceres globals</li>
           <li xml:lang="ca-valencia">Corregix les accions de les dreceres globals</li>
+          <li xml:lang="cs">Opraveny globální akce klávesových zkratek</li>
           <li xml:lang="es">Arregladas las acciones de atajos de teclado globales</li>
           <li xml:lang="fr">Correction des actions de raccourcis globaux</li>
           <li xml:lang="he">תוקנו פעולות מקשי קיצור מקיפים</li>
