@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-17 00:43+0000\n"
+"POT-Creation-Date: 2026-03-21 00:44+0000\n"
 "PO-Revision-Date: 2025-07-20 01:44+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -4247,7 +4247,7 @@ msgctxt "1h 20m ago"
 msgid "%1 ago"
 msgstr "%1 전"
 
-#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:326
+#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:321
 #: plugins/infowidget/webseedsmodel.cpp:112
 #, kde-format
 msgid "Downloaded"
@@ -4266,7 +4266,7 @@ msgstr "세션 내 다운로드"
 msgid "Size"
 msgstr "용량"
 
-#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:328
+#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:323
 #, kde-format
 msgid "Uploaded"
 msgstr "업로드된 용량"
@@ -4285,12 +4285,12 @@ msgstr "남은 용량"
 
 #: ktorrent/view/viewmodel.cpp:503
 #: plugins/infowidget/chunkdownloadmodel.cpp:203
-#: plugins/infowidget/peerviewmodel.cpp:308
+#: plugins/infowidget/peerviewmodel.cpp:303
 #, kde-format
 msgid "Down Speed"
 msgstr "다운로드 속도"
 
-#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:310
+#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:305
 #, kde-format
 msgid "Up Speed"
 msgstr "업로드 속도"
@@ -5781,151 +5781,151 @@ msgstr "피어 추방"
 msgid "Ban Peer"
 msgstr "피어를 추방하고 필터에 등록"
 
-#: plugins/infowidget/peerviewmodel.cpp:86
+#: plugins/infowidget/peerviewmodel.cpp:81
 #, kde-format
 msgid " (µTP)"
 msgstr " (µTP)"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:102
 #, kde-format
 msgctxt "Choked"
 msgid "Yes"
 msgstr "예"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:102
 #, kde-format
 msgctxt "Not choked"
 msgid "No"
 msgstr "아니요"
 
-#: plugins/infowidget/peerviewmodel.cpp:109
+#: plugins/infowidget/peerviewmodel.cpp:104
 #, kde-format
 msgctxt "Snubbed"
 msgid "Yes"
 msgstr "예"
 
-#: plugins/infowidget/peerviewmodel.cpp:109
+#: plugins/infowidget/peerviewmodel.cpp:104
 #, kde-format
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "아니요"
 
-#: plugins/infowidget/peerviewmodel.cpp:111
+#: plugins/infowidget/peerviewmodel.cpp:106
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
 msgstr "%1%"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:120
 #, kde-format
 msgctxt "Interested"
 msgid "Yes"
 msgstr "예"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:120
 #, kde-format
 msgctxt "Not Interested"
 msgid "No"
 msgstr "아니요"
 
-#: plugins/infowidget/peerviewmodel.cpp:127
+#: plugins/infowidget/peerviewmodel.cpp:122
 #, kde-format
 msgctxt "Interesting"
 msgid "Yes"
 msgstr "예"
 
-#: plugins/infowidget/peerviewmodel.cpp:127
+#: plugins/infowidget/peerviewmodel.cpp:122
 #, kde-format
 msgctxt "Not Interesting"
 msgid "No"
 msgstr "아니요"
 
-#: plugins/infowidget/peerviewmodel.cpp:302
+#: plugins/infowidget/peerviewmodel.cpp:297
 #, kde-format
 msgid "Address"
 msgstr "주소"
 
-#: plugins/infowidget/peerviewmodel.cpp:304
+#: plugins/infowidget/peerviewmodel.cpp:299
 #, kde-format
 msgid "Country"
 msgstr "국가"
 
-#: plugins/infowidget/peerviewmodel.cpp:306
+#: plugins/infowidget/peerviewmodel.cpp:301
 #, kde-format
 msgid "Client"
 msgstr "클라이언트 종류"
 
-#: plugins/infowidget/peerviewmodel.cpp:312
+#: plugins/infowidget/peerviewmodel.cpp:307
 #, kde-format
 msgid "Choked"
 msgstr "차단함"
 
-#: plugins/infowidget/peerviewmodel.cpp:314
+#: plugins/infowidget/peerviewmodel.cpp:309
 #, kde-format
 msgid "Snubbed"
 msgstr "데이터 미전송 여부"
 
-#: plugins/infowidget/peerviewmodel.cpp:316
+#: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
 msgid "Availability"
 msgstr "가용성"
 
-#: plugins/infowidget/peerviewmodel.cpp:318
+#: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/infowidget/peerviewmodel.cpp:320
+#: plugins/infowidget/peerviewmodel.cpp:315
 #, kde-format
 msgid "Score"
 msgstr "점수"
 
-#: plugins/infowidget/peerviewmodel.cpp:322
+#: plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
 msgid "Upload Slot"
 msgstr "업로드 슬롯"
 
-#: plugins/infowidget/peerviewmodel.cpp:324
+#: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Requests"
 msgstr "요청"
 
-#: plugins/infowidget/peerviewmodel.cpp:330
+#: plugins/infowidget/peerviewmodel.cpp:325
 #, kde-format
 msgid "Interested"
 msgstr "관심가짐"
 
-#: plugins/infowidget/peerviewmodel.cpp:332
+#: plugins/infowidget/peerviewmodel.cpp:327
 #, kde-format
 msgid "Interesting"
 msgstr "관심있음"
 
-#: plugins/infowidget/peerviewmodel.cpp:339
+#: plugins/infowidget/peerviewmodel.cpp:334
 #, kde-format
 msgid "IP address of the peer"
 msgstr "피어의 IP 주소"
 
-#: plugins/infowidget/peerviewmodel.cpp:341
+#: plugins/infowidget/peerviewmodel.cpp:336
 #, kde-format
 msgid "Country the peer is in"
 msgstr "피어가 위치한 국가"
 
-#: plugins/infowidget/peerviewmodel.cpp:343
+#: plugins/infowidget/peerviewmodel.cpp:338
 #, kde-format
 msgid "Which client the peer is using"
 msgstr "피어가 사용하는 클라이언트"
 
-#: plugins/infowidget/peerviewmodel.cpp:345
+#: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
 msgid "Download speed"
 msgstr "다운로드 속도"
 
-#: plugins/infowidget/peerviewmodel.cpp:347
+#: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
 msgid "Upload speed"
 msgstr "업로드 속도"
 
-#: plugins/infowidget/peerviewmodel.cpp:349
+#: plugins/infowidget/peerviewmodel.cpp:344
 #, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
@@ -5934,54 +5934,54 @@ msgstr ""
 "내 IP 주소를 피어가 차단했는지를 나타냅니다. 차단한 피어는 어떤 데이터도 보내"
 "지 않습니다."
 
-#: plugins/infowidget/peerviewmodel.cpp:351
+#: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
 "'데이터를 미전송함'은 지난 2분간 어떤 데이터도 보내지 않은 피어를 말합니다."
 
-#: plugins/infowidget/peerviewmodel.cpp:353
+#: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr "피어가 이 토렌트에서 얼마나 많은 데이터를 가지고 있는지를 나타냅니다."
 
-#: plugins/infowidget/peerviewmodel.cpp:355
+#: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr "피어의 DHT 활성화 여부를 나타냅니다."
 
-#: plugins/infowidget/peerviewmodel.cpp:357
+#: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
 "피어의 '점수' 입니다. KTorrent는 이것을 업로드 대상을 지정할 때 사용합니다."
 
-#: plugins/infowidget/peerviewmodel.cpp:359
+#: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr "업로드 슬롯에 있는 피어만이 데이터를 받아갈 수 있습니다."
 
-#: plugins/infowidget/peerviewmodel.cpp:361
+#: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
 msgid "The number of download and upload requests"
 msgstr "다운로드, 업로드 요청 수"
 
-#: plugins/infowidget/peerviewmodel.cpp:363
+#: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr "이 피어에게 다운로드한 용량"
 
-#: plugins/infowidget/peerviewmodel.cpp:365
+#: plugins/infowidget/peerviewmodel.cpp:360
 #, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr "이 피어에게 업로드한 용량"
 
-#: plugins/infowidget/peerviewmodel.cpp:367
+#: plugins/infowidget/peerviewmodel.cpp:362
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr "피어가 내 다운로드 데이터를 관심 있어 하는지 여부"
 
-#: plugins/infowidget/peerviewmodel.cpp:369
+#: plugins/infowidget/peerviewmodel.cpp:364
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr "이 피어의 다운로드 데이터에 관심이 있는지 여부"

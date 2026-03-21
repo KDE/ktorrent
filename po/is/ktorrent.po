@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-17 00:43+0000\n"
+"POT-Creation-Date: 2026-03-21 00:44+0000\n"
 "PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -4103,7 +4103,7 @@ msgctxt "1h 20m ago"
 msgid "%1 ago"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:326
+#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:321
 #: plugins/infowidget/webseedsmodel.cpp:112
 #, fuzzy, kde-format
 msgid "Downloaded"
@@ -4123,7 +4123,7 @@ msgstr "Fjöldi niðurhala"
 msgid "Size"
 msgstr "Stærð"
 
-#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:328
+#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:323
 #, fuzzy, kde-format
 msgid "Uploaded"
 msgstr "Hlaðið inn"
@@ -4142,12 +4142,12 @@ msgstr "Vinstri"
 
 #: ktorrent/view/viewmodel.cpp:503
 #: plugins/infowidget/chunkdownloadmodel.cpp:203
-#: plugins/infowidget/peerviewmodel.cpp:308
+#: plugins/infowidget/peerviewmodel.cpp:303
 #, fuzzy, kde-format
 msgid "Down Speed"
 msgstr "Innhraði"
 
-#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:310
+#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:305
 #, fuzzy, kde-format
 msgid "Up Speed"
 msgstr "Upphraði"
@@ -5619,205 +5619,205 @@ msgstr "Sparka jafningja"
 msgid "Ban Peer"
 msgstr "Banna jafningja"
 
-#: plugins/infowidget/peerviewmodel.cpp:86
+#: plugins/infowidget/peerviewmodel.cpp:81
 #, fuzzy, kde-format
 msgid " (µTP)"
 msgstr "µTP"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:102
 #, fuzzy, kde-format
 msgctxt "Choked"
 msgid "Yes"
 msgstr "Já"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:102
 #, fuzzy, kde-format
 msgctxt "Not choked"
 msgid "No"
 msgstr "Nei"
 
-#: plugins/infowidget/peerviewmodel.cpp:109
+#: plugins/infowidget/peerviewmodel.cpp:104
 #, fuzzy, kde-format
 msgctxt "Snubbed"
 msgid "Yes"
 msgstr "Já"
 
-#: plugins/infowidget/peerviewmodel.cpp:109
+#: plugins/infowidget/peerviewmodel.cpp:104
 #, fuzzy, kde-format
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "Nei"
 
-#: plugins/infowidget/peerviewmodel.cpp:111
+#: plugins/infowidget/peerviewmodel.cpp:106
 #, fuzzy, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
 msgstr "%1 %"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:120
 #, fuzzy, kde-format
 msgctxt "Interested"
 msgid "Yes"
 msgstr "Já"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:120
 #, fuzzy, kde-format
 msgctxt "Not Interested"
 msgid "No"
 msgstr "Nei"
 
-#: plugins/infowidget/peerviewmodel.cpp:127
+#: plugins/infowidget/peerviewmodel.cpp:122
 #, fuzzy, kde-format
 msgctxt "Interesting"
 msgid "Yes"
 msgstr "Já"
 
-#: plugins/infowidget/peerviewmodel.cpp:127
+#: plugins/infowidget/peerviewmodel.cpp:122
 #, fuzzy, kde-format
 msgctxt "Not Interesting"
 msgid "No"
 msgstr "Nei"
 
-#: plugins/infowidget/peerviewmodel.cpp:302
+#: plugins/infowidget/peerviewmodel.cpp:297
 #, fuzzy, kde-format
 msgid "Address"
 msgstr "Vistfang"
 
-#: plugins/infowidget/peerviewmodel.cpp:304
+#: plugins/infowidget/peerviewmodel.cpp:299
 #, fuzzy, kde-format
 msgid "Country"
 msgstr "Land"
 
-#: plugins/infowidget/peerviewmodel.cpp:306
+#: plugins/infowidget/peerviewmodel.cpp:301
 #, fuzzy, kde-format
 msgid "Client"
 msgstr "Biðlari"
 
-#: plugins/infowidget/peerviewmodel.cpp:312
+#: plugins/infowidget/peerviewmodel.cpp:307
 #, fuzzy, kde-format
 msgid "Choked"
 msgstr "Yfirfylltist"
 
-#: plugins/infowidget/peerviewmodel.cpp:314
+#: plugins/infowidget/peerviewmodel.cpp:309
 #, fuzzy, kde-format
 msgid "Snubbed"
 msgstr "Sniðgengið"
 
-#: plugins/infowidget/peerviewmodel.cpp:316
+#: plugins/infowidget/peerviewmodel.cpp:311
 #, fuzzy, kde-format
 msgid "Availability"
 msgstr "Aðgengi"
 
-#: plugins/infowidget/peerviewmodel.cpp:318
+#: plugins/infowidget/peerviewmodel.cpp:313
 #, fuzzy, kde-format
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/infowidget/peerviewmodel.cpp:320
+#: plugins/infowidget/peerviewmodel.cpp:315
 #, kde-format
 msgid "Score"
 msgstr "Stig"
 
-#: plugins/infowidget/peerviewmodel.cpp:322
+#: plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
 msgid "Upload Slot"
 msgstr "Senda hólf"
 
-#: plugins/infowidget/peerviewmodel.cpp:324
+#: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Requests"
 msgstr "Beiðnir"
 
-#: plugins/infowidget/peerviewmodel.cpp:330
+#: plugins/infowidget/peerviewmodel.cpp:325
 #, kde-format
 msgid "Interested"
 msgstr "Áhugasamur"
 
-#: plugins/infowidget/peerviewmodel.cpp:332
+#: plugins/infowidget/peerviewmodel.cpp:327
 #, fuzzy, kde-format
 msgid "Interesting"
 msgstr "Áhugavert"
 
-#: plugins/infowidget/peerviewmodel.cpp:339
+#: plugins/infowidget/peerviewmodel.cpp:334
 #, fuzzy, kde-format
 msgid "IP address of the peer"
 msgstr "IP vistfang jafningja"
 
-#: plugins/infowidget/peerviewmodel.cpp:341
+#: plugins/infowidget/peerviewmodel.cpp:336
 #, fuzzy, kde-format
 msgid "Country the peer is in"
 msgstr "Land er \""
 
-#: plugins/infowidget/peerviewmodel.cpp:343
+#: plugins/infowidget/peerviewmodel.cpp:338
 #, fuzzy, kde-format
 msgid "Which client the peer is using"
 msgstr "Hvaða forrit jafningi notar"
 
-#: plugins/infowidget/peerviewmodel.cpp:345
+#: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
 msgid "Download speed"
 msgstr "Niðurhalshraði"
 
-#: plugins/infowidget/peerviewmodel.cpp:347
+#: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
 msgid "Upload speed"
 msgstr "Sendingarhraði"
 
-#: plugins/infowidget/peerviewmodel.cpp:349
+#: plugins/infowidget/peerviewmodel.cpp:344
 #, fuzzy, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
 "send us any data"
 msgstr "eða ekki euro ekki euro"
 
-#: plugins/infowidget/peerviewmodel.cpp:351
+#: plugins/infowidget/peerviewmodel.cpp:346
 #, fuzzy, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
 "Að vera sniðgenginn þýðir að jafninginn hefur ekki sent okkur nein gögn "
 "síðustu 2 mínúturnar"
 
-#: plugins/infowidget/peerviewmodel.cpp:353
+#: plugins/infowidget/peerviewmodel.cpp:348
 #, fuzzy, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr "af"
 
-#: plugins/infowidget/peerviewmodel.cpp:355
+#: plugins/infowidget/peerviewmodel.cpp:350
 #, fuzzy, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr "Hvort jafninginn sé með DHT virkjað"
 
-#: plugins/infowidget/peerviewmodel.cpp:357
+#: plugins/infowidget/peerviewmodel.cpp:352
 #, fuzzy, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr "stig af til til til"
 
-#: plugins/infowidget/peerviewmodel.cpp:359
+#: plugins/infowidget/peerviewmodel.cpp:354
 #, fuzzy, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr "Einungis jafningjar sem eiga sendingarhólf fá gögn frá okkur"
 
-#: plugins/infowidget/peerviewmodel.cpp:361
+#: plugins/infowidget/peerviewmodel.cpp:356
 #, fuzzy, kde-format
 msgid "The number of download and upload requests"
 msgstr "Fjöldi fyrirspurna um niðurhal og sendingar"
 
-#: plugins/infowidget/peerviewmodel.cpp:363
+#: plugins/infowidget/peerviewmodel.cpp:358
 #, fuzzy, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr "Hversu mikið af gögnum við erum búin að ná í frá þessum jafningja"
 
-#: plugins/infowidget/peerviewmodel.cpp:365
+#: plugins/infowidget/peerviewmodel.cpp:360
 #, fuzzy, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr "Hversu mikið af gögnum við erum búin að senda til þessa jafningja"
 
-#: plugins/infowidget/peerviewmodel.cpp:367
+#: plugins/infowidget/peerviewmodel.cpp:362
 #, fuzzy, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr "Hvort jafninginn hefur áhuga á gögnum frá okkur"
 
-#: plugins/infowidget/peerviewmodel.cpp:369
+#: plugins/infowidget/peerviewmodel.cpp:364
 #, fuzzy, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr "Hvort við höfum áhuga á gögnum frá þessum jafningja"

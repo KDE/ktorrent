@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-17 00:43+0000\n"
+"POT-Creation-Date: 2026-03-21 00:44+0000\n"
 "PO-Revision-Date: 2025-11-11 22:55+0100\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -4384,7 +4384,7 @@ msgctxt "1h 20m ago"
 msgid "%1 ago"
 msgstr "vor %1"
 
-#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:326
+#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:321
 #: plugins/infowidget/webseedsmodel.cpp:112
 #, kde-format
 msgid "Downloaded"
@@ -4403,7 +4403,7 @@ msgstr "Heruntergeladen (Sitzung)"
 msgid "Size"
 msgstr "Größe"
 
-#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:328
+#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:323
 #, kde-format
 msgid "Uploaded"
 msgstr "Hochgeladen"
@@ -4422,12 +4422,12 @@ msgstr "Verbleiben"
 
 #: ktorrent/view/viewmodel.cpp:503
 #: plugins/infowidget/chunkdownloadmodel.cpp:203
-#: plugins/infowidget/peerviewmodel.cpp:308
+#: plugins/infowidget/peerviewmodel.cpp:303
 #, kde-format
 msgid "Down Speed"
 msgstr "Downloadgeschwindigkeit"
 
-#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:310
+#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:305
 #, kde-format
 msgid "Up Speed"
 msgstr "Uploadgeschwindigkeit"
@@ -5954,151 +5954,151 @@ msgstr "Gegenstelle zwangsweise trennen"
 msgid "Ban Peer"
 msgstr "Gegenstelle verbannen"
 
-#: plugins/infowidget/peerviewmodel.cpp:86
+#: plugins/infowidget/peerviewmodel.cpp:81
 #, kde-format
 msgid " (µTP)"
 msgstr " (µTP)"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:102
 #, kde-format
 msgctxt "Choked"
 msgid "Yes"
 msgstr "Ja"
 
-#: plugins/infowidget/peerviewmodel.cpp:107
+#: plugins/infowidget/peerviewmodel.cpp:102
 #, kde-format
 msgctxt "Not choked"
 msgid "No"
 msgstr "Nein"
 
-#: plugins/infowidget/peerviewmodel.cpp:109
+#: plugins/infowidget/peerviewmodel.cpp:104
 #, kde-format
 msgctxt "Snubbed"
 msgid "Yes"
 msgstr "Ja"
 
-#: plugins/infowidget/peerviewmodel.cpp:109
+#: plugins/infowidget/peerviewmodel.cpp:104
 #, kde-format
 msgctxt "Not snubbed"
 msgid "No"
 msgstr "Nein"
 
-#: plugins/infowidget/peerviewmodel.cpp:111
+#: plugins/infowidget/peerviewmodel.cpp:106
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
 msgstr "%1 %"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:120
 #, kde-format
 msgctxt "Interested"
 msgid "Yes"
 msgstr "Ja"
 
-#: plugins/infowidget/peerviewmodel.cpp:125
+#: plugins/infowidget/peerviewmodel.cpp:120
 #, kde-format
 msgctxt "Not Interested"
 msgid "No"
 msgstr "Nein"
 
-#: plugins/infowidget/peerviewmodel.cpp:127
+#: plugins/infowidget/peerviewmodel.cpp:122
 #, kde-format
 msgctxt "Interesting"
 msgid "Yes"
 msgstr "Ja"
 
-#: plugins/infowidget/peerviewmodel.cpp:127
+#: plugins/infowidget/peerviewmodel.cpp:122
 #, kde-format
 msgctxt "Not Interesting"
 msgid "No"
 msgstr "Nein"
 
-#: plugins/infowidget/peerviewmodel.cpp:302
+#: plugins/infowidget/peerviewmodel.cpp:297
 #, kde-format
 msgid "Address"
 msgstr "Adresse"
 
-#: plugins/infowidget/peerviewmodel.cpp:304
+#: plugins/infowidget/peerviewmodel.cpp:299
 #, kde-format
 msgid "Country"
 msgstr "Land"
 
-#: plugins/infowidget/peerviewmodel.cpp:306
+#: plugins/infowidget/peerviewmodel.cpp:301
 #, kde-format
 msgid "Client"
 msgstr "Programm"
 
-#: plugins/infowidget/peerviewmodel.cpp:312
+#: plugins/infowidget/peerviewmodel.cpp:307
 #, kde-format
 msgid "Choked"
 msgstr "Gedrosselt"
 
-#: plugins/infowidget/peerviewmodel.cpp:314
+#: plugins/infowidget/peerviewmodel.cpp:309
 #, kde-format
 msgid "Snubbed"
 msgstr "Abgewiesen"
 
-#: plugins/infowidget/peerviewmodel.cpp:316
+#: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
 msgid "Availability"
 msgstr "Verfügbarkeit"
 
-#: plugins/infowidget/peerviewmodel.cpp:318
+#: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
 msgid "DHT"
 msgstr "VHT"
 
-#: plugins/infowidget/peerviewmodel.cpp:320
+#: plugins/infowidget/peerviewmodel.cpp:315
 #, kde-format
 msgid "Score"
 msgstr "Bewertung"
 
-#: plugins/infowidget/peerviewmodel.cpp:322
+#: plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
 msgid "Upload Slot"
 msgstr "Slot zum Hochladen"
 
-#: plugins/infowidget/peerviewmodel.cpp:324
+#: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Requests"
 msgstr "Anfragen"
 
-#: plugins/infowidget/peerviewmodel.cpp:330
+#: plugins/infowidget/peerviewmodel.cpp:325
 #, kde-format
 msgid "Interested"
 msgstr "Interessiert"
 
-#: plugins/infowidget/peerviewmodel.cpp:332
+#: plugins/infowidget/peerviewmodel.cpp:327
 #, kde-format
 msgid "Interesting"
 msgstr "Interessant"
 
-#: plugins/infowidget/peerviewmodel.cpp:339
+#: plugins/infowidget/peerviewmodel.cpp:334
 #, kde-format
 msgid "IP address of the peer"
 msgstr "IP-Adresse der Gegenstelle"
 
-#: plugins/infowidget/peerviewmodel.cpp:341
+#: plugins/infowidget/peerviewmodel.cpp:336
 #, kde-format
 msgid "Country the peer is in"
 msgstr "Land, in dem sich die Gegenstelle befindet"
 
-#: plugins/infowidget/peerviewmodel.cpp:343
+#: plugins/infowidget/peerviewmodel.cpp:338
 #, kde-format
 msgid "Which client the peer is using"
 msgstr "Das von der Gegenstelle verwendete Programm"
 
-#: plugins/infowidget/peerviewmodel.cpp:345
+#: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
 msgid "Download speed"
 msgstr "Downloadgeschwindigkeit"
 
-#: plugins/infowidget/peerviewmodel.cpp:347
+#: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
 msgid "Upload speed"
 msgstr "Uploadgeschwindigkeit"
 
-#: plugins/infowidget/peerviewmodel.cpp:349
+#: plugins/infowidget/peerviewmodel.cpp:344
 #, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
@@ -6107,58 +6107,58 @@ msgstr ""
 "Gibt an, ob Sie durch die Gegenstelle geblockt werden. Wenn Sie geblockt "
 "werden, sendet die Gegenstelle Ihnen keine Daten"
 
-#: plugins/infowidget/peerviewmodel.cpp:351
+#: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
 "Abgewiesen bedeutet, dass die Gegenstelle Ihnen in den letzten 2 Minuten "
 "keine Daten mehr gesendet hat"
 
-#: plugins/infowidget/peerviewmodel.cpp:353
+#: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr "Die Datenmenge, die die Gegenstelle vom Torrent besitzt"
 
-#: plugins/infowidget/peerviewmodel.cpp:355
+#: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr "Gibt an, ob die Gegenstelle VHT aktiviert hat"
 
-#: plugins/infowidget/peerviewmodel.cpp:357
+#: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
 "Die Punktzahl der Gegenstelle. KTorrent verwendet diese, um zu bestimmen, an "
 "wen Daten hochgeladen werden"
 
-#: plugins/infowidget/peerviewmodel.cpp:359
+#: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr "Nur Gegenstellen mit mindestens einem Upload-Slot erhalten Daten"
 
-#: plugins/infowidget/peerviewmodel.cpp:361
+#: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
 msgid "The number of download and upload requests"
 msgstr "Die Anzahl an Download- und Uploadanfragen"
 
-#: plugins/infowidget/peerviewmodel.cpp:363
+#: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr "Die von dieser Gegenstelle bereits heruntergeladene Datenmenge"
 
-#: plugins/infowidget/peerviewmodel.cpp:365
+#: plugins/infowidget/peerviewmodel.cpp:360
 #, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr "Die zu dieser Gegenstelle bereits hochgeladene Datenmenge"
 
-#: plugins/infowidget/peerviewmodel.cpp:367
+#: plugins/infowidget/peerviewmodel.cpp:362
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr ""
 "Gibt an, ob die Gegenstelle daran interessiert ist, Daten von Ihnen "
 "herunterzuladen"
 
-#: plugins/infowidget/peerviewmodel.cpp:369
+#: plugins/infowidget/peerviewmodel.cpp:364
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr ""
