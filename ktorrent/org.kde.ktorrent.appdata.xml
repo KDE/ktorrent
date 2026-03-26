@@ -1074,7 +1074,7 @@
           <li xml:lang="uk">Виправлено колір тла панелі стану пункту подачі віджета синдикації</li>
           <li xml:lang="zh-CN">已修复聚合小部件的订阅源项目状态面板的背景颜色</li>
           <li>Added columns to the main view showing the number of bytes uploaded and downloaded in the current session</li>
-          <li xml:lang="ar">إضافة أعمدة إلى الشاشة الرئيسية تعرض عدد البايتات التي تم تحميلها وتنزيلها خلال الجلسة الحالية</li>
+          <li xml:lang="ar">إضافة أعمدة إلى الشاشة الرئيسة تعرض عدد البايتات التي تم تحميلها وتنزيلها خلال الجلسة الحالية</li>
           <li xml:lang="ca">S'han afegit columnes a la vista principal que mostren el nombre de bytes pujats i baixats a la sessió actual</li>
           <li xml:lang="ca-valencia">S'han afegit columnes en la vista principal que mostren el nombre de bytes pujats i baixats a la sessió actual</li>
           <li xml:lang="cs">Do hlavního zobrazení byly přidány sloupce, které zobrazují počet bajtů nahraných a stažených v aktuální relaci</li>
