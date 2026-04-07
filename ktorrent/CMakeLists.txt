@@ -1,7 +1,6 @@
 add_executable(ktorrent_app)
 set_target_properties(ktorrent_app  PROPERTIES
     OUTPUT_NAME ktorrent
-    CXX_STANDARD 14
 )
 
 set(ktorrent_dbus_SRC)
