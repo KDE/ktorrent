@@ -1064,6 +1064,7 @@
           <li xml:lang="nl">Overgezet naar Qt 6</li>
           <li xml:lang="pt-BR">Porte para o Qt6</li>
           <li xml:lang="ru">Перенос на Qt 6</li>
+          <li xml:lang="sk">Portované na Qt 6</li>
           <li xml:lang="sl">Preneseno v Qt 6</li>
           <li xml:lang="tr">Qt6 geçişi yapıldı.</li>
           <li xml:lang="uk">Портовано на Qt 6</li>
@@ -1083,6 +1084,7 @@
           <li xml:lang="nl">Een symbolisch systeemvakpictogram gebruiken</li>
           <li xml:lang="pt-BR">Usar um ícone simbólico na bandeja do sistema</li>
           <li xml:lang="ru">Использование символического значка в области уведомлений;</li>
+          <li xml:lang="sk">Používať symbolickú ikonu v systémovej lište</li>
           <li xml:lang="sl">Uporabi simbolično ikono v sistemskem pladnju</li>
           <li xml:lang="tr">Artık sembolik tepsi simgesi kullanılıyor.</li>
           <li xml:lang="uk">Використано символічну піктограму лотка</li>
@@ -1101,6 +1103,7 @@
           <li xml:lang="nl">De zoekplug-in is verbeterd: de overbodige zoekbalk is verwijderd; verwijderbare tabbladen worden gebruikt in plaats van een aangepaste verwijderknop; voor knoppen voor Terug, Vooruit en Herladen worden alleen pictogrammen gebruikt.</li>
           <li xml:lang="pt-BR">Melhoria do plugin de busca: removida a barra de busca redundante; uso de abas removíveis em vez de um botão de exclusão personalizado; e utilização de botões com ícones para Voltar, Avançar e Recarregar</li>
           <li xml:lang="ru">Улучшен модуль поиска: удалена избыточная панель поиска; использованы закрываемые вкладки вместо пользовательской кнопки удаления; для кнопок «Назад», «Вперёд» и «Обновить» использованы значки без текста;</li>
+          <li xml:lang="sk">Vylepšený zásuvný modul vyhľadávania: odstránený nadbytočný panel vyhľadávania; použité zatvárateľné karty namiesto vlastného tlačidla na odstránenie; použité tlačidlá iba s ikonami pre Späť, Vpred a Obnoviť</li>
           <li xml:lang="sl">Izboljšan vtičnik za iskanje: odstranjena odvečna iskalna vrstica; uporabljeni odstranljivi zavihki namesto gumba za brisanje po meri; uporabljeni gumbi samo z ikonami za Nazaj, Naprej in Ponovno nalaganje</li>
           <li xml:lang="tr">Arama eklentisi iyileştirildi: Gereksiz arama çubuğu kaldırıldı; özel silme düğmesi yerine çıkarılabilir sekmeler kullanıldı; Geri, İleri ve Yeniden Yükle için yalnızca simge içeren düğmeler kullanıldı.</li>
           <li xml:lang="uk">Удосконалено додаток пошуку: вилучено зайвий рядок пошуку; використано придатні до вилучення вкладки замість кнопки вилучення; для дій «Назад», «Вперед» та «Перезавантажити» використано кнопки, на яких є лише піктограми.</li>
@@ -1118,6 +1121,7 @@
           <li xml:lang="nl">De afstand tussen verschillende widgets is verbeterd en een groot deel van de gebruikersinterface is aangepast naar een nieuwe, frameloos uiterlijk.</li>
           <li xml:lang="pt-BR">Melhoria do espaçamento de vários widgets e adaptação de grande parte da interface do usuário para um novo visual sem moldura</li>
           <li xml:lang="ru">Улучшены отступы между элементами управления; большая часть интерфейса переведена на новый внешний вид без рамок.</li>
+          <li xml:lang="sk">Vylepšené rozostupy rôznych widgetov a veľká časť rozhrania bola portovaná na nový bezrámový vzhľad</li>
           <li xml:lang="sl">Izboljšani razmiki med različnimi pripomočki in prenos velikega dela uporabniškega vmesnika na nov videz brez okvirja</li>
           <li xml:lang="tr">Çeşitli araç takımların aralıkları iyileştirildi ve kullanıcı arayüzünün büyük bir kısmı yeni, çerçevesiz bir görünüme kavuşturuldu.</li>
           <li xml:lang="uk">Удосконалено інтервали між різними віджетами і портовано більшість інтерфейсу на використання нового компонування без рамок</li>
@@ -1135,6 +1139,7 @@
           <li xml:lang="nl">Opgelost: het probleem met de landvlaggen in het tabblad 'Peers' van de infowidget.</li>
           <li xml:lang="pt-BR">Corrigido o problema com as bandeiras dos países na aba "Pares" do widget de informações</li>
           <li xml:lang="ru">Исправлено отображение флагов стран на вкладке «Участники» информационного виджета;</li>
+          <li xml:lang="sk">Opravené zobrazovanie vlajok krajín na karte Partneri v informačnom widgete</li>
           <li xml:lang="sl">Odpravljena napaka, zaradi katere so bile zastave držav na zavihku Vrstniki v gradnku za informacije</li>
           <li xml:lang="tr">Bilgi araç takımının “Eşler” sekmesinde ülke bayraklarının görünmesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено прапорці країн на вкладці вузлів інформаційного віджета</li>
@@ -1152,6 +1157,7 @@
           <li xml:lang="nl">Opgelost: het probleem waarbij het dialoogvenster 'Torrent importeren' er niet in slaagde het opgegeven .torrent-bestand te kopiëren.</li>
           <li xml:lang="pt-BR">Corrigido o problema na caixa de diálogo de importação de torrent ao copiar o arquivo .torrent fornecido</li>
           <li xml:lang="ru">Исправлена ошибка в диалоге импорта торрентов при копировании указанного файла .torrent;</li>
+          <li xml:lang="sk">Opravené zlyhávanie dialógu Importovať torrent pri kopírovaní zadaného súboru .torrent</li>
           <li xml:lang="sl">Popravljeno je pogovorno okno za uvoz torrenta, ki ni uspelo kopirati dane datoteke .torrent</li>
           <li xml:lang="tr">Torrent içe aktarma iletişim kutusunun verilen .torrent dosyasını kopyalayamaması sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено можливість копіювання вказаного файла .torrent у вікні імпортування торентів</li>
@@ -1169,6 +1175,7 @@
           <li xml:lang="nl">Opgelost: het probleem waarbij de hulpballon van de balk met gedeelten de legenda niet correct weergaf.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a legenda não era exibida corretamente na dica da barra de ferramentas</li>
           <li xml:lang="ru">Исправлена некорректное отображение легенды во всплывающей подсказке индикатора загрузки;</li>
+          <li xml:lang="sk">Opravené nesprávne zobrazovanie legendy v bublinovej nápovede lišty blokov</li>
           <li xml:lang="sl">Popravljena napaka, zaradi katere opis orodja chunkbar ni pravilno prikazoval legende</li>
           <li xml:lang="tr">Parça çubuğu araç ipucunun göstergeyi doğru şekilde görüntülememesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено показ умовних позначень у підказці панелі фрагментів</li>
@@ -1186,6 +1193,7 @@
           <li xml:lang="nl">Het loggen naar een bestand is standaard uitgeschakeld om onnodige schrijfbewerkingen naar het bestandssysteem te voorkomen. Het opdrachtregelargument `--enable-logging` kan worden doorgegeven om het loggen naar een bestand in te schakelen.</li>
           <li xml:lang="pt-BR">Desativado o registro em arquivo por padrão para evitar gravações desnecessárias no sistema de arquivos; o argumento de linha de comando `--enable-logging` pode ser passado para ativar o registro em arquivo</li>
           <li xml:lang="ru">Отключено ведение журнала в файл по умолчанию во избежание лишних операций записи в файловую систему; для его включения можно передать аргумент командной строки `--enable-logging`.</li>
+          <li xml:lang="sk">Predvolene vypnuté zapisovanie protokolu do súboru, aby sa predišlo zbytočným zápisom na súborový systém. Na povolenie zapisovania protokolu do súboru je možné použiť argument príkazového riadka `--enable-logging`</li>
           <li xml:lang="sl">Privzeto onemogočeno beleženje v datoteko, da se izogn nepotrebnemu pisanju v datotečni sistem. Za omogočanje beleženja v datoteko lahko v ukazno vrstico lahko uporabite argument `--enable-logging`.</li>
           <li xml:lang="tr">Dosya sistemine gereksiz yazma işlemlerini önlemek için öntanımlı olarak dosya günlük kaydı devre dışı bırakıldı; dosya günlük kaydını etkinleştirmek için `--enable-logging` komut satırı argümanı kullanılabilir.</li>
           <li xml:lang="uk">Вимкнено записування журналу до типового файла, щоб уникнути непотрібного записування до файлової системи; щоб увімкнути запис журналу до файла, можна передати параметр командного рядка `--enable-logging`</li>
@@ -1203,6 +1211,7 @@
           <li xml:lang="nl">Opgelost: het probleem waarbij de hulpballon van de balk met gedeelten de legenda niet correct weergaf.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a legenda não era exibida corretamente na dica da barra de ferramentas</li>
           <li xml:lang="ru">Исправлена некорректное отображение легенды во всплывающей подсказке индикатора загрузки;</li>
+          <li xml:lang="sk">Opravené nesprávne zobrazovanie legendy v bublinovej nápovede lišty blokov</li>
           <li xml:lang="sl">Popravljena napaka, zaradi katere opis orodja chunkbar ni pravilno prikazoval legende</li>
           <li xml:lang="tr">Parça çubuğu araç ipucunun göstergeyi doğru şekilde görüntülememesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено показ умовних позначень у підказці панелі фрагментів</li>
@@ -1220,6 +1229,7 @@
           <li xml:lang="nl">Opgelost: globale sneltoetsacties</li>
           <li xml:lang="pt-BR">Correção das ações de atalho globais</li>
           <li xml:lang="ru">Исправлены действия глобальных комбинаций клавиш;</li>
+          <li xml:lang="sk">Opravené globálne akcie klávesových skratiek</li>
           <li xml:lang="sl">Popravljena globalna dejanja bližnjic</li>
           <li xml:lang="tr">Global kısayol eylemleri onarıldı.</li>
           <li xml:lang="uk">Виправлено дії для загальних клавіатурних скорочень</li>
