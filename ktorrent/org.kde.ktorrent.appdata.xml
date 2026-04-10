@@ -1002,6 +1002,7 @@
           <li xml:lang="nl">Een fout is verholpen waardoor het magnetenbestand constant werd bijgewerkt</li>
           <li xml:lang="pt-BR">Corrigido um erro que fazia com que o arquivo de ímãs fosse atualizado constantemente.</li>
           <li xml:lang="ru">Исправлена ошибка, вызывавшая постоянное обновление файла магнитов;</li>
+          <li xml:lang="sk">Fixed a bug causing the magnets file to be constantly updated</li>
           <li xml:lang="sl">Odpravljena je bila napaka, zaradi katere se je datoteka z magneti nenehno posodabljala.</li>
           <li xml:lang="tr">Mıknatısların sürekli güncellenmesine neden olan bir hata düzeltildi.</li>
           <li xml:lang="uk">Виправлено ваду, яка спричиняла постійне оновлення файла magnets</li>
@@ -1018,6 +1019,7 @@
           <li xml:lang="nl">De accentueringskleur van de voortgangsbalk is gecorrigeerd</li>
           <li xml:lang="pt-BR">Corrigida a cor de destaque da barra de progresso</li>
           <li xml:lang="ru">Исправлено выделение цветом индикатора выполнения;</li>
+          <li xml:lang="sk">Fixed the progress bar highlight color</li>
           <li xml:lang="sl">Popravljena je barva označevanja vrstice napredka</li>
           <li xml:lang="tr">İlerleme çubuğunun vurgu rengi düzeltildi.</li>
           <li xml:lang="uk">Виправлено колір підсвічування смужки поступу</li>
@@ -1034,6 +1036,7 @@
           <li xml:lang="nl">De tekstballon in de instellingen van de logviewer die onbewerkte HTML weergaf, is nu correct.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a dica das configurações do visualizador de logs exibia HTML bruto</li>
           <li xml:lang="ru">Исправлено отображение необработанного HTML во всплывающей подсказке параметров средства просмотра журнала;</li>
+          <li xml:lang="sk">Fixed the log viewer settings tooltip showing raw HTML</li>
           <li xml:lang="sl">Popravljen je opis nastavitev pregledovalnika dnevnikov, ki prikazuje surov HTML</li>
           <li xml:lang="tr">Günlük yöneticisi ayarları araç ipucunun ham HTML gösterme sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено помилку, яка призводила до того, що на панелі підказки параметрів переглядача журналу було показано необроблений код HTML</li>
@@ -1059,6 +1062,7 @@
           <li xml:lang="nl">Een kolom 'Laatste activiteit' is toegevoegd die het tijdstip weergeeft waarop de torrent voor het laatst is geüpload of gedownload</li>
           <li xml:lang="pt-BR">Adicionada uma coluna "Última atividade" mostrando a hora em que o torrent teve a última atividade de upload ou download</li>
           <li xml:lang="ru">Добавлен столбец «Последняя активность», отображающий время последней загрузки или выгрузки данных в торренте.</li>
+          <li xml:lang="sk">Pridaný stĺpec „Posledná aktivita“ zobrazujúci čas poslednej aktivity nahrávania alebo sťahovania torrentu</li>
           <li xml:lang="sl">Dodan stolpec »Zadnja aktivnost«, ki prikazuje čas zadnjega nalaganja ali prenosa torrenta</li>
           <li xml:lang="tr">Torrent’in en son yükleme veya indirme etkinliği olduğu zamanı gösteren bir “Son Etkinlik” sütunu eklendi.</li>
           <li xml:lang="uk">Додано стовпчик «Останні дії», у якому буде показано часові параметри тривалості вивантаження або отримання торентів</li>
@@ -1075,6 +1079,7 @@
           <li xml:lang="nl">De achtergrondkleur van het statuspaneel voor feeditems in het syndicatiewidget is gecorrigeerd</li>
           <li xml:lang="pt-BR">Corrigida a cor de fundo do painel de status do item de feed do widget de sindicação</li>
           <li xml:lang="ru">Исправлен цвет фона панели состояния элемента ленты виджета синдикации;</li>
+          <li xml:lang="sk">Fixed the background color of the syndication widget's feed-item status panel</li>
           <li xml:lang="sl">Popravljena je bila barva ozadja plošče s stanjem elementov v viru v pripomočku za sindiciranjem.</li>
           <li xml:lang="tr">Eşzamanlama araç takımının besleme ögesi durum panelinin arka plan rengi düzeltildi.</li>
           <li xml:lang="uk">Виправлено колір тла панелі стану пункту подачі віджета синдикації</li>
@@ -1091,6 +1096,7 @@
           <li xml:lang="nl">Er zijn kolommen toegevoegd aan de hoofdweergave die het aantal geüploade en gedownloade bytes in de huidige sessie weergeven</li>
           <li xml:lang="pt-BR">Adicionadas colunas à visualização principal, mostrando o número de bytes enviados e recebidos na sessão atual</li>
           <li xml:lang="ru">Добавлены столбцы в главное окно для отображения количества переданных и полученных байтов в текущем сеансе;</li>
+          <li xml:lang="sk">Added columns to the main view showing the number of bytes uploaded and downloaded in the current session</li>
           <li xml:lang="sl">V glavni pogled so dodani stolpci, ki prikazujejo število naloženih in prenesenih bajtov v trenutni seji.</li>
           <li xml:lang="tr">Ana görünüme, geçerli oturumda yüklenen ve indirilen bayt sayısını gösteren sütunlar eklendi.</li>
           <li xml:lang="uk">До основного вікна додано стовпці, що показують кількість байтів, вивантажених або отриманих у поточному сеансі</li>
@@ -1120,6 +1126,7 @@
           <li xml:lang="nl">De kolom 'Toegevoegd' gebruikt nu een korter datumformaat</li>
           <li xml:lang="pt-BR">A coluna "Adicionado" agora usa um formato de data mais curto</li>
           <li xml:lang="ru">В столбце «Добавлено» используется сокращённый формат даты;</li>
+          <li xml:lang="sk">The "Added" column now uses a shorter date format</li>
           <li xml:lang="sl">Stolpec »Dodano« zdaj uporablja krajšo obliko datuma</li>
           <li xml:lang="tr">“Eklendi” sütunu artık daha kısa bir tarih biçimi kullanıyor.</li>
           <li xml:lang="uk">У стовпчику «Додано» у новій версії використано дату у скороченому форматі</li>
@@ -1136,6 +1143,7 @@
           <li xml:lang="nl">Een crash bij het sluiten van het videowidget is verholpen</li>
           <li xml:lang="pt-BR">Corrigido um erro que causava o fechamento inesperado do widget de vídeo</li>
           <li xml:lang="ru">Исправлено аварийное завершение при закрытии видеовиджета;</li>
+          <li xml:lang="sk">Fixed a crash when closing the video widget</li>
           <li xml:lang="sl">Odpravljeno je bilo sesutje pri zapiranju video gradnika</li>
           <li xml:lang="tr">Video araç takımı kapatılırken oluşan bir çökme düzeltildi.</li>
           <li xml:lang="uk">Усунено аварійне завершення при закритті віджета відео</li>
@@ -1158,6 +1166,7 @@
           <li xml:lang="nl">Accepteer webseeds via HTTPS</li>
           <li xml:lang="pt-BR">Aceitar webseeds usando HTTPS</li>
           <li xml:lang="ru">Поддержка веб-сидов по протоколу HTTPS.</li>
+          <li xml:lang="sk">Akceptovať webseedy používajúce HTTPS</li>
           <li xml:lang="sl">Sprejmi spletna semena prek HTTPS</li>
           <li xml:lang="tr">Artık web beslemeleri HTTPS kullanılarak kabul ediliyor.</li>
           <li xml:lang="uk">Реалізовано прийняття вебпоширень з використанням HTTPS</li>
@@ -1174,6 +1183,7 @@
           <li xml:lang="nl">Het probleem met grafieken met witte tekst op een witte achtergrond in de statistiekenplug-in is opgelost</li>
           <li xml:lang="pt-BR">Corrigido gráficos com texto branco sobre fundo branco no plugin de Estatísticas</li>
           <li xml:lang="ru">Исправлено отображение белого текста на белом фоне в диаграммах модуля статистики;</li>
+          <li xml:lang="sk">Fixed charts having white text on a white background in the Statistics plugin</li>
           <li xml:lang="sl">Popravljeni grafikoni z belim besedilom na belem ozadju v vtičniku Statistics</li>
           <li xml:lang="tr">İstatistik eklentisinde beyaz arka plan üzerinde beyaz metin bulunan grafikler düzeltildi.</li>
           <li xml:lang="uk">Виправлено помилку, через яку діаграми містили білий текст на білому тлі у додатку «Статистика»</li>
@@ -1196,6 +1206,7 @@
           <li xml:lang="nl">Het probleem is opgelost waarbij het dialoogvenster 'Torrent importeren' het selecteren van .torrent-bestanden ongedaan maakte</li>
           <li xml:lang="pt-BR">Corrigido o problema que impedia a seleção de arquivos .torrent na caixa de diálogo "Importar torrent"</li>
           <li xml:lang="ru">Исправлена ошибка в диалоге импорта торрентов, не позволявшая выбрать файлы .torrent;</li>
+          <li xml:lang="sk">Fixed the Import Torrent dialog not allowing .torrent files to be selected</li>
           <li xml:lang="sl">Popravljeno pogovorno okno Uvozi Torrent, ki ni dovoljevalo izbire datotek .torrent</li>
           <li xml:lang="tr">Torrent dosyalarının seçilmesine izin vermeyen “Torrent İçe Aktar” iletişim kutusu onarıldı.</li>
           <li xml:lang="uk">Виправлено неможливість вибору файлів .torrent у вікні імпортування торентів</li>
@@ -1222,6 +1233,7 @@
           <li xml:lang="nl">Er is een actie toegevoegd om bestanden te hernoemen in het contextmenu van het Info-widget</li>
           <li xml:lang="pt-BR">Adicionada uma ação para renomear arquivos no menu de contexto do widget de informações</li>
           <li xml:lang="ru">Добавлено действие для переименования файлов в контекстном меню информационного виджета;</li>
+          <li xml:lang="sk">Added an action to rename files in the Info Widget context menu</li>
           <li xml:lang="sl">V kontekstnem meniju informacijskega gradnika je bilo dodano dejanje za preimenovanje datotek</li>
           <li xml:lang="tr">Bilgi araç takımı bağlam menüsüne dosyaları yeniden adlandırmak için bir işlem eklendi.</li>
           <li xml:lang="uk">Додано пункт дії для перейменування файлів до контекстного меню інформаційного віджета</li>
@@ -1238,6 +1250,7 @@
           <li xml:lang="nl">Sla het magnetenbestand op telkens wanneer het wordt bijgewerkt, zodat de magnetengegevens niet verloren gaan als de app crasht</li>
           <li xml:lang="pt-BR">Salva o arquivo de ímãs sempre que ele for atualizado, para que os dados dos ímãs não sejam perdidos caso o aplicativo apresente falhas</li>
           <li xml:lang="ru">Сохранение файла с магнет-ссылками при его обновлении для предотвращения потери данных при аварийном завершении приложения;</li>
+          <li xml:lang="sk">Save the magnets file whenever it is updated, so that magnet data is not lost if the app crashes</li>
           <li xml:lang="sl">Shrani datoteko z magneti vsakič, ko je posodobljena, da se podatki o magnetih ne izgubijo, če se aplikacija sesuje</li>
           <li xml:lang="tr">Uygulama çökerse mıknatıs verilerinin kaybolmaması için mıknatıs dosyası artık her güncellendiğinde kaydediliyor.</li>
           <li xml:lang="uk">Реалізовано збереження файлів magnets при кожному оновленні, щоб дані маґнета не було втрачено, якщо програма завершить роботу в аварійному режимі</li>
@@ -1254,6 +1267,7 @@
           <li xml:lang="nl">Gebruik een ander pictogram voor het in de wachtrij plaatsen van seed-bestanden en het in de wachtrij plaatsen van download-bestanden</li>
           <li xml:lang="pt-BR">Usa um ícone diferente para o compartilhamento em fila e para o download em fila</li>
           <li xml:lang="ru">Разные значки для отложенной раздачи и отложенной загрузки;</li>
+          <li xml:lang="sk">Use a different icon for queued seeding and queued downloading</li>
           <li xml:lang="sl">Uporabi drugo ikono čakalno vrsto sejanja in čakalno vrsto prejemanja</li>
           <li xml:lang="tr">Sıraya alınmış dosya paylaşımı ve sıraya alınmış indirme işlemleri için farklı simgeler kullanılıyor.</li>
           <li xml:lang="uk">Реалізовано використання іншої піктограми для поширення і отримання даних за чергою</li>
@@ -1280,6 +1294,7 @@
           <li xml:lang="nl">Overgezet naar Qt 6</li>
           <li xml:lang="pt-BR">Porte para o Qt6</li>
           <li xml:lang="ru">Перенос на Qt 6</li>
+          <li xml:lang="sk">Portované na Qt 6</li>
           <li xml:lang="sl">Preneseno v Qt 6</li>
           <li xml:lang="tr">Qt6 geçişi yapıldı.</li>
           <li xml:lang="uk">Портовано на Qt 6</li>
@@ -1299,6 +1314,7 @@
           <li xml:lang="nl">Een symbolisch systeemvakpictogram gebruiken</li>
           <li xml:lang="pt-BR">Usar um ícone simbólico na bandeja do sistema</li>
           <li xml:lang="ru">Использование символического значка в области уведомлений;</li>
+          <li xml:lang="sk">Používať symbolickú ikonu v systémovej lište</li>
           <li xml:lang="sl">Uporabi simbolično ikono v sistemskem pladnju</li>
           <li xml:lang="tr">Artık sembolik tepsi simgesi kullanılıyor.</li>
           <li xml:lang="uk">Використано символічну піктограму лотка</li>
@@ -1317,6 +1333,7 @@
           <li xml:lang="nl">De zoekplug-in is verbeterd: de overbodige zoekbalk is verwijderd; verwijderbare tabbladen worden gebruikt in plaats van een aangepaste verwijderknop; voor knoppen voor Terug, Vooruit en Herladen worden alleen pictogrammen gebruikt.</li>
           <li xml:lang="pt-BR">Melhoria do plugin de busca: removida a barra de busca redundante; uso de abas removíveis em vez de um botão de exclusão personalizado; e utilização de botões com ícones para Voltar, Avançar e Recarregar</li>
           <li xml:lang="ru">Улучшен модуль поиска: удалена избыточная панель поиска; использованы закрываемые вкладки вместо пользовательской кнопки удаления; для кнопок «Назад», «Вперёд» и «Обновить» использованы значки без текста;</li>
+          <li xml:lang="sk">Vylepšený zásuvný modul vyhľadávania: odstránený nadbytočný panel vyhľadávania; použité zatvárateľné karty namiesto vlastného tlačidla na odstránenie; použité tlačidlá iba s ikonami pre Späť, Vpred a Obnoviť</li>
           <li xml:lang="sl">Izboljšan vtičnik za iskanje: odstranjena odvečna iskalna vrstica; uporabljeni odstranljivi zavihki namesto gumba za brisanje po meri; uporabljeni gumbi samo z ikonami za Nazaj, Naprej in Ponovno nalaganje</li>
           <li xml:lang="tr">Arama eklentisi iyileştirildi: Gereksiz arama çubuğu kaldırıldı; özel silme düğmesi yerine çıkarılabilir sekmeler kullanıldı; Geri, İleri ve Yeniden Yükle için yalnızca simge içeren düğmeler kullanıldı.</li>
           <li xml:lang="uk">Удосконалено додаток пошуку: вилучено зайвий рядок пошуку; використано придатні до вилучення вкладки замість кнопки вилучення; для дій «Назад», «Вперед» та «Перезавантажити» використано кнопки, на яких є лише піктограми.</li>
@@ -1334,6 +1351,7 @@
           <li xml:lang="nl">De afstand tussen verschillende widgets is verbeterd en een groot deel van de gebruikersinterface is aangepast naar een nieuwe, frameloos uiterlijk.</li>
           <li xml:lang="pt-BR">Melhoria do espaçamento de vários widgets e adaptação de grande parte da interface do usuário para um novo visual sem moldura</li>
           <li xml:lang="ru">Улучшены отступы между элементами управления; большая часть интерфейса переведена на новый внешний вид без рамок.</li>
+          <li xml:lang="sk">Vylepšené rozostupy rôznych widgetov a veľká časť rozhrania bola portovaná na nový bezrámový vzhľad</li>
           <li xml:lang="sl">Izboljšani razmiki med različnimi pripomočki in prenos velikega dela uporabniškega vmesnika na nov videz brez okvirja</li>
           <li xml:lang="tr">Çeşitli araç takımların aralıkları iyileştirildi ve kullanıcı arayüzünün büyük bir kısmı yeni, çerçevesiz bir görünüme kavuşturuldu.</li>
           <li xml:lang="uk">Удосконалено інтервали між різними віджетами і портовано більшість інтерфейсу на використання нового компонування без рамок</li>
@@ -1351,6 +1369,7 @@
           <li xml:lang="nl">Opgelost: het probleem met de landvlaggen in het tabblad 'Peers' van de infowidget.</li>
           <li xml:lang="pt-BR">Corrigido o problema com as bandeiras dos países na aba "Pares" do widget de informações</li>
           <li xml:lang="ru">Исправлено отображение флагов стран на вкладке «Участники» информационного виджета;</li>
+          <li xml:lang="sk">Opravené zobrazovanie vlajok krajín na karte Partneri v informačnom widgete</li>
           <li xml:lang="sl">Odpravljena napaka, zaradi katere so bile zastave držav na zavihku Vrstniki v gradnku za informacije</li>
           <li xml:lang="tr">Bilgi araç takımının “Eşler” sekmesinde ülke bayraklarının görünmesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено прапорці країн на вкладці вузлів інформаційного віджета</li>
@@ -1368,6 +1387,7 @@
           <li xml:lang="nl">Opgelost: het probleem waarbij het dialoogvenster 'Torrent importeren' er niet in slaagde het opgegeven .torrent-bestand te kopiëren.</li>
           <li xml:lang="pt-BR">Corrigido o problema na caixa de diálogo de importação de torrent ao copiar o arquivo .torrent fornecido</li>
           <li xml:lang="ru">Исправлена ошибка в диалоге импорта торрентов при копировании указанного файла .torrent;</li>
+          <li xml:lang="sk">Opravené zlyhávanie dialógu Importovať torrent pri kopírovaní zadaného súboru .torrent</li>
           <li xml:lang="sl">Popravljeno je pogovorno okno za uvoz torrenta, ki ni uspelo kopirati dane datoteke .torrent</li>
           <li xml:lang="tr">Torrent içe aktarma iletişim kutusunun verilen .torrent dosyasını kopyalayamaması sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено можливість копіювання вказаного файла .torrent у вікні імпортування торентів</li>
@@ -1385,6 +1405,7 @@
           <li xml:lang="nl">Opgelost: het probleem waarbij de hulpballon van de balk met gedeelten de legenda niet correct weergaf.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a legenda não era exibida corretamente na dica da barra de ferramentas</li>
           <li xml:lang="ru">Исправлена некорректное отображение легенды во всплывающей подсказке индикатора загрузки;</li>
+          <li xml:lang="sk">Opravené nesprávne zobrazovanie legendy v bublinovej nápovede lišty blokov</li>
           <li xml:lang="sl">Popravljena napaka, zaradi katere opis orodja chunkbar ni pravilno prikazoval legende</li>
           <li xml:lang="tr">Parça çubuğu araç ipucunun göstergeyi doğru şekilde görüntülememesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено показ умовних позначень у підказці панелі фрагментів</li>
@@ -1402,6 +1423,7 @@
           <li xml:lang="nl">Het loggen naar een bestand is standaard uitgeschakeld om onnodige schrijfbewerkingen naar het bestandssysteem te voorkomen. Het opdrachtregelargument `--enable-logging` kan worden doorgegeven om het loggen naar een bestand in te schakelen.</li>
           <li xml:lang="pt-BR">Desativado o registro em arquivo por padrão para evitar gravações desnecessárias no sistema de arquivos; o argumento de linha de comando `--enable-logging` pode ser passado para ativar o registro em arquivo</li>
           <li xml:lang="ru">Отключено ведение журнала в файл по умолчанию во избежание лишних операций записи в файловую систему; для его включения можно передать аргумент командной строки `--enable-logging`.</li>
+          <li xml:lang="sk">Predvolene vypnuté zapisovanie protokolu do súboru, aby sa predišlo zbytočným zápisom na súborový systém. Na povolenie zapisovania protokolu do súboru je možné použiť argument príkazového riadka `--enable-logging`</li>
           <li xml:lang="sl">Privzeto onemogočeno beleženje v datoteko, da se izogn nepotrebnemu pisanju v datotečni sistem. Za omogočanje beleženja v datoteko lahko v ukazno vrstico lahko uporabite argument `--enable-logging`.</li>
           <li xml:lang="tr">Dosya sistemine gereksiz yazma işlemlerini önlemek için öntanımlı olarak dosya günlük kaydı devre dışı bırakıldı; dosya günlük kaydını etkinleştirmek için `--enable-logging` komut satırı argümanı kullanılabilir.</li>
           <li xml:lang="uk">Вимкнено записування журналу до типового файла, щоб уникнути непотрібного записування до файлової системи; щоб увімкнути запис журналу до файла, можна передати параметр командного рядка `--enable-logging`</li>
@@ -1419,6 +1441,7 @@
           <li xml:lang="nl">Opgelost: het probleem waarbij de hulpballon van de balk met gedeelten de legenda niet correct weergaf.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a legenda não era exibida corretamente na dica da barra de ferramentas</li>
           <li xml:lang="ru">Исправлена некорректное отображение легенды во всплывающей подсказке индикатора загрузки;</li>
+          <li xml:lang="sk">Opravené nesprávne zobrazovanie legendy v bublinovej nápovede lišty blokov</li>
           <li xml:lang="sl">Popravljena napaka, zaradi katere opis orodja chunkbar ni pravilno prikazoval legende</li>
           <li xml:lang="tr">Parça çubuğu araç ipucunun göstergeyi doğru şekilde görüntülememesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено показ умовних позначень у підказці панелі фрагментів</li>
@@ -1436,6 +1459,7 @@
           <li xml:lang="nl">Opgelost: globale sneltoetsacties</li>
           <li xml:lang="pt-BR">Correção das ações de atalho globais</li>
           <li xml:lang="ru">Исправлены действия глобальных комбинаций клавиш;</li>
+          <li xml:lang="sk">Opravené globálne akcie klávesových skratiek</li>
           <li xml:lang="sl">Popravljena globalna dejanja bližnjic</li>
           <li xml:lang="tr">Global kısayol eylemleri onarıldı.</li>
           <li xml:lang="uk">Виправлено дії для загальних клавіатурних скорочень</li>
