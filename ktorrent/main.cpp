@@ -35,6 +35,7 @@
 #include <torrent/globals.h>
 #include <utp/connection.h>
 
+#include "ktorrent_version.h"
 #include "ktversion.h"
 #include "version.h"
 #include <util/error.h>
@@ -85,7 +86,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    bt::SetClientInfo(QStringLiteral("KTorrent"), kt::MAJOR, kt::MINOR, kt::RELEASE, kt::VERSION_TYPE, QStringLiteral("KT"));
+    bt::SetClientInfo(QStringLiteral("KTorrent"), QStringLiteral(KTORRENT_VERSION_STRING), QStringLiteral("KT"));
 
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     KLocalizedString::setApplicationDomain(QByteArrayLiteral("ktorrent"));
