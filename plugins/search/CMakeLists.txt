@@ -7,6 +7,7 @@ target_sources(SearchPlugin PRIVATE
 	searchwidget.cpp 
 	searchplugin.cpp 
 	searchengine.cpp 
+	torznabsearchjob.cpp
 	opensearchdownloadjob.cpp
         searchactivity.cpp
         proxy_helper.cpp
@@ -18,6 +19,7 @@ kconfig_add_kcfg_files(SearchPlugin searchpluginsettings.kcfgc)
 target_link_libraries(
     SearchPlugin
     ktcore
+    Qt6::Network
     Qt6::WebEngineWidgets
     KTorrent6
     KF6::CoreAddons

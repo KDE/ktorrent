@@ -163,18 +163,38 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QPushButton" name="m_add">
-          <property name="toolTip">
-           <string>Add a new search engine.</string>
-          </property>
-          <property name="text">
-           <string>Add</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="m_remove">
-          <property name="toolTip">
-           <string>Remove all selected search engines.</string>
+           <property name="toolTip">
+            <string>Add a new web search engine.</string>
+           </property>
+           <property name="text">
+            <string>Add Web Engine</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="m_add_torznab">
+           <property name="toolTip">
+            <string>Add a new Jackett/Torznab engine.</string>
+           </property>
+           <property name="text">
+            <string>Add Jackett</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="m_edit">
+           <property name="toolTip">
+            <string>Edit the selected Jackett/Torznab engine.</string>
+           </property>
+           <property name="text">
+            <string>&amp;Edit</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="m_remove">
+           <property name="toolTip">
+            <string>Remove all selected search engines.</string>
           </property>
           <property name="text">
            <string>&amp;Remove</string>

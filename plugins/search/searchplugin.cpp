@@ -83,6 +83,13 @@ void SearchPlugin::unload()
 
 void SearchPlugin::search(const QString &text, int engine, bool external)
 {
+    SearchEngine *selectedEngine = engines->engine(engine >= 0 ? engine : 0);
+    if (selectedEngine && selectedEngine->isTorznab()) {
+        activity->search(text, engine);
+        getGUI()->setCurrentActivity(activity);
+        return;
+    }
+
     if (external) {
         if (engine < 0 || engine >= (int)engines->getNumEngines()) {
             engine = 0;

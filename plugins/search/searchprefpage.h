@@ -37,6 +37,8 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void addClicked();
+    void addTorznabClicked();
+    void editClicked();
     void removeClicked();
     void addDefaultClicked();
     void removeAllClicked();

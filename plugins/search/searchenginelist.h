@@ -39,6 +39,9 @@ public:
     /// Search with an engine
     QUrl search(bt::Uint32 engine, const QString &terms);
 
+    /// Get an engine by index
+    SearchEngine *engine(bt::Uint32 index) const;
+
     /// Get the name of an engine
     QString getEngineName(bt::Uint32 engine) const;
 
@@ -81,6 +84,24 @@ public:
      * @param url The url
      */
     void addEngine(const QString &dir, const QString &url);
+
+    /**
+     * Add a Jackett/Torznab engine from a configuration object
+     * @param dir The directory to use
+     * @param config Engine configuration
+     * @param error_message Receives a user-visible error on failure
+     * @return true if the engine was added
+     */
+    bool addTorznabEngine(const QString &dir, const TorznabEngineConfig &config, QString *error_message = nullptr);
+
+    /**
+     * Update an existing Jackett/Torznab engine
+     * @param index Model index of the engine
+     * @param config Replacement configuration
+     * @param error_message Receives a user-visible error on failure
+     * @return true if the engine was updated
+     */
+    bool updateTorznabEngine(const QModelIndex &index, const TorznabEngineConfig &config, QString *error_message = nullptr);
 
 private:
     void convertSearchEnginesFile();

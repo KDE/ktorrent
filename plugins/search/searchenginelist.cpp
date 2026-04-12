@@ -24,6 +24,11 @@ using namespace bt;
 
 namespace kt
 {
+static QString torznabConfigPath(const QString &directory)
+{
+    return directory + SearchEngine::torznabConfigFileName();
+}
+
 SearchEngineList::SearchEngineList(ProxyHelper *proxy, const QString &data_dir)
     : m_proxy(proxy)
     , data_dir(data_dir)
@@ -58,11 +63,15 @@ void SearchEngineList::loadEngines()
     } else {
         QStringList subdirs = QDir(data_dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
         for (const QString &sd : std::as_const(subdirs)) {
-            // Load only if there is an opensearch.xml file and not a removed file
-            if (bt::Exists(data_dir + sd + QStringLiteral("/opensearch.xml")) && !bt::Exists(data_dir + sd + QStringLiteral("/removed"))) {
+            const QString baseDir = data_dir + sd + QLatin1Char('/');
+            const QString openSearchFile = baseDir + QStringLiteral("opensearch.xml");
+            const QString torznabFile = torznabConfigPath(baseDir);
+            const QString removedFile = baseDir + QStringLiteral("removed");
+
+            if (!bt::Exists(removedFile) && (bt::Exists(openSearchFile) || bt::Exists(torznabFile))) {
                 Out(SYS_SRC | LOG_DEBUG) << "Loading " << sd << endl;
-                SearchEngine *se = new SearchEngine(data_dir + sd + QLatin1Char('/'));
-                if (!se->load(data_dir + sd + QStringLiteral("/opensearch.xml"))) {
+                SearchEngine *se = new SearchEngine(baseDir);
+                if (!se->load(bt::Exists(torznabFile) ? torznabFile : openSearchFile)) {
                     delete se;
                 } else {
                     engines.append(se);
@@ -124,6 +133,11 @@ QUrl SearchEngineList::search(bt::Uint32 engine, const QString &terms)
 
     Out(SYS_SRC | LOG_NOTICE) << "Searching " << u.toDisplayString() << endl;
     return u;
+}
+
+SearchEngine *SearchEngineList::engine(bt::Uint32 index) const
+{
+    return index < (bt::Uint32)engines.count() ? engines[index] : nullptr;
 }
 
 QString SearchEngineList::getEngineName(bt::Uint32 engine) const
@@ -192,6 +206,75 @@ void SearchEngineList::addEngine(const QString &dir, const QString &url)
 
     engines.append(se);
     insertRow(engines.count() - 1);
+}
+
+bool SearchEngineList::addTorznabEngine(const QString &dir, const TorznabEngineConfig &config, QString *error_message)
+{
+    try {
+        if (!bt::Exists(dir)) {
+            bt::MakeDir(dir);
+        }
+    } catch (bt::Error &err) {
+        if (error_message) {
+            *error_message = err.toString();
+        }
+        return false;
+    }
+
+    const QString configPath = torznabConfigPath(dir);
+    if (!SearchEngine::writeTorznabConfig(configPath, config, error_message)) {
+        return false;
+    }
+
+    SearchEngine *se = new SearchEngine(dir);
+    if (!se->load(configPath)) {
+        delete se;
+        if (error_message && error_message->isEmpty()) {
+            *error_message = i18n("Failed to parse %1", configPath);
+        }
+        return false;
+    }
+
+    engines.append(se);
+    insertRow(engines.count() - 1);
+    return true;
+}
+
+bool SearchEngineList::updateTorznabEngine(const QModelIndex &index, const TorznabEngineConfig &config, QString *error_message)
+{
+    if (!index.isValid() || index.row() < 0 || index.row() >= engines.count()) {
+        if (error_message) {
+            *error_message = i18n("The selected engine is invalid.");
+        }
+        return false;
+    }
+
+    SearchEngine *current = engines.at(index.row());
+    if (!current || !current->isTorznab()) {
+        if (error_message) {
+            *error_message = i18n("Only Jackett/Torznab engines can be edited.");
+        }
+        return false;
+    }
+
+    const QString configPath = torznabConfigPath(current->engineDir());
+    if (!SearchEngine::writeTorznabConfig(configPath, config, error_message)) {
+        return false;
+    }
+
+    SearchEngine *replacement = new SearchEngine(current->engineDir());
+    if (!replacement->load(configPath)) {
+        delete replacement;
+        if (error_message && error_message->isEmpty()) {
+            *error_message = i18n("Failed to parse %1", configPath);
+        }
+        return false;
+    }
+
+    delete current;
+    engines[index.row()] = replacement;
+    Q_EMIT dataChanged(index, index);
+    return true;
 }
 
 void SearchEngineList::removeEngines(const QModelIndexList &sel)
@@ -330,6 +413,9 @@ QVariant SearchEngineList::data(const QModelIndex &index, int role) const
     } else if (role == Qt::DecorationRole) {
         return se->engineIcon();
     } else if (role == Qt::ToolTipRole) {
+        if (se->isTorznab()) {
+            return i18n("Type: <b>Jackett/Torznab</b><br/>URL: <b>%1</b>", se->engineUrl());
+        }
         return i18n("URL: <b>%1</b>", se->engineUrl());
     }
 

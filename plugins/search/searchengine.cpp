@@ -5,10 +5,14 @@
 */
 
 #include <QFileInfo>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QStringView>
+#include <QUrlQuery>
 #include <QXmlStreamReader>
 
 #include <KIO/StoredTransferJob>
+#include <KLocalizedString>
 
 #include "searchengine.h"
 #include <util/fileops.h>
@@ -120,7 +124,21 @@ SearchEngine::~SearchEngine()
 {
 }
 
-bool SearchEngine::load(const QString &xml_file)
+QString SearchEngine::torznabConfigFileName()
+{
+    return QStringLiteral("torznab.json");
+}
+
+bool SearchEngine::load(const QString &descriptor_file)
+{
+    if (descriptor_file.endsWith(QLatin1String(".json"))) {
+        return loadTorznab(descriptor_file);
+    }
+
+    return loadOpenSearch(descriptor_file);
+}
+
+bool SearchEngine::loadOpenSearch(const QString &xml_file)
 {
     QFile fptr(xml_file);
     if (!fptr.open(QIODevice::ReadOnly)) {
@@ -135,6 +153,9 @@ bool SearchEngine::load(const QString &xml_file)
         Out(SYS_SRC | LOG_NOTICE) << "Failed to parse opensearch description !" << endl;
         return false;
     }
+
+    type = SearchEngineType::OpenSearch;
+    torznab_config = TorznabEngineConfig();
 
     // check if icon file is present in data_dir
     // if not, download it
@@ -162,8 +183,126 @@ bool SearchEngine::load(const QString &xml_file)
     return true;
 }
 
-QUrl SearchEngine::search(const QString &terms)
+TorznabEngineConfig SearchEngine::normalizedTorznabConfig(const TorznabEngineConfig &config)
 {
+    TorznabEngineConfig normalized = config;
+    normalized.name = normalized.name.trimmed();
+    normalized.description = normalized.description.trimmed();
+    normalized.apiKey = normalized.apiKey.trimmed();
+
+    QString serviceUrl = normalized.serviceUrl.toString(QUrl::RemoveQuery | QUrl::RemoveFragment).trimmed();
+    while (serviceUrl.endsWith(QLatin1Char('/'))) {
+        serviceUrl.chop(1);
+    }
+    normalized.serviceUrl = QUrl(serviceUrl);
+    normalized.threadCount = qMax(1, normalized.threadCount);
+    return normalized;
+}
+
+bool SearchEngine::writeTorznabConfig(const QString &config_path, const TorznabEngineConfig &config, QString *error_message)
+{
+    const TorznabEngineConfig normalized = normalizedTorznabConfig(config);
+
+    if (normalized.name.isEmpty()) {
+        if (error_message) {
+            *error_message = i18n("The engine name cannot be empty.");
+        }
+        return false;
+    }
+
+    if (!normalized.serviceUrl.isValid() || normalized.serviceUrl.host().isEmpty()
+        || (normalized.serviceUrl.scheme() != QLatin1String("http") && normalized.serviceUrl.scheme() != QLatin1String("https"))) {
+        if (error_message) {
+            *error_message = i18n("The Jackett/Torznab URL must be a valid HTTP or HTTPS address.");
+        }
+        return false;
+    }
+
+    if (normalized.apiKey.isEmpty()) {
+        if (error_message) {
+            *error_message = i18n("The API key cannot be empty.");
+        }
+        return false;
+    }
+
+    QFile fptr(config_path);
+    if (!fptr.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        if (error_message) {
+            *error_message = i18n("Cannot open %1: %2", config_path, fptr.errorString());
+        }
+        return false;
+    }
+
+    const QJsonObject root{
+        {QStringLiteral("type"), QStringLiteral("torznab")},
+        {QStringLiteral("name"), normalized.name},
+        {QStringLiteral("description"), normalized.description},
+        {QStringLiteral("url"), normalized.serviceUrl.toString()},
+        {QStringLiteral("api_key"), normalized.apiKey},
+        {QStringLiteral("tracker_first"), normalized.trackerFirst},
+        {QStringLiteral("thread_count"), normalized.threadCount},
+    };
+
+    fptr.write(QJsonDocument(root).toJson(QJsonDocument::Indented));
+    return true;
+}
+
+bool SearchEngine::loadTorznab(const QString &json_file)
+{
+    QFile fptr(json_file);
+    if (!fptr.open(QIODevice::ReadOnly)) {
+        return false;
+    }
+
+    QJsonParseError parse_error;
+    const QJsonDocument document = QJsonDocument::fromJson(fptr.readAll(), &parse_error);
+    if (parse_error.error != QJsonParseError::NoError || !document.isObject()) {
+        Out(SYS_SRC | LOG_NOTICE) << "Failed to parse torznab configuration: " << parse_error.errorString() << endl;
+        return false;
+    }
+
+    const QJsonObject root = document.object();
+
+    TorznabEngineConfig config;
+    config.name = root.value(QStringLiteral("name")).toString();
+    config.description = root.value(QStringLiteral("description")).toString();
+    config.serviceUrl = QUrl(root.value(QStringLiteral("url")).toString());
+    config.apiKey = root.value(QStringLiteral("api_key")).toString();
+    config.trackerFirst = root.value(QStringLiteral("tracker_first")).toBool(false);
+    config.threadCount = root.value(QStringLiteral("thread_count")).toInt(20);
+    config = normalizedTorznabConfig(config);
+
+    if (config.name.isEmpty() || !config.serviceUrl.isValid() || config.serviceUrl.host().isEmpty() || config.apiKey.isEmpty()) {
+        Out(SYS_SRC | LOG_NOTICE) << "Invalid torznab configuration in " << json_file << endl;
+        return false;
+    }
+
+    type = SearchEngineType::Torznab;
+    torznab_config = config;
+    name = config.name;
+    description = config.description.isEmpty() ? i18n("Jackett/Torznab search engine") : config.description;
+    url = config.serviceUrl.toString();
+    icon_url.clear();
+    icon = QIcon::fromTheme(QStringLiteral("network-server"));
+    if (icon.isNull()) {
+        icon = QIcon::fromTheme(QStringLiteral("edit-find"));
+    }
+
+    return true;
+}
+
+QUrl SearchEngine::search(const QString &terms) const
+{
+    if (type == SearchEngineType::Torznab) {
+        QUrl torznabUrl;
+        torznabUrl.setScheme(QStringLiteral("torznab"));
+        torznabUrl.setPath(QStringLiteral("/") + name);
+        QUrlQuery query;
+        query.addQueryItem(QStringLiteral("q"), terms);
+        torznabUrl.setQuery(query);
+        return torznabUrl;
+    }
+
     QString r = url;
     r = r.replace(QLatin1String("{searchTerms}"), terms);
     return QUrl(r);
