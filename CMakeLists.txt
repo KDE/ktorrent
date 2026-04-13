@@ -35,11 +35,16 @@ include(ECMInstallIcons)
 include(ECMAddAppIcon)
 include(ECMMarkAsTest)
 include(ECMMarkNonGuiExecutable)
+include(ECMSetupVersion)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+ecm_setup_version(${RELEASE_SERVICE_VERSION}
+    VARIABLE_PREFIX KTORRENT
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/ktorrent/ktorrent_version.h")
 
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED
     Core
