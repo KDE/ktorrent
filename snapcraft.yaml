@@ -39,7 +39,7 @@ parts:
       - libgmp10
       - libgmpxx4ldbl
     source: https://invent.kde.org/network/libktorrent.git
-    source-branch: master
+    source-branch: release/26.04
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
