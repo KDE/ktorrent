@@ -993,7 +993,7 @@
           <li>Fixed a bug causing the magnets file to be constantly updated</li>
           <li xml:lang="ar">إصلاح خطأ كان يتسبب في تحديث ملف المغناطيسات باستمرار</li>
           <li xml:lang="ca">S'ha corregit un error que provocava que el fitxer magnet s'actualitzés constantment</li>
-          <li xml:lang="ca-valencia">S'ha corregit un error que provocava que el fitxer magnet s'actualitzara constantment</li>
+          <li xml:lang="ca-valencia">S'ha esmenat un error que provocava que el fitxer magnet s'actualitzara constantment</li>
           <li xml:lang="cs">Opravena chyba, kvůli které se soubor magnetů neustále aktualizoval</li>
           <li xml:lang="es">Arreglado un error que causaba que los archivos magnet se actualizaran constantemente</li>
           <li xml:lang="fr">Correction d'un bogue provoquant la mise à jour permanente du fichier des aimants</li>
@@ -1010,7 +1010,7 @@
           <li>Fixed the progress bar highlight color</li>
           <li xml:lang="ar">إصلاح لون تمييز شريط التقدم</li>
           <li xml:lang="ca">S'ha corregit el color de ressaltat de la barra de progrés</li>
-          <li xml:lang="ca-valencia">S'ha corregit el color de ressaltat de la barra de progrés</li>
+          <li xml:lang="ca-valencia">S'ha esmenat el color de ressaltat de la barra de progrés</li>
           <li xml:lang="cs">Barva zvýraznění v šabloně</li>
           <li xml:lang="es">Arreglado el color destacado de la barra de progreso</li>
           <li xml:lang="fr">Correction de la couleur de mise en évidence de la barre de progression</li>
@@ -1027,7 +1027,7 @@
           <li>Fixed the log viewer settings tooltip showing raw HTML</li>
           <li xml:lang="ar">إصلاح تلميح إعدادات عارض السجلات الذي كان يعرض كود HTML الخام</li>
           <li xml:lang="ca">S'ha corregit el consell d'eina de la configuració del visualitzador de registres que mostrava HTML en brut</li>
-          <li xml:lang="ca-valencia">S'ha corregit el consell d'eina de la configuració del visor de registres que mostrava HTML en brut</li>
+          <li xml:lang="ca-valencia">S'ha esmenat el consell d'eina de la configuració del visor de registres que mostrava HTML en brut</li>
           <li xml:lang="cs">Opravena chyba, kdy se v popisku nastavení prohlížeče protokolů zobrazoval nezpracovaný kód HTML</li>
           <li xml:lang="es">Arreglado el menú emergente de preferencias del visor de registros que mostraba HTML crudo</li>
           <li xml:lang="fr">Correction de l'infobulle de configuration de l'afficheur de journaux affichant du format « HTML » brut</li>
@@ -1070,7 +1070,7 @@
           <li>Fixed the background color of the syndication widget's feed-item status panel</li>
           <li xml:lang="ar">إصلاح لون خلفية لوحة حالة عناصر الخلاصة في أداة التوزيع</li>
           <li xml:lang="ca">S'ha corregit el color de fons del plafó d'estat de l'element de canal del giny de sindicació</li>
-          <li xml:lang="ca-valencia">S'ha corregit el color de fons del quadro d'estat de l'element de canal del giny de sindicació</li>
+          <li xml:lang="ca-valencia">S'ha esmenat el color de fons del quadro d'estat de l'element de canal del giny de sindicació</li>
           <li xml:lang="cs">Byla opravena barva pozadí panelu stavu položek kanálu v widgetu pro sdílení</li>
           <li xml:lang="es">Arreglado el color de fondo del panel de estado del complemento de sindicación</li>
           <li xml:lang="fr">Correction de la couleur d'arrière-plan du panneau d'état pour l'élément de flux du composant graphique de syndication</li>
@@ -1134,7 +1134,7 @@
           <li>Fixed a crash when closing the video widget</li>
           <li xml:lang="ar"> إصلاح مشكلة تعطل التطبيق عند إغلاق أداة الفيديو</li>
           <li xml:lang="ca">S'ha corregit una fallada en tancar el giny de vídeo</li>
-          <li xml:lang="ca-valencia">S'ha corregit una fallada en tancar el giny de vídeo</li>
+          <li xml:lang="ca-valencia">S'ha esmenat una fallada en tancar el giny de vídeo</li>
           <li xml:lang="cs">Opravena chyba, která způsobovala pád aplikace při zavírání widgetu videa</li>
           <li xml:lang="es">Arreglado un error al cerrar el complemento de vídeo</li>
           <li xml:lang="fr">Correction d'un plantage lors de la fermeture du composant graphique de vidéos</li>
@@ -1174,7 +1174,7 @@
           <li>Fixed charts having white text on a white background in the Statistics plugin</li>
           <li xml:lang="ar">إصلاح المخططات التي تظهر فيها النصوص باللون الأبيض على خلفية بيضاء في المكون الإضافي «الإحصائيات»</li>
           <li xml:lang="ca">S'han corregit els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
-          <li xml:lang="ca-valencia">S'han corregit els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
+          <li xml:lang="ca-valencia">S'han esmenat els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
           <li xml:lang="cs">Opraveny grafy s bílým textem na bílém pozadí v pluginu Statistiky</li>
           <li xml:lang="es">Arreglados los gráficos que mostraban texto en blanco sobre fondo blanco en el complemento de estadísticas</li>
           <li xml:lang="fr">Correction des graphiques ayant du texte blanc sur un arrière-plan blanc dans le module externe « Statistiques »</li>
@@ -1197,7 +1197,7 @@
           <li>Fixed the Import Torrent dialog not allowing .torrent files to be selected</li>
           <li xml:lang="ar">إصلاح مشكلة عدم السماح باختيار ملفات .torrent في مربع حوار استيراد السيول.</li>
           <li xml:lang="ca">S'ha corregit el diàleg d'importació de torrent que no permet seleccionar fitxers .torrent</li>
-          <li xml:lang="ca-valencia">S'ha corregit el diàleg d'importació de torrent que no permet seleccionar fitxers «.torrent»</li>
+          <li xml:lang="ca-valencia">S'ha esmenat el diàleg d'importació de torrent que no permet seleccionar fitxers «.torrent»</li>
           <li xml:lang="cs">Opravena chyba, kvůli které nebylo možné v dialogovém okně „Importovat torrent“ vybrat soubory .torrent</li>
           <li xml:lang="es">Arreglado el diálogo de importación torrent que no permitía seleccionar archivos .torrent</li>
           <li xml:lang="fr">Correction de la boîte de dialogue d'importation de Torrent, ne permettant pas la sélection de de fichier « .torrent »</li>
@@ -1378,7 +1378,7 @@
           <li xml:lang="ar">إصلاح مشكلة فشل مربع حوار استيراد التورنت في نسخ ملف .torrent المحدد</li>
           <li xml:lang="bg">Поправена е грешката, при която диалоговият прозорец „Импортиране на торент“ не копираше зададения .torrent файл</li>
           <li xml:lang="ca">S'ha corregit el diàleg d'importació de torrent que falla en copiar el fitxer .torrent indicat</li>
-          <li xml:lang="ca-valencia">S'ha corregit el diàleg d'importació de torrent que falla en copiar el fitxer «.torrent» indicat</li>
+          <li xml:lang="ca-valencia">S'ha esmenat el diàleg d'importació de torrent que falla en copiar el fitxer «.torrent» indicat</li>
           <li xml:lang="cs">Opravena chyba dialogového okna Importovat torrent, které nedokázalo zkopírovat zadaný soubor .torrent.</li>
           <li xml:lang="es">Arreglado el diálogo de importar torrent al fallar la copia de un archivo .torrent</li>
           <li xml:lang="fr">Correction de la boîte de dialogue d'importation échouant lors de la copie du fichier « .torrent » fourni</li>
