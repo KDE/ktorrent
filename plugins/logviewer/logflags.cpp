@@ -38,7 +38,8 @@ bool LogFlags::checkFlags(unsigned int arg)
     while (i != log_flags.end()) {
         const LogFlag &f = *i;
         if (f.id & arg) {
-            return f.flag & arg;
+            const Uint32 log_level = arg - f.id;
+            return log_level <= f.flag;
         }
         i++;
     }
