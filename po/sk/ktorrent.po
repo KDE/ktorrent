@@ -3137,20 +3137,20 @@ msgid ""
 "If the SOCKS server requires authentication via a username and a password, "
 "enable this box."
 msgstr ""
-"Ak SOCKS server vyžaduje autentizáciu pomocou uživateľského mena a hesla, "
+"Ak SOCKS server vyžaduje autentizáciu pomocou užívateľského mena a hesla, "
 "aktivujte toto políčko."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_socksUsePassword)
 #: ktorrent/pref/proxypref.ui:159
 #, kde-format
 msgid "Username and password required"
-msgstr "Uživateľské meno a heslo je vyžadované"
+msgstr "Užívateľské meno a heslo je vyžadované"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/proxypref.ui:170
 #, kde-format
 msgid "Username:"
-msgstr "Uživateľské meno:"
+msgstr "Užívateľské meno:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_socksUsername)
 #: ktorrent/pref/proxypref.ui:177
@@ -9230,7 +9230,7 @@ msgstr "ZeroConf"
 
 #~ msgid "Username you need to use in the login page of the webinterface."
 #~ msgstr ""
-#~ "Uživateľské meno, ktoré musíte použiť na prihlasovacej stránke webového "
+#~ "Užívateľské meno, ktoré musíte použiť na prihlasovacej stránke webového "
 #~ "rozhrania."
 
 #~ msgid ""
