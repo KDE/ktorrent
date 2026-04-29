@@ -1671,7 +1671,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:135
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr "The maxminddb library používaný na the InfoWidget plugin."
+msgstr "Knižnica maxminddb používaná pre zásuvný modul InfoWidget."
 
 #: ktorrent/main.cpp:136
 #, kde-format
@@ -2054,8 +2054,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
-"Enable logging to standard output. Requires --enable-logging to be specified "
-"tiež."
+"Povolí zaznamenávanie na štandardný výstup. Vyžaduje tiež zadanie --enable-"
+"logging."
 
 #: ktorrent/main.cpp:183
 #, kde-format
@@ -2282,9 +2282,9 @@ msgid ""
 "generates"
 msgstr ""
 "Zistí názov hostiteľa každého účastníka. Toto má za následok zobrazenie "
-"názvu hostiteľa namiesto IP adresy.\n"
+"názvu hostiteľa namiesto IP adresy. \n"
 "\n"
-"Môžete to zakázať, ak si neželáte zvýšené zaťaženie siete, ktoré to vytvára."
+"Môžete to zakázať, ak si neželáte zvýšené zaťaženie siete, ktoré to vytvára"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:307
