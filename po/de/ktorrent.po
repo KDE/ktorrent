@@ -1,20 +1,20 @@
 # SPDX-FileCopyrightText: 2005 Stephan Johach <hunsum@gmx.de>
-# SPDX-FileCopyrightText: 2005, 2006 Patrick Trettenbrein <patrick.trettenbrein@kdemail.net>
-# SPDX-FileCopyrightText: 2005, 2006, 2007, 2008, 2010 Thomas Reitelbach <tr@erdfunkstelle.de>
+# SPDX-FileCopyrightText: 2005-2006 Patrick Trettenbrein <patrick.trettenbrein@kdemail.net>
+# SPDX-FileCopyrightText: 2005-2008, 2010 Thomas Reitelbach <tr@erdfunkstelle.de>
 # SPDX-FileCopyrightText: 2006 Danny Kukawka <danny.kukawka@web.de>
-# SPDX-FileCopyrightText: 2006, 2007, 2008, 2009, 2010 Jannick Kuhr <opensource@kuhr.org>
-# SPDX-FileCopyrightText: 2009, 2010 Markus Slopianka <markus.s@kdemail.net>
-# SPDX-FileCopyrightText: 2009, 2010 Panagiotis Papadopoulos <pano_90@gmx.net>
-# SPDX-FileCopyrightText: 2009, 2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2014, 2016, 2022, 2023 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2006-2010 Jannick Kuhr <opensource@kuhr.org>
+# SPDX-FileCopyrightText: 2009, 2011-2014, 2016-2021 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2009-2010 Markus Slopianka <markus.s@kdemail.net>
+# SPDX-FileCopyrightText: 2009-2010 Panagiotis Papadopoulos <pano_90@gmx.net>
+# SPDX-FileCopyrightText: 2010-2012, 2014, 2016, 2022-2023 Frederik Schwarzer <schwarzer@kde.org>
 # SPDX-FileCopyrightText: 2011 Torbjörn Klatt <torbjoern.k@googlemail.com>
-# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n.daphipz@fastmail.de>
+# SPDX-FileCopyrightText: 2025-2026 Philipp Kiemle <l10n.daphipz@fastmail.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-24 00:43+0000\n"
-"PO-Revision-Date: 2025-11-11 22:55+0100\n"
+"PO-Revision-Date: 2026-04-25 23:12+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3950,7 +3950,7 @@ msgstr[1] "Es können nicht mehr als %1 Torrents heruntergeladen werden.<br>"
 #, kde-format
 msgid "Go to Settings -> Configure KTorrent, if you want to change the limits."
 msgstr ""
-"Unter Einstellungen -> KTorrent einrichten können Sie diese Begrenzungen "
+"Unter „Einstellungen“ → „KTorrent einrichten“ können Sie diese Begrenzungen "
 "ändern."
 
 #: ktorrent/trayicon.cpp:309
@@ -6518,7 +6518,7 @@ msgstr "Aktivieren Sie dies, wenn Sie das IP-Filter-Modul verwenden möchten."
 #: plugins/ipfilter/ipblockingprefpage.ui:32
 #, kde-format
 msgid "Use PeerGuardian filter"
-msgstr "PeerGuardian-Filter benutzen"
+msgstr "PeerGuardian-Filter verwenden"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #: plugins/ipfilter/ipblockingprefpage.ui:44
@@ -6602,7 +6602,7 @@ msgstr "Ebene-1-Filteradresse"
 #: plugins/ipfilter/ktipfilterplugin.kcfg:14
 #, kde-format
 msgid "Use level1 filter?"
-msgstr "Ebene-1-Filter benutzen?"
+msgstr "„level1“-Filter verwenden?"
 
 #. i18n: ectx: label, entry (useRichText), group (general)
 #: plugins/logviewer/ktlogviewerplugin.kcfg:11
@@ -6913,12 +6913,12 @@ msgstr "Wiedergabe: <b>%1</b>"
 #: plugins/mediaplayer/mediacontroller.cpp:99
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
-msgstr "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
+msgstr "<b>%2</b> – <b>%1</b> (Album: <b>%3</b>)"
 
 #: plugins/mediaplayer/mediacontroller.cpp:102
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b>"
-msgstr "<b>%2</b> - <b>%1</b>"
+msgstr "<b>%2</b> – <b>%1</b>"
 
 #: plugins/mediaplayer/mediacontroller.cpp:105
 #: plugins/mediaplayer/mediacontroller.cpp:108
@@ -7616,7 +7616,7 @@ msgstr "Auszuführende Aktion:"
 #: plugins/shutdown/shutdowndlg.ui:32
 #, kde-format
 msgid "Execute action when:"
-msgstr "Aktion ausführen wenn:"
+msgstr "Aktion ausführen, wenn:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, m_all_rules_must_be_hit)
 #: plugins/shutdown/shutdowndlg.ui:47
@@ -8465,13 +8465,14 @@ msgid "<b>OK</b>"
 msgstr "<b>OK</b>"
 
 #: plugins/syndication/feedwidget.cpp:229
-#, fuzzy, kde-format
-#| msgid "Last updated:"
+#, kde-format
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
 msgid ""
 "Last Updated:\n"
 "%1"
-msgstr "Letzte Aktualisierung:"
+msgstr ""
+"Letzte Aktualisierung:\n"
+"%1"
 
 #: plugins/syndication/feedwidget.cpp:234
 #, kde-format
@@ -8489,10 +8490,9 @@ msgid "<b>Downloading</b>"
 msgstr "<b>Herunterladen</b>"
 
 #: plugins/syndication/feedwidget.cpp:243
-#, fuzzy, kde-format
-#| msgid "<b>%1</b>"
+#, kde-format
 msgid "<b>Queued</b>"
-msgstr "<b>%1</b>"
+msgstr "<b>In der Warteschlange</b>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/feedwidget.ui:65
@@ -8530,7 +8530,7 @@ msgstr " Minuten"
 #: plugins/syndication/feedwidget.ui:160
 #, kde-format
 msgid "Last successful update of the selected feed"
-msgstr ""
+msgstr "Letzte erfolgreiche Aktualisierung der ausgewählten Nachrichtenquelle"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
 #: plugins/syndication/feedwidget.ui:183
