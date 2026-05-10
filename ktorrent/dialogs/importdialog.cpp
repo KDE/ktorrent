@@ -166,8 +166,9 @@ void ImportDialog::import()
     QUrl data_url = m_data_url->url();
 
     // now we need to check the data
+    std::unique_ptr<DataChecker> data_checker;
     if (tor.isMultiFile()) {
-        dc = new MultiDataChecker(0, tor.getNumChunks());
+        data_checker = std::make_unique<MultiDataChecker>(0, tor.getNumChunks());
         QString path = data_url.toLocalFile();
         if (!path.endsWith(bt::DirSeparator())) {
             path += bt::DirSeparator();
@@ -178,14 +179,15 @@ void ImportDialog::import()
             tf.setPathOnDisk(path + tf.getPath());
         }
     } else {
-        dc = new SingleDataChecker(0, tor.getNumChunks());
+        data_checker = std::make_unique<SingleDataChecker>(0, tor.getNumChunks());
     }
 
+    dc = data_checker.get();
     connect(dc, &bt::DataChecker::progress, this, &ImportDialog::progress, Qt::QueuedConnection);
 
     BitSet bs(tor.getNumChunks());
     bs.setAll(false);
-    dc_thread = new DataCheckerThread(dc, bs, data_url.toLocalFile(), tor, QString());
+    dc_thread = new DataCheckerThread(std::move(data_checker), bs, data_url.toLocalFile(), tor, QString());
     connect(dc_thread, &bt::DataCheckerThread::finished, this, &ImportDialog::finished, Qt::QueuedConnection);
     dc_thread->start();
 }
