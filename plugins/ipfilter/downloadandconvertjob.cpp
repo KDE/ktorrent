@@ -173,7 +173,7 @@ void DownloadAndConvertJob::extract(KJob *j)
     }
 
     QString zipfile = kt::DataDir() + QStringLiteral("level1.zip");
-    KZip *zip = new KZip(zipfile);
+    auto zip = std::make_unique<KZip>(zipfile);
     if (!zip->open(QIODevice::ReadOnly) || !zip->directory()) {
         Out(SYS_IPF | LOG_NOTICE) << "IP filter update failed: cannot open zip file " << zipfile << endl;
         if (mode == Verbose) {
@@ -185,14 +185,13 @@ void DownloadAndConvertJob::extract(KJob *j)
 
         setError(UNZIP_FAILED);
         emitResult();
-        delete zip;
         return;
     }
 
     QString destination = kt::DataDir() + QStringLiteral("level1.txt");
     QStringList entries = zip->directory()->entries();
     if (entries.count() >= 1) {
-        active_job = new bt::ExtractFileJob(zip, entries.front(), destination);
+        active_job = new bt::ExtractFileJob(std::move(zip), entries.front(), destination);
         connect(active_job, &KJob::result, this, qOverload<KJob *>(&DownloadAndConvertJob::convert));
         unzip = true;
         active_job->start();
@@ -207,7 +206,6 @@ void DownloadAndConvertJob::extract(KJob *j)
 
         setError(UNZIP_FAILED);
         emitResult();
-        delete zip;
     }
 }
 
