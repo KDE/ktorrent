@@ -945,10 +945,10 @@ bt::TorrentInterface *Core::createTorrent(bt::TorrentCreator *mktor, bool seed)
     QString tdir;
     try {
         tdir = findNewTorrentDir();
-        bt::TorrentControl *tc = mktor->makeTC(tdir);
+        auto tc = mktor->makeTC(tdir).release();
         if (tc) {
             connectSignals(tc);
-            qman->append(tc);
+            qman->append(tc); // This takes ownership
             if (seed) {
                 start(tc);
             }
