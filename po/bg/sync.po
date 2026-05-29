@@ -1,0 +1,100 @@
+# SPDX-FileCopyrightText: 2023, 2026 Mincho Kondarev <mkondarev@yahoo.de>
+msgid ""
+msgstr ""
+"Project-Id-Version: org.kde.ktorrent.appdata\n"
+"POT-Creation-Date: 2026-04-18 02:38+0000\n"
+"PO-Revision-Date: 2026-04-02 23:26+0200\n"
+"Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
+"Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 26.03.70\n"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:61
+msgid "Fixed a bug causing the magnets file to be constantly updated"
+msgstr "Поправена е грешка, причиняваща постоянно актуализиране на файла с магнитни връзки"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:62
+msgid "Fixed the progress bar highlight color"
+msgstr "Коригиран е цветът за открояване на лентата за напредък"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:63
+msgid "Fixed the log viewer settings tooltip showing raw HTML"
+msgstr "Коригиран е проблемът, при който подсказката в настройките на прегледа на дневника показваше чист HTML код"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:73
+msgid ""
+"Added a \"Last Activity\" column showing the time the torrent last had "
+"upload or download activity"
+msgstr ""
+"Добавена е колона „Последна активност“, показваща времето на последната "
+"активност за качване или изтегляне на торента"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:74
+msgid ""
+"Fixed the background color of the syndication widget's feed-item status panel"
+msgstr ""
+"Коригиран е фоновият цвят на панела за състояние на елементите в уиджета за "
+"синдикация (RSS)"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:75
+msgid ""
+"Added columns to the main view showing the number of bytes uploaded and "
+"downloaded in the current session"
+msgstr ""
+"Добавени са колони в главния изглед, показващи броя на качените и изтеглените "
+"байтове през текущата сесия"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:89
+msgid "The \"Added\" column now uses a shorter date format"
+msgstr "Колоната „Добавено“ вече използва по-кратък формат за дата"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:90
+msgid "Fixed a crash when closing the video widget"
+msgstr "Коригиран е срив при затваряне на видео уиджета"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:97
+msgid "Accept webseeds using HTTPS"
+msgstr "Приемане на webseeds чрез HTTPS"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:98
+msgid ""
+"Fixed charts having white text on a white background in the Statistics plugin"
+msgstr ""
+"Коригиран е проблемът с белия текст върху бял фон в графиките на приставката "
+"„Статистика“"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:116
+msgid "Added an action to rename files in the Info Widget context menu"
+msgstr ""
+"Добавено е действие за преименуване на файлове в контекстното меню на "
+"информационния уиджет"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:117
+msgid ""
+"Save the magnets file whenever it is updated, so that magnet data is not "
+"lost if the app crashes"
+msgstr ""
+"Записване на файла с магнитни връзки при всяка актуализация, за да не се "
+"загубят данни при евентуален срив на приложението"
+
+#. (itstool) path: ul/li
+#: org.kde.ktorrent.appdata.xml:118
+msgid "Use a different icon for queued seeding and queued downloading"
+msgstr ""
+"Използване на различни икони за сидиране в опашка и изтегляне в опашка"
