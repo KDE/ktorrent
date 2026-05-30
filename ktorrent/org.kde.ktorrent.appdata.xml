@@ -993,6 +993,7 @@
         <ul>
           <li>Fixed a bug causing the magnets file to be constantly updated</li>
           <li xml:lang="ar">إصلاح خطأ كان يتسبب في تحديث ملف المغناطيسات باستمرار</li>
+          <li xml:lang="bg">Поправена е грешка, причиняваща постоянно актуализиране на файла с магнитни връзки</li>
           <li xml:lang="ca">S'ha corregit un error que provocava que el fitxer magnet s'actualitzés constantment</li>
           <li xml:lang="ca-valencia">S'ha esmenat un error que provocava que el fitxer magnet s'actualitzara constantment</li>
           <li xml:lang="cs">Opravena chyba, kvůli které se soubor magnetů neustále aktualizoval</li>
@@ -1008,6 +1009,7 @@
           <li xml:lang="zh-CN">修复了一个导致 magnets 文件不断更新的错误</li>
           <li>Fixed the progress bar highlight color</li>
           <li xml:lang="ar">إصلاح لون تمييز شريط التقدم</li>
+          <li xml:lang="bg">Коригиран е цветът за открояване на лентата за напредък</li>
           <li xml:lang="ca">S'ha corregit el color de ressaltat de la barra de progrés</li>
           <li xml:lang="ca-valencia">S'ha esmenat el color de ressaltat de la barra de progrés</li>
           <li xml:lang="cs">Barva zvýraznění v šabloně</li>
@@ -1023,6 +1025,7 @@
           <li xml:lang="zh-CN">修复进度条高亮颜色</li>
           <li>Fixed the log viewer settings tooltip showing raw HTML</li>
           <li xml:lang="ar">إصلاح تلميح إعدادات عارض السجلات الذي كان يعرض كود HTML الخام</li>
+          <li xml:lang="bg">Коригиран е проблемът, при който подсказката в настройките на прегледа на дневника показваше чист HTML код</li>
           <li xml:lang="ca">S'ha corregit el consell d'eina de la configuració del visualitzador de registres que mostrava HTML en brut</li>
           <li xml:lang="ca-valencia">S'ha esmenat el consell d'eina de la configuració del visor de registres que mostrava HTML en brut</li>
           <li xml:lang="cs">Opravena chyba, kdy se v popisku nastavení prohlížeče protokolů zobrazoval nezpracovaný kód HTML</li>
@@ -1047,6 +1050,7 @@
         <ul>
           <li>Added a "Last Activity" column showing the time the torrent last had upload or download activity</li>
           <li xml:lang="ar"> إضافة عمود ”آخر نشاط“ يعرض الوقت الذي شهد فيه السيول آخر نشاط تحميل أو تنزيل</li>
+          <li xml:lang="bg">Добавена е колона „Последна активност“, показваща времето на последната активност за качване или изтегляне на торента</li>
           <li xml:lang="ca">S'ha afegit una columna «Darrera activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
           <li xml:lang="ca-valencia">S'ha afegit una columna «Última activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
           <li xml:lang="cs">Byl přidán sloupec „Poslední aktivita“, který zobrazuje čas, kdy došlo k poslednímu nahrávání nebo stahování v rámci torrentu</li>
@@ -1062,6 +1066,7 @@
           <li xml:lang="zh-CN">新增了一个“最近活动”列，显示该种子文件最近一次上传或下载活动的时间。</li>
           <li>Fixed the background color of the syndication widget's feed-item status panel</li>
           <li xml:lang="ar">إصلاح لون خلفية لوحة حالة عناصر الخلاصة في أداة التوزيع</li>
+          <li xml:lang="bg">Коригиран е фоновият цвят на панела за състояние на елементите в уиджета за синдикация (RSS)</li>
           <li xml:lang="ca">S'ha corregit el color de fons del plafó d'estat de l'element de canal del giny de sindicació</li>
           <li xml:lang="ca-valencia">S'ha esmenat el color de fons del quadro d'estat de l'element de canal del giny de sindicació</li>
           <li xml:lang="cs">Byla opravena barva pozadí panelu stavu položek kanálu v widgetu pro sdílení</li>
@@ -1077,6 +1082,7 @@
           <li xml:lang="zh-CN">已修复聚合小部件的订阅源项目状态面板的背景颜色</li>
           <li>Added columns to the main view showing the number of bytes uploaded and downloaded in the current session</li>
           <li xml:lang="ar">إضافة أعمدة إلى الشاشة الرئيسة تعرض عدد البايتات التي تم تحميلها وتنزيلها خلال الجلسة الحالية</li>
+          <li xml:lang="bg">Добавени са колони в главния изглед, показващи броя на качените и изтеглените байтове през текущата сесия</li>
           <li xml:lang="ca">S'han afegit columnes a la vista principal que mostren el nombre de bytes pujats i baixats a la sessió actual</li>
           <li xml:lang="ca-valencia">S'han afegit columnes en la vista principal que mostren el nombre de bytes pujats i baixats a la sessió actual</li>
           <li xml:lang="cs">Do hlavního zobrazení byly přidány sloupce, které zobrazují počet bajtů nahraných a stažených v aktuální relaci</li>
@@ -1105,6 +1111,7 @@
         <ul>
           <li>The "Added" column now uses a shorter date format</li>
           <li xml:lang="ar">يستخدم عمود ”المُضاف“ الآن تنسيقًا أقصر للتاريخ</li>
+          <li xml:lang="bg">Колоната „Добавено“ вече използва по-кратък формат за дата</li>
           <li xml:lang="ca">La columna «Afegit» ara fa servir el format de data curta</li>
           <li xml:lang="ca-valencia">La columna «Afegit» ara utilitza el format de data curta</li>
           <li xml:lang="cs">Sloupec „Přidáno“ nyní používá zkrácený formát data</li>
@@ -1120,6 +1127,7 @@
           <li xml:lang="zh-CN">“添加时间”列现在使用了更短的日期格式</li>
           <li>Fixed a crash when closing the video widget</li>
           <li xml:lang="ar"> إصلاح مشكلة تعطل التطبيق عند إغلاق أداة الفيديو</li>
+          <li xml:lang="bg">Коригиран е срив при затваряне на видео уиджета</li>
           <li xml:lang="ca">S'ha corregit una fallada en tancar el giny de vídeo</li>
           <li xml:lang="ca-valencia">S'ha esmenat una fallada en tancar el giny de vídeo</li>
           <li xml:lang="cs">Opravena chyba, která způsobovala pád aplikace při zavírání widgetu videa</li>
@@ -1141,6 +1149,7 @@
         <ul>
           <li>Accept webseeds using HTTPS</li>
           <li xml:lang="ar">قبول ملفات مزودي الويب عبر ميفاق HTTPS</li>
+          <li xml:lang="bg">Приемане на webseeds чрез HTTPS</li>
           <li xml:lang="ca">Accepta sembrats web utilitzant HTTPS</li>
           <li xml:lang="ca-valencia">Accepta sembrats web utilitzant HTTPS</li>
           <li xml:lang="cs">Příjem webových seedů přes HTTPS</li>
@@ -1156,6 +1165,7 @@
           <li xml:lang="zh-CN">接受使用 HTTPS 的网页种子</li>
           <li>Fixed charts having white text on a white background in the Statistics plugin</li>
           <li xml:lang="ar">إصلاح المخططات التي تظهر فيها النصوص باللون الأبيض على خلفية بيضاء في المكون الإضافي «الإحصائيات»</li>
+          <li xml:lang="bg">Коригиран е проблемът с белия текст върху бял фон в графиките на приставката „Статистика“</li>
           <li xml:lang="ca">S'han corregit els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
           <li xml:lang="ca-valencia">S'han esmenat els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
           <li xml:lang="cs">Opraveny grafy s bílým textem na bílém pozadí v pluginu Statistiky</li>
@@ -1177,6 +1187,7 @@
         <ul>
           <li>Fixed the Import Torrent dialog not allowing .torrent files to be selected</li>
           <li xml:lang="ar">إصلاح مشكلة عدم السماح باختيار ملفات .torrent في مربع حوار استيراد السيول.</li>
+          <li xml:lang="bg">Поправена е грешката, при която диалоговият прозорец „Импортиране на торент“ не позволяваше избора на .torrent файл</li>
           <li xml:lang="ca">S'ha corregit el diàleg d'importació de torrent que no permet seleccionar fitxers .torrent</li>
           <li xml:lang="ca-valencia">S'ha esmenat el diàleg d'importació de torrent que no permet seleccionar fitxers «.torrent»</li>
           <li xml:lang="cs">Opravena chyba, kvůli které nebylo možné v dialogovém okně „Importovat torrent“ vybrat soubory .torrent</li>
@@ -1202,6 +1213,7 @@
         <ul>
           <li>Added an action to rename files in the Info Widget context menu</li>
           <li xml:lang="ar">إضافة إجراء لإعادة تسمية الملفات في قائمة السياق الخاصة بـ«Info Widget»</li>
+          <li xml:lang="bg">Добавено е действие за преименуване на файлове в контекстното меню на информационния уиджет</li>
           <li xml:lang="ca">S'ha afegit una acció per a canviar el nom de fitxers en el menú contextual del giny d'informació</li>
           <li xml:lang="ca-valencia">S'ha afegit una acció per a canviar el nom de fitxers en el menú contextual del giny d'informació</li>
           <li xml:lang="cs">Do kontextového menu widgetu Info byla přidána akce pro přejmenování souborů</li>
@@ -1217,6 +1229,7 @@
           <li xml:lang="zh-CN">在“信息”小部件的上下文菜单中添加了一个重命名文件的操作。</li>
           <li>Save the magnets file whenever it is updated, so that magnet data is not lost if the app crashes</li>
           <li xml:lang="ar">حفظ ملف المغناطيسات كلما حدثت أي تحديثات، حتى لا تضيع بيانات المغناطيسات في حالة تعطل التطبيق</li>
+          <li xml:lang="bg">Записване на файла с магнитни връзки при всяка актуализация, за да не се загубят данни при евентуален срив на приложението</li>
           <li xml:lang="ca">Desa el fitxer magnet sempre que s'actualitzi, de manera que les dades del magnet no es perdin si l'aplicació es bloqueja</li>
           <li xml:lang="ca-valencia">Guarda el fitxer magnet sempre que s'actualitze, de manera que les dades del magnet no es perden si l'aplicació es bloqueja</li>
           <li xml:lang="cs">Soubor magnetů se ukládá při každé aktualizaci, aby nedošlo ke ztrátě dat magnetů v případě selhání aplikace</li>
@@ -1232,6 +1245,7 @@
           <li xml:lang="zh-CN">每次更新磁铁文件时都要保存，这样如果应用程序崩溃，磁铁数据就不会丢失。</li>
           <li>Use a different icon for queued seeding and queued downloading</li>
           <li xml:lang="ar">استخدم رمزًا مختلفًا لعمليات التوزيع المعلقة وعمليات التنزيل الملبثة</li>
+          <li xml:lang="bg">Използване на различни икони за сидиране в опашка и изтегляне в опашка</li>
           <li xml:lang="ca">Usa una icona diferent per a la sembra en cua i la baixada en cua</li>
           <li xml:lang="ca-valencia">Utilitza una icona diferent per a la sembra en cua i la baixada en cua</li>
           <li xml:lang="cs">Pro načítání do fronty a stahování do fronty byla použita jiná ikona</li>
