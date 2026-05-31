@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-24 00:43+0000\n"
+"POT-Creation-Date: 2026-05-31 00:43+0000\n"
 "PO-Revision-Date: 2026-02-25 19:04+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -548,19 +548,19 @@ msgstr "المتوفّرة:"
 msgid "After download:"
 msgstr "بعد التنزيل:"
 
-#: ktorrent/dialogs/importdialog.cpp:204 ktorrent/dialogs/importdialog.cpp:230
+#: ktorrent/dialogs/importdialog.cpp:206 ktorrent/dialogs/importdialog.cpp:232
 #, kde-format
 msgid "Cannot load the torrent file: %1"
 msgstr "تعذّر فتح ملف السيل: %1"
 
-#: ktorrent/dialogs/importdialog.cpp:256 plugins/ipfilter/convertthread.cpp:55
+#: ktorrent/dialogs/importdialog.cpp:258 plugins/ipfilter/convertthread.cpp:55
 #: plugins/ipfilter/convertthread.cpp:143
 #: plugins/search/searchenginelist.cpp:164
 #, kde-format
 msgid "Cannot open %1: %2"
 msgstr "تعذّر فتح %1: %2"
 
-#: ktorrent/dialogs/importdialog.cpp:367 ktorrent/dialogs/importdialog.cpp:384
+#: ktorrent/dialogs/importdialog.cpp:369 ktorrent/dialogs/importdialog.cpp:386
 #, kde-format
 msgid "Failed to create %1: %2"
 msgstr "فشل إنشاء %1: %2"
@@ -6231,7 +6231,7 @@ msgstr "لا عناوين IP لتحويلها في %1"
 #: plugins/ipfilter/downloadandconvertjob.cpp:70
 #: plugins/ipfilter/downloadandconvertjob.cpp:105
 #: plugins/ipfilter/downloadandconvertjob.cpp:167
-#: plugins/ipfilter/downloadandconvertjob.cpp:229
+#: plugins/ipfilter/downloadandconvertjob.cpp:227
 #, kde-format
 msgid "Automatic update of IP filter failed: %1"
 msgstr "فشل التحديث الآليّ لمرشّح عنوان IP:‏ %1"
@@ -6256,12 +6256,12 @@ msgstr "تعذّر فتح الملف المضغوط %1."
 msgid "Automatic update of IP filter failed: cannot open zip file %1"
 msgstr "فشل التحديث الآليّ لمرشّح عنوان IP:‏ تعذّر فتح الملف المضغوط %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:202
+#: plugins/ipfilter/downloadandconvertjob.cpp:201
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
 msgstr "تعذّر العثور على قائمة الحظر في الملف المضغوط %1."
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:204
+#: plugins/ipfilter/downloadandconvertjob.cpp:203
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"

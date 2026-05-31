@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-24 00:43+0000\n"
+"POT-Creation-Date: 2026-05-31 00:43+0000\n"
 "PO-Revision-Date: 2007-12-09 18:13+0200\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -534,19 +534,19 @@ msgstr "Усе файлы"
 msgid "After download:"
 msgstr "Не сцгваць"
 
-#: ktorrent/dialogs/importdialog.cpp:204 ktorrent/dialogs/importdialog.cpp:230
+#: ktorrent/dialogs/importdialog.cpp:206 ktorrent/dialogs/importdialog.cpp:232
 #, kde-format
 msgid "Cannot load the torrent file: %1"
 msgstr ""
 
-#: ktorrent/dialogs/importdialog.cpp:256 plugins/ipfilter/convertthread.cpp:55
+#: ktorrent/dialogs/importdialog.cpp:258 plugins/ipfilter/convertthread.cpp:55
 #: plugins/ipfilter/convertthread.cpp:143
 #: plugins/search/searchenginelist.cpp:164
 #, kde-format
 msgid "Cannot open %1: %2"
 msgstr ""
 
-#: ktorrent/dialogs/importdialog.cpp:367 ktorrent/dialogs/importdialog.cpp:384
+#: ktorrent/dialogs/importdialog.cpp:369 ktorrent/dialogs/importdialog.cpp:386
 #, kde-format
 msgid "Failed to create %1: %2"
 msgstr ""
@@ -6236,7 +6236,7 @@ msgstr ""
 #: plugins/ipfilter/downloadandconvertjob.cpp:70
 #: plugins/ipfilter/downloadandconvertjob.cpp:105
 #: plugins/ipfilter/downloadandconvertjob.cpp:167
-#: plugins/ipfilter/downloadandconvertjob.cpp:229
+#: plugins/ipfilter/downloadandconvertjob.cpp:227
 #, kde-format
 msgid "Automatic update of IP filter failed: %1"
 msgstr ""
@@ -6261,12 +6261,12 @@ msgstr ""
 msgid "Automatic update of IP filter failed: cannot open zip file %1"
 msgstr ""
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:202
+#: plugins/ipfilter/downloadandconvertjob.cpp:201
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
 msgstr ""
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:204
+#: plugins/ipfilter/downloadandconvertjob.cpp:203
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-24 00:43+0000\n"
+"POT-Creation-Date: 2026-05-31 00:43+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -528,19 +528,19 @@ msgstr "භාවිතයට ඇති:"
 msgid "After download:"
 msgstr "බාගැනීමෙන් පසු:"
 
-#: ktorrent/dialogs/importdialog.cpp:204 ktorrent/dialogs/importdialog.cpp:230
+#: ktorrent/dialogs/importdialog.cpp:206 ktorrent/dialogs/importdialog.cpp:232
 #, kde-format
 msgid "Cannot load the torrent file: %1"
 msgstr "ටොරෙන්ට් ගොනුව පූර්ණය කල නොහැක: %1"
 
-#: ktorrent/dialogs/importdialog.cpp:256 plugins/ipfilter/convertthread.cpp:55
+#: ktorrent/dialogs/importdialog.cpp:258 plugins/ipfilter/convertthread.cpp:55
 #: plugins/ipfilter/convertthread.cpp:143
 #: plugins/search/searchenginelist.cpp:164
 #, kde-format
 msgid "Cannot open %1: %2"
 msgstr "%1 විවෘත කල නොහැක: %2"
 
-#: ktorrent/dialogs/importdialog.cpp:367 ktorrent/dialogs/importdialog.cpp:384
+#: ktorrent/dialogs/importdialog.cpp:369 ktorrent/dialogs/importdialog.cpp:386
 #, kde-format
 msgid "Failed to create %1: %2"
 msgstr "%1 නිර්මාණය අසාර්ථකයි: %2"
@@ -6201,7 +6201,7 @@ msgstr "%1 වෙත හැරවීමට කිසිඳු IP ලිපින
 #: plugins/ipfilter/downloadandconvertjob.cpp:70
 #: plugins/ipfilter/downloadandconvertjob.cpp:105
 #: plugins/ipfilter/downloadandconvertjob.cpp:167
-#: plugins/ipfilter/downloadandconvertjob.cpp:229
+#: plugins/ipfilter/downloadandconvertjob.cpp:227
 #, kde-format
 msgid "Automatic update of IP filter failed: %1"
 msgstr "IP පෙරහනෙහි ස්වයංක්‍රීය යාවත් අසාර්ථකයි: %1"
@@ -6226,12 +6226,12 @@ msgstr "%1 සිප් ගොනුව විවෘත කල නොහැක."
 msgid "Automatic update of IP filter failed: cannot open zip file %1"
 msgstr "IP පෙරහනේ ස්වයංක්‍රීය යාවත් අසාර්ථක විය: %1 සිප් ගොනුව විවෘත කල නොහැක"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:202
+#: plugins/ipfilter/downloadandconvertjob.cpp:201
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
 msgstr "%1 සිප් ගොනුව සඳහා අවහිර ගොනුව සොයාගත නොහැක."
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:204
+#: plugins/ipfilter/downloadandconvertjob.cpp:203
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-24 00:43+0000\n"
+"POT-Creation-Date: 2026-05-31 00:43+0000\n"
 "PO-Revision-Date: 2020-02-06 14:37+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -564,19 +564,19 @@ msgstr "Saadaolev:"
 msgid "After download:"
 msgstr "Pärast allalaadimist:"
 
-#: ktorrent/dialogs/importdialog.cpp:204 ktorrent/dialogs/importdialog.cpp:230
+#: ktorrent/dialogs/importdialog.cpp:206 ktorrent/dialogs/importdialog.cpp:232
 #, kde-format
 msgid "Cannot load the torrent file: %1"
 msgstr "Torrentifaili laadimine nurjus: %1"
 
-#: ktorrent/dialogs/importdialog.cpp:256 plugins/ipfilter/convertthread.cpp:55
+#: ktorrent/dialogs/importdialog.cpp:258 plugins/ipfilter/convertthread.cpp:55
 #: plugins/ipfilter/convertthread.cpp:143
 #: plugins/search/searchenginelist.cpp:164
 #, kde-format
 msgid "Cannot open %1: %2"
 msgstr "%1 avamine nurjus: %2"
 
-#: ktorrent/dialogs/importdialog.cpp:367 ktorrent/dialogs/importdialog.cpp:384
+#: ktorrent/dialogs/importdialog.cpp:369 ktorrent/dialogs/importdialog.cpp:386
 #, kde-format
 msgid "Failed to create %1: %2"
 msgstr "%1 loomine nurjus: %2"
@@ -6333,7 +6333,7 @@ msgstr "%1 ei sisalda teisendatavaid IP-aadresse"
 #: plugins/ipfilter/downloadandconvertjob.cpp:70
 #: plugins/ipfilter/downloadandconvertjob.cpp:105
 #: plugins/ipfilter/downloadandconvertjob.cpp:167
-#: plugins/ipfilter/downloadandconvertjob.cpp:229
+#: plugins/ipfilter/downloadandconvertjob.cpp:227
 #, kde-format
 msgid "Automatic update of IP filter failed: %1"
 msgstr "IP-filtri automaatne uuendamine nurjus: %1"
@@ -6359,12 +6359,12 @@ msgid "Automatic update of IP filter failed: cannot open zip file %1"
 msgstr ""
 "IP-filtri automaatne uuendamine nurjus: ei õnnestunud avada zip-faili %1"
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:202
+#: plugins/ipfilter/downloadandconvertjob.cpp:201
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
 msgstr "Zip-failis %1 ei leitud blokeeringuloendit."
 
-#: plugins/ipfilter/downloadandconvertjob.cpp:204
+#: plugins/ipfilter/downloadandconvertjob.cpp:203
 #, kde-format
 msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"
