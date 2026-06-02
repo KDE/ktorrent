@@ -8,24 +8,25 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-31 00:43+0000\n"
-"PO-Revision-Date: 2013-09-08 07:04+0900\n"
-"Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
+"PO-Revision-Date: 2026-05-31 19:53-0400\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "ئابدۇقادىر ئابلىز, غەيرەت كەنجى"
+msgstr "ئابدۇقادىر ئابلىز، غەيرەت كەنجى"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sahran.ug@gmail.com,  gheyret@gmail.com"
+msgstr "sahranbay@gmail.com, gheyret@gmail.com"
 
 #: ktorrent/core.cpp:149
 #, kde-format
@@ -166,7 +167,7 @@ msgstr ""
 #: ktorrent/dialogs/addpeersdlg.ui:46 ktorrent/ipfilterwidget.ui:34
 #, kde-format
 msgid "127.0.0.1"
-msgstr "127.0.0.1"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: ectx: property (text), widget (QLabel, label_4)
@@ -244,11 +245,10 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:222
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "ئەكىر(&I)"
+msgstr "ئەكىر"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:233
 #: ktorrent/dialogs/fileselectdlg.cpp:252
@@ -262,11 +262,10 @@ msgstr ""
 #: ktorrent/dialogs/missingfilesdlg.cpp:102
 #: ktorrent/dialogs/missingfilesdlg.cpp:140
 #: ktorrent/dialogs/torrentcreatordlg.cpp:281
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
-msgstr "قايتا قۇر"
+msgstr "ياسا"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:285
 #, kde-format
@@ -276,18 +275,16 @@ msgid ""
 msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:291
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr "ھۆججەت(لەر)نى ئۆچۈرۈش"
+msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "ھۆججەت(لەر)نى ئۆچۈرۈش"
+msgstr ""
 
 #: ktorrent/dialogs/fileselectdlg.cpp:318
 #, kde-format
@@ -347,7 +344,7 @@ msgstr ""
 #: ktorrent/dialogs/fileselectdlg.cpp:624
 #, kde-format
 msgid "Clear History"
-msgstr "تارىخنى تازىلاش"
+msgstr "تارىخنى تازىلا"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, FileSelectDlg)
 #: ktorrent/dialogs/fileselectdlg.ui:14
@@ -442,7 +439,7 @@ msgstr "ئەكسىچە تاللا"
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:36
 #, kde-format
 msgid "Collapse All"
-msgstr "ھەممىنى قاتلا"
+msgstr "ھەممىنى يىغ"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_expand_all)
 #. i18n: ectx: property (text), widget (QPushButton, btnExpandAll)
@@ -557,7 +554,7 @@ msgstr ""
 #: ktorrent/dialogs/importdialog.ui:46
 #, kde-format
 msgid "Data:"
-msgstr "سانلىق-مەلۇمات:"
+msgstr "سانلىق مەلۇمات:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/dialogs/importdialog.ui:70
@@ -575,7 +572,7 @@ msgstr ""
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -676,7 +673,7 @@ msgstr ""
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:146
 #, kde-format
 msgid "Cancel"
-msgstr "ئەمەلدىن قالدۇر"
+msgstr "ۋاز كەچ"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, PasteDlgBase)
 #: ktorrent/dialogs/pastedialog.cpp:34 ktorrent/dialogs/pastedlgbase.ui:14
@@ -700,14 +697,14 @@ msgstr ""
 #: ktorrent/dialogs/torrentcreatordlg.cpp:241 ktorrent/gui.cpp:322
 #, kde-format
 msgid "Invalid URL: %1"
-msgstr "ئىناۋەتسىز URL: %1"
+msgstr "ئىناۋەتسىز تور ئادرېسى: %1"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/dialogs/pastedlgbase.ui:22 plugins/syndication/feedwidget.ui:32
 #, kde-format
 msgid "URL:"
-msgstr "URL:"
+msgstr "تور ئادرېسى:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_silently)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_openSilently)
@@ -823,7 +820,7 @@ msgstr "چەك يوق"
 #: plugins/bwscheduler/edititemdlg.ui:196
 #, kde-format
 msgid " KiB/s"
-msgstr " كىلوبايت‏/s"
+msgstr " KiB/s"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #. i18n: ectx: property (text), widget (QLabel, label_4)
@@ -915,17 +912,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectDirectory)
 #: ktorrent/dialogs/torrentcreatordlg.ui:44
-#, fuzzy, kde-format
-#| msgid "Open Directory"
+#, kde-format
 msgid "Select Directory"
-msgstr "قىسقۇچ ئاچ"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectFile)
 #: ktorrent/dialogs/torrentcreatordlg.ui:51
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select File"
-msgstr "ھەممىنى تاللا(&A)"
+msgstr "ھۆججەت تاللا"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/torrentcreatordlg.ui:71
@@ -989,10 +984,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:127
-#, fuzzy, kde-format
-#| msgid "1 MiB"
+#, kde-format
 msgid "16 MiB"
-msgstr "1 مېگابايت"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_start_seeding)
 #: ktorrent/dialogs/torrentcreatordlg.ui:137
@@ -1052,7 +1046,7 @@ msgstr "ئۈستىگە"
 #: ktorrent/tools/queuemanagerwidget.cpp:72
 #, kde-format
 msgid "Move Down"
-msgstr "پەسكە"
+msgstr "ئاستىغا"
 
 #. i18n: ectx: attribute (title), widget (QWidget, m_dht_tab)
 #: ktorrent/dialogs/torrentcreatordlg.ui:240
@@ -1330,10 +1324,9 @@ msgid "Choose a file"
 msgstr "ھۆججەت تاللايدۇ"
 
 #: ktorrent/ipfilterwidget.cpp:119 ktorrent/ipfilterwidget.cpp:132
-#, fuzzy, kde-format
-#| msgid "Search files"
+#, kde-format
 msgid "Text files"
-msgstr "ھۆججەت ئىزدەش"
+msgstr ""
 
 #: ktorrent/ipfilterwidget.cpp:132
 #, kde-format
@@ -1370,18 +1363,15 @@ msgstr "تازىلا"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "ئاچ"
+msgstr "ئاچ…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
-msgstr "باشقا ئاتتا ساقلا…"
+msgstr ""
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -1413,7 +1403,7 @@ msgstr "توررېنتلار"
 #: ktorrent/kttorrentactivityui.rc:27
 #, kde-format
 msgid "Groups"
-msgstr "گۇرۇپپىلار"
+msgstr "گۇرۇپپا"
 
 #. i18n: ectx: Menu (ViewMenu)
 #: ktorrent/kttorrentactivityui.rc:40
@@ -1451,14 +1441,13 @@ msgstr ""
 #: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
 #, kde-format
 msgid "Columns"
-msgstr "ئىستونلار"
+msgstr "رەت"
 
 #: ktorrent/main.cpp:100
-#, fuzzy, kde-format
-#| msgid "KTorrent"
+#, kde-format
 msgctxt "@title"
 msgid "KTorrent"
-msgstr "KTorrent"
+msgstr ""
 
 #: ktorrent/main.cpp:102
 #, kde-format
@@ -1474,7 +1463,7 @@ msgstr ""
 #: ktorrent/main.cpp:111
 #, kde-format
 msgid "Joris Guisson"
-msgstr "Joris Guisson"
+msgstr ""
 
 #: ktorrent/main.cpp:115
 #, kde-format
@@ -1534,12 +1523,12 @@ msgstr ""
 #: ktorrent/main.cpp:121
 #, kde-format
 msgid "Adam Treat"
-msgstr "Adam Treat"
+msgstr ""
 
 #: ktorrent/main.cpp:122
 #, kde-format
 msgid "Danny Allen"
-msgstr "Danny Allen"
+msgstr ""
 
 #: ktorrent/main.cpp:122
 #, kde-format
@@ -1569,7 +1558,7 @@ msgstr ""
 #: ktorrent/main.cpp:126
 #, kde-format
 msgid "Andreas Kling"
-msgstr "Andreas Kling"
+msgstr ""
 
 #: ktorrent/main.cpp:127
 #, kde-format
@@ -1648,7 +1637,7 @@ msgstr ""
 #: ktorrent/main.cpp:144
 #, kde-format
 msgid "Alexander Dymo"
-msgstr "Alexander Dymo"
+msgstr ""
 
 #: ktorrent/main.cpp:144
 #, kde-format
@@ -1818,7 +1807,7 @@ msgstr ""
 #: ktorrent/main.cpp:161
 #, kde-format
 msgid "Lee Olson"
-msgstr "Lee Olson"
+msgstr ""
 
 #: ktorrent/main.cpp:161
 #, kde-format
@@ -1951,10 +1940,9 @@ msgid "Nick Shaforostoff"
 msgstr ""
 
 #: ktorrent/main.cpp:175
-#, fuzzy, kde-format
-#| msgid "Alexander Dymo"
+#, kde-format
 msgid "Alexander Trufanov"
-msgstr "Alexander Dymo"
+msgstr ""
 
 #: ktorrent/main.cpp:175
 #, kde-format
@@ -1972,10 +1960,9 @@ msgid "KF6 porting"
 msgstr ""
 
 #: ktorrent/main.cpp:180
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "ھەممىنى قوزغات"
+msgstr ""
 
 #: ktorrent/main.cpp:182
 #, kde-format
@@ -2026,7 +2013,7 @@ msgstr ""
 #: ktorrent/pref/advancedpref.ui:45
 #, kde-format
 msgid "Performance"
-msgstr "ئىقتىدارى"
+msgstr "ئۈنۈم"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/advancedpref.ui:53
@@ -2072,17 +2059,15 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/advancedpref.ui:132
-#, fuzzy, kde-format
-#| msgid "Magnet"
+#, kde-format
 msgid "Magnets Queue"
-msgstr "ماگنىت"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/advancedpref.ui:140
-#, fuzzy, kde-format
-#| msgid "The number of download and upload requests"
+#, kde-format
 msgid "Number of downloading slots:"
-msgstr "چۈشۈرۈش ۋە يۈكلەش ئىلتىماس سانى"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_numMagnetDownloadingSlots)
 #: ktorrent/pref/advancedpref.ui:147
@@ -2114,9 +2099,7 @@ msgstr ""
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
 #: ktorrent/pref/advancedpref.ui:176 ktorrent/pref/qmpref.cpp:16
-#, fuzzy, kde-format
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgid " min"
 msgstr " مىنۇت"
 
@@ -2125,7 +2108,7 @@ msgstr " مىنۇت"
 #: ktorrent/pref/advancedpref.ui:210 ktorrent/pref/generalpref.ui:123
 #, kde-format
 msgid "Miscellaneous"
-msgstr "باشقىلار"
+msgstr "باشقا"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/advancedpref.ui:220
@@ -2146,7 +2129,7 @@ msgstr ""
 #: ktorrent/pref/advancedpref.ui:230 ktorrent/pref/advancedpref.ui:253
 #, kde-format
 msgid " KiB"
-msgstr " كىلوبايت"
+msgstr " KiB"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/advancedpref.ui:243
@@ -2164,10 +2147,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
-#, fuzzy, kde-format
-#| msgid "Tracker"
+#, kde-format
 msgid "Tracker list URL:"
-msgstr "ئىزلىغۇچ"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_trackerListUrl)
 #: ktorrent/pref/advancedpref.ui:293
@@ -2197,7 +2179,7 @@ msgstr ""
 #: ktorrent/pref/btpref.cpp:14
 #, kde-format
 msgid "BitTorrent"
-msgstr "BitTorrent"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, dhtGroupBox)
 #: ktorrent/pref/btpref.ui:17
@@ -2352,7 +2334,7 @@ msgstr ""
 #: plugins/stats/DisplaySettings.ui:17
 #, kde-format
 msgid "Colors"
-msgstr "رەڭلەر"
+msgstr "رەڭ"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_stalledTorrentColor)
 #: ktorrent/pref/colorpref.ui:19
@@ -2386,10 +2368,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/colorpref.ui:54
-#, fuzzy, kde-format
-#| msgid "Torrent"
+#, kde-format
 msgid "Torrent error:"
-msgstr "توررېنتلار"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -2454,17 +2435,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
-#, fuzzy, kde-format
-#| msgid "Share Ratio"
+#, kde-format
 msgid "Low share ratio:"
-msgstr "ھەمبەھىر نىسبىتى"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Share Ratio"
+#, kde-format
 msgid "Good share ratio:"
-msgstr "ھەمبەھىر نىسبىتى"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
@@ -2486,21 +2465,20 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
-#, fuzzy, kde-format
-#| msgid "Colors"
+#, kde-format
 msgid "Reset Colors"
-msgstr "رەڭلەر"
+msgstr ""
 
 #: ktorrent/pref/generalpref.cpp:13
 #, kde-format
 msgid "Application"
-msgstr "پروگرامما"
+msgstr "پىروگرامما"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/pref/generalpref.ui:17
 #, kde-format
 msgid "Folders"
-msgstr "قىسقۇچلار"
+msgstr "قىسقۇچ"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/generalpref.ui:23
@@ -2771,7 +2749,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:209
 #, kde-format
 msgid "Network interface:"
-msgstr "تور ئارايۈزى"
+msgstr "تور ئارايۈزى:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, combo_networkInterface)
 #: ktorrent/pref/networkpref.ui:223
@@ -2830,13 +2808,13 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:265 ktupnptest/upnptestwidget.ui:102
 #, kde-format
 msgid "TCP"
-msgstr "TCP"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:270
 #, kde-format
 msgid "µTP"
-msgstr "µTP"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:311
@@ -2848,10 +2826,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended settings:"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "تەۋسىيە تەڭشەك:"
+msgstr ""
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3100,7 +3077,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:114
 #, kde-format
 msgid " MiB"
-msgstr " مېگابايت"
+msgstr " MiB"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_decreasePriorityOfStalledTorrents)
 #: ktorrent/pref/qmpref.ui:131
@@ -3128,11 +3105,10 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, fuzzy, kde-format
-#| msgid "Pending"
+#, kde-format
 msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
-msgstr "كۈتۈۋاتىدۇ"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_keepSeeding)
 #: ktorrent/pref/qmpref.ui:165
@@ -3239,7 +3215,7 @@ msgstr ""
 #: ktorrent/pref/recommendedsettingsdlg.ui:57
 #, kde-format
 msgid " Kbps"
-msgstr " Kbps"
+msgstr ""
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_upload_bw)
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_download_bw)
@@ -3339,7 +3315,7 @@ msgstr ""
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
@@ -3390,10 +3366,9 @@ msgid "Stop Magnet"
 msgstr ""
 
 #: ktorrent/tools/magnetview.cpp:54
-#, fuzzy, kde-format
-#| msgid "Tracker"
+#, kde-format
 msgid "Copy Magnet URL"
-msgstr "ئىزلىغۇچ"
+msgstr ""
 
 #: ktorrent/tools/magnetview.cpp:56
 #, kde-format
@@ -3421,12 +3396,12 @@ msgstr ""
 #: plugins/infowidget/iwfiletreemodel.cpp:74
 #, kde-format
 msgid "Priority"
-msgstr "مەرتىۋە"
+msgstr "ئالدىنلىق"
 
 #: ktorrent/tools/queuemanagermodel.cpp:221
 #, kde-format
 msgid "Running"
-msgstr "ئىجرادا"
+msgstr "ئىجرا قىلىنىۋاتىدۇ"
 
 #: ktorrent/tools/queuemanagermodel.cpp:225
 #, kde-format
@@ -3528,10 +3503,9 @@ msgid "Widget to manage the torrent queue"
 msgstr ""
 
 #: ktorrent/torrentactivity.cpp:96
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgid "Magnet Downloader"
-msgstr "چۈشۈرۈش سانى"
+msgstr ""
 
 #: ktorrent/torrentactivity.cpp:96
 #, kde-format
@@ -3570,10 +3544,9 @@ msgid "Suspend all running torrents"
 msgstr ""
 
 #: ktorrent/torrentactivity.cpp:128
-#, fuzzy, kde-format
-#| msgid "Group:"
+#, kde-format
 msgid "Group View"
-msgstr "گۇرۇپپا:"
+msgstr ""
 
 #: ktorrent/torrentactivity.cpp:129
 #, kde-format
@@ -3697,16 +3670,14 @@ msgid "Torrent has been stopped.<br />"
 msgstr ""
 
 #: ktorrent/trayicon.cpp:363
-#, fuzzy, kde-format
-#| msgid "Upload speed"
+#, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "يۈكلەش تېزلىكى"
+msgstr ""
 
 #: ktorrent/trayicon.cpp:365
-#, fuzzy, kde-format
-#| msgid "Download speed"
+#, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "چۈشۈرۈش تېزىكى"
+msgstr ""
 
 #: ktorrent/trayicon.cpp:368 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -3868,17 +3839,16 @@ msgid "Errors:"
 msgstr "خاتالىق:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "سۈزگۈچ"
+msgstr "سۈزگۈچ…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
 msgctxt "@action Start all selected torrents in the current tab"
 msgid "Start"
-msgstr "باشلاش"
+msgstr "باشلا"
 
 #: ktorrent/view/view.cpp:134
 #, kde-format
@@ -4000,7 +3970,7 @@ msgstr ""
 #: ktorrent/view/view.cpp:216 plugins/stats/Settings.ui:13
 #, kde-format
 msgid "Settings"
-msgstr "تەڭشەكلەر"
+msgstr "تەڭشەك"
 
 #: ktorrent/view/view.cpp:220
 #, kde-format
@@ -4070,14 +4040,13 @@ msgstr ""
 #: plugins/infowidget/fileview.cpp:405
 #, kde-format
 msgid "Select a directory to move the data to."
-msgstr "سانلىق-مەلۇماتلارنى يۆتكەيدىغان مۇندەرىجىنى تاللايدۇ."
+msgstr "سانلىق مەلۇماتلارنى يۆتكەيدىغان مۇندەرىجىنى تاللايدۇ."
 
 #: ktorrent/view/viewdelegate.cpp:344
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:185
 #, kde-format
@@ -4092,11 +4061,10 @@ msgid "Downloaded"
 msgstr "چۈشۈرۈلدى"
 
 #: ktorrent/view/viewmodel.cpp:493
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "چۈشۈرۈش سانى"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:495
 #: libktcore/torrent/torrentfilelistmodel.cpp:68
@@ -4111,11 +4079,10 @@ msgid "Uploaded"
 msgstr "يۈكلەندى"
 
 #: ktorrent/view/viewmodel.cpp:499
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "يۈكلەندى"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:501
 #, kde-format
@@ -4183,7 +4150,7 @@ msgstr "قوشۇلدى"
 #: ktorrent/view/viewmodel.cpp:526
 #, kde-format
 msgid "Last Activity"
-msgstr ""
+msgstr "ئاخىرقى پائالىيەت"
 
 #: ktorrent/view/viewmodel.cpp:533
 #, kde-format
@@ -4344,13 +4311,13 @@ msgstr "كېلىشىم:"
 #: ktupnptest/upnptestwidget.ui:97
 #, kde-format
 msgid "UDP"
-msgstr "UDP"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_forward)
 #: ktupnptest/upnptestwidget.ui:125 plugins/upnp/upnpwidget.ui:27
 #, kde-format
 msgid "Forward"
-msgstr "ئالدى"
+msgstr "ئالدىغا"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_undo_forward)
 #: ktupnptest/upnptestwidget.ui:132 plugins/upnp/upnpwidget.ui:34
@@ -4392,7 +4359,7 @@ msgstr ""
 #: libktcore/groups/groupmanager.cpp:100
 #, kde-format
 msgid "Downloads"
-msgstr "چۈشۈرۈلمىلەر"
+msgstr "چۈشۈرۈلمە"
 
 #: libktcore/groups/groupmanager.cpp:101
 #, kde-format
@@ -4445,8 +4412,7 @@ msgid "Ungrouped Torrents"
 msgstr ""
 
 #: libktcore/interfaces/functions.cpp:155
-#, fuzzy, kde-format
-#| msgid "Torrents"
+#, kde-format
 msgctxt "*.torrent"
 msgid "Torrents"
 msgstr "توررېنتلار"
@@ -4454,7 +4420,7 @@ msgstr "توررېنتلار"
 #: libktcore/interfaces/functions.cpp:157
 #, kde-format
 msgid "All files"
-msgstr "ھەممە ھۆججەتلەر"
+msgstr "ھەممە ھۆججەت"
 
 #. i18n: ectx: label, entry (maxDownloads), group (downloads)
 #: libktcore/ktorrent.kcfg:10
@@ -4673,16 +4639,14 @@ msgid "Warning: %1"
 msgstr "ئاگاھلاندۇرۇش: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "چۈشۈرۈلدى"
+msgstr ""
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Do Not Download"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "چۈشۈرمە"
+msgstr ""
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
@@ -4720,12 +4684,10 @@ msgstr ""
 #: libktcore/torrent/queuemanager.cpp:238
 #: libktcore/torrent/queuemanager.cpp:279
 #: libktcore/torrent/queuemanager.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
-msgstr "باشلاش"
+msgstr "باشلا"
 
 #: libktcore/torrent/queuemanager.cpp:148
 #, kde-format
@@ -4900,34 +4862,34 @@ msgstr "ۋاقتى"
 #: plugins/bwscheduler/edititemdlg.ui:28
 #, kde-format
 msgid "From:"
-msgstr "ئەۋەتكۈچى:"
+msgstr "كىمدىن:"
 
 #. i18n: ectx: property (displayFormat), widget (QTimeEdit, m_from)
 #. i18n: ectx: property (displayFormat), widget (QTimeEdit, m_to)
 #: plugins/bwscheduler/edititemdlg.ui:35 plugins/bwscheduler/edititemdlg.ui:49
 #, kde-format
 msgid "hh:mm"
-msgstr "hh:mm"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/bwscheduler/edititemdlg.ui:42
 #, kde-format
 msgid "To:"
-msgstr "خەت تاپشۇرۇۋالغۇچى："
+msgstr "كىمگە:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: plugins/bwscheduler/edititemdlg.ui:60
 #, kde-format
 msgctxt "starting day"
 msgid "From:"
-msgstr "ئەۋەتكۈچى:"
+msgstr "كىمدىن:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_10)
 #: plugins/bwscheduler/edititemdlg.ui:70
 #, kde-format
 msgctxt "ending day"
 msgid "To:"
-msgstr "خەت تاپشۇرۇۋالغۇچى："
+msgstr "كىمگە:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: plugins/bwscheduler/edititemdlg.ui:100
@@ -5159,10 +5121,9 @@ msgid "Add Trackers"
 msgstr ""
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available"
+#, kde-format
 msgid "Available Chunks"
-msgstr "ئىشلەتكىلى بولىدۇ"
+msgstr ""
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
@@ -5187,7 +5148,7 @@ msgstr "كىشى"
 #: plugins/infowidget/chunkdownloadmodel.cpp:205
 #, kde-format
 msgid "Files"
-msgstr "ھۆججەتلەر"
+msgstr "ھۆججەت"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:212
 #, kde-format
@@ -5263,11 +5224,10 @@ msgstr "ئاچ"
 #, kde-format
 msgctxt "Open file with"
 msgid "Open With"
-msgstr "بۇنىڭدا ئېچىش"
+msgstr "ئاچقۇز"
 
 #: plugins/infowidget/fileview.cpp:117
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "ئات ئۆزگەرت"
@@ -5293,10 +5253,9 @@ msgid "Download last"
 msgstr "ئەڭ ئاخىرىدا چۈشۈر"
 
 #: plugins/infowidget/fileview.cpp:124
-#, fuzzy, kde-format
-#| msgid "Do Not Download"
+#, kde-format
 msgid "Do not download"
-msgstr "چۈشۈرمە"
+msgstr ""
 
 #: plugins/infowidget/fileview.cpp:125
 #, kde-format
@@ -5340,7 +5299,7 @@ msgid "You will lose all data in this file, are you sure you want to do this?"
 msgid_plural ""
 "You will lose all data in these files, are you sure you want to do this?"
 msgstr[0] ""
-"بۇ ھۆججەتلەرنىڭ بارلىق سانلىق-مەلۇماتلىرى يوقىلىدۇ، راست بۇنى قىلامسىز؟"
+"بۇ ھۆججەتلەرنىڭ بارلىق سانلىق مەلۇماتلىرى يوقىلىدۇ، راست بۇنى قىلامسىز؟"
 
 #: plugins/infowidget/fileview.cpp:496
 #, kde-format
@@ -5378,7 +5337,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:tab"
 msgid "Files"
-msgstr "ھۆججەتلەر"
+msgstr "ھۆججەت"
 
 #: plugins/infowidget/infowidgetplugin.cpp:58
 #, kde-format
@@ -5442,7 +5401,7 @@ msgstr "ئاخىرقى"
 #, kde-format
 msgctxt "Download Normal (not as first or last)"
 msgid "Normal"
-msgstr "نورمال"
+msgstr "ئادەتتىكى"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:144
 #: plugins/infowidget/iwfilelistmodel.cpp:165
@@ -5483,7 +5442,7 @@ msgstr "%1 %"
 #, kde-format
 msgctxt "Download normally(not as first or last)"
 msgid "Normal"
-msgstr "نورمال"
+msgstr "ئادەتتىكى"
 
 #: plugins/infowidget/iwfiletreemodel.cpp:168
 #, kde-format
@@ -5495,7 +5454,7 @@ msgstr "ئىشلەتكىلى بولىدۇ"
 #: plugins/infowidget/iwprefpage.ui:17
 #, kde-format
 msgid "Tabs"
-msgstr "بەتكۈچلەر"
+msgstr "بەتكۈچ"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPeerView)
 #: plugins/infowidget/iwprefpage.ui:23
@@ -5633,11 +5592,10 @@ msgid "No"
 msgstr "ياق"
 
 #: plugins/infowidget/peerviewmodel.cpp:106
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:120
 #, kde-format
@@ -5696,7 +5654,7 @@ msgstr "بارى"
 #: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
 msgid "DHT"
-msgstr "DHT"
+msgstr ""
 
 #: plugins/infowidget/peerviewmodel.cpp:315
 #, kde-format
@@ -5831,7 +5789,7 @@ msgstr ""
 #: plugins/infowidget/statustab.ui:64
 #, kde-format
 msgid "Type:"
-msgstr "تىپى:"
+msgstr "تۈرى:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_15)
 #: plugins/infowidget/statustab.ui:100
@@ -5886,7 +5844,7 @@ msgstr "ۋاقىت چەكلىمىسى:"
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
 msgid "URL"
-msgstr "URL"
+msgstr "تور ئادرېسى"
 
 #: plugins/infowidget/trackermodel.cpp:137
 #, kde-format
@@ -5899,10 +5857,9 @@ msgid "Next Update"
 msgstr "كېيىنكى يېڭىلاش"
 
 #: plugins/infowidget/trackerview.cpp:57
-#, fuzzy, kde-format
-#| msgid "Tracker"
+#, kde-format
 msgid "Copy Tracker URL"
-msgstr "ئىزلىغۇچ"
+msgstr ""
 
 #: plugins/infowidget/trackerview.cpp:65
 #, kde-format
@@ -6010,10 +5967,9 @@ msgstr "ھەممىنى چەكلە"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:148
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
-msgstr "ئايلاندۇرۇۋاتىدۇ…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6540,13 +6496,13 @@ msgstr ""
 #: plugins/mediaplayer/mediaplayerplugin.cpp:45
 #, kde-format
 msgid "Media Player"
-msgstr "ۋاسىتە قويغۇ"
+msgstr "ۋاسىتە ياڭراتقۇچ"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:102
 #: plugins/mediaplayer/videowidget.cpp:63
 #, kde-format
 msgid "Play"
-msgstr "قوي"
+msgstr "ياڭرات"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:106
 #, kde-format
@@ -6682,11 +6638,10 @@ msgstr ""
 #: plugins/scanfolder/torrentloadqueue.cpp:148
 #: plugins/scanfolder/torrentloadqueue.cpp:149
 #: plugins/scanfolder/torrentloadqueue.cpp:153
-#, fuzzy, kde-format
-#| msgid "loaded"
+#, kde-format
 msgctxt "folder name part"
 msgid "loaded"
-msgstr "يۈكلەندى"
+msgstr ""
 
 #: plugins/scanfolder/scanfolderplugin.cpp:43
 #: plugins/scanfolder/scanfolderplugin.cpp:56
@@ -6718,7 +6673,7 @@ msgstr ""
 #: plugins/scanfolder/scanfolderprefpage.ui:38
 #, kde-format
 msgid "Add Folder"
-msgstr "قىسقۇچ قوشۇش"
+msgstr "قىسقۇچ قوش"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_remove)
 #: plugins/scanfolder/scanfolderprefpage.ui:45
@@ -6730,7 +6685,7 @@ msgstr ""
 #: plugins/scanfolder/scanfolderprefpage.ui:48
 #, kde-format
 msgid "Remove Folder"
-msgstr "قىسقۇچ چىقىرىۋېتىش"
+msgstr "قىسقۇچ چىقىرىۋەت"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_openSilently)
 #. i18n: ectx: property (toolTip), widget (QCheckBox, cbShowAllFiles)
@@ -6816,36 +6771,31 @@ msgstr ""
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
-msgstr ""
+msgstr "تارا"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select folder:"
-msgstr "ھەممىنى تاللا(&A)"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:101
-#, fuzzy, kde-format
-#| msgid "All files"
+#, kde-format
 msgid "Show all files"
-msgstr "ھەممە ھۆججەتلەر"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:112
-#, fuzzy, kde-format
-#| msgctxt "Open file with"
-#| msgid "Open With"
+#, kde-format
 msgid "Open file"
-msgstr "بۇنىڭدا ئېچىش"
+msgstr "ھۆججەت ئاچ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgid "Delete on disk"
-msgstr "ھۆججەت(لەر)نى ئۆچۈرۈش"
+msgstr ""
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:124
@@ -6857,7 +6807,7 @@ msgstr ""
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
 #, kde-format
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "چاپلاش تاختىسىغا كۆچۈر"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:136
@@ -7013,7 +6963,7 @@ msgstr ""
 #: plugins/search/searchpref.ui:152
 #, kde-format
 msgid "Search Engines"
-msgstr "ئىزدەش ماتورى"
+msgstr "ئىزدەش موتورى"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_add)
 #: plugins/search/searchpref.ui:167
@@ -7109,12 +7059,12 @@ msgstr "چۈشۈرۈش"
 #: plugins/search/webview.cpp:110
 #, kde-format
 msgid "Home"
-msgstr "ماكان"
+msgstr "باش بەت"
 
 #: plugins/search/webview.cpp:111
 #, kde-format
 msgid "KTorrent"
-msgstr "KTorrent"
+msgstr ""
 
 #: plugins/search/webview.cpp:112
 #, kde-format
@@ -7162,7 +7112,7 @@ msgstr "قۇلۇپلا"
 #: plugins/shutdown/shutdownruleset.cpp:254
 #, kde-format
 msgid "Sleep (suspend to RAM)"
-msgstr "ئۇخلا(RAM غا توڭلىتىدۇ)"
+msgstr "ئۇخلا(ئەسلەككەا توڭلىتىدۇ)"
 
 #: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
 #: plugins/shutdown/shutdownruleset.cpp:257
@@ -7195,7 +7145,7 @@ msgstr ""
 #: plugins/shutdown/shutdowndlg.ui:22
 #, kde-format
 msgid "Action to execute:"
-msgstr "ئىجرا قىلىدىغان مەشغۇلات"
+msgstr "ئىجرا قىلىدىغان مەشغۇلات:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/shutdown/shutdowndlg.ui:32
@@ -7303,7 +7253,7 @@ msgstr "باغلىنىشلار"
 #, kde-format
 msgctxt "Chart name"
 msgid "DHT"
-msgstr "DHT"
+msgstr ""
 
 #: plugins/stats/ConnsTabPage.cc:37
 #, kde-format
@@ -7378,7 +7328,7 @@ msgstr "تۈگۈنلەر"
 #, kde-format
 msgctxt "Name of a line on chart"
 msgid "Tasks"
-msgstr "ۋەزىپىلەر"
+msgstr "ۋەزىپە"
 
 #. i18n: ectx: property (title), widget (QGroupBox, DlSpdGbw)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
@@ -7503,8 +7453,7 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7534,13 +7483,13 @@ msgstr ""
 #: plugins/stats/DisplaySettings.ui:940
 #, kde-format
 msgid "Native"
-msgstr "Native"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_WidgetType)
 #: plugins/stats/DisplaySettings.ui:945
 #, kde-format
 msgid "KDE"
-msgstr "ك د ئې(KDE)"
+msgstr "KDE"
 
 #. i18n: ectx: property (text), widget (QLabel, label_33)
 #: plugins/stats/DisplaySettings.ui:953
@@ -7549,8 +7498,7 @@ msgid "(plugin reload is needed after change)"
 msgstr ""
 
 #: plugins/stats/DisplaySettingsPage.cc:15
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
@@ -7560,12 +7508,12 @@ msgstr "كۆرسەتكۈچ"
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
 msgid "KiB/s"
-msgstr "كىلوبايت‏/s"
+msgstr "KiB/s"
 
 #: plugins/stats/drawer/ChartDrawerData.cc:14
 #, kde-format
 msgid "Unknown"
-msgstr "نامەلۇم"
+msgstr "يوچۇن"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:309
 #: plugins/stats/drawer/PlainChartDrawer.cc:475
@@ -7602,7 +7550,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
-msgstr "ئەسلىگە قايتۇرۇش"
+msgstr "ئەسلىگە قايتۇر"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:376
 #: plugins/stats/drawer/PlainChartDrawer.cc:316
@@ -7612,10 +7560,9 @@ msgstr ""
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:376
 #: plugins/stats/drawer/PlainChartDrawer.cc:316
-#, fuzzy, kde-format
-#| msgid "Search files"
+#, kde-format
 msgid "Image files"
-msgstr "ھۆججەت ئىزدەش"
+msgstr ""
 
 #. i18n: ectx: label, entry (UpdateEveryGuiUpdates), group (general)
 #: plugins/stats/ktstatsplugin.kcfg:10
@@ -7856,7 +7803,7 @@ msgstr ""
 #, kde-format
 msgctxt "Continuation of: Gather data every [number field]"
 msgid "milliseconds"
-msgstr "مىللىي سېكۇنت"
+msgstr "مىللىسېكۇنت"
 
 #. i18n: The maximums of 0X axes on charts
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
@@ -7914,7 +7861,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Statistics"
-msgstr "ستاتىستىكا"
+msgstr "ئىستاتىستىكا"
 
 #: plugins/stats/SettingsPage.cc:31
 #, kde-format
@@ -8022,13 +7969,12 @@ msgid "<b>OK</b>"
 msgstr ""
 
 #: plugins/syndication/feedwidget.cpp:229
-#, fuzzy, kde-format
-#| msgid "Last updated:"
+#, kde-format
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
 msgid ""
 "Last Updated:\n"
 "%1"
-msgstr "ئاخىرقى يېڭىلانغان ۋاقتى:"
+msgstr ""
 
 #: plugins/syndication/feedwidget.cpp:234
 #, kde-format
@@ -8046,10 +7992,9 @@ msgid "<b>Downloading</b>"
 msgstr ""
 
 #: plugins/syndication/feedwidget.cpp:243
-#, fuzzy, kde-format
-#| msgid "<b>%1</b>"
+#, kde-format
 msgid "<b>Queued</b>"
-msgstr "<b>%1</b>"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/feedwidget.ui:65
@@ -8091,7 +8036,7 @@ msgstr ""
 #: plugins/syndication/feedwidget.ui:183
 #, kde-format
 msgid "Cookies"
-msgstr "Cookies"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_filters)
 #: plugins/syndication/feedwidget.ui:190
@@ -8510,7 +8455,7 @@ msgstr ""
 #: plugins/upnp/upnpplugin.cpp:54 plugins/upnp/upnpwidget.ui:13
 #, kde-format
 msgid "UPnP"
-msgstr "UPnP"
+msgstr ""
 
 #: plugins/upnp/upnpplugin.cpp:43
 #, kde-format
@@ -8532,7 +8477,6 @@ msgstr ""
 #~ msgid "Open..."
 #~ msgstr "ئاچ…"
 
-#, fuzzy
 #~| msgid "Filter"
 #~ msgid "Filter..."
 #~ msgstr "سۈزگۈچ"
