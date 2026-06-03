@@ -91,6 +91,7 @@
   <summary xml:lang="sr-ijekavianlatin">Bittorrent klijent</summary>
   <summary xml:lang="sv">Dataflödesprogram</summary>
   <summary xml:lang="tr">BitTorrent İstemcisi</summary>
+  <summary xml:lang="ug">BitTorrent خېرىدارى</summary>
   <summary xml:lang="uk">Клієнт BitTorrent</summary>
   <summary xml:lang="zh-CN">BitTorrent 客户端</summary>
   <summary xml:lang="zh-TW">BitTorrent 用戶端</summary>
@@ -180,6 +181,7 @@
     <p xml:lang="sr-ijekavianlatin">Mogućnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="tr">Özellikler:</p>
+    <p xml:lang="ug">ئىقتىدار:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
