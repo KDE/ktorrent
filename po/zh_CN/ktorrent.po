@@ -2156,7 +2156,7 @@ msgstr " 分钟"
 #: ktorrent/pref/advancedpref.ui:210 ktorrent/pref/generalpref.ui:123
 #, kde-format
 msgid "Miscellaneous"
-msgstr "杂项"
+msgstr "其他"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/advancedpref.ui:220
