@@ -1362,7 +1362,7 @@
           <li xml:lang="sl">Odpravljena napaka, zaradi katere so bile zastave držav na zavihku Vrstniki v gradnku za informacije</li>
           <li xml:lang="tr">Bilgi araç takımının “Eşler” sekmesinde ülke bayraklarının görünmesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено прапорці країн на вкладці вузлів інформаційного віджета</li>
-          <li xml:lang="zh-CN">修复了国家旗帜出现在“信息”小部件的“对等节点”选项卡中的问题</li>
+          <li xml:lang="zh-CN">修复了国家旗帜出现在“信息”小部件的“对等节点”标签页中的问题</li>
           <li>Fixed the Import Torrent dialog failing to copy the given .torrent file</li>
           <li xml:lang="ar">إصلاح مشكلة فشل مربع حوار استيراد التورنت في نسخ ملف .torrent المحدد</li>
           <li xml:lang="bg">Поправена е грешката, при която диалоговият прозорец „Импортиране на торент“ не копираше зададения .torrent файл</li>
