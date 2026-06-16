@@ -775,9 +775,9 @@ static bool IsStalled(bt::TorrentInterface *tc, bt::TimeStamp now, bt::Uint32 mi
 {
     bt::Int64 stalled_time = 0;
     if (tc->getStats().completed) {
-        stalled_time = (now - tc->getStats().last_upload_activity_time) / 1000;
+        stalled_time = (now - tc->getStats().session_last_upload_activity_time) / 1000;
     } else {
-        stalled_time = (now - tc->getStats().last_download_activity_time) / 1000;
+        stalled_time = (now - tc->getStats().session_last_download_activity_time) / 1000;
     }
 
     return stalled_time > min_stall_time * 60 && tc->getStats().running;
