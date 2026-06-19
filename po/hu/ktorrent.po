@@ -6,13 +6,13 @@
 # Tóth Csanád <toth.csanad@kde.hu>, 2009, 2010.
 # Kristóf Kiszel <ulysses@kubuntu.org>, 2010, 2011, 2012, 2021.
 # Balázs Úr <urbalazs@gmail.com>, 2012, 2013, 2014.
-# SPDX-FileCopyrightText: 2021, 2024, 2025 Kristof Kiszel <kiszel.kristof@gmail.com>
+# SPDX-FileCopyrightText: 2021, 2024-2026 Kristof Kiszel <kiszel.kristof@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-24 02:41+0000\n"
-"PO-Revision-Date: 2025-11-08 22:08+0100\n"
+"PO-Revision-Date: 2026-06-18 21:51+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 26.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -623,7 +623,7 @@ msgstr "&Importálás"
 #: ktorrent/dialogs/importdialog.ui:119
 #, kde-format
 msgid "Ca&ncel"
-msgstr "&Mégsem"
+msgstr "&Mégse"
 
 #: ktorrent/dialogs/missingfilesdlg.cpp:73
 #: ktorrent/dialogs/missingfilesdlg.cpp:121
@@ -710,7 +710,7 @@ msgstr "Új hely kiválasztása"
 #: ktorrent/dialogs/missingfilesdlg.ui:77
 #, kde-format
 msgid "Cancel, do not start the torrent."
-msgstr "Mégsem, ne indítsa el a torrentet."
+msgstr "Mégse, ne indítsa el a torrentet."
 
 #. i18n: ectx: property (text), widget (QPushButton, cancel_button)
 #. i18n: ectx: property (text), widget (QPushButton, m_cancel)
@@ -718,7 +718,7 @@ msgstr "Mégsem, ne indítsa el a torrentet."
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:146
 #, kde-format
 msgid "Cancel"
-msgstr "Mégsem"
+msgstr "Mégse"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, PasteDlgBase)
 #: ktorrent/dialogs/pastedialog.cpp:34 ktorrent/dialogs/pastedlgbase.ui:14
@@ -6290,7 +6290,7 @@ msgstr "Blokklista konvertálása KTorrent-formátumúra. Kis türelmet…"
 #: plugins/ipfilter/convertdialog.ui:99
 #, kde-format
 msgid "C&ancel"
-msgstr "&Mégsem"
+msgstr "&Mégse"
 
 #: plugins/ipfilter/convertthread.cpp:60
 #, kde-format
