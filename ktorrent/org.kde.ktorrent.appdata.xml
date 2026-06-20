@@ -1004,6 +1004,7 @@
           <li xml:lang="ka">გასწორდა შეცდომა, რომელიც მაგნიტების ფაილის მუდმივ განახლებას იწვევდა</li>
           <li xml:lang="nl">Een fout is verholpen waardoor het magnetenbestand constant werd bijgewerkt</li>
           <li xml:lang="pt-BR">Corrigido um erro que fazia com que o arquivo de ímãs fosse atualizado constantemente.</li>
+          <li xml:lang="ru">Исправлена ошибка, вызывавшая постоянное обновление файла магнитов;</li>
           <li xml:lang="sk">Opravená chyba spôsobujúca neustálu aktualizáciu súboru magnetov</li>
           <li xml:lang="sl">Popravljena je bila napaka, zaradi katere se je datoteka z magneti nenehno posodabljala</li>
           <li xml:lang="uk">Виправлено ваду, яка спричиняла нескінченне оновлення файлів маґнетів</li>
@@ -1020,6 +1021,7 @@
           <li xml:lang="ka">გასწორდა მიმდინარეობის ზოლის გამოკვეთის ფერი</li>
           <li xml:lang="nl">De accentueringskleur van de voortgangsbalk is gecorrigeerd</li>
           <li xml:lang="pt-BR">Corrigida a cor de destaque da barra de progresso</li>
+          <li xml:lang="ru">Исправлен цвет выделения индикатора выполнения;</li>
           <li xml:lang="sk">Opravená farba zvýraznenia indikátora priebehu</li>
           <li xml:lang="sl">Popravljena je barva označevanja vrstice napredka</li>
           <li xml:lang="uk">Виправлено колір підсвічування смужки поступу</li>
@@ -1036,6 +1038,7 @@
           <li xml:lang="ka">გასწორდა მოვლენების დამთვალიერებლის პარამეტრების მინიშნებაში დაუმუშავებელ HTML-ის ჩვენება</li>
           <li xml:lang="nl">De tekstballon in de instellingen van de logviewer die onbewerkte HTML weergaf, is nu correct</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a dica das configurações do visualizador de logs exibia HTML bruto</li>
+          <li xml:lang="ru">Исправлено отображение необработанного HTML во всплывающей подсказке параметров средства просмотра журнала;</li>
           <li xml:lang="sk">Opravený popis nastavení prehliadača protokolov zobrazujúci surové HTML</li>
           <li xml:lang="sl">Popravljen je namih nastavitev pregledovalnika dnevnikov, ki prikazuje surov HTML</li>
           <li xml:lang="uk">Виправлено помилку, яка призводила до того, що на панелі підказки параметрів переглядача журналу було показано необроблений код HTML</li>
@@ -1061,6 +1064,7 @@
           <li xml:lang="ka">დაემატა 'ბოლო აქტივობის' სვეტი, რომელიც აჩვენებს, როდის ჰქონდა ტორენტს ბოლო ატვირთვის, ან გადმოწერის აქტივობა</li>
           <li xml:lang="nl">Een kolom 'Laatste activiteit' is toegevoegd die het tijdstip weergeeft waarop de torrent voor het laatst is geüpload of gedownload</li>
           <li xml:lang="pt-BR">Adicionada uma coluna "Última atividade" mostrando a hora em que o torrent teve a última atividade de upload ou download</li>
+          <li xml:lang="ru">Добавлен столбец «Последняя активность», показывающий время последней загрузки или отдачи торрента.</li>
           <li xml:lang="sk">Pridaný stĺpec „Posledná aktivita" zobrazujúci čas poslednej aktivity odosielania alebo prijímania torrenta</li>
           <li xml:lang="sl">Dodan stolpec "Zadnja aktivnost", ki prikazuje čas zadnjega nalaganja ali prenosa torrenta</li>
           <li xml:lang="uk">Додано стовпчик «Останні дії», у якому буде показано часові параметри тривалості вивантаження або отримання торентів</li>
@@ -1077,6 +1081,7 @@
           <li xml:lang="ka">გასწორდა ფონის ფერი ვიჯეტის ლენტის ელემენტის სტატუსის პანელისთვის</li>
           <li xml:lang="nl">De achtergrondkleur van het statuspaneel voor feeditems in het syndicatiewidget is gecorrigeerd</li>
           <li xml:lang="pt-BR">Corrigida a cor de fundo do painel de status do item de feed do widget de sindicação</li>
+          <li xml:lang="ru">Исправлен цвет фона панели состояния элемента ленты виджета синдикации;</li>
           <li xml:lang="sk">Opravená farba pozadia panela stavu položky zdroja miniaplikácie syndikácie</li>
           <li xml:lang="sl">Popravljena je bila barva ozadja plošče s stanjem elementov v viru v gradniku za sindikacijo</li>
           <li xml:lang="uk">Виправлено колір тла панелі стану пункту подачі віджета синдикації</li>
@@ -1093,6 +1098,7 @@
           <li xml:lang="ka">დაემატა სვეტები მთავარ ხედში, რომლებიც მიმდინარე სესიაში გადმოწერილი, ან ატვირთული ბაიტების რაოდენობას აჩვენებს</li>
           <li xml:lang="nl">Er zijn kolommen toegevoegd aan de hoofdweergave die het aantal geüploade en gedownloade bytes in de huidige sessie weergeven</li>
           <li xml:lang="pt-BR">Adicionadas colunas à visualização principal, mostrando o número de bytes enviados e recebidos na sessão atual</li>
+          <li xml:lang="ru">Добавлены столбцы в главное окно для отображения количества переданных и полученных байтов в текущем сеансе;</li>
           <li xml:lang="sk">Pridané stĺpce do hlavného zobrazenia ukazujúce počet odoslaných a prijatých bajtov v aktuálnej relácii</li>
           <li xml:lang="sl">V glavni pogled so dodani stolpci, ki prikazujejo število prenesenih bajtov tja in sem v trenutni seji</li>
           <li xml:lang="uk">До основного вікна додано стовпці, що показують кількість байтів, вивантажених або отриманих у поточному сеансі</li>
@@ -1122,6 +1128,7 @@
           <li xml:lang="ka">'დამატებულია' სვეტი ახლა უფრო მოკლე თარიღის ფორმატს იყენებს</li>
           <li xml:lang="nl">De kolom 'Toegevoegd' gebruikt nu een korter datumformaat</li>
           <li xml:lang="pt-BR">A coluna "Adicionado" agora usa um formato de data mais curto</li>
+          <li xml:lang="ru">В столбце «Добавлено» используется сокращённый формат даты;</li>
           <li xml:lang="sk">Stĺpec „Pridané" teraz používa kratší formát dátumu</li>
           <li xml:lang="sl">Stolpec "Dodano" zdaj uporablja krajšo obliko datuma</li>
           <li xml:lang="uk">У стовпчику «Додано» у новій версії використано дату у скороченому форматі</li>
@@ -1138,6 +1145,7 @@
           <li xml:lang="ka">გასწორდა ავარიული დასრულება ვიდეოს ვიჯეტის დახურვისას</li>
           <li xml:lang="nl">Een crash bij het sluiten van het videowidget is verholpen</li>
           <li xml:lang="pt-BR">Corrigido um erro que causava o fechamento inesperado do widget de vídeo</li>
+          <li xml:lang="ru">Исправлено аварийное завершение при закрытии видеовиджета;</li>
           <li xml:lang="sk">Opravený pád pri zatváraní miniaplikácie videa</li>
           <li xml:lang="sl">Popravljeno sesutje pri zapiranju video gradnika</li>
           <li xml:lang="uk">Усунено аварійне завершення при закритті віджета відео</li>
@@ -1160,6 +1168,7 @@
           <li xml:lang="ka">ვებსიდების მიღება HTTPS-ით</li>
           <li xml:lang="nl">Accepteer webseeds via HTTPS</li>
           <li xml:lang="pt-BR">Aceitar webseeds usando HTTPS</li>
+          <li xml:lang="ru">Поддержка веб-сидов по протоколу HTTPS.</li>
           <li xml:lang="sk">Prijímať webové zdroje používajúce HTTPS</li>
           <li xml:lang="sl">Sprejme spletna semena prek HTTPS</li>
           <li xml:lang="uk">Реалізовано прийняття вебпоширень з використанням HTTPS</li>
@@ -1176,6 +1185,7 @@
           <li xml:lang="ka">გასწორდა სტატისტიკის დამატებაში გრაფიკებში თეთრი ტექსტის თეთრ ფონზე დახატვა</li>
           <li xml:lang="nl">Het probleem met grafieken met witte tekst op een witte achtergrond in de statistiekenplug-in is opgelost</li>
           <li xml:lang="pt-BR">Corrigido gráficos com texto branco sobre fundo branco no plugin de Estatísticas</li>
+          <li xml:lang="ru">Исправлено отображение белого текста на белом фоне в диаграммах модуля статистики;</li>
           <li xml:lang="sk">Opravené grafy s bielym textom na bielom pozadí v zásuvnom module Štatistiky</li>
           <li xml:lang="sl">Popravljeni grafikoni z belim besedilom na belem ozadju v vtičniku Statistike</li>
           <li xml:lang="uk">Виправлено помилку, через яку діаграми містили білий текст на білому тлі у додатку «Статистика»</li>
@@ -1198,6 +1208,7 @@
           <li xml:lang="ka">გასწორდა ტორენტის შემოტანის დიალოგის შეცდომა, როცა ის .torrent ფაილის არჩევის საშუალებას არ იძლეოდა</li>
           <li xml:lang="nl">Het probleem is opgelost waarbij het dialoogvenster 'Torrent importeren' het selecteren van .torrent-bestanden ongedaan maakte</li>
           <li xml:lang="pt-BR">Corrigido o problema que impedia a seleção de arquivos .torrent na caixa de diálogo "Importar torrent"</li>
+          <li xml:lang="ru">Исправлена ошибка в диалоге импорта торрентов, не позволявшая выбрать файлы .torrent;</li>
           <li xml:lang="sk">Opravený dialóg Importovať torrent, ktorý neumožňoval vybrať súbory .torrent</li>
           <li xml:lang="sl">Popravljeno pogovorno okno Uvozi torrent, ki ni dovoljevalo izbire datotek .torrent</li>
           <li xml:lang="uk">Виправлено вікно імпортування торентів так, щоб можна було вибирати файли .torrent</li>
@@ -1224,6 +1235,7 @@
           <li xml:lang="ka">დაემატა ქმედება ინფორმაციის ვიჯეტის კონტექსტურ მენიუში ფაილების სახელის გადასარმევად</li>
           <li xml:lang="nl">Er is een actie toegevoegd om bestanden te hernoemen in het contextmenu van het Info-widget</li>
           <li xml:lang="pt-BR">Adicionada uma ação para renomear arquivos no menu de contexto do widget de informações</li>
+          <li xml:lang="ru">Добавлено действие для переименования файлов в контекстном меню информационного виджета;</li>
           <li xml:lang="sk">Pridaná akcia na premenovanie súborov do kontextovej ponuky miniaplikácie Info</li>
           <li xml:lang="sl">V kontekstnem meniju informacijskega gradnika je bilo dodano dejanje za preimenovanje datotek.</li>
           <li xml:lang="uk">Додано пункт дії для перейменування файлів до контекстного меню інформаційного віджета</li>
@@ -1240,6 +1252,7 @@
           <li xml:lang="ka">მაგნიტების ფაილის შენახვა, როცა ის განახლდება, რომ მაგნიტური მონაცემები არ დაიკარგოს, თუ აპლიკაცია ავარიულად დასრულდება</li>
           <li xml:lang="nl">Sla het magnetenbestand op telkens wanneer het wordt bijgewerkt, zodat de magnetengegevens niet verloren gaan als de app crasht</li>
           <li xml:lang="pt-BR">Salva o arquivo de ímãs sempre que ele for atualizado, para que os dados dos ímãs não sejam perdidos caso o aplicativo apresente falhas</li>
+          <li xml:lang="ru">Сохранение файла с магнет-ссылками при его обновлении для предотвращения потери данных при аварийном завершении приложения;</li>
           <li xml:lang="sk">Uložiť súbor magnetov vždy pri aktualizácii, aby sa údaje magnetov nestratili pri páde aplikácie</li>
           <li xml:lang="sl">Shranjuje datoteko z magneti vsakič, ko je posodobljena, da se podatki o magnetih ne izgubijo, če se aplikacija sesuje</li>
           <li xml:lang="uk">Реалізовано збереження файлів magnets при кожному оновленні, щоб дані маґнета не було втрачено, якщо програма завершить роботу в аварійному режимі</li>
@@ -1256,6 +1269,7 @@
           <li xml:lang="ka">სხვადასხვა ხატულას გამოყენება სიდინგისთვის და გადმოწერის რიგისთვის</li>
           <li xml:lang="nl">Gebruik een ander pictogram voor het in de wachtrij plaatsen van seed-bestanden en het in de wachtrij plaatsen van download-bestanden</li>
           <li xml:lang="pt-BR">Usa um ícone diferente para o compartilhamento em fila e para o download em fila</li>
+          <li xml:lang="ru">Разные значки для отложенной раздачи и отложенной загрузки;</li>
           <li xml:lang="sk">Použiť odlišné ikony pre zaradenú distribúciu a zaradené sťahovanie</li>
           <li xml:lang="sl">Uporablja različni ikoni za sejanje v čakalni vrsti in čakalno vrsto prenos sem </li>
           <li xml:lang="uk">Реалізовано використання іншої піктограми для поширення і отримання даних за чергою</li>
