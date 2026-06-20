@@ -808,14 +808,14 @@ bool Core::changeDataDir(const QString &new_dir)
 
         qman->setSuspendedState(true);
 
-        QList<bt::TorrentInterface *> succes;
+        QList<bt::TorrentInterface *> success;
 
         QList<bt::TorrentInterface *>::iterator i = qman->begin();
         while (i != qman->end()) {
             bt::TorrentInterface *tc = *i;
             if (!tc->changeTorDir(nd)) {
                 // failure time to roll back all the successful tc's
-                rollback(succes);
+                rollback(success);
                 // set back the old data_dir in Settings
                 Settings::setTempDir(data_dir);
                 Settings::self()->save();
@@ -823,7 +823,7 @@ bool Core::changeDataDir(const QString &new_dir)
                 update_timer.start(CORE_UPDATE_INTERVAL);
                 return false;
             } else {
-                succes.append(tc);
+                success.append(tc);
             }
             i++;
         }
@@ -838,12 +838,12 @@ bool Core::changeDataDir(const QString &new_dir)
     }
 }
 
-void Core::rollback(const QList<bt::TorrentInterface *> &succes)
+void Core::rollback(const QList<bt::TorrentInterface *> &success)
 {
     Out(SYS_GEN | LOG_DEBUG) << "Error, rolling back" << endl;
     update_timer.stop();
-    QList<bt::TorrentInterface *>::const_iterator i = succes.begin();
-    while (i != succes.end()) {
+    QList<bt::TorrentInterface *>::const_iterator i = success.begin();
+    while (i != success.end()) {
         (*i)->rollback();
         i++;
     }
