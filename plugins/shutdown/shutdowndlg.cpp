@@ -23,6 +23,7 @@ ShutdownDlg::ShutdownDlg(ShutdownRuleSet *rules, CoreInterface *core, QWidget *p
     setWindowTitle(i18nc("@title:window", "Configure Shutdown"));
     model = new ShutdownTorrentModel(core, this);
 
+    m_action->addItem(QIcon::fromTheme(QStringLiteral("window-close")), i18n("Quit KTorrent"), QUIT_APP);
     m_action->addItem(QIcon::fromTheme(QStringLiteral("system-shutdown")), i18n("Shutdown"), SHUTDOWN);
     m_action->addItem(QIcon::fromTheme(QStringLiteral("system-lock-screen")), i18n("Lock"), LOCK);
 
@@ -106,15 +107,17 @@ kt::Action ShutdownDlg::indexToAction(int idx)
     int suspend_to_disk = m_action->findData(SUSPEND_TO_DISK);
 
     if (idx == 0) {
-        return SHUTDOWN;
+        return QUIT_APP;
     } else if (idx == 1) {
+        return SHUTDOWN;
+    } else if (idx == 2) {
         return LOCK;
     } else if (idx == suspend_to_ram) {
         return SUSPEND_TO_RAM;
     } else if (idx == suspend_to_disk) {
         return SUSPEND_TO_DISK;
     } else {
-        return SHUTDOWN;
+        return QUIT_APP;
     }
 }
 
@@ -124,10 +127,12 @@ int ShutdownDlg::actionToIndex(Action act)
     int suspend_to_disk = m_action->findData(SUSPEND_TO_DISK);
 
     switch (act) {
-    case SHUTDOWN:
+    case QUIT_APP:
         return 0;
-    case LOCK:
+    case SHUTDOWN:
         return 1;
+    case LOCK:
+        return 2;
     case SUSPEND_TO_RAM:
         return suspend_to_ram;
     case SUSPEND_TO_DISK:

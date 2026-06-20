@@ -58,6 +58,8 @@ void ShutdownPlugin::load()
     if (rules->enabled()) {
         shutdown_enabled->setChecked(true);
     }
+
+    connect(rules, &ShutdownRuleSet::quitApp, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
     connect(rules, &ShutdownRuleSet::shutdown, this, &ShutdownPlugin::shutdownComputer);
     connect(rules, &ShutdownRuleSet::lock, this, &ShutdownPlugin::lock);
     connect(rules, &ShutdownRuleSet::suspendToDisk, this, &ShutdownPlugin::suspendToDisk);
@@ -125,6 +127,10 @@ void ShutdownPlugin::configureShutdown()
 void ShutdownPlugin::updateAction()
 {
     switch (rules->currentAction()) {
+    case QUIT_APP:
+        shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("window-close")));
+        shutdown_enabled->setText(i18n("Quit KTorrent"));
+        break;
     case SHUTDOWN:
         shutdown_enabled->setIcon(QIcon::fromTheme(QLatin1String("system-shutdown")));
         shutdown_enabled->setText(i18n("Shutdown"));

@@ -90,6 +90,9 @@ void ShutdownRuleSet::triggered(Trigger trigger, TorrentInterface *tc)
 
     if ((!all_rules_must_be_hit && hit) || (all_rules_must_be_hit && all_hit)) {
         switch (currentAction()) {
+        case QUIT_APP:
+            Q_EMIT quitApp();
+            break;
         case SHUTDOWN:
             Q_EMIT shutdown();
             break;
@@ -244,6 +247,9 @@ QString ShutdownRuleSet::toolTip() const
         QString msg;
         Action action = currentAction();
         switch (action) {
+        case QUIT_APP:
+            msg = i18n("Quit KTorrent");
+            break;
         case SHUTDOWN:
             msg = i18n("Shutdown");
             break;

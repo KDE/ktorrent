@@ -25,6 +25,7 @@ enum Target {
 };
 
 enum Action {
+    QUIT_APP,
     SHUTDOWN,
     LOCK,
     SUSPEND_TO_DISK,
@@ -116,6 +117,7 @@ public:
     QString toolTip() const;
 
 Q_SIGNALS:
+    void quitApp();
     void shutdown();
     void standby();
     void lock();
