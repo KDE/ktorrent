@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-31 00:43+0000\n"
+"POT-Creation-Date: 2026-06-22 00:43+0000\n"
 "PO-Revision-Date: 2026-02-24 12:04+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -7094,8 +7094,8 @@ msgstr "Salveguarda %1 in"
 
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
-#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:130
-#: plugins/shutdown/shutdownruleset.cpp:248
+#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:136
+#: plugins/shutdown/shutdownruleset.cpp:254
 #, kde-format
 msgid "Shutdown"
 msgstr "Stoppa (Shutdown)"
@@ -7112,35 +7112,42 @@ msgctxt "@title:window"
 msgid "Configure Shutdown"
 msgstr "Configura Shutdown (stoppar)"
 
-#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:134
+#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
+#, fuzzy, kde-format
+#| msgid "BitTorrent"
+msgid "Quit KTorrent"
+msgstr "Bittorrent"
+
+#: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
+#: plugins/shutdown/shutdownruleset.cpp:257
 #, kde-format
 msgid "Lock"
 msgstr "Bloca"
 
-#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:138
-#: plugins/shutdown/shutdownruleset.cpp:254
+#: plugins/shutdown/shutdowndlg.cpp:38 plugins/shutdown/shutdownplugin.cpp:144
+#: plugins/shutdown/shutdownruleset.cpp:260
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "Dormi (suspende a RAM)"
 
-#: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
-#: plugins/shutdown/shutdownruleset.cpp:257
+#: plugins/shutdown/shutdowndlg.cpp:46 plugins/shutdown/shutdownplugin.cpp:148
+#: plugins/shutdown/shutdownruleset.cpp:263
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "Hiberna (Suspende a Disco)"
 
-#: plugins/shutdown/shutdowndlg.cpp:49
+#: plugins/shutdown/shutdowndlg.cpp:50
 #, kde-format
 msgid "When all torrents finish downloading"
 msgstr ""
 
-#: plugins/shutdown/shutdowndlg.cpp:50
+#: plugins/shutdown/shutdowndlg.cpp:51
 #, kde-format
 msgid "When all torrents finish seeding"
 msgstr ""
 
-#: plugins/shutdown/shutdowndlg.cpp:51
+#: plugins/shutdown/shutdowndlg.cpp:52
 #, kde-format
 msgid "When the events below happen"
 msgstr ""
@@ -7187,37 +7194,37 @@ msgstr ""
 msgid "Configure Shutdown"
 msgstr "Configura "
 
-#: plugins/shutdown/shutdownruleset.cpp:242
+#: plugins/shutdown/shutdownruleset.cpp:245
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr ""
 
-#: plugins/shutdown/shutdownruleset.cpp:262
+#: plugins/shutdown/shutdownruleset.cpp:268
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr ""
 
-#: plugins/shutdown/shutdownruleset.cpp:264
+#: plugins/shutdown/shutdownruleset.cpp:270
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr ""
 
-#: plugins/shutdown/shutdownruleset.cpp:342
+#: plugins/shutdown/shutdownruleset.cpp:348
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr ""
 
-#: plugins/shutdown/shutdownruleset.cpp:344
+#: plugins/shutdown/shutdownruleset.cpp:350
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr ""
 
-#: plugins/shutdown/shutdownruleset.cpp:346
+#: plugins/shutdown/shutdownruleset.cpp:352
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr ""
 
-#: plugins/shutdown/shutdownruleset.cpp:348
+#: plugins/shutdown/shutdownruleset.cpp:354
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr ""

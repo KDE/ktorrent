@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-31 00:43+0000\n"
+"POT-Creation-Date: 2026-06-22 00:43+0000\n"
 "PO-Revision-Date: 2026-02-26 19:38+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -7457,8 +7457,8 @@ msgstr "Выбор папки для сохранения %1"
 # [https://bugs.kde.org/show_bug.cgi?id=305381] add accelerator for menu name --aspotashev
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
-#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:130
-#: plugins/shutdown/shutdownruleset.cpp:248
+#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:136
+#: plugins/shutdown/shutdownruleset.cpp:254
 #, kde-format
 msgid "Shutdown"
 msgstr "Завершение работы"
@@ -7475,38 +7475,45 @@ msgctxt "@title:window"
 msgid "Configure Shutdown"
 msgstr "Настройка автоматического завершения работы"
 
-# shutdown-method
-#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:134
+#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
+#, fuzzy, kde-format
+#| msgid "BitTorrent"
+msgid "Quit KTorrent"
+msgstr "BitTorrent"
+
+# shutdown-method
+#: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
+#: plugins/shutdown/shutdownruleset.cpp:257
 #, kde-format
 msgid "Lock"
 msgstr "Заблокировать"
 
 # shutdown-method
-#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:138
-#: plugins/shutdown/shutdownruleset.cpp:254
+#: plugins/shutdown/shutdowndlg.cpp:38 plugins/shutdown/shutdownplugin.cpp:144
+#: plugins/shutdown/shutdownruleset.cpp:260
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "Спящий режим"
 
 # shutdown-method
-#: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
-#: plugins/shutdown/shutdownruleset.cpp:257
+#: plugins/shutdown/shutdowndlg.cpp:46 plugins/shutdown/shutdownplugin.cpp:148
+#: plugins/shutdown/shutdownruleset.cpp:263
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "Гибернация"
 
-#: plugins/shutdown/shutdowndlg.cpp:49
+#: plugins/shutdown/shutdowndlg.cpp:50
 #, kde-format
 msgid "When all torrents finish downloading"
 msgstr "Когда все торренты загрузились"
 
-#: plugins/shutdown/shutdowndlg.cpp:50
+#: plugins/shutdown/shutdowndlg.cpp:51
 #, kde-format
 msgid "When all torrents finish seeding"
 msgstr "Когда все торренты завершили отдачу"
 
-#: plugins/shutdown/shutdowndlg.cpp:51
+#: plugins/shutdown/shutdowndlg.cpp:52
 #, kde-format
 msgid "When the events below happen"
 msgstr "По событию"
@@ -7556,38 +7563,38 @@ msgstr "Завершение работы включено"
 msgid "Configure Shutdown"
 msgstr "Настроить автоматическое завершение работы"
 
-#: plugins/shutdown/shutdownruleset.cpp:242
+#: plugins/shutdown/shutdownruleset.cpp:245
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "Автоматическое завершение работы не используется"
 
 # Всплывающая подсказка для кнопки "Завершение работы": "Завершение работы [эта строка]" --aspotashev
-#: plugins/shutdown/shutdownruleset.cpp:262
+#: plugins/shutdown/shutdownruleset.cpp:268
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr " при выполнении всех перечисленных условий:<br/><br/>"
 
-#: plugins/shutdown/shutdownruleset.cpp:264
+#: plugins/shutdown/shutdownruleset.cpp:270
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr " при выполнении одного из перечисленных условий:<br/><br/>"
 
-#: plugins/shutdown/shutdownruleset.cpp:342
+#: plugins/shutdown/shutdownruleset.cpp:348
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "завершена загрузка <b>всех торрентов</b>"
 
-#: plugins/shutdown/shutdownruleset.cpp:344
+#: plugins/shutdown/shutdownruleset.cpp:350
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "завершена отдача <b>всех торрентов</b>"
 
-#: plugins/shutdown/shutdownruleset.cpp:346
+#: plugins/shutdown/shutdownruleset.cpp:352
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "завершена загрузка <b>%1</b>"
 
-#: plugins/shutdown/shutdownruleset.cpp:348
+#: plugins/shutdown/shutdownruleset.cpp:354
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "завершена отдача <b>%1</b>"

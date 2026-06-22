@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-31 00:43+0000\n"
+"POT-Creation-Date: 2026-06-22 00:43+0000\n"
 "PO-Revision-Date: 2026-02-24 07:19+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -7442,8 +7442,8 @@ msgstr "Shrani %1 v"
 
 #. i18n: ectx: Menu (shutdown)
 #: plugins/shutdown/ktorrent_shutdownui.rc:6
-#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:130
-#: plugins/shutdown/shutdownruleset.cpp:248
+#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:136
+#: plugins/shutdown/shutdownruleset.cpp:254
 #, kde-format
 msgid "Shutdown"
 msgstr "Izklopi"
@@ -7460,35 +7460,42 @@ msgctxt "@title:window"
 msgid "Configure Shutdown"
 msgstr "Nastavi izklop"
 
-#: plugins/shutdown/shutdowndlg.cpp:27 plugins/shutdown/shutdownplugin.cpp:134
+#: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
+#, fuzzy, kde-format
+#| msgid "BitTorrent"
+msgid "Quit KTorrent"
+msgstr "BitTorrent"
+
+#: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
+#: plugins/shutdown/shutdownruleset.cpp:257
 #, kde-format
 msgid "Lock"
 msgstr "Zakleni"
 
-#: plugins/shutdown/shutdowndlg.cpp:37 plugins/shutdown/shutdownplugin.cpp:138
-#: plugins/shutdown/shutdownruleset.cpp:254
+#: plugins/shutdown/shutdowndlg.cpp:38 plugins/shutdown/shutdownplugin.cpp:144
+#: plugins/shutdown/shutdownruleset.cpp:260
 #, kde-format
 msgid "Sleep (suspend to RAM)"
 msgstr "Spanje (začasna zaustavitev v RAMu)"
 
-#: plugins/shutdown/shutdowndlg.cpp:45 plugins/shutdown/shutdownplugin.cpp:142
-#: plugins/shutdown/shutdownruleset.cpp:257
+#: plugins/shutdown/shutdowndlg.cpp:46 plugins/shutdown/shutdownplugin.cpp:148
+#: plugins/shutdown/shutdownruleset.cpp:263
 #, kde-format
 msgid "Hibernate (suspend to disk)"
 msgstr "V mirovanje (začasno zaustavi na disku)"
 
-#: plugins/shutdown/shutdowndlg.cpp:49
+#: plugins/shutdown/shutdowndlg.cpp:50
 #, kde-format
 msgid "When all torrents finish downloading"
 msgstr "Ko se zaključi prejemanje vseh torrentov"
 
-#: plugins/shutdown/shutdowndlg.cpp:50
+#: plugins/shutdown/shutdowndlg.cpp:51
 #, kde-format
 msgid "When all torrents finish seeding"
 msgstr "Ko se zaključi sejanje vseh torrentov"
 
-#: plugins/shutdown/shutdowndlg.cpp:51
+#: plugins/shutdown/shutdowndlg.cpp:52
 #, kde-format
 msgid "When the events below happen"
 msgstr "Ko se zgodijo naslednji dogodki"
@@ -7537,37 +7544,37 @@ msgstr "Izklop je omogočen"
 msgid "Configure Shutdown"
 msgstr "Nastavi izklop"
 
-#: plugins/shutdown/shutdownruleset.cpp:242
+#: plugins/shutdown/shutdownruleset.cpp:245
 #, kde-format
 msgid "Automatic shutdown not active"
 msgstr "Samodejni izklop ni dejaven"
 
-#: plugins/shutdown/shutdownruleset.cpp:262
+#: plugins/shutdown/shutdownruleset.cpp:268
 #, kde-format
 msgid " when all of the following events have occurred:<br/><br/> "
 msgstr " ko so se zgodili vsi naslednji dogodki:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:264
+#: plugins/shutdown/shutdownruleset.cpp:270
 #, kde-format
 msgid " when one of the following events occur:<br/><br/> "
 msgstr " ko se zgodi eden izmed naslednjih dogodkov:<br/><br/> "
 
-#: plugins/shutdown/shutdownruleset.cpp:342
+#: plugins/shutdown/shutdownruleset.cpp:348
 #, kde-format
 msgid "<b>All torrents</b> finish downloading"
 msgstr "Ko se zaključi prejemanje <b>vseh torrentov</b>"
 
-#: plugins/shutdown/shutdownruleset.cpp:344
+#: plugins/shutdown/shutdownruleset.cpp:350
 #, kde-format
 msgid "<b>All torrents</b> finish seeding"
 msgstr "Ko se zaključi sejanje <b>vseh torrentov</b>"
 
-#: plugins/shutdown/shutdownruleset.cpp:346
+#: plugins/shutdown/shutdownruleset.cpp:352
 #, kde-format
 msgid "<b>%1</b> finishes downloading"
 msgstr "Ko se zaključi prejemanje <b>%1</b>"
 
-#: plugins/shutdown/shutdownruleset.cpp:348
+#: plugins/shutdown/shutdownruleset.cpp:354
 #, kde-format
 msgid "<b>%1</b> finishes seeding"
 msgstr "Ko se zaključi sejanje <b>%1</b>"
