@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:43+0000\n"
-"PO-Revision-Date: 2026-02-24 09:34+0200\n"
+"PO-Revision-Date: 2026-06-22 16:44+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -7533,10 +7533,9 @@ msgstr "Налаштування вимикання"
 
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
-#, fuzzy, kde-format
-#| msgid "BitTorrent"
+#, kde-format
 msgid "Quit KTorrent"
-msgstr "BitTorrent"
+msgstr "Вийти з KTorrent"
 
 #: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
 #: plugins/shutdown/shutdownruleset.cpp:257

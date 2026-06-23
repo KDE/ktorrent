@@ -7262,10 +7262,9 @@ msgstr "配置关机"
 
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
-#, fuzzy, kde-format
-#| msgid "BitTorrent"
+#, kde-format
 msgid "Quit KTorrent"
-msgstr "BitTorrent"
+msgstr ""
 
 #: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
 #: plugins/shutdown/shutdownruleset.cpp:257
