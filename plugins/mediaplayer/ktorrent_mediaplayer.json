@@ -42,6 +42,7 @@
             }
         ],
         "Description": "Play media files as they download",
+        "Description[ka]": "მედიაფაილების დაკვრა მათი გადმოწერისას",
         "EnabledByDefault": false,
         "Icon": "applications-multimedia",
         "License": "GPL",
