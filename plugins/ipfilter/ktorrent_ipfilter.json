@@ -69,7 +69,7 @@
         "Description[sk]": "Filtrovanie IP adresy cez blocklist",
         "Description[sl]": "Filtriraj naslove IP s seznamom blokiranih",
         "Description[sv]": "Filtrera IP-adresser med en blockeringslista",
-        "Description[tr]": "Bir engel listesiyle IP adreslerini süzgeçten geçir",
+        "Description[tr]": "Bir engel listesiyle IP adreslerini süzgeçten geçirin",
         "Description[uk]": "Фільтрувати IP-адреси за списком блокування",
         "Description[zh_CN]": "通过屏蔽列表过滤 IP 地址",
         "Description[zh_TW]": "透過黑名單過濾 IP 位址",

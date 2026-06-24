@@ -69,7 +69,7 @@
         "Description[sk]": "Umožňuje vypnúť počítač po dokončení torrentov",
         "Description[sl]": "Omogoči izklop računalnika, ko se torrenti zaključijo",
         "Description[sv]": "Låter dig stänga av datorn när dataflöden är klara",
-        "Description[tr]": "Torrentler bittiği zaman bilgisayarınızın otomatik olarak kapanmasına izin verir",
+        "Description[tr]": "Torrentler bittiği zaman bilgisayarınızın kendiliğinden kapanmasına olanak tanır",
         "Description[uk]": "Надає вам змогу вимкнути комп’ютер після завершення отримання торента",
         "Description[zh_CN]": "允许您在种子完成时关闭计算机",
         "Description[zh_TW]": "允許在 torrents 完成後關閉電腦",
