@@ -7264,7 +7264,7 @@ msgstr "配置关机"
 #: plugins/shutdown/shutdownruleset.cpp:251
 #, kde-format
 msgid "Quit KTorrent"
-msgstr ""
+msgstr "退出 KTorrent"
 
 #: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
 #: plugins/shutdown/shutdownruleset.cpp:257
