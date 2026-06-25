@@ -44,6 +44,7 @@
         "Description": "Play media files as they download",
         "Description[bg]": "Възпроизвеждане на медийни файлове, докато се изтеглят",
         "Description[ca]": "Reprodueix els fitxers multimèdia mentre es baixen",
+        "Description[he]": "ניגון קובצי מדיה תוך כדי הורדתם",
         "Description[ka]": "მედიაფაილების დაკვრა მათი გადმოწერისას",
         "Description[nl]": "Speel mediabestanden af ​​terwijl ze worden gedownload",
         "Description[pt_BR]": "Reproduzir os arquivos de mídia à medida que forem baixados",
