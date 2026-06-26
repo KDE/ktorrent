@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:43+0000\n"
-"PO-Revision-Date: 2026-02-24 09:42+0100\n"
+"PO-Revision-Date: 2026-06-22 12:01+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -291,7 +291,7 @@ msgstr "Importa"
 #: ktorrent/dialogs/fileselectdlg.cpp:252
 #, kde-format
 msgid "The directory %1 does not exist, do you want to create it?"
-msgstr "El directori %1 no existix, voleu crear-lo?"
+msgstr "La carpeta %1 no existix, voleu crear-la?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:235
 #: ktorrent/dialogs/fileselectdlg.cpp:254
@@ -1635,7 +1635,7 @@ msgstr "Felix Berger"
 #: ktorrent/main.cpp:125
 #, kde-format
 msgid "ChunkBar's tooltip and IWFileTreeItem sorting"
-msgstr "Consells de la barra de fragments i ordenació IWFileTreeItem"
+msgstr "Consell d'eina de la barra de fragments i ordenació IWFileTreeItem"
 
 #: ktorrent/main.cpp:126
 #, kde-format
@@ -3923,8 +3923,7 @@ msgstr[1] "No es poden baixar més de %1 torrent. <br>"
 #, kde-format
 msgid "Go to Settings -> Configure KTorrent, if you want to change the limits."
 msgstr ""
-"Aneu fins a «Configuració -> Configura KTorrent…» si voleu canviar els "
-"límits."
+"Aneu fins a «Configuració → Configura KTorrent…» si voleu canviar els límits."
 
 #: ktorrent/trayicon.cpp:309
 #, kde-format
@@ -4148,7 +4147,7 @@ msgstr "Inicia"
 #: ktorrent/view/view.cpp:134
 #, kde-format
 msgid "Start all selected torrents in the current tab"
-msgstr "Inicia tots els torrent seleccionats a la pestanya actual"
+msgstr "Inicia tots els torrent seleccionats en la pestanya actual"
 
 #: ktorrent/view/view.cpp:140
 #, kde-format
@@ -4159,7 +4158,8 @@ msgstr "Força l'iniciada"
 #: ktorrent/view/view.cpp:141
 #, kde-format
 msgid "Force start all selected torrents in the current tab"
-msgstr "Força l'iniciada de tots els torrent seleccionats a la pestanya actual"
+msgstr ""
+"Força l'iniciada de tots els torrent seleccionats en la pestanya actual"
 
 #: ktorrent/view/view.cpp:145
 #, kde-format
@@ -4170,7 +4170,7 @@ msgstr "Para"
 #: ktorrent/view/view.cpp:146
 #, kde-format
 msgid "Stop all selected torrents in the current tab"
-msgstr "Para tots els torrent seleccionats a la pestanya actual"
+msgstr "Para tots els torrent seleccionats en la pestanya actual"
 
 #: ktorrent/view/view.cpp:152
 #, kde-format
@@ -4181,7 +4181,7 @@ msgstr "Pausa"
 #: ktorrent/view/view.cpp:154
 #, kde-format
 msgid "Pause all selected torrents in the current tab"
-msgstr "Posa en pausa tots els torrent seleccionats a la pestanya actual"
+msgstr "Posa en pausa tots els torrent seleccionats en la pestanya actual"
 
 #: ktorrent/view/view.cpp:159
 #, kde-format
@@ -4192,7 +4192,7 @@ msgstr "Elimina"
 #: ktorrent/view/view.cpp:161
 #, kde-format
 msgid "Remove all selected torrents in the current tab"
-msgstr "Elimina tots els torrent seleccionats a la pestanya actual"
+msgstr "Elimina tots els torrent seleccionats en la pestanya actual"
 
 #: ktorrent/view/view.cpp:166
 #, kde-format
@@ -6866,12 +6866,12 @@ msgstr "Reproduint: <b>%1</b>"
 #: plugins/mediaplayer/mediacontroller.cpp:99
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b> (Album: <b>%3</b>)"
-msgstr "<b>%2</b> - <b>%1</b> (Àlbum: <b>%3</b>)"
+msgstr "<b>%2</b> – <b>%1</b> (Àlbum: <b>%3</b>)"
 
 #: plugins/mediaplayer/mediacontroller.cpp:102
 #, kde-format
 msgid "<b>%2</b> - <b>%1</b>"
-msgstr "<b>%2</b> - <b>%1</b>"
+msgstr "<b>%2</b> – <b>%1</b>"
 
 #: plugins/mediaplayer/mediacontroller.cpp:105
 #: plugins/mediaplayer/mediacontroller.cpp:108
@@ -7525,10 +7525,9 @@ msgstr "Configura la parada"
 
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
-#, fuzzy, kde-format
-#| msgid "BitTorrent"
+#, kde-format
 msgid "Quit KTorrent"
-msgstr "BitTorrent"
+msgstr "Ix de KTorrent"
 
 #: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
 #: plugins/shutdown/shutdownruleset.cpp:257
