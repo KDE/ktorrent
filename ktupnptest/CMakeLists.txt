@@ -6,6 +6,7 @@ ki18n_wrap_ui(ktupnptest upnptestwidget.ui)
 
 target_link_libraries(
     ktupnptest
+    Qt6::Widgets
     Qt6::Network
     KTorrent6
     KF6::CoreAddons
