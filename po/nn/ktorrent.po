@@ -6770,7 +6770,7 @@ msgstr "Tøm speleliste"
 #: plugins/mediaplayer/mediaplayeractivity.cpp:134
 #, kde-format
 msgid "Toggle Fullscreen"
-msgstr "Slå av/på fullskjerm"
+msgstr "Slå på/av fullskjerm"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:160
 #: plugins/mediaplayer/mediaplayeractivity.cpp:351
