@@ -28,7 +28,6 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KWindowSystem>
-#include <kwindowsystem_version.h>
 
 #include "gui.h"
 #include <interfaces/functions.h>

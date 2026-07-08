@@ -11,7 +11,6 @@
 
 #include <KDNSSD/PublicService>
 #include <KDNSSD/ServiceBrowser>
-#include <kdnssd_version.h>
 
 namespace bt
 {
