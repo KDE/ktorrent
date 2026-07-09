@@ -81,7 +81,7 @@ bool MMapFile::open(const QString &file, QIODevice::OpenModeFlag mode)
     filename = file;
 
     // mmap the file
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
     int fd = fptr->handle();
 #ifdef HAVE_MMAP64
     data = (Uint8 *)mmap64(0, size, mmap_flag, MAP_SHARED, fd, 0);
@@ -97,7 +97,7 @@ bool MMapFile::open(const QString &file, QIODevice::OpenModeFlag mode)
     }
     ptr = 0;
     return true;
-#else // Q_WS_WIN
+#else // Q_OS_WIN
     data = (Uint8 *)fptr->map(0, size);
 
     if (!data) {
@@ -114,7 +114,7 @@ bool MMapFile::open(const QString &file, QIODevice::OpenModeFlag mode)
 void MMapFile::close()
 {
     if (fptr) {
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 #ifdef HAVE_MUNMAP64
         munmap64(data, size);
 #else
@@ -135,7 +135,7 @@ void MMapFile::close()
 void MMapFile::flush()
 {
     if (fptr)
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         msync(data, size, MS_SYNC);
 #else
         FlushViewOfFile(data, size);

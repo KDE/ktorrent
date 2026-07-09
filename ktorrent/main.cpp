@@ -47,7 +47,7 @@
 
 using namespace bt;
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 bool GrabPIDLock()
 {
     // open the PID file in the /tmp directory and attempt to lock it
@@ -75,7 +75,7 @@ bool GrabPIDLock()
 
 int main(int argc, char **argv)
 {
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
     // ignore SIGPIPE and SIGXFSZ
     signal(SIGPIPE, SIG_IGN);
     signal(SIGXFSZ, SIG_IGN);
@@ -203,7 +203,7 @@ int main(int argc, char **argv)
 
     const KDBusService dbusService(KDBusService::Unique);
 
-#if 0 // ndef Q_WS_WIN
+#if 0 // ndef Q_OS_WIN
     // need to grab lock after the fork call in start, otherwise this will not work properly
     if (!GrabPIDLock()) {
         fprintf(stderr, "ktorrent is already running !\n");
@@ -213,7 +213,7 @@ int main(int argc, char **argv)
 #endif
 
     try {
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
         bt::SignalCatcher catcher;
         catcher.catchSignal(SIGINT);
         catcher.catchSignal(SIGTERM);
