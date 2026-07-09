@@ -1339,6 +1339,7 @@
           <li xml:lang="ru">Перенос на Qt 6</li>
           <li xml:lang="sk">Portované na Qt 6</li>
           <li xml:lang="sl">Preneseno v Qt 6</li>
+          <li xml:lang="sv">Konverterad till Qt 6</li>
           <li xml:lang="tr">Qt6 geçişi yapıldı.</li>
           <li xml:lang="uk">Портовано на Qt 6</li>
           <li xml:lang="zh-CN">移植到 Qt6</li>
@@ -1359,6 +1360,7 @@
           <li xml:lang="ru">Использование символического значка в области уведомлений;</li>
           <li xml:lang="sk">Používať symbolickú ikonu v systémovej lište</li>
           <li xml:lang="sl">Uporabi simbolično ikono v sistemskem pladnju</li>
+          <li xml:lang="sv">Använd en symbolisk ikon i systembrickan</li>
           <li xml:lang="tr">Artık sembolik tepsi simgesi kullanılıyor.</li>
           <li xml:lang="uk">Використано символічну піктограму лотка</li>
           <li xml:lang="zh-CN">使用抽象符号化的托盘图标</li>
@@ -1504,6 +1506,7 @@
           <li xml:lang="ru">Исправлены действия глобальных комбинаций клавиш;</li>
           <li xml:lang="sk">Opravené globálne akcie klávesových skratiek</li>
           <li xml:lang="sl">Popravljena globalna dejanja bližnjic</li>
+          <li xml:lang="sv">Rättade globala genvägsåtgärder</li>
           <li xml:lang="tr">Global kısayol eylemleri onarıldı.</li>
           <li xml:lang="uk">Виправлено дії для загальних клавіатурних скорочень</li>
           <li xml:lang="zh-CN">修复全局快捷键操作</li>
