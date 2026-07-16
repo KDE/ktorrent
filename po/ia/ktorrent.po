@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:43+0000\n"
-"PO-Revision-Date: 2026-02-24 12:04+0100\n"
+"PO-Revision-Date: 2026-07-15 17:19+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -7114,10 +7114,9 @@ msgstr "Configura Shutdown (stoppar)"
 
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
-#, fuzzy, kde-format
-#| msgid "BitTorrent"
+#, kde-format
 msgid "Quit KTorrent"
-msgstr "Bittorrent"
+msgstr "Quita KTorrent"
 
 #: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
 #: plugins/shutdown/shutdownruleset.cpp:257
