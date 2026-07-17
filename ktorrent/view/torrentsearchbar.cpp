@@ -48,6 +48,7 @@ TorrentSearchBar::~TorrentSearchBar()
 void TorrentSearchBar::showBar()
 {
     show();
+    search_bar->selectAll();
     search_bar->setFocus();
     Q_EMIT filterBarShown(search_bar->text());
 }
