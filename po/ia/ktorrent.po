@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:43+0000\n"
-"PO-Revision-Date: 2026-07-15 17:19+0200\n"
+"PO-Revision-Date: 2026-07-17 17:09+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1532,7 +1532,7 @@ msgstr "Danny Allen"
 #: ktorrent/main.cpp:122
 #, kde-format
 msgid "1.0 application icon"
-msgstr ""
+msgstr "Icone de Application 1.0"
 
 #: ktorrent/main.cpp:123
 #, kde-format
