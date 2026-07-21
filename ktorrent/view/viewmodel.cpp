@@ -608,13 +608,8 @@ QVariant ViewModel::data(const QModelIndex &index, int role) const
     } else if (role == Qt::DecorationRole && index.column() == NAME) {
         return item->statusIcon();
     } else if (role == Qt::ToolTipRole && index.column() == NAME) {
-        QString tooltip;
         bt::TorrentInterface *tc = item->tc;
-        if (tc->loadUrl().isValid()) {
-            tooltip = i18n("%1<br>Url: <b>%2</b>", tc->getDisplayName(), tc->loadUrl().toDisplayString());
-        } else {
-            tooltip = tc->getDisplayName();
-        }
+        QString tooltip = tc->getDisplayName();
 
         tooltip += QLatin1String("<br/><br/>") + tc->getStats().statusToString();
         if (tc->getTrackersList()->noTrackersReachable()) {
