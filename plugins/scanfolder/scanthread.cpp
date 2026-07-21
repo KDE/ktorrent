@@ -52,7 +52,6 @@ ScanThread::ScanThread()
     : stop_requested(false)
     , recursive(false)
 {
-    scan_folders.setAutoDelete(true);
     moveToThread(this);
 }
 
@@ -100,20 +99,19 @@ void ScanThread::updateFolders()
     mutex.unlock();
 
     // first erase folders we don't need anymore
-    bt::PtrMap<QString, ScanFolder>::iterator i = scan_folders.begin();
+    auto i = scan_folders.begin();
     while (i != scan_folders.end()) {
-        if (!tmp.contains(i->first)) {
-            QString f = i->first;
-            i++;
-            scan_folders.erase(f);
+        if (!tmp.contains(i.key())) {
+            i.value()->deleteLater();
+            i = scan_folders.erase(i);
         } else {
-            i->second->setRecursive(recursive);
+            i.value()->setRecursive(recursive);
             i++;
         }
     }
 
     for (const QString &folder : std::as_const(tmp)) {
-        if (scan_folders.find(folder)) {
+        if (scan_folders.value(folder)) {
             continue;
         }
 
@@ -135,9 +133,12 @@ void ScanThread::stop()
 {
     stop_requested = true;
 
-    // XXX seems like deleting KDirWatch object(s) created in scan_folders
-    // in destructor of this QThread after it has been stopped
-    // causes memory corruption, so we delete them early
+    // Make sure QObjects are deleted in their own thread.
+    // Also KDirWatch uses thread-local storage which must
+    // be cleaned up by deleting in the proper thread.
+    for (auto *scan_folder : scan_folders) {
+        scan_folder->deleteLater();
+    }
     scan_folders.clear();
     exit();
     wait();

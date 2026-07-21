@@ -75,7 +75,7 @@ private:
     QStringList folders;
     std::atomic<bool> stop_requested;
     std::atomic<bool> recursive;
-    bt::PtrMap<QString, ScanFolder> scan_folders;
+    QMap<QString, ScanFolder *> scan_folders;
 };
 
 }
