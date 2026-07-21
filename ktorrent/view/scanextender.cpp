@@ -99,12 +99,13 @@ void ScanExtender::percent(long unsigned int percent)
 
 void ScanExtender::finished(KJob *j)
 {
-    progress_bar->setValue(progress_bar->maximum());
     progress_bar->setEnabled(false);
     cancel_button->setDisabled(true);
     close_button->setEnabled(true);
 
-    if (j->error() && !j->errorText().isEmpty()) {
+    if (!j->error()) {
+        progress_bar->setValue(progress_bar->maximum());
+    } else if (!j->errorText().isEmpty()) {
         error_msg->show();
         error_msg->setText(i18n("<font color=\"red\">%1</font>", j->errorText()));
         Q_EMIT resized(this);
