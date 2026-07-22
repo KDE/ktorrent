@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent(2)\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-22 00:43+0000\n"
+"POT-Creation-Date: 2026-07-22 02:43+0000\n"
 "PO-Revision-Date: 2025-12-13 13:36+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: \n"
@@ -3996,7 +3996,7 @@ msgstr "Selectați un director pentru a muta datele acolo."
 msgid "Checked %v of %m chunks"
 msgstr "%v din %m bucăți verificate"
 
-#: ktorrent/view/scanextender.cpp:109
+#: ktorrent/view/scanextender.cpp:110
 #, kde-format
 msgid "<font color=\"red\">%1</font>"
 msgstr "<font color=\"red\">%1</font>"
@@ -7073,7 +7073,7 @@ msgstr ""
 msgid "Scan directories recursively."
 msgstr "Citește dosarele recursiv."
 
-#: plugins/scanfolder/scanfolder.cpp:64 plugins/scanfolder/scanthread.cpp:176
+#: plugins/scanfolder/scanfolder.cpp:64 plugins/scanfolder/scanthread.cpp:177
 #: plugins/scanfolder/torrentloadqueue.cpp:148
 #: plugins/scanfolder/torrentloadqueue.cpp:149
 #: plugins/scanfolder/torrentloadqueue.cpp:153

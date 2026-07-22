@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-22 00:43+0000\n"
+"POT-Creation-Date: 2026-07-22 02:43+0000\n"
 "PO-Revision-Date: 2026-06-22 12:01+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -4059,7 +4059,7 @@ msgstr "Ubicació a on s'han de moure els fitxers."
 msgid "Checked %v of %m chunks"
 msgstr "Comprovats %v de %m fragments"
 
-#: ktorrent/view/scanextender.cpp:109
+#: ktorrent/view/scanextender.cpp:110
 #, kde-format
 msgid "<font color=\"red\">%1</font>"
 msgstr "<font color=\"red\">%1</font>"
@@ -7040,7 +7040,7 @@ msgstr "S'ha seleccionat l'acció de moure."
 msgid "Scan directories recursively."
 msgstr "Explora els directoris recursivament."
 
-#: plugins/scanfolder/scanfolder.cpp:64 plugins/scanfolder/scanthread.cpp:176
+#: plugins/scanfolder/scanfolder.cpp:64 plugins/scanfolder/scanthread.cpp:177
 #: plugins/scanfolder/torrentloadqueue.cpp:148
 #: plugins/scanfolder/torrentloadqueue.cpp:149
 #: plugins/scanfolder/torrentloadqueue.cpp:153

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-22 00:43+0000\n"
+"POT-Creation-Date: 2026-07-22 02:43+0000\n"
 "PO-Revision-Date: 2025-12-06 11:55+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -4059,7 +4059,7 @@ msgstr "Fitxategiak eramateko kokalekua."
 msgid "Checked %v of %m chunks"
 msgstr "%m(e)tik %v zati egiaztatu dira"
 
-#: ktorrent/view/scanextender.cpp:109
+#: ktorrent/view/scanextender.cpp:110
 #, kde-format
 msgid "<font color=\"red\">%1</font>"
 msgstr "<font color=\"red\">%1</font>"
@@ -7033,7 +7033,7 @@ msgstr "Eramateko ekintza markatuta."
 msgid "Scan directories recursively."
 msgstr "Aztertu direktorioak errekurtsiboki."
 
-#: plugins/scanfolder/scanfolder.cpp:64 plugins/scanfolder/scanthread.cpp:176
+#: plugins/scanfolder/scanfolder.cpp:64 plugins/scanfolder/scanthread.cpp:177
 #: plugins/scanfolder/torrentloadqueue.cpp:148
 #: plugins/scanfolder/torrentloadqueue.cpp:149
 #: plugins/scanfolder/torrentloadqueue.cpp:153

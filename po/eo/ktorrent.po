@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-22 00:43+0000\n"
+"POT-Creation-Date: 2026-07-22 02:43+0000\n"
 "PO-Revision-Date: 2025-03-15 10:38+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -4022,7 +4022,7 @@ msgstr "Loko por movi la dosierojn."
 msgid "Checked %v of %m chunks"
 msgstr "Kontrolis %v el %m pecoj"
 
-#: ktorrent/view/scanextender.cpp:109
+#: ktorrent/view/scanextender.cpp:110
 #, kde-format
 msgid "<font color=\"red\">%1</font>"
 msgstr "<font color=\"red\">%1</font>"
@@ -7025,7 +7025,7 @@ msgstr "Mova ago kontrolita."
 msgid "Scan directories recursively."
 msgstr "Skani dosierujojn rekursie."
 
-#: plugins/scanfolder/scanfolder.cpp:64 plugins/scanfolder/scanthread.cpp:176
+#: plugins/scanfolder/scanfolder.cpp:64 plugins/scanfolder/scanthread.cpp:177
 #: plugins/scanfolder/torrentloadqueue.cpp:148
 #: plugins/scanfolder/torrentloadqueue.cpp:149
 #: plugins/scanfolder/torrentloadqueue.cpp:153
