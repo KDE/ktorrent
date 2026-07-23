@@ -78,4 +78,4 @@ endif()
 target_include_directories(ktcore PUBLIC "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/libktcore>")
 
 install(TARGETS ktcore  ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
-
+install(FILES ktorrent.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
