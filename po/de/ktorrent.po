@@ -7477,7 +7477,7 @@ msgstr "Suchmaschine hinzufügen"
 #, kde-format
 msgid "Enter the hostname of the search engine (for example www.google.com):"
 msgstr ""
-"Bitte den Rechnernamen der Suchmaschine eingeben (z. B. www.google.de):"
+"Bitte den Rechnernamen der Suchmaschine eingeben (z. B. www.google.de):"
 
 #: plugins/search/searchprefpage.cpp:123
 #, kde-format
