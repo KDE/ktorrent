@@ -9,6 +9,8 @@
 
 #include <QAbstractTableModel>
 
+#include <util/constants.h>
+
 namespace bt
 {
 class TorrentInterface;

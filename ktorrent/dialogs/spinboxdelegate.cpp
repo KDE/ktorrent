@@ -4,12 +4,12 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include "spinboxdelegate.h"
+
 #include <QModelIndex>
 #include <QSpinBox>
 
 #include <KLocalizedString>
-
-#include "spinboxdelegate.h"
 
 namespace kt
 {

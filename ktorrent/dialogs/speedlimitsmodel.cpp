@@ -4,10 +4,11 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include "speedlimitsmodel.h"
+
 #include <KLocalizedString>
 
 #include "core.h"
-#include "speedlimitsmodel.h"
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
 #include <util/functions.h>
