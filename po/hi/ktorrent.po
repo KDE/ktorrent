@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-20 00:43+0000\n"
+"POT-Creation-Date: 2026-08-02 00:45+0000\n"
 "PO-Revision-Date: 2008-03-30 16:43+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@yahoo.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
@@ -4405,12 +4405,7 @@ msgstr "डाउनलोडेड"
 msgid "Time since last download or upload activity"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:614
-#, kde-format
-msgid "%1<br>Url: <b>%2</b>"
-msgstr ""
-
-#: ktorrent/view/viewmodel.cpp:621
+#: ktorrent/view/viewmodel.cpp:616
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr ""

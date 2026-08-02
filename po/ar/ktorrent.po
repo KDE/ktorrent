@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-20 00:43+0000\n"
+"POT-Creation-Date: 2026-08-02 00:45+0000\n"
 "PO-Revision-Date: 2026-06-25 09:13+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -4453,12 +4453,7 @@ msgstr "متى أضيف هذا السيل"
 msgid "Time since last download or upload activity"
 msgstr "الوقت منذ آخر نشاط تنزيل أو تحميل"
 
-#: ktorrent/view/viewmodel.cpp:614
-#, kde-format
-msgid "%1<br>Url: <b>%2</b>"
-msgstr "%1<br>عنوان URL: <b>%2</b>"
-
-#: ktorrent/view/viewmodel.cpp:621
+#: ktorrent/view/viewmodel.cpp:616
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>تعذّر الاتصال بمتتبّع."
@@ -8849,6 +8844,9 @@ msgstr "أعد الاستكشاف"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "%1<br>Url: <b>%2</b>"
+#~ msgstr "%1<br>عنوان URL: <b>%2</b>"
 
 #~ msgid "Open..."
 #~ msgstr "افتح..."

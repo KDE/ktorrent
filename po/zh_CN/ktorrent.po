@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-20 00:43+0000\n"
+"POT-Creation-Date: 2026-08-02 00:45+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -4369,12 +4369,7 @@ msgstr "添加此种子时"
 msgid "Time since last download or upload activity"
 msgstr "最近一次下载或上传活动后经过的时间"
 
-#: ktorrent/view/viewmodel.cpp:614
-#, kde-format
-msgid "%1<br>Url: <b>%2</b>"
-msgstr "%1<br>地址：<b>%2</b>"
-
-#: ktorrent/view/viewmodel.cpp:621
+#: ktorrent/view/viewmodel.cpp:616
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>无法与 tracker 通信。"
@@ -8714,3 +8709,6 @@ msgstr "重新扫描"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
+
+#~ msgid "%1<br>Url: <b>%2</b>"
+#~ msgstr "%1<br>地址：<b>%2</b>"

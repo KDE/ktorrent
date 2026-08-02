@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-20 00:43+0000\n"
+"POT-Creation-Date: 2026-08-02 00:45+0000\n"
 "PO-Revision-Date: 2026-06-22 11:38+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -4551,12 +4551,7 @@ msgstr "Кога е добавен торента"
 msgid "Time since last download or upload activity"
 msgstr "Време от последното изтегляне или качване"
 
-#: ktorrent/view/viewmodel.cpp:614
-#, kde-format
-msgid "%1<br>Url: <b>%2</b>"
-msgstr "%1<br>Url адрес: <b>%2</b>"
-
-#: ktorrent/view/viewmodel.cpp:621
+#: ktorrent/view/viewmodel.cpp:616
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>Не може да се осъществи връзка със сървър."
@@ -8969,3 +8964,6 @@ msgstr "Ново сканиране"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
+
+#~ msgid "%1<br>Url: <b>%2</b>"
+#~ msgstr "%1<br>Url адрес: <b>%2</b>"

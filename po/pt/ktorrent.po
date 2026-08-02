@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-20 00:43+0000\n"
+"POT-Creation-Date: 2026-08-02 00:45+0000\n"
 "PO-Revision-Date: 2023-06-15 11:50+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
@@ -4619,12 +4619,7 @@ msgstr "Quando esta torrente foi adicionada"
 msgid "Time since last download or upload activity"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:614
-#, kde-format
-msgid "%1<br>Url: <b>%2</b>"
-msgstr "%1<br>URL: <b>%2</b>"
-
-#: ktorrent/view/viewmodel.cpp:621
+#: ktorrent/view/viewmodel.cpp:616
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>Não foi possível contactar um localizador."
@@ -9091,6 +9086,9 @@ msgstr "Pesquisar de Novo"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "%1<br>Url: <b>%2</b>"
+#~ msgstr "%1<br>URL: <b>%2</b>"
 
 #~ msgid "Open..."
 #~ msgstr "Abrir..."

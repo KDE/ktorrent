@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-20 00:43+0000\n"
+"POT-Creation-Date: 2026-08-02 00:45+0000\n"
 "PO-Revision-Date: 2025-11-11 18:47+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -4496,12 +4496,7 @@ msgstr "Kad šis torents tika pievienots"
 msgid "Time since last download or upload activity"
 msgstr "Laiks kopš pēdējās lejupielādes vai augšupielādes aktivitātes"
 
-#: ktorrent/view/viewmodel.cpp:614
-#, kde-format
-msgid "%1<br>Url: <b>%2</b>"
-msgstr "%1<br>URL: <b>%2</b>"
-
-#: ktorrent/view/viewmodel.cpp:621
+#: ktorrent/view/viewmodel.cpp:616
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>Neizdevās sazināties ar sekotāju."
@@ -8899,6 +8894,9 @@ msgstr "Pārskenēt"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
+
+#~ msgid "%1<br>Url: <b>%2</b>"
+#~ msgstr "%1<br>URL: <b>%2</b>"
 
 #~ msgid "Open..."
 #~ msgstr "Atvērt..."

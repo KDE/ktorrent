@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-20 00:43+0000\n"
+"POT-Creation-Date: 2026-08-02 00:45+0000\n"
 "PO-Revision-Date: 2015-02-22 22:52+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team:  <bs@li.org>\n"
@@ -4549,12 +4549,7 @@ msgstr "Kada je dodat ovaj torent"
 msgid "Time since last download or upload activity"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:614
-#, kde-format
-msgid "%1<br>Url: <b>%2</b>"
-msgstr "<html>%1<br />URL: <b>%2</b></html>"
-
-#: ktorrent/view/viewmodel.cpp:621
+#: ktorrent/view/viewmodel.cpp:616
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>Neuspjelo kontaktiranje tragača."
@@ -9047,6 +9042,9 @@ msgstr "Potraži"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zirokonf"
+
+#~ msgid "%1<br>Url: <b>%2</b>"
+#~ msgstr "<html>%1<br />URL: <b>%2</b></html>"
 
 #~ msgid "Open..."
 #~ msgstr "Otvori..."

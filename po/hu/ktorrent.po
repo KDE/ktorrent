@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KTorrent 3.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-20 00:43+0000\n"
+"POT-Creation-Date: 2026-08-02 00:45+0000\n"
 "PO-Revision-Date: 2026-06-18 21:51+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -4518,12 +4518,7 @@ msgstr "Torrent hozzáadásának időpontja"
 msgid "Time since last download or upload activity"
 msgstr "Az utolsó letöltési vagy feltöltési tevékenység óta eltelt idő"
 
-#: ktorrent/view/viewmodel.cpp:614
-#, kde-format
-msgid "%1<br>Url: <b>%2</b>"
-msgstr "%1<br>Cím: <b>%2</b>"
-
-#: ktorrent/view/viewmodel.cpp:621
+#: ktorrent/view/viewmodel.cpp:616
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>Nem sikerült kapcsolatot teremteni a követővel."
@@ -8930,6 +8925,9 @@ msgstr "Újraolvasás"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
+
+#~ msgid "%1<br>Url: <b>%2</b>"
+#~ msgstr "%1<br>Cím: <b>%2</b>"
 
 #~ msgid "Open..."
 #~ msgstr "Megnyitás…"

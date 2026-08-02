@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-20 00:43+0000\n"
+"POT-Creation-Date: 2026-08-02 00:45+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -4488,12 +4488,7 @@ msgstr "यदा एषः प्रवाहः योजितः"
 msgid "Time since last download or upload activity"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:614
-#, kde-format
-msgid "%1<br>Url: <b>%2</b>"
-msgstr "%1<br> Url: <b>%2</b>"
-
-#: ktorrent/view/viewmodel.cpp:621
+#: ktorrent/view/viewmodel.cpp:616
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>कस्यचित् ट्रैकरस्य सम्पर्कं कर्तुं असमर्थः।"
@@ -8886,6 +8881,9 @@ msgstr "पुनः स्कैन करें"
 #, kde-format
 msgid "ZeroConf"
 msgstr "शून्यसंकल्पना"
+
+#~ msgid "%1<br>Url: <b>%2</b>"
+#~ msgstr "%1<br> Url: <b>%2</b>"
 
 #~ msgid "Open..."
 #~ msgstr "उद्घाटित..."
