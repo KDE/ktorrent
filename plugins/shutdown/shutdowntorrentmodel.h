@@ -66,6 +66,13 @@ private Q_SLOTS:
     void torrentRemoved(bt::TorrentInterface *tc);
 
 private:
+    enum class Column : int {
+        TORRENT,
+        EVENT,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     struct TriggerItem {
         bt::TorrentInterface *tc;
         bool checked;

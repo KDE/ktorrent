@@ -63,7 +63,7 @@ int FeedWidgetModel::rowCount(const QModelIndex &parent) const
 int FeedWidgetModel::columnCount(const QModelIndex &parent) const
 {
     if (!parent.isValid()) {
-        return 3;
+        return NUM_COLUMNS;
     } else {
         return 0;
     }
@@ -71,16 +71,16 @@ int FeedWidgetModel::columnCount(const QModelIndex &parent) const
 
 QVariant FeedWidgetModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole || section < 0 || section >= 3 || orientation != Qt::Horizontal) {
+    if (role != Qt::DisplayRole || section < 0 || section >= NUM_COLUMNS || orientation != Qt::Horizontal) {
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::TITLE:
         return i18n("Title");
-    case 1:
+    case Column::DATE_PUBLISHED:
         return i18n("Date Published");
-    case 2:
+    case Column::TORRENT:
         return i18n("Torrent");
     default:
         return QVariant();
@@ -97,21 +97,22 @@ QVariant FeedWidgetModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     Syndication::ItemPtr item = items.at(index.row());
     if (role == Qt::DisplayRole) {
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::TITLE:
             return item->title();
-        case 1:
+        case Column::DATE_PUBLISHED:
             return QLocale().toString(QDateTime::fromSecsSinceEpoch(item->datePublished()), QLocale::ShortFormat);
-        case 2:
+        case Column::TORRENT:
             return TorrentUrlFromItem(item);
         default:
             return QVariant();
         }
-    } else if (role == Qt::DecorationRole && index.column() == 0 && feed->downloaded(item)) {
+    } else if (role == Qt::DecorationRole && column == Column::TITLE && feed->downloaded(item)) {
         return QIcon::fromTheme(QStringLiteral("go-down"));
-    } else if (role == Qt::DecorationRole && index.column() == 0 && feed->failed(item)) {
+    } else if (role == Qt::DecorationRole && column == Column::TITLE && feed->failed(item)) {
         return QIcon::fromTheme(QStringLiteral("data-error"));
     }
 

@@ -350,7 +350,7 @@ void ViewDelegate::paintProgressBar(QPainter *painter, const QStyleOptionViewIte
 
 void ViewDelegate::normalPaint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (index.column() == ViewModel::PERCENTAGE) {
+    if (ViewModel::Column{index.column()} == ViewModel::Column::PERCENTAGE) {
         paintProgressBar(painter, option, index);
     } else {
         QStyledItemDelegate::paint(painter, option, index);

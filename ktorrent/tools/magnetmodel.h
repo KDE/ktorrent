@@ -53,6 +53,14 @@ private:
     QString status(int row) const;
 
 private:
+    enum class Column : int {
+        MAGNET_LINK,
+        STATUS,
+        PEERS,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     int currentRows;
     QPointer<MagnetManager> mman;
 };

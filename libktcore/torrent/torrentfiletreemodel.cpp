@@ -368,7 +368,7 @@ int TorrentFileTreeModel::rowCount(const QModelIndex &parent) const
 
 int TorrentFileTreeModel::columnCount(const QModelIndex &) const
 {
-    return 2;
+    return NUM_COLUMNS;
 }
 
 QVariant TorrentFileTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -377,10 +377,10 @@ QVariant TorrentFileTreeModel::headerData(int section, Qt::Orientation orientati
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::FILE:
         return i18n("File");
-    case 1:
+    case Column::SIZE:
         return i18n("Size");
     default:
         return QVariant();
@@ -398,11 +398,12 @@ QVariant TorrentFileTreeModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::FILE:
             return n->name;
-        case 1:
+        case Column::SIZE:
             if (tc->getStats().multi_file_torrent) {
                 return BytesToString(n->fileSize(tc));
             } else {
@@ -412,10 +413,10 @@ QVariant TorrentFileTreeModel::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     } else if (role == Qt::UserRole) { // sorting
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::FILE:
             return n->name;
-        case 1:
+        case Column::SIZE:
             if (tc->getStats().multi_file_torrent) {
                 return n->fileSize(tc);
             } else {
@@ -424,7 +425,7 @@ QVariant TorrentFileTreeModel::data(const QModelIndex &index, int role) const
         default:
             return QVariant();
         }
-    } else if (role == Qt::DecorationRole && index.column() == 0) {
+    } else if (role == Qt::DecorationRole && column == Column::FILE) {
 #if 0
         if (!n->file && n->children.count() <= 0) {
             qWarning() << tc;
@@ -445,7 +446,7 @@ QVariant TorrentFileTreeModel::data(const QModelIndex &index, int role) const
         } else {
             return QIcon::fromTheme(QMimeDatabase().mimeTypeForFile(n->file->getPath()).iconName());
         }
-    } else if (role == Qt::CheckStateRole && index.column() == 0) {
+    } else if (role == Qt::CheckStateRole && column == Column::FILE) {
         if (tc->getStats().multi_file_torrent) {
             return n->checkState(tc);
         }

@@ -114,6 +114,16 @@ private:
     void softReset();
 
 private:
+    enum class Column {
+        ORDER,
+        NAME,
+        STATUS,
+        TIME_STALLED,
+        PRIORITY,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     QueueManager *qman;
     QList<Item> queue;
     mutable QList<int> dragged_items;

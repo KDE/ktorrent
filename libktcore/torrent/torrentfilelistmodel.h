@@ -40,6 +40,14 @@ public:
 
 private:
     void invertCheck(const QModelIndex &idx);
+
+protected:
+    enum class Column : int {
+        FILE,
+        SIZE,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
 };
 
 }

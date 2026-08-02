@@ -93,7 +93,7 @@ int WebSeedsModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 4;
+        return NUM_COLUMNS;
     }
 }
 
@@ -103,14 +103,14 @@ QVariant WebSeedsModel::headerData(int section, Qt::Orientation orientation, int
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::URL:
         return i18n("URL");
-    case 1:
+    case Column::SPEED:
         return i18n("Speed");
-    case 2:
+    case Column::DOWNLOADED:
         return i18n("Downloaded");
-    case 3:
+    case Column::STATUS:
         return i18n("Status");
     default:
         return QVariant();
@@ -127,32 +127,37 @@ QVariant WebSeedsModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     if (role == Qt::DisplayRole) {
         const bt::WebSeedInterface *ws = curr_tc.data()->getWebSeed(index.row());
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::URL:
             return ws->getUrl().toDisplayString();
-        case 1:
+        case Column::SPEED:
             return bt::BytesPerSecToString(ws->getDownloadRate());
-        case 2:
+        case Column::DOWNLOADED:
             return bt::BytesToString(ws->getTotalDownloaded());
-        case 3:
+        case Column::STATUS:
             return ws->getStatus();
+        default:
+            break;
         }
-    } else if (role == Qt::CheckStateRole && index.column() == 0) {
+    } else if (role == Qt::CheckStateRole && column == Column::URL) {
         const bt::WebSeedInterface *ws = curr_tc.data()->getWebSeed(index.row());
         return ws->isEnabled() ? Qt::Checked : Qt::Unchecked;
     } else if (role == Qt::UserRole) {
         const bt::WebSeedInterface *ws = curr_tc.data()->getWebSeed(index.row());
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::URL:
             return ws->getUrl().toDisplayString();
-        case 1:
+        case Column::SPEED:
             return ws->getDownloadRate();
-        case 2:
+        case Column::DOWNLOADED:
             return ws->getTotalDownloaded();
-        case 3:
+        case Column::STATUS:
             return ws->getStatus();
+        default:
+            break;
         }
     }
     return QVariant();
@@ -161,7 +166,7 @@ QVariant WebSeedsModel::data(const QModelIndex &index, int role) const
 Qt::ItemFlags WebSeedsModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags flags = QAbstractTableModel::flags(index);
-    if (index.column() == 0) {
+    if (Column{index.column()} == Column::URL) {
         flags |= Qt::ItemIsUserCheckable;
     }
 

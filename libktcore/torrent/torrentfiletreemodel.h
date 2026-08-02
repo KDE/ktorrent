@@ -106,6 +106,13 @@ private:
     void modifyPathOfFiles(Node *n, const QString &path);
 
 protected:
+    enum class Column : int {
+        FILE,
+        SIZE,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     Node *root;
     bool emit_check_state_change;
 };

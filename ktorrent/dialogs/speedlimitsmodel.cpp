@@ -88,7 +88,7 @@ int SpeedLimitsModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 5;
+        return NUM_COLUMNS;
     }
 }
 
@@ -98,16 +98,16 @@ QVariant SpeedLimitsModel::headerData(int section, Qt::Orientation orientation, 
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::TORRENT:
         return i18n("Torrent");
-    case 1:
+    case Column::DOWNLOAD_LIMIT:
         return i18n("Download Limit");
-    case 2:
+    case Column::UPLOAD_LIMIT:
         return i18n("Upload Limit");
-    case 3:
+    case Column::ASSURED_DOWNLOAD_SPEED:
         return i18n("Assured Download Speed");
-    case 4:
+    case Column::ASSURED_UPLOAD_SPEED:
         return i18n("Assured Upload Speed");
     default:
         return QVariant();
@@ -127,28 +127,28 @@ QVariant SpeedLimitsModel::data(const QModelIndex &index, int role) const
 
     const Limits &lim = limits[tc];
 
-    switch (index.column()) {
-    case 0:
+    switch (Column{index.column()}) {
+    case Column::TORRENT:
         return tc->getDisplayName();
-    case 1:
+    case Column::DOWNLOAD_LIMIT:
         if (role == Qt::EditRole || role == Qt::UserRole) {
             return lim.down / 1024;
         } else {
             return lim.down == 0 ? i18n("No limit") : BytesPerSecToString(lim.down);
         }
-    case 2:
+    case Column::UPLOAD_LIMIT:
         if (role == Qt::EditRole || role == Qt::UserRole) {
             return lim.up / 1024;
         } else {
             return lim.up == 0 ? i18n("No limit") : BytesPerSecToString(lim.up);
         }
-    case 3:
+    case Column::ASSURED_DOWNLOAD_SPEED:
         if (role == Qt::EditRole || role == Qt::UserRole) {
             return lim.assured_down / 1024;
         } else {
             return lim.assured_down == 0 ? i18n("No assured speed") : BytesPerSecToString(lim.assured_down);
         }
-    case 4:
+    case Column::ASSURED_UPLOAD_SPEED:
         if (role == Qt::EditRole || role == Qt::UserRole) {
             return lim.assured_up / 1024;
         } else {
@@ -173,18 +173,20 @@ bool SpeedLimitsModel::setData(const QModelIndex &index, const QVariant &value, 
     bool ok = false;
     Limits &lim = limits[tc];
 
-    switch (index.column()) {
-    case 1:
+    switch (Column{index.column()}) {
+    case Column::DOWNLOAD_LIMIT:
         lim.down = value.toInt(&ok) * 1024;
         break;
-    case 2:
+    case Column::UPLOAD_LIMIT:
         lim.up = value.toInt(&ok) * 1024;
         break;
-    case 3:
+    case Column::ASSURED_DOWNLOAD_SPEED:
         lim.assured_down = value.toInt(&ok) * 1024;
         break;
-    case 4:
+    case Column::ASSURED_UPLOAD_SPEED:
         lim.assured_up = value.toInt(&ok) * 1024;
+        break;
+    default:
         break;
     }
 
@@ -205,7 +207,7 @@ Qt::ItemFlags SpeedLimitsModel::flags(const QModelIndex &index) const
         return Qt::ItemIsEnabled;
     }
 
-    if (index.column() > 0) {
+    if (Column{index.column()} > Column::TORRENT) {
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
     } else {
         return QAbstractItemModel::flags(index);

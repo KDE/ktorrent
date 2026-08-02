@@ -136,7 +136,7 @@ Q_SIGNALS:
     void sorted();
 
 public:
-    enum Column {
+    enum class Column : int {
         NAME = 0,
         BYTES_DOWNLOADED,
         SESSION_BYTES_DOWNLOADED,
@@ -158,6 +158,7 @@ public:
         LAST_ACTIVITY,
         _NUMBER_OF_COLUMNS,
     };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
 
     struct Item {
         bt::TorrentInterface *tc;
@@ -187,11 +188,11 @@ public:
 
         Item(bt::TorrentInterface *tc);
 
-        bool update(int row, int sort_column, QModelIndexList &to_update, ViewModel *model);
-        QVariant data(int col) const;
-        QVariant color(int col) const;
+        bool update(int row, Column sort_column, QModelIndexList &to_update, ViewModel *model);
+        QVariant data(Column col) const;
+        QVariant color(Column col) const;
         QVariant statusIcon() const;
-        bool lessThan(int col, const Item *other) const;
+        bool lessThan(Column col, const Item *other) const;
         bool visible(Group *group, const QString &filter_string) const;
     };
 
@@ -199,7 +200,7 @@ private:
     Core *core;
     View *view;
     QList<Item *> torrents;
-    int sort_column;
+    Column sort_column;
     Qt::SortOrder sort_order;
     Group *group;
     int num_visible;

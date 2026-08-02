@@ -56,6 +56,16 @@ Q_SIGNALS:
     void itemsDropped();
 
 private:
+    enum class Column : int {
+        TITLE,
+        ARTIST,
+        ALBUM,
+        LENGTH,
+        YEAR,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     typedef QPair<MediaFileRef, TagLib::FileRef *> PlayListItem;
     mutable QList<PlayListItem> files;
     mutable QList<int> dragged_rows;

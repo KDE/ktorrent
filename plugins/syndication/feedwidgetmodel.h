@@ -44,6 +44,14 @@ public:
     void updated();
 
 private:
+    enum class Column : int {
+        TITLE,
+        DATE_PUBLISHED,
+        TORRENT,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     Feed *feed;
     QList<Syndication::ItemPtr> items;
 };

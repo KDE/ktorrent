@@ -70,24 +70,25 @@ QVariant MagnetModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     const MagnetDownloader *md = mman->getMagnetDownloader(index.row());
     if (role == Qt::DisplayRole) {
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::MAGNET_LINK:
             return displayName(md);
-        case 1:
+        case Column::STATUS:
             return status(index.row());
-        case 2:
+        case Column::PEERS:
             return md->numPeers();
         default:
             return QVariant();
         }
     } else if (role == Qt::DecorationRole) {
-        if (index.column() == 0) {
+        if (column == Column::MAGNET_LINK) {
             return QIcon::fromTheme(QStringLiteral("kt-magnet"));
         }
     } else if (role == Qt::ToolTipRole) {
-        if (index.column() == 0) {
+        if (column == Column::MAGNET_LINK) {
             return md->magnetLink().toString();
         }
     }
@@ -102,12 +103,12 @@ QVariant MagnetModel::headerData(int section, Qt::Orientation orientation, int r
     }
 
     if (role == Qt::DisplayRole) {
-        switch (section) {
-        case 0:
+        switch (Column{section}) {
+        case Column::MAGNET_LINK:
             return i18n("Magnet Link");
-        case 1:
+        case Column::STATUS:
             return i18n("Status");
-        case 2:
+        case Column::PEERS:
             return i18n("Peers");
         default:
             return QVariant();
@@ -122,7 +123,7 @@ int MagnetModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 3;
+        return NUM_COLUMNS;
     }
 }
 

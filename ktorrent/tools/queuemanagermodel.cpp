@@ -166,7 +166,7 @@ int QueueManagerModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 4;
+        return NUM_COLUMNS;
     }
 }
 
@@ -176,16 +176,16 @@ QVariant QueueManagerModel::headerData(int section, Qt::Orientation orientation,
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::ORDER:
         return i18n("Order");
-    case 1:
+    case Column::NAME:
         return i18n("Name");
-    case 2:
+    case Column::STATUS:
         return i18n("Status");
-    case 3:
+    case Column::TIME_STALLED:
         return i18n("Time Stalled");
-    case 4:
+    case Column::PRIORITY:
         return i18n("Priority");
     default:
         return QVariant();
@@ -198,9 +198,10 @@ QVariant QueueManagerModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     const bt::TorrentInterface *tc = queue.at(index.row()).tc;
     if (role == Qt::ForegroundRole) {
-        if (index.column() == 2) {
+        if (column == Column::STATUS) {
             if (tc->getStats().running) {
                 return QColor(40, 205, 40); // green
             } else if (tc->getStats().status == bt::QUEUED) {
@@ -211,12 +212,12 @@ QVariant QueueManagerModel::data(const QModelIndex &index, int role) const
         }
         return QVariant();
     } else if (role == Qt::DisplayRole) {
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::ORDER:
             return index.row() + 1;
-        case 1:
+        case Column::NAME:
             return tc->getDisplayName();
-        case 2:
+        case Column::STATUS:
             if (tc->getStats().running) {
                 return i18n("Running");
             } else if (tc->getStats().status == bt::QUEUED) {
@@ -225,7 +226,7 @@ QVariant QueueManagerModel::data(const QModelIndex &index, int role) const
                 return i18n("Not queued");
             }
             break;
-        case 3: {
+        case Column::TIME_STALLED: {
             if (!tc->getStats().running) {
                 return QVariant();
             }
@@ -237,14 +238,14 @@ QVariant QueueManagerModel::data(const QModelIndex &index, int role) const
                 return QVariant();
             }
         } break;
-        case 4:
+        case Column::PRIORITY:
             return tc->getPriority();
         default:
             return QVariant();
         }
-    } else if (role == Qt::ToolTipRole && index.column() == 0) {
+    } else if (role == Qt::ToolTipRole && column == Column::ORDER) {
         return i18n("Order of a torrent in the queue.\nUse drag and drop or the move up and down buttons on the right to change the order.");
-    } else if (role == Qt::DecorationRole && index.column() == 1) {
+    } else if (role == Qt::DecorationRole && column == Column::STATUS) {
         if (!tc->getStats().completed) {
             return QIcon::fromTheme(QStringLiteral("arrow-down"));
         } else {

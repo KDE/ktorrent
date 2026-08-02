@@ -42,6 +42,14 @@ private:
     void setPriority(Node *n, bt::Priority newpriority, bool selected_node);
 
 private:
+    enum class Column : int {
+        PRIORITY = TorrentFileTreeModel::NUM_COLUMNS,
+        PREVIEW,
+        PERCENT_COMPLETE,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     bool preview;
     bool mmfile;
     double percentage;

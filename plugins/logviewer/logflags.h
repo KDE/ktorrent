@@ -54,6 +54,13 @@ private:
     QString flagToString(bt::Uint32 flag) const;
 
 private:
+    enum class Column : int {
+        CATEGORY,
+        LEVEL,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     struct LogFlag {
         QString name;
         bt::Uint32 id;

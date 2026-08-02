@@ -39,6 +39,14 @@ private:
     QVariant sortData(const QModelIndex &index) const;
 
 private:
+    enum class Column : int {
+        PRIORITY = TorrentFileListModel::NUM_COLUMNS,
+        PREVIEW,
+        PERCENT_COMPLETE,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     bool preview;
     bool mmfile;
     double percentage;

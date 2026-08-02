@@ -33,35 +33,36 @@ bool ChunkDownloadModel::Item::changed() const
     return ret;
 }
 
-QVariant ChunkDownloadModel::Item::data(int col) const
+QVariant ChunkDownloadModel::Item::data(Column col) const
 {
     switch (col) {
-    case 0:
+    case Column::CHUNK:
         return stats.chunk_index;
-    case 1:
+    case Column::PROGRESS:
         return QStringLiteral("%1 / %2").arg(stats.pieces_downloaded).arg(stats.total_pieces);
-    case 2:
+    case Column::PEER:
         return stats.current_peer_id;
-    case 3:
+    case Column::DOWNLOAD_SPEED:
         return BytesPerSecToString(stats.download_speed);
-    case 4:
+    case Column::FILES:
         return files;
+    default:
+        return QVariant();
     }
-    return QVariant();
 }
 
-QVariant ChunkDownloadModel::Item::sortData(int col) const
+QVariant ChunkDownloadModel::Item::sortData(Column col) const
 {
     switch (col) {
-    case 0:
+    case Column::CHUNK:
         return stats.chunk_index;
-    case 1:
+    case Column::PROGRESS:
         return stats.pieces_downloaded;
-    case 2:
+    case Column::PEER:
         return stats.current_peer_id;
-    case 3:
+    case Column::DOWNLOAD_SPEED:
         return stats.download_speed;
-    case 4:
+    case Column::FILES:
         return files;
     default:
         return QVariant();
@@ -181,7 +182,7 @@ int ChunkDownloadModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 5;
+        return NUM_COLUMNS;
     }
 }
 
@@ -191,32 +192,33 @@ QVariant ChunkDownloadModel::headerData(int section, Qt::Orientation orientation
         return QVariant();
     }
 
+    const Column column{section};
     if (role == Qt::DisplayRole) {
-        switch (section) {
-        case 0:
+        switch (column) {
+        case Column::CHUNK:
             return i18n("Chunk");
-        case 1:
+        case Column::PROGRESS:
             return i18n("Progress");
-        case 2:
+        case Column::PEER:
             return i18n("Peer");
-        case 3:
+        case Column::DOWNLOAD_SPEED:
             return i18n("Down Speed");
-        case 4:
+        case Column::FILES:
             return i18n("Files");
         default:
             return QVariant();
         }
     } else if (role == Qt::ToolTipRole) {
-        switch (section) {
-        case 0:
+        switch (column) {
+        case Column::CHUNK:
             return i18n("Number of the chunk");
-        case 1:
+        case Column::PROGRESS:
             return i18n("Download progress of the chunk");
-        case 2:
+        case Column::PEER:
             return i18n("Which peer we are downloading it from");
-        case 3:
+        case Column::DOWNLOAD_SPEED:
             return i18n("Download speed of the chunk");
-        case 4:
+        case Column::FILES:
             return i18n("Which files the chunk is located in");
         default:
             return QVariant();
@@ -241,10 +243,11 @@ QVariant ChunkDownloadModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     if (role == Qt::DisplayRole) {
-        return items[index.row()]->data(index.column());
+        return items[index.row()]->data(column);
     } else if (role == Qt::UserRole) {
-        return items[index.row()]->sortData(index.column());
+        return items[index.row()]->sortData(column);
     }
 
     return QVariant();

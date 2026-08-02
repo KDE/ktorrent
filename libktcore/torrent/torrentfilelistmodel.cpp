@@ -49,7 +49,7 @@ int TorrentFileListModel::rowCount(const QModelIndex &parent) const
 int TorrentFileListModel::columnCount(const QModelIndex &parent) const
 {
     if (!parent.isValid()) {
-        return 2;
+        return NUM_COLUMNS;
     } else {
         return 0;
     }
@@ -61,10 +61,10 @@ QVariant TorrentFileListModel::headerData(int section, Qt::Orientation orientati
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::FILE:
         return i18n("File");
-    case 1:
+    case Column::SIZE:
         return i18n("Size");
     default:
         return QVariant();
@@ -84,16 +84,17 @@ QVariant TorrentFileListModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     const TorrentStats &s = tc->getStats();
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::FILE:
             if (multi) {
                 return tc->getTorrentFile(r).getUserModifiedPath();
             } else {
                 return tc->getUserModifiedFileName();
             }
-        case 1:
+        case Column::SIZE:
             if (multi) {
                 return BytesToString(tc->getTorrentFile(r).getSize());
             } else {
@@ -103,14 +104,14 @@ QVariant TorrentFileListModel::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     } else if (role == Qt::UserRole) { // sorting
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::FILE:
             if (multi) {
                 return tc->getTorrentFile(r).getUserModifiedPath();
             } else {
                 return tc->getUserModifiedFileName();
             }
-        case 1:
+        case Column::SIZE:
             if (multi) {
                 return tc->getTorrentFile(r).getSize();
             } else {
@@ -119,10 +120,10 @@ QVariant TorrentFileListModel::data(const QModelIndex &index, int role) const
         default:
             return QVariant();
         }
-    } else if (role == Qt::DecorationRole && index.column() == 0) {
+    } else if (role == Qt::DecorationRole && column == Column::FILE) {
         // if this is an empty folder then we are in the single file case
         return QIcon::fromTheme(QMimeDatabase().mimeTypeForFile(multi ? tc->getTorrentFile(r).getPath() : s.torrent_name).iconName());
-    } else if (role == Qt::CheckStateRole && index.column() == 0 && multi) {
+    } else if (role == Qt::CheckStateRole && column == Column::FILE && multi) {
         const TorrentFileInterface &file = tc->getTorrentFile(r);
         return file.doNotDownload() || file.getPriority() == ONLY_SEED_PRIORITY ? Qt::Unchecked : Qt::Checked;
     }

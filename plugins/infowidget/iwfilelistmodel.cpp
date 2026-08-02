@@ -46,7 +46,7 @@ void IWFileListModel::changeTorrent(bt::TorrentInterface *tc)
 int IWFileListModel::columnCount(const QModelIndex &parent) const
 {
     if (!parent.isValid()) {
-        return 5;
+        return NUM_COLUMNS;
     } else {
         return 0;
     }
@@ -58,17 +58,17 @@ QVariant IWFileListModel::headerData(int section, Qt::Orientation orientation, i
         return QVariant();
     }
 
-    if (section < 2) {
+    if (section < TorrentFileListModel::NUM_COLUMNS) {
         return TorrentFileListModel::headerData(section, orientation, role);
     }
 
-    switch (section) {
-    case 2:
+    switch (Column{section}) {
+    case Column::PRIORITY:
         return i18n("Priority");
-    case 3:
+    case Column::PREVIEW:
         return i18nc("@title:column", "Preview");
     // xgettext: no-c-format
-    case 4:
+    case Column::PERCENT_COMPLETE:
         return i18nc("Percent of File Downloaded", "% Complete");
     default:
         return QVariant();
@@ -95,7 +95,7 @@ static QString PriorityString(const bt::TorrentFileInterface *file)
 
 QVariant IWFileListModel::data(const QModelIndex &index, int role) const
 {
-    if (index.column() < 2 && role != Qt::ForegroundRole) {
+    if (index.column() < TorrentFileListModel::NUM_COLUMNS && role != Qt::ForegroundRole) {
         return TorrentFileListModel::data(index, role);
     }
 
@@ -103,7 +103,7 @@ QVariant IWFileListModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    if (role == Qt::ForegroundRole && index.column() == 2 && tc->getStats().multi_file_torrent) {
+    if (role == Qt::ForegroundRole && Column{index.column()} == Column::PRIORITY && tc->getStats().multi_file_torrent) {
         const bt::TorrentFileInterface *file = &tc->getTorrentFile(index.row());
         switch (file->getPriority()) {
         case FIRST_PREVIEW_PRIORITY:
@@ -133,12 +133,14 @@ QVariant IWFileListModel::data(const QModelIndex &index, int role) const
 
 QVariant IWFileListModel::displayData(const QModelIndex &index) const
 {
+    const Column column{index.column()};
+
     if (tc->getStats().multi_file_torrent) {
         const bt::TorrentFileInterface *file = &tc->getTorrentFile(index.row());
-        switch (index.column()) {
-        case 2:
+        switch (column) {
+        case Column::PRIORITY:
             return PriorityString(file);
-        case 3:
+        case Column::PREVIEW:
             if (file->isMultimedia()) {
                 if (file->isPreviewAvailable()) {
                     return i18nc("Preview available", "Available");
@@ -148,7 +150,7 @@ QVariant IWFileListModel::displayData(const QModelIndex &index) const
             } else {
                 return i18nc("No preview available", "No");
             }
-        case 4: {
+        case Column::PERCENT_COMPLETE: {
             float percent = file->getDownloadPercentage();
             return ki18n("%1 %").subs(percent, 0, 'f', 2).toString();
         }
@@ -156,10 +158,10 @@ QVariant IWFileListModel::displayData(const QModelIndex &index) const
             return QVariant();
         }
     } else {
-        switch (index.column()) {
-        case 2:
+        switch (column) {
+        case Column::PRIORITY:
             return QVariant();
-        case 3:
+        case Column::PREVIEW:
             if (mmfile) {
                 if (tc->readyForPreview()) {
                     return i18nc("Preview available", "Available");
@@ -169,7 +171,7 @@ QVariant IWFileListModel::displayData(const QModelIndex &index) const
             } else {
                 return i18nc("No preview available", "No");
             }
-        case 4: {
+        case Column::PERCENT_COMPLETE: {
             double percent = bt::Percentage(tc->getStats());
             return ki18n("%1 %").subs(percent, 0, 'f', 2).toString();
         }
@@ -182,12 +184,14 @@ QVariant IWFileListModel::displayData(const QModelIndex &index) const
 
 QVariant IWFileListModel::sortData(const QModelIndex &index) const
 {
+    const Column column{index.column()};
+
     if (tc->getStats().multi_file_torrent) {
         const bt::TorrentFileInterface *file = &tc->getTorrentFile(index.row());
-        switch (index.column()) {
-        case 2:
+        switch (column) {
+        case Column::PRIORITY:
             return (int)file->getPriority();
-        case 3:
+        case Column::PREVIEW:
             if (file->isMultimedia()) {
                 if (file->isPreviewAvailable()) {
                     return 3;
@@ -197,14 +201,16 @@ QVariant IWFileListModel::sortData(const QModelIndex &index) const
             } else {
                 return 1;
             }
-        case 4:
+        case Column::PERCENT_COMPLETE:
             return file->getDownloadPercentage();
+        default:
+            break;
         }
     } else {
-        switch (index.column()) {
-        case 2:
+        switch (column) {
+        case Column::PRIORITY:
             return QVariant();
-        case 3:
+        case Column::PREVIEW:
             if (mmfile) {
                 if (tc->readyForPreview()) {
                     return 3;
@@ -214,8 +220,10 @@ QVariant IWFileListModel::sortData(const QModelIndex &index) const
             } else {
                 return 1;
             }
-        case 4:
+        case Column::PERCENT_COMPLETE:
             return bt::Percentage(tc->getStats());
+        default:
+            break;
         }
     }
     return QVariant();

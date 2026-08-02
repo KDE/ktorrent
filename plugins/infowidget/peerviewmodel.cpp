@@ -73,52 +73,52 @@ bool PeerViewModel::Item::changed() const
     return ret;
 }
 
-QVariant PeerViewModel::Item::data(int col) const
+QVariant PeerViewModel::Item::data(Column col) const
 {
     switch (col) {
-    case 0:
+    case Column::ADDRESS:
         if (stats.transport_protocol == bt::UTP) {
             return QString(stats.address() + i18n(" (µTP)"));
         } else {
             return stats.address();
         }
-    case 1:
+    case Column::COUNTRY:
         return country;
-    case 2:
+    case Column::CLIENT:
         return stats.client;
-    case 3:
+    case Column::DOWNLOAD_SPEED:
         if (stats.download_rate >= 103) {
             return BytesPerSecToString(stats.download_rate);
         } else {
             return QVariant();
         }
-    case 4:
+    case Column::UPLOAD_SPEED:
         if (stats.upload_rate >= 103) {
             return BytesPerSecToString(stats.upload_rate);
         } else {
             return QVariant();
         }
-    case 5:
+    case Column::CHOKED:
         return stats.choked ? i18nc("Choked", "Yes") : i18nc("Not choked", "No");
-    case 6:
+    case Column::SNUBBED:
         return stats.snubbed ? i18nc("Snubbed", "Yes") : i18nc("Not snubbed", "No");
-    case 7:
+    case Column::AVAILABILITY:
         return i18nc("File percentage stat", "%1%", (int)stats.perc_of_file);
-    case 8:
+    case Column::DHT:
         return QVariant();
-    case 9:
+    case Column::SCORE:
         return QLocale().toString(stats.aca_score, 'f', 2);
-    case 10:
+    case Column::UPLOAD_SLOT:
         return QVariant();
-    case 11:
+    case Column::REQUESTS:
         return QString(QString::number(stats.num_down_requests) + QLatin1String(" / ") + QString::number(stats.num_up_requests));
-    case 12:
+    case Column::DOWNLOADED:
         return BytesToString(stats.bytes_downloaded);
-    case 13:
+    case Column::UPLOADED:
         return BytesToString(stats.bytes_uploaded);
-    case 14:
+    case Column::INTERESTED:
         return stats.interested ? i18nc("Interested", "Yes") : i18nc("Not Interested", "No");
-    case 15:
+    case Column::INTERESTING:
         return stats.am_interested ? i18nc("Interesting", "Yes") : i18nc("Not Interesting", "No");
     default:
         return QVariant();
@@ -126,62 +126,63 @@ QVariant PeerViewModel::Item::data(int col) const
     return QVariant();
 }
 
-QVariant PeerViewModel::Item::sortData(int col) const
+QVariant PeerViewModel::Item::sortData(Column col) const
 {
     switch (col) {
-    case 0:
+    case Column::ADDRESS:
         return stats.address();
-    case 1:
+    case Column::COUNTRY:
         return country;
-    case 2:
+    case Column::CLIENT:
         return stats.client;
-    case 3:
+    case Column::DOWNLOAD_SPEED:
         return stats.download_rate;
-    case 4:
+    case Column::UPLOAD_SPEED:
         return stats.upload_rate;
-    case 5:
+    case Column::CHOKED:
         return stats.choked;
-    case 6:
+    case Column::SNUBBED:
         return stats.snubbed;
-    case 7:
+    case Column::AVAILABILITY:
         return stats.perc_of_file;
-    case 8:
+    case Column::DHT:
         return stats.dht_support;
-    case 9:
+    case Column::SCORE:
         return stats.aca_score;
-    case 10:
+    case Column::UPLOAD_SLOT:
         return stats.has_upload_slot;
-    case 11:
+    case Column::REQUESTS:
         return stats.num_down_requests + stats.num_up_requests;
-    case 12:
+    case Column::DOWNLOADED:
         return stats.bytes_downloaded;
-    case 13:
+    case Column::UPLOADED:
         return stats.bytes_uploaded;
-    case 14:
+    case Column::INTERESTED:
         return stats.interested;
-    case 15:
+    case Column::INTERESTING:
         return stats.am_interested;
     default:
         return QVariant();
     }
 }
 
-QVariant PeerViewModel::Item::decoration(int col) const
+QVariant PeerViewModel::Item::decoration(Column col) const
 {
     switch (col) {
-    case 0:
+    case Column::ADDRESS:
         if (stats.encrypted) {
             return QIcon::fromTheme(QStringLiteral("kt-encrypted"));
         }
         break;
-    case 1:
+    case Column::COUNTRY:
         return flag;
-    case 8:
+    case Column::DHT:
         return stats.dht_support ? yes : no;
-    case 10:
+    case Column::UPLOAD_SLOT:
         return stats.has_upload_slot ? yes : QIcon();
+    default:
+        break;
     }
-
     return QVariant();
 }
 
@@ -281,7 +282,7 @@ int PeerViewModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 16;
+        return NUM_COLUMNS;
     }
 }
 
@@ -291,76 +292,77 @@ QVariant PeerViewModel::headerData(int section, Qt::Orientation orientation, int
         return QVariant();
     }
 
+    const Column column{section};
     if (role == Qt::DisplayRole) {
-        switch (section) {
-        case 0:
+        switch (column) {
+        case Column::ADDRESS:
             return i18n("Address");
-        case 1:
+        case Column::COUNTRY:
             return i18n("Country");
-        case 2:
+        case Column::CLIENT:
             return i18n("Client");
-        case 3:
+        case Column::DOWNLOAD_SPEED:
             return i18n("Down Speed");
-        case 4:
+        case Column::UPLOAD_SPEED:
             return i18n("Up Speed");
-        case 5:
+        case Column::CHOKED:
             return i18n("Choked");
-        case 6:
+        case Column::SNUBBED:
             return i18n("Snubbed");
-        case 7:
+        case Column::AVAILABILITY:
             return i18n("Availability");
-        case 8:
+        case Column::DHT:
             return i18n("DHT");
-        case 9:
+        case Column::SCORE:
             return i18n("Score");
-        case 10:
+        case Column::UPLOAD_SLOT:
             return i18n("Upload Slot");
-        case 11:
+        case Column::REQUESTS:
             return i18n("Requests");
-        case 12:
+        case Column::DOWNLOADED:
             return i18n("Downloaded");
-        case 13:
+        case Column::UPLOADED:
             return i18n("Uploaded");
-        case 14:
+        case Column::INTERESTED:
             return i18n("Interested");
-        case 15:
+        case Column::INTERESTING:
             return i18n("Interesting");
         default:
             return QVariant();
         }
     } else if (role == Qt::ToolTipRole) {
-        switch (section) {
-        case 0:
+        switch (column) {
+        case Column::ADDRESS:
             return i18n("IP address of the peer");
-        case 1:
+        case Column::COUNTRY:
             return i18n("Country the peer is in");
-        case 2:
+        case Column::CLIENT:
             return i18n("Which client the peer is using");
-        case 3:
+        case Column::DOWNLOAD_SPEED:
             return i18n("Download speed");
-        case 4:
+        case Column::UPLOAD_SPEED:
             return i18n("Upload speed");
-        case 5:
+        case Column::CHOKED:
             return i18n("Whether or not the peer has choked us - when we are choked the peer will not send us any data");
-        case 6:
+        case Column::SNUBBED:
             return i18n("Snubbed means the peer has not sent us any data in the last 2 minutes");
-        case 7:
+        case Column::AVAILABILITY:
             return i18n("How much data the peer has of the torrent");
-        case 8:
+        case Column::DHT:
             return i18n("Whether or not the peer has DHT enabled");
-        case 9:
+        case Column::SCORE:
             return i18n("The score of the peer, KTorrent uses this to determine who to upload to");
-        case 10:
+        case Column::UPLOAD_SLOT:
             return i18n("Only peers which have an upload slot will get data from us");
-        case 11:
+        case Column::REQUESTS:
             return i18n("The number of download and upload requests");
-        case 12:
+        case Column::DOWNLOADED:
             return i18n("How much data we have downloaded from this peer");
-        case 13:
+        case Column::UPLOADED:
             return i18n("How much data we have uploaded to this peer");
-        case 14:
+        case Column::INTERESTED:
             return i18n("Whether the peer is interested in downloading data from us");
-        case 15:
+        case Column::INTERESTING:
             return i18n("Whether we are interested in downloading from this peer");
         default:
             return QVariant();
@@ -376,13 +378,14 @@ QVariant PeerViewModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     Item *item = items[index.row()];
     if (role == Qt::DisplayRole) {
-        return item->data(index.column());
+        return item->data(column);
     } else if (role == Qt::UserRole) {
-        return item->sortData(index.column());
+        return item->sortData(column);
     } else if (role == Qt::DecorationRole) {
-        return item->decoration(index.column());
+        return item->decoration(column);
     }
 
     return QVariant();

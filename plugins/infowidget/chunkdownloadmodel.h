@@ -51,7 +51,17 @@ public:
     bool insertRows(int row, int count, const QModelIndex &parent) override;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
 
-public:
+private:
+    enum class Column : int {
+        CHUNK,
+        PROGRESS,
+        PEER,
+        DOWNLOAD_SPEED,
+        FILES,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     struct Item {
         mutable bt::ChunkDownloadInterface::Stats stats;
         bt::ChunkDownloadInterface *cd;
@@ -60,11 +70,10 @@ public:
         Item(bt::ChunkDownloadInterface *cd, const QString &files);
 
         bool changed() const;
-        QVariant data(int col) const;
-        QVariant sortData(int col) const;
+        QVariant data(Column col) const;
+        QVariant sortData(Column col) const;
     };
 
-private:
     QList<Item *> items;
     bt::TorrentInterface::WPtr tc;
 };

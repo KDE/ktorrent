@@ -11,6 +11,8 @@
 
 #include <KLocalizedString>
 
+#include "speedlimitsmodel.h"
+
 namespace kt
 {
 SpinBoxDelegate::SpinBoxDelegate(QObject *parent)
@@ -26,7 +28,7 @@ QWidget *SpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewIt
 {
     QSpinBox *editor = new QSpinBox(parent);
     editor->setSuffix(i18n(" KiB/s"));
-    if (index.column() < 3) {
+    if (SpeedLimitsModel::Column{index.column()} < SpeedLimitsModel::Column::ASSURED_DOWNLOAD_SPEED) {
         editor->setSpecialValueText(i18n("No limit"));
     } else {
         editor->setSpecialValueText(i18n("No assured speed"));

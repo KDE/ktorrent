@@ -756,7 +756,7 @@ bool View::edit(const QModelIndex &index, EditTrigger trigger, QEvent *event)
 
 void View::onDoubleClicked(const QModelIndex &index)
 {
-    if (index.column() == 0) { // double clicking on column 0 will change the name of a torrent
+    if (ViewModel::Column{index.column()} == ViewModel::Column::NAME) { // double clicking the name will change the name of a torrent
         return;
     }
 

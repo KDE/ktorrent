@@ -55,6 +55,27 @@ public:
     bt::PeerInterface *indexToPeer(const QModelIndex &idx);
 
 public:
+    enum class Column : int {
+        ADDRESS,
+        COUNTRY,
+        CLIENT,
+        DOWNLOAD_SPEED,
+        UPLOAD_SPEED,
+        CHOKED,
+        SNUBBED,
+        AVAILABILITY,
+        DHT,
+        SCORE,
+        UPLOAD_SLOT,
+        REQUESTS,
+        DOWNLOADED,
+        UPLOADED,
+        INTERESTED,
+        INTERESTING,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     struct Item {
         bt::PeerInterface *peer;
         mutable bt::PeerInterface::Stats stats;
@@ -69,9 +90,9 @@ public:
         );
 
         bool changed() const;
-        QVariant data(int col) const;
-        QVariant decoration(int col) const;
-        QVariant sortData(int col) const;
+        QVariant data(Column col) const;
+        QVariant decoration(Column col) const;
+        QVariant sortData(Column col) const;
     };
 
 private:

@@ -85,16 +85,16 @@ QVariant PlayList::headerData(int section, Qt::Orientation orientation, int role
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::TITLE:
         return i18n("Title");
-    case 1:
+    case Column::ARTIST:
         return i18n("Artist");
-    case 2:
+    case Column::ALBUM:
         return i18n("Album");
-    case 3:
+    case Column::LENGTH:
         return i18n("Length");
-    case 4:
+    case Column::YEAR:
         return i18n("Year");
     default:
         return QVariant();
@@ -116,8 +116,9 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
         ref = item.second;
     }
 
+    const Column column{index.column()};
     if (!ref || ref->isNull()) {
-        if (index.column() == 0) {
+        if (column == Column::TITLE) {
             return QFileInfo(file.path()).fileName();
         } else {
             return QVariant();
@@ -126,7 +127,7 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
 
     TagLib::Tag *tag = ref->tag();
     if (!tag) {
-        if (index.column() == 0) {
+        if (column == Column::TITLE) {
             return QFileInfo(file.path()).fileName();
         } else {
             return QVariant();
@@ -134,16 +135,16 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
     }
 
     if (role == Qt::DisplayRole || role == Qt::UserRole) {
-        switch (index.column()) {
-        case 0: {
+        switch (column) {
+        case Column::TITLE: {
             QString title = TStringToQString(tag->title());
             return title.isEmpty() ? QFileInfo(file.path()).fileName() : title;
         }
-        case 1:
+        case Column::ARTIST:
             return TStringToQString(tag->artist());
-        case 2:
+        case Column::ALBUM:
             return TStringToQString(tag->album());
-        case 3:
+        case Column::LENGTH:
             if (role == Qt::UserRole) {
                 return ref->audioProperties()->lengthInSeconds();
             } else {
@@ -151,14 +152,14 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
                 t = t.addSecs(ref->audioProperties()->lengthInSeconds());
                 return t.toString(QStringLiteral("m:ss"));
             }
-        case 4:
+        case Column::YEAR:
             return tag->year() == 0 ? QVariant() : tag->year();
         default:
             return QVariant();
         }
     }
 
-    if (role == Qt::DecorationRole && index.column() == 0) {
+    if (role == Qt::DecorationRole && column == Column::TITLE) {
         if (file == player->getCurrentSource()) {
             return QIcon::fromTheme(QStringLiteral("arrow-right"));
         }
@@ -172,7 +173,7 @@ int PlayList::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 5;
+        return NUM_COLUMNS;
     }
 }
 
@@ -225,7 +226,7 @@ QMimeData *PlayList::mimeData(const QModelIndexList &indexes) const
     QMimeData *data = new QMimeData();
     QList<QUrl> urls;
     for (const QModelIndex &index : indexes) {
-        if (index.isValid() && index.column() == 0) {
+        if (index.isValid() && Column{index.column()} == Column::TITLE) {
             urls << QUrl::fromLocalFile(files.at(index.row()).first.path());
             dragged_rows.append(index.row());
         }

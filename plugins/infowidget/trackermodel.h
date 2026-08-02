@@ -53,6 +53,17 @@ public:
     void addTrackers(QList<bt::TrackerInterface *> &tracker_list);
 
 private:
+    enum class Column : int {
+        URL,
+        STATUS,
+        SEEDERS,
+        LEECHERS,
+        TIMES_DOWNLOADED,
+        NEXT_UPDATE,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     struct Item {
         bt::TrackerInterface *trk;
         bt::TrackerStatus status;
@@ -63,8 +74,8 @@ private:
 
         Item(bt::TrackerInterface *tracker);
         bool update();
-        QVariant displayData(int column) const;
-        QVariant sortData(int column) const;
+        QVariant displayData(Column column) const;
+        QVariant sortData(Column column) const;
     };
 
     bt::TorrentInterface *tc;

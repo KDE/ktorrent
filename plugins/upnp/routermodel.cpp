@@ -43,7 +43,7 @@ int RouterModel::rowCount(const QModelIndex &parent) const
 int RouterModel::columnCount(const QModelIndex &parent) const
 {
     if (!parent.isValid()) {
-        return 2;
+        return NUM_COLUMNS;
     } else {
         return 0;
     }
@@ -55,10 +55,10 @@ QVariant RouterModel::headerData(int section, Qt::Orientation orientation, int r
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::DEVICE:
         return i18n("Device");
-    case 1:
+    case Column::PORTS_FORWARDED:
         return i18n("Ports Forwarded");
     default:
         return QVariant();
@@ -80,26 +80,29 @@ QVariant RouterModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     const bt::UPnPRouter *r = routers.at(index.row());
     if (role == Qt::DisplayRole) {
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::DEVICE:
             return r->getDescription().friendlyName;
-        case 1:
+        case Column::PORTS_FORWARDED:
             if (!r->getError().isEmpty()) {
                 return r->getError();
             } else {
                 return ports(r);
             }
+        default:
+            break;
         }
     } else if (role == Qt::DecorationRole) {
-        if (index.column() == 0) {
+        if (column == Column::DEVICE) {
             return QIcon::fromTheme(QStringLiteral("modem"));
-        } else if (index.column() == 1 && !r->getError().isEmpty()) {
+        } else if (column == Column::PORTS_FORWARDED && !r->getError().isEmpty()) {
             return QIcon::fromTheme(QStringLiteral("dialog-error"));
         }
     } else if (role == Qt::ToolTipRole) {
-        if (index.column() == 0) {
+        if (column == Column::DEVICE) {
             const bt::UPnPDeviceDescription &d = r->getDescription();
             return i18n(
                 "Model Name: <b>%1</b><br/>"
@@ -108,7 +111,7 @@ QVariant RouterModel::data(const QModelIndex &index, int role) const
                 d.modelName,
                 d.manufacturer,
                 d.modelDescription);
-        } else if (index.column() == 1 && !r->getError().isEmpty()) {
+        } else if (column == Column::PORTS_FORWARDED && !r->getError().isEmpty()) {
             return r->getError();
         }
     }

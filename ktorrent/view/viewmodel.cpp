@@ -65,95 +65,95 @@ ViewModel::Item::Item(bt::TorrentInterface *tc)
     last_activity = std::max(s.last_download_activity_time, s.last_upload_activity_time);
 }
 
-bool ViewModel::Item::update(int row, int sort_column, QModelIndexList &to_update, kt::ViewModel *model)
+bool ViewModel::Item::update(int row, Column sort_column, QModelIndexList &to_update, kt::ViewModel *model)
 {
     bool ret = false;
     const TorrentStats &s = tc->getStats();
 
-    const auto update_if_differs = [&](auto &target, const auto &source, int column) {
+    const auto update_if_differs = [&](auto &target, const auto &source, Column column) {
         if (target != source) {
-            to_update.append(model->index(row, column));
+            to_update.append(model->index(row, static_cast<int>(column)));
             target = source;
             ret |= (sort_column == column);
         }
     };
 
-    const auto update_if_differs_float = [&](auto &target, const auto &source, int column) {
+    const auto update_if_differs_float = [&](auto &target, const auto &source, Column column) {
         if (fabs(target - source) > 0.001) {
-            to_update.append(model->index(row, column));
+            to_update.append(model->index(row, static_cast<int>(column)));
             target = source;
             ret |= (sort_column == column);
         }
     };
 
-    update_if_differs(status, s.status, NAME);
-    update_if_differs(bytes_downloaded, s.bytes_downloaded, BYTES_DOWNLOADED);
-    update_if_differs(session_bytes_downloaded, s.session_bytes_downloaded, SESSION_BYTES_DOWNLOADED);
-    update_if_differs(total_bytes_to_download, s.total_bytes_to_download, TOTAL_BYTES_TO_DOWNLOAD);
-    update_if_differs(bytes_uploaded, s.bytes_uploaded, BYTES_UPLOADED);
-    update_if_differs(session_bytes_uploaded, s.session_bytes_uploaded, SESSION_BYTES_UPLOADED);
-    update_if_differs(bytes_left, s.bytes_left, BYTES_LEFT);
-    update_if_differs(download_rate, s.download_rate, DOWNLOAD_RATE);
-    update_if_differs(upload_rate, s.upload_rate, UPLOAD_RATE);
-    update_if_differs(eta, tc->getETA(), ETA);
-    update_if_differs(seeders_connected_to, s.seeders_connected_to, SEEDERS);
-    update_if_differs(seeders_total, s.seeders_total, SEEDERS);
-    update_if_differs(leechers_connected_to, s.leechers_connected_to, LEECHERS);
-    update_if_differs(leechers_total, s.leechers_total, LEECHERS);
+    update_if_differs(status, s.status, Column::NAME);
+    update_if_differs(bytes_downloaded, s.bytes_downloaded, Column::BYTES_DOWNLOADED);
+    update_if_differs(session_bytes_downloaded, s.session_bytes_downloaded, Column::SESSION_BYTES_DOWNLOADED);
+    update_if_differs(total_bytes_to_download, s.total_bytes_to_download, Column::TOTAL_BYTES_TO_DOWNLOAD);
+    update_if_differs(bytes_uploaded, s.bytes_uploaded, Column::BYTES_UPLOADED);
+    update_if_differs(session_bytes_uploaded, s.session_bytes_uploaded, Column::SESSION_BYTES_UPLOADED);
+    update_if_differs(bytes_left, s.bytes_left, Column::BYTES_LEFT);
+    update_if_differs(download_rate, s.download_rate, Column::DOWNLOAD_RATE);
+    update_if_differs(upload_rate, s.upload_rate, Column::UPLOAD_RATE);
+    update_if_differs(eta, tc->getETA(), Column::ETA);
+    update_if_differs(seeders_connected_to, s.seeders_connected_to, Column::SEEDERS);
+    update_if_differs(seeders_total, s.seeders_total, Column::SEEDERS);
+    update_if_differs(leechers_connected_to, s.leechers_connected_to, Column::LEECHERS);
+    update_if_differs(leechers_total, s.leechers_total, Column::LEECHERS);
 
     auto la = std::max(s.last_download_activity_time, s.last_upload_activity_time);
     if (last_activity < la) {
         last_activity = la;
-        to_update.append(model->index(row, LAST_ACTIVITY));
-        ret |= (sort_column == LAST_ACTIVITY);
+        to_update.append(model->index(row, static_cast<int>(Column::LAST_ACTIVITY)));
+        ret |= (sort_column == Column::LAST_ACTIVITY);
     }
 
-    update_if_differs_float(percentage, Percentage(s), PERCENTAGE);
-    update_if_differs_float(share_ratio, s.shareRatio(), SHARE_RATIO);
+    update_if_differs_float(percentage, Percentage(s), Column::PERCENTAGE);
+    update_if_differs_float(share_ratio, s.shareRatio(), Column::SHARE_RATIO);
 
-    update_if_differs(runtime_dl, tc->getRunningTimeDL(), DOWNLOAD_TIME);
+    update_if_differs(runtime_dl, tc->getRunningTimeDL(), Column::DOWNLOAD_TIME);
     // clang-format off
     const auto rul = (tc->getRunningTimeUL() >= tc->getRunningTimeDL()
                       ? tc->getRunningTimeUL() - tc->getRunningTimeDL()
                       : 0);
     // clang-format on
-    update_if_differs(runtime_ul, rul, SEED_TIME);
+    update_if_differs(runtime_ul, rul, Column::SEED_TIME);
 
     return ret;
 }
 
-QVariant ViewModel::Item::data(int col) const
+QVariant ViewModel::Item::data(Column col) const
 {
     static QLocale locale;
     const TorrentStats &s = tc->getStats();
     switch (col) {
-    case NAME:
+    case Column::NAME:
         return tc->getDisplayName();
-    case BYTES_DOWNLOADED:
+    case Column::BYTES_DOWNLOADED:
         return BytesToString(bytes_downloaded);
-    case SESSION_BYTES_DOWNLOADED:
+    case Column::SESSION_BYTES_DOWNLOADED:
         return BytesToString(session_bytes_downloaded);
-    case TOTAL_BYTES_TO_DOWNLOAD:
+    case Column::TOTAL_BYTES_TO_DOWNLOAD:
         return BytesToString(total_bytes_to_download);
-    case BYTES_UPLOADED:
+    case Column::BYTES_UPLOADED:
         return BytesToString(bytes_uploaded);
-    case SESSION_BYTES_UPLOADED:
+    case Column::SESSION_BYTES_UPLOADED:
         return BytesToString(session_bytes_uploaded);
-    case BYTES_LEFT:
+    case Column::BYTES_LEFT:
         return bytes_left > 0 ? BytesToString(bytes_left) : QVariant();
-    case DOWNLOAD_RATE:
+    case Column::DOWNLOAD_RATE:
         if (download_rate >= 103 && s.bytes_left_to_download > 0) { // lowest "visible" speed, all below will be 0,0 Kb/s
             return BytesPerSecToString(download_rate);
         } else {
             return QVariant();
         }
-    case UPLOAD_RATE:
+    case Column::UPLOAD_RATE:
         if (upload_rate >= 103) { // lowest "visible" speed, all below will be 0,0 Kb/s
             return BytesPerSecToString(upload_rate);
         } else {
             return QVariant();
         }
-    case ETA:
+    case Column::ETA:
         if (eta == bt::TimeEstimator::NEVER) {
             return QString(QChar(0x221E)); // infinity
         } else if (eta != bt::TimeEstimator::ALREADY_FINISHED) {
@@ -161,24 +161,24 @@ QVariant ViewModel::Item::data(int col) const
         } else {
             return QVariant();
         }
-    case SEEDERS:
+    case Column::SEEDERS:
         return QString(QString::number(seeders_connected_to) + QLatin1String(" (") + QString::number(seeders_total) + QLatin1Char(')'));
-    case LEECHERS:
+    case Column::LEECHERS:
         return QString(QString::number(leechers_connected_to) + QLatin1String(" (") + QString::number(leechers_total) + QLatin1Char(')'));
     // xgettext: no-c-format
-    case PERCENTAGE:
+    case Column::PERCENTAGE:
         return percentage;
-    case SHARE_RATIO:
+    case Column::SHARE_RATIO:
         return locale.toString(share_ratio, 'f', 2);
-    case DOWNLOAD_TIME:
+    case Column::DOWNLOAD_TIME:
         return DurationToString(runtime_dl);
-    case SEED_TIME:
+    case Column::SEED_TIME:
         return DurationToString(runtime_ul);
-    case DOWNLOAD_LOCATION:
+    case Column::DOWNLOAD_LOCATION:
         return tc->getStats().output_path;
-    case TIME_ADDED:
+    case Column::TIME_ADDED:
         return locale.toString(time_added, QLocale::ShortFormat);
-    case LAST_ACTIVITY: {
+    case Column::LAST_ACTIVITY: {
         KFormat kf;
         auto msSinceLastActivity = QDateTime::currentMSecsSinceEpoch() - last_activity;
         auto durationFormat = KFormat::AbbreviatedDuration | KFormat::HideSeconds;
@@ -189,54 +189,54 @@ QVariant ViewModel::Item::data(int col) const
     }
 }
 
-bool ViewModel::Item::lessThan(int col, const Item *other) const
+bool ViewModel::Item::lessThan(Column col, const Item *other) const
 {
     switch (col) {
-    case NAME:
+    case Column::NAME:
         return QString::localeAwareCompare(tc->getDisplayName(), other->tc->getDisplayName()) < 0;
-    case BYTES_DOWNLOADED:
+    case Column::BYTES_DOWNLOADED:
         return bytes_downloaded < other->bytes_downloaded;
-    case SESSION_BYTES_DOWNLOADED:
+    case Column::SESSION_BYTES_DOWNLOADED:
         return session_bytes_downloaded < other->session_bytes_downloaded;
-    case TOTAL_BYTES_TO_DOWNLOAD:
+    case Column::TOTAL_BYTES_TO_DOWNLOAD:
         return total_bytes_to_download < other->total_bytes_to_download;
-    case BYTES_UPLOADED:
+    case Column::BYTES_UPLOADED:
         return bytes_uploaded < other->bytes_uploaded;
-    case SESSION_BYTES_UPLOADED:
+    case Column::SESSION_BYTES_UPLOADED:
         return session_bytes_uploaded < other->session_bytes_uploaded;
-    case BYTES_LEFT:
+    case Column::BYTES_LEFT:
         return bytes_left < other->bytes_left;
-    case DOWNLOAD_RATE:
+    case Column::DOWNLOAD_RATE:
         return (download_rate < 102 ? 0 : download_rate) < (other->download_rate < 102 ? 0 : other->download_rate);
-    case UPLOAD_RATE:
+    case Column::UPLOAD_RATE:
         return (upload_rate < 102 ? 0 : upload_rate) < (other->upload_rate < 102 ? 0 : other->upload_rate);
-    case ETA:
+    case Column::ETA:
         return eta < other->eta;
-    case SEEDERS:
+    case Column::SEEDERS:
         if (seeders_connected_to == other->seeders_connected_to) {
             return seeders_total < other->seeders_total;
         } else {
             return seeders_connected_to < other->seeders_connected_to;
         }
-    case LEECHERS:
+    case Column::LEECHERS:
         if (leechers_connected_to == other->leechers_connected_to) {
             return leechers_total < other->leechers_total;
         } else {
             return leechers_connected_to < other->leechers_connected_to;
         }
-    case PERCENTAGE:
+    case Column::PERCENTAGE:
         return percentage < other->percentage;
-    case SHARE_RATIO:
+    case Column::SHARE_RATIO:
         return share_ratio < other->share_ratio;
-    case DOWNLOAD_TIME:
+    case Column::DOWNLOAD_TIME:
         return runtime_dl < other->runtime_dl;
-    case SEED_TIME:
+    case Column::SEED_TIME:
         return runtime_ul < other->runtime_ul;
-    case DOWNLOAD_LOCATION:
+    case Column::DOWNLOAD_LOCATION:
         return tc->getStats().output_path < other->tc->getStats().output_path;
-    case TIME_ADDED:
+    case Column::TIME_ADDED:
         return time_added < other->time_added;
-    case LAST_ACTIVITY:
+    case Column::LAST_ACTIVITY:
         // last_activity the timestamp for 1 minute is bigger than the timestamp for 1 hour
         // but when sorting descending 1 hour should come before 1 minute
         return last_activity > other->last_activity;
@@ -245,9 +245,9 @@ bool ViewModel::Item::lessThan(int col, const Item *other) const
     }
 }
 
-QVariant ViewModel::Item::color(int col) const
+QVariant ViewModel::Item::color(Column col) const
 {
-    if (col == NAME) {
+    if (col == Column::NAME) {
         switch (status) {
         case bt::SEEDING:
         case bt::SUPERSEEDING:
@@ -284,7 +284,7 @@ QVariant ViewModel::Item::color(int col) const
             return QVariant();
         }
 
-    } else if (col == SHARE_RATIO) {
+    } else if (col == Column::SHARE_RATIO) {
         return share_ratio >= Settings::greenRatio() ? Settings::goodShareRatioColor() : Settings::lowShareRatioColor();
     } else {
         return QVariant();
@@ -346,7 +346,7 @@ ViewModel::ViewModel(Core *core, View *parent)
     connect(core, &Core::aboutToQuit, this, &ViewModel::onExit); // model must be in core's thread to be notified in time
     connect(core, &Core::torrentAdded, this, &ViewModel::addTorrent);
     connect(core, &Core::torrentRemoved, this, &ViewModel::removeTorrent);
-    sort_column = 0;
+    sort_column = Column::NAME;
     sort_order = Qt::AscendingOrder;
     group = nullptr;
     num_visible = 0;
@@ -447,7 +447,7 @@ bool ViewModel::update(ViewDelegate *delegate, bool force_resort)
 
     if (resort) {
         update_list.clear();
-        sort(sort_column, sort_order);
+        sort(static_cast<int>(sort_column), sort_order);
         return true;
     }
 
@@ -473,7 +473,7 @@ int ViewModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return _NUMBER_OF_COLUMNS;
+        return NUM_COLUMNS;
     }
 }
 
@@ -484,87 +484,87 @@ QVariant ViewModel::headerData(int section, Qt::Orientation orientation, int rol
     }
 
     if (role == Qt::DisplayRole) {
-        switch (section) {
-        case NAME:
+        switch (Column{section}) {
+        case Column::NAME:
             return i18n("Name");
-        case BYTES_DOWNLOADED:
+        case Column::BYTES_DOWNLOADED:
             return i18n("Downloaded");
-        case SESSION_BYTES_DOWNLOADED:
+        case Column::SESSION_BYTES_DOWNLOADED:
             return i18nc("Bytes downloaded this session", "Session Downloaded");
-        case TOTAL_BYTES_TO_DOWNLOAD:
+        case Column::TOTAL_BYTES_TO_DOWNLOAD:
             return i18n("Size");
-        case BYTES_UPLOADED:
+        case Column::BYTES_UPLOADED:
             return i18n("Uploaded");
-        case SESSION_BYTES_UPLOADED:
+        case Column::SESSION_BYTES_UPLOADED:
             return i18nc("Bytes uploaded this session", "Session Uploaded");
-        case BYTES_LEFT:
+        case Column::BYTES_LEFT:
             return i18nc("Bytes left to downloaded", "Left");
-        case DOWNLOAD_RATE:
+        case Column::DOWNLOAD_RATE:
             return i18n("Down Speed");
-        case UPLOAD_RATE:
+        case Column::UPLOAD_RATE:
             return i18n("Up Speed");
-        case ETA:
+        case Column::ETA:
             return i18n("Time Left");
-        case SEEDERS:
+        case Column::SEEDERS:
             return i18n("Seeders");
-        case LEECHERS:
+        case Column::LEECHERS:
             return i18n("Leechers");
-        case PERCENTAGE:
+        case Column::PERCENTAGE:
             // xgettext: no-c-format
             return i18n("% Complete");
-        case SHARE_RATIO:
+        case Column::SHARE_RATIO:
             return i18n("Share Ratio");
-        case DOWNLOAD_TIME:
+        case Column::DOWNLOAD_TIME:
             return i18n("Time Downloaded");
-        case SEED_TIME:
+        case Column::SEED_TIME:
             return i18n("Time Seeded");
-        case DOWNLOAD_LOCATION:
+        case Column::DOWNLOAD_LOCATION:
             return i18n("Location");
-        case TIME_ADDED:
+        case Column::TIME_ADDED:
             return i18n("Added");
-        case LAST_ACTIVITY:
+        case Column::LAST_ACTIVITY:
             return i18n("Last Activity");
         default:
             return QVariant();
         }
     } else if (role == Qt::ToolTipRole) {
-        switch (section) {
-        case BYTES_DOWNLOADED:
+        switch (Column{section}) {
+        case Column::BYTES_DOWNLOADED:
             return i18n("How much data we have downloaded of the torrent");
-        case SESSION_BYTES_DOWNLOADED:
+        case Column::SESSION_BYTES_DOWNLOADED:
             return i18n("How much data we have downloaded of the torrent this session");
-        case TOTAL_BYTES_TO_DOWNLOAD:
+        case Column::TOTAL_BYTES_TO_DOWNLOAD:
             return i18n("Total size of the torrent, excluded files are not included");
-        case BYTES_UPLOADED:
+        case Column::BYTES_UPLOADED:
             return i18n("How much data we have uploaded");
-        case SESSION_BYTES_UPLOADED:
+        case Column::SESSION_BYTES_UPLOADED:
             return i18n("How much data we have uploaded this session");
-        case BYTES_LEFT:
+        case Column::BYTES_LEFT:
             return i18n("How much data left to download");
-        case DOWNLOAD_RATE:
+        case Column::DOWNLOAD_RATE:
             return i18n("Current download speed");
-        case UPLOAD_RATE:
+        case Column::UPLOAD_RATE:
             return i18n("Current upload speed");
-        case ETA:
+        case Column::ETA:
             return i18n("How much time is left before the torrent is finished or before the maximum share ratio is reached, if that is enabled");
-        case SEEDERS:
+        case Column::SEEDERS:
             return i18n("How many seeders we are connected to (How many seeders there are according to the tracker)");
-        case LEECHERS:
+        case Column::LEECHERS:
             return i18n("How many leechers we are connected to (How many leechers there are according to the tracker)");
         // xgettext: no-c-format
-        case PERCENTAGE:
+        case Column::PERCENTAGE:
             return i18n("The percentage of data we have of the whole torrent, not including excluded files");
-        case SHARE_RATIO:
+        case Column::SHARE_RATIO:
             return i18n("Share ratio is the number of bytes uploaded divided by the number of bytes downloaded");
-        case DOWNLOAD_TIME:
+        case Column::DOWNLOAD_TIME:
             return i18n("How long we have been downloading the torrent");
-        case SEED_TIME:
+        case Column::SEED_TIME:
             return i18n("How long we have been seeding the torrent");
-        case DOWNLOAD_LOCATION:
+        case Column::DOWNLOAD_LOCATION:
             return i18n("The location of the torrent's data on disk");
-        case TIME_ADDED:
+        case Column::TIME_ADDED:
             return i18n("When this torrent was added");
-        case LAST_ACTIVITY:
+        case Column::LAST_ACTIVITY:
             return i18n("Time since last download or upload activity");
         default:
             return QVariant();
@@ -599,15 +599,16 @@ QVariant ViewModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     if (role == Qt::ForegroundRole) {
-        return item->color(index.column());
+        return item->color(column);
     } else if (role == Qt::DisplayRole) {
-        return item->data(index.column());
-    } else if (role == Qt::EditRole && index.column() == NAME) {
+        return item->data(column);
+    } else if (role == Qt::EditRole && column == Column::NAME) {
         return item->tc->getDisplayName();
-    } else if (role == Qt::DecorationRole && index.column() == NAME) {
+    } else if (role == Qt::DecorationRole && column == Column::NAME) {
         return item->statusIcon();
-    } else if (role == Qt::ToolTipRole && index.column() == NAME) {
+    } else if (role == Qt::ToolTipRole && column == Column::NAME) {
         bt::TorrentInterface *tc = item->tc;
         QString tooltip = tc->getDisplayName();
 
@@ -618,11 +619,11 @@ QVariant ViewModel::data(const QModelIndex &index, int role) const
 
         return tooltip;
     } else if (role == Qt::TextAlignmentRole) {
-        switch (index.column()) {
-        case NAME:
-        case PERCENTAGE:
-        case DOWNLOAD_LOCATION:
-        case TIME_ADDED:
+        switch (column) {
+        case Column::NAME:
+        case Column::PERCENTAGE:
+        case Column::DOWNLOAD_LOCATION:
+        case Column::TIME_ADDED:
             return static_cast<Qt::Alignment::Int>(Qt::AlignLeft | Qt::AlignVCenter);
         default:
             return static_cast<Qt::Alignment::Int>(Qt::AlignRight | Qt::AlignVCenter);
@@ -638,7 +639,7 @@ QVariant ViewModel::data(const QModelIndex &index, int role) const
 
 bool ViewModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() || index.row() >= torrents.count() || role != Qt::EditRole || index.column() != NAME) {
+    if (!index.isValid() || index.row() >= torrents.count() || role != Qt::EditRole || Column{index.column()} != Column::NAME) {
         return false;
     }
 
@@ -651,8 +652,8 @@ bool ViewModel::setData(const QModelIndex &index, const QVariant &value, int rol
     bt::TorrentInterface *tc = item->tc;
     tc->setDisplayName(name);
     Q_EMIT dataChanged(index, index);
-    if (sort_column == NAME) {
-        sort(sort_column, sort_order);
+    if (sort_column == Column::NAME) {
+        sort(static_cast<int>(sort_column), sort_order);
     }
     return true;
 }
@@ -664,7 +665,7 @@ Qt::ItemFlags ViewModel::flags(const QModelIndex &index) const
     }
 
     Qt::ItemFlags flags = QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
-    if (index.column() == NAME) {
+    if (Column{index.column()} == Column::NAME) {
         flags |= Qt::ItemIsEditable;
     }
 
@@ -801,7 +802,7 @@ void ViewModel::onExit()
 class ViewModelItemCmp
 {
 public:
-    ViewModelItemCmp(int col, Qt::SortOrder order)
+    ViewModelItemCmp(ViewModel::Column col, Qt::SortOrder order)
         : col(col)
         , order(order)
     {
@@ -820,16 +821,16 @@ public:
         }
     }
 
-    int col;
+    ViewModel::Column col;
     Qt::SortOrder order;
 };
 
 void ViewModel::sort(int col, Qt::SortOrder order)
 {
-    sort_column = col;
+    sort_column = Column{col};
     sort_order = order;
     Q_EMIT layoutAboutToBeChanged();
-    std::stable_sort(torrents.begin(), torrents.end(), ViewModelItemCmp(col, order));
+    std::stable_sort(torrents.begin(), torrents.end(), ViewModelItemCmp(sort_column, order));
     Q_EMIT layoutChanged();
     Q_EMIT sorted();
 }

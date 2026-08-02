@@ -60,18 +60,19 @@ QVariant ShutdownTorrentModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     if (role == Qt::CheckStateRole) {
-        if (index.column() != 0) {
+        if (column != Column::EVENT) {
             return QVariant();
         }
 
         return conds.at(index.row()).checked ? Qt::Checked : Qt::Unchecked;
     } else if (role == Qt::DisplayRole) {
         const TriggerItem &cond = conds.at(index.row());
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::EVENT:
             return cond.tc->getDisplayName();
-        case 1:
+        case Column::TORRENT:
             if (cond.trigger == DOWNLOADING_COMPLETED) {
                 return i18n("Downloading finishes");
             } else {
@@ -81,7 +82,7 @@ QVariant ShutdownTorrentModel::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     } else if (role == Qt::EditRole) {
-        if (index.column() == 1) {
+        if (column == Column::TORRENT) {
             return conds.at(index.row()).trigger;
         }
     }
@@ -91,7 +92,7 @@ QVariant ShutdownTorrentModel::data(const QModelIndex &index, int role) const
 
 int ShutdownTorrentModel::columnCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? 0 : 2;
+    return parent.isValid() ? 0 : NUM_COLUMNS;
 }
 
 int ShutdownTorrentModel::rowCount(const QModelIndex &parent) const
@@ -132,10 +133,10 @@ QVariant ShutdownTorrentModel::headerData(int section, Qt::Orientation orientati
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::TORRENT:
         return i18n("Torrent");
-    case 1:
+    case Column::EVENT:
         return i18n("Event");
     default:
         return QVariant();
@@ -167,12 +168,13 @@ Qt::ItemFlags ShutdownTorrentModel::flags(const QModelIndex &index) const
         return {};
     }
 
+    const Column column{index.column()};
     Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
-    if (index.column() == 0) {
+    if (column == Column::EVENT) {
         flags |= Qt::ItemIsUserCheckable;
     }
 
-    if (index.column() == 1) {
+    if (column == Column::TORRENT) {
         flags |= Qt::ItemIsEditable;
     }
 

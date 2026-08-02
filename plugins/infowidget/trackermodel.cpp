@@ -73,7 +73,7 @@ int TrackerModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 6;
+        return NUM_COLUMNS;
     }
 }
 
@@ -90,13 +90,14 @@ QVariant TrackerModel::data(const QModelIndex &index, int role) const
 
     bt::TrackerInterface *trk = item->trk;
 
-    if (role == Qt::CheckStateRole && index.column() == 0) {
+    const Column column{index.column()};
+    if (role == Qt::CheckStateRole && column == Column::URL) {
         return trk->isEnabled() ? Qt::Checked : Qt::Unchecked;
     } else if (role == Qt::DisplayRole) {
-        return item->displayData(index.column());
+        return item->displayData(column);
     } else if (role == Qt::UserRole) {
-        return item->sortData(index.column());
-    } else if (role == Qt::ForegroundRole && index.column() == 1 && trk->trackerStatus() == bt::TRACKER_ERROR) {
+        return item->sortData(column);
+    } else if (role == Qt::ForegroundRole && column == Column::STATUS && trk->trackerStatus() == bt::TRACKER_ERROR) {
         return QColor(Qt::red);
     }
 
@@ -124,19 +125,21 @@ QVariant TrackerModel::headerData(int section, Qt::Orientation orientation, int 
     }
 
     if (role == Qt::DisplayRole) {
-        switch (section) {
-        case 0:
+        switch (Column{section}) {
+        case Column::URL:
             return i18n("URL");
-        case 1:
+        case Column::STATUS:
             return i18n("Status");
-        case 2:
+        case Column::SEEDERS:
             return i18n("Seeders");
-        case 3:
+        case Column::LEECHERS:
             return i18n("Leechers");
-        case 4:
+        case Column::TIMES_DOWNLOADED:
             return i18n("Times Downloaded");
-        case 5:
+        case Column::NEXT_UPDATE:
             return i18n("Next Update");
+        default:
+            break;
         }
     }
     return QVariant();
@@ -182,7 +185,7 @@ bool TrackerModel::removeRows(int row, int count, const QModelIndex &parent)
 
 Qt::ItemFlags TrackerModel::flags(const QModelIndex &index) const
 {
-    if (!tc || !index.isValid() || index.row() >= trackers.count() || index.row() < 0 || index.column() != 0) {
+    if (!tc || !index.isValid() || index.row() >= trackers.count() || index.row() < 0 || Column{index.column()} != Column::URL) {
         return QAbstractItemModel::flags(index);
     } else {
         return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
@@ -259,20 +262,20 @@ bool TrackerModel::Item::update()
     return ret;
 }
 
-QVariant TrackerModel::Item::displayData(int column) const
+QVariant TrackerModel::Item::displayData(Column column) const
 {
     switch (column) {
-    case 0:
+    case Column::URL:
         return trk->trackerURL().toString();
-    case 1:
+    case Column::STATUS:
         return trk->trackerStatusString();
-    case 2:
+    case Column::SEEDERS:
         return seeders >= 0 ? seeders : QVariant();
-    case 3:
+    case Column::LEECHERS:
         return leechers >= 0 ? leechers : QVariant();
-    case 4:
+    case Column::TIMES_DOWNLOADED:
         return times_downloaded >= 0 ? times_downloaded : QVariant();
-    case 5: {
+    case Column::NEXT_UPDATE: {
         int secs = time_to_next_update;
         if (secs) {
             return QTime(0, 0, 0, 0).addSecs(secs).toString(QStringLiteral("mm:ss"));
@@ -285,20 +288,20 @@ QVariant TrackerModel::Item::displayData(int column) const
     }
 }
 
-QVariant TrackerModel::Item::sortData(int column) const
+QVariant TrackerModel::Item::sortData(Column column) const
 {
     switch (column) {
-    case 0:
+    case Column::URL:
         return trk->trackerURL().toString();
-    case 1:
+    case Column::STATUS:
         return status;
-    case 2:
+    case Column::SEEDERS:
         return seeders;
-    case 3:
+    case Column::LEECHERS:
         return leechers;
-    case 4:
+    case Column::TIMES_DOWNLOADED:
         return times_downloaded;
-    case 5:
+    case Column::NEXT_UPDATE:
         return time_to_next_update;
     default:
         return QVariant();

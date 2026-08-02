@@ -45,6 +45,15 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
 private:
+    enum class Column : int {
+        URL,
+        SPEED,
+        DOWNLOADED,
+        STATUS,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     struct Item {
         QString status;
         bt::Uint64 downloaded;

@@ -94,7 +94,7 @@ int LogFlags::rowCount(const QModelIndex &parent) const
 int LogFlags::columnCount(const QModelIndex &parent) const
 {
     if (!parent.isValid()) {
-        return 2;
+        return NUM_COLUMNS;
     } else {
         return 0;
     }
@@ -106,10 +106,10 @@ QVariant LogFlags::headerData(int section, Qt::Orientation orientation, int role
         return QVariant();
     }
 
-    switch (section) {
-    case 0:
+    switch (Column{section}) {
+    case Column::CATEGORY:
         return i18n("System");
-    case 1:
+    case Column::LEVEL:
         return i18n("Log Level");
     default:
         return QVariant();
@@ -122,17 +122,18 @@ QVariant LogFlags::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    const Column column{index.column()};
     if (role == Qt::DisplayRole) {
         const LogFlag &f = log_flags.at(index.row());
-        switch (index.column()) {
-        case 0:
+        switch (column) {
+        case Column::CATEGORY:
             return f.name;
-        case 1:
+        case Column::LEVEL:
             return flagToString(f.flag);
         default:
             return QVariant();
         }
-    } else if (role == Qt::EditRole && index.column() == 1) {
+    } else if (role == Qt::EditRole && column == Column::LEVEL) {
         const LogFlag &f = log_flags.at(index.row());
         return f.flag;
     }
@@ -142,7 +143,7 @@ QVariant LogFlags::data(const QModelIndex &index, int role) const
 
 bool LogFlags::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() || role != Qt::EditRole || index.column() != 1) {
+    if (!index.isValid() || role != Qt::EditRole || Column{index.column()} != Column::LEVEL) {
         return false;
     }
 
@@ -168,7 +169,7 @@ Qt::ItemFlags LogFlags::flags(const QModelIndex &index) const
         return Qt::ItemIsEnabled;
     }
 
-    if (index.column() == 1) {
+    if (Column{index.column()} == Column::LEVEL) {
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
     } else {
         return QAbstractItemModel::flags(index);

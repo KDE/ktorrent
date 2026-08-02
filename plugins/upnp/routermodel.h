@@ -57,6 +57,13 @@ private:
     QString ports(const bt::UPnPRouter *r) const;
 
 private:
+    enum class Column : int {
+        DEVICE,
+        PORTS_FORWARDED,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
     QList<bt::UPnPRouter *> routers;
 };
 

@@ -39,6 +39,16 @@ public:
 
     void apply();
 
+    enum class Column : int {
+        TORRENT,
+        DOWNLOAD_LIMIT,
+        UPLOAD_LIMIT,
+        ASSURED_DOWNLOAD_SPEED,
+        ASSURED_UPLOAD_SPEED,
+        _NUMBER_OF_COLUMNS,
+    };
+    static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
+
 Q_SIGNALS:
     void enableApply(bool on);
 
