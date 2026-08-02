@@ -46,20 +46,6 @@ int MediaModel::rowCount(const QModelIndex &parent) const
     }
 }
 
-int MediaModel::columnCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent);
-    return 1;
-}
-
-QVariant MediaModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-    Q_UNUSED(section);
-    Q_UNUSED(orientation);
-    Q_UNUSED(role);
-    return QVariant();
-}
-
 QVariant MediaModel::data(const QModelIndex &index, int role) const
 {
     if (index.column() != 0 || index.row() < 0 || index.row() >= items.count()) {
