@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-02 00:45+0000\n"
+"POT-Creation-Date: 2026-08-03 00:42+0000\n"
 "PO-Revision-Date: 2011-11-15 16:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hantha.org>\n"
@@ -785,8 +785,8 @@ msgstr "උපරිම බාගැනීම් වේගය:"
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, ratio_limit)
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, time_limit)
 #: ktorrent/dialogs/speedlimitsdlg.ui:77 ktorrent/dialogs/speedlimitsdlg.ui:100
-#: ktorrent/dialogs/speedlimitsmodel.cpp:136
-#: ktorrent/dialogs/speedlimitsmodel.cpp:142
+#: ktorrent/dialogs/speedlimitsmodel.cpp:137
+#: ktorrent/dialogs/speedlimitsmodel.cpp:143
 #: ktorrent/dialogs/spinboxdelegate.cpp:30 ktorrent/groups/grouppolicydlg.ui:81
 #: ktorrent/groups/grouppolicydlg.ui:101 ktorrent/groups/grouppolicydlg.ui:121
 #: ktorrent/groups/grouppolicydlg.ui:144 ktorrent/pref/networkpref.ui:81
@@ -843,35 +843,35 @@ msgstr " KiB/s"
 msgid "Maximum upload speed:"
 msgstr "උපරිම අපගත වේගය:"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:102
+#: ktorrent/dialogs/speedlimitsmodel.cpp:103
 #: plugins/shutdown/shutdowntorrentmodel.cpp:137
 #: plugins/syndication/feedwidgetmodel.cpp:84
 #, kde-format
 msgid "Torrent"
 msgstr "ටොරන්ට්"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:104
+#: ktorrent/dialogs/speedlimitsmodel.cpp:105
 #, kde-format
 msgid "Download Limit"
 msgstr "බාගැනීමේ සීමාව"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:106
+#: ktorrent/dialogs/speedlimitsmodel.cpp:107
 #, kde-format
 msgid "Upload Limit"
 msgstr "අපගත සීමාව"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:108
+#: ktorrent/dialogs/speedlimitsmodel.cpp:109
 #, kde-format
 msgid "Assured Download Speed"
 msgstr "සහතික බාගැනීම් වේගය"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:110
+#: ktorrent/dialogs/speedlimitsmodel.cpp:111
 #, kde-format
 msgid "Assured Upload Speed"
 msgstr "සහතික අපගත වේගය"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:148
-#: ktorrent/dialogs/speedlimitsmodel.cpp:154
+#: ktorrent/dialogs/speedlimitsmodel.cpp:149
+#: ktorrent/dialogs/speedlimitsmodel.cpp:155
 #: ktorrent/dialogs/spinboxdelegate.cpp:32
 #, kde-format
 msgid "No assured speed"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-02 00:45+0000\n"
+"POT-Creation-Date: 2026-08-03 00:42+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -794,8 +794,8 @@ msgstr "最大下载速度："
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, ratio_limit)
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, time_limit)
 #: ktorrent/dialogs/speedlimitsdlg.ui:77 ktorrent/dialogs/speedlimitsdlg.ui:100
-#: ktorrent/dialogs/speedlimitsmodel.cpp:136
-#: ktorrent/dialogs/speedlimitsmodel.cpp:142
+#: ktorrent/dialogs/speedlimitsmodel.cpp:137
+#: ktorrent/dialogs/speedlimitsmodel.cpp:143
 #: ktorrent/dialogs/spinboxdelegate.cpp:30 ktorrent/groups/grouppolicydlg.ui:81
 #: ktorrent/groups/grouppolicydlg.ui:101 ktorrent/groups/grouppolicydlg.ui:121
 #: ktorrent/groups/grouppolicydlg.ui:144 ktorrent/pref/networkpref.ui:81
@@ -852,35 +852,35 @@ msgstr " KiB/s"
 msgid "Maximum upload speed:"
 msgstr "最大上传速度："
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:102
+#: ktorrent/dialogs/speedlimitsmodel.cpp:103
 #: plugins/shutdown/shutdowntorrentmodel.cpp:137
 #: plugins/syndication/feedwidgetmodel.cpp:84
 #, kde-format
 msgid "Torrent"
 msgstr "种子"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:104
+#: ktorrent/dialogs/speedlimitsmodel.cpp:105
 #, kde-format
 msgid "Download Limit"
 msgstr "下载限速"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:106
+#: ktorrent/dialogs/speedlimitsmodel.cpp:107
 #, kde-format
 msgid "Upload Limit"
 msgstr "上传限速"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:108
+#: ktorrent/dialogs/speedlimitsmodel.cpp:109
 #, kde-format
 msgid "Assured Download Speed"
 msgstr "保证下载速度"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:110
+#: ktorrent/dialogs/speedlimitsmodel.cpp:111
 #, kde-format
 msgid "Assured Upload Speed"
 msgstr "保证上传速度"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:148
-#: ktorrent/dialogs/speedlimitsmodel.cpp:154
+#: ktorrent/dialogs/speedlimitsmodel.cpp:149
+#: ktorrent/dialogs/speedlimitsmodel.cpp:155
 #: ktorrent/dialogs/spinboxdelegate.cpp:32
 #, kde-format
 msgid "No assured speed"
@@ -8709,6 +8709,3 @@ msgstr "重新扫描"
 #, kde-format
 msgid "ZeroConf"
 msgstr "Zeroconf"
-
-#~ msgid "%1<br>Url: <b>%2</b>"
-#~ msgstr "%1<br>地址：<b>%2</b>"

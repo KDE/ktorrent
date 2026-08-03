@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-02 00:45+0000\n"
+"POT-Creation-Date: 2026-08-03 00:42+0000\n"
 "PO-Revision-Date: 2026-06-22 03:42+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -822,8 +822,8 @@ msgstr "მაქსიმალური გადმოწერის სი�
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, ratio_limit)
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, time_limit)
 #: ktorrent/dialogs/speedlimitsdlg.ui:77 ktorrent/dialogs/speedlimitsdlg.ui:100
-#: ktorrent/dialogs/speedlimitsmodel.cpp:136
-#: ktorrent/dialogs/speedlimitsmodel.cpp:142
+#: ktorrent/dialogs/speedlimitsmodel.cpp:137
+#: ktorrent/dialogs/speedlimitsmodel.cpp:143
 #: ktorrent/dialogs/spinboxdelegate.cpp:30 ktorrent/groups/grouppolicydlg.ui:81
 #: ktorrent/groups/grouppolicydlg.ui:101 ktorrent/groups/grouppolicydlg.ui:121
 #: ktorrent/groups/grouppolicydlg.ui:144 ktorrent/pref/networkpref.ui:81
@@ -880,35 +880,35 @@ msgstr " კიბ/წმ"
 msgid "Maximum upload speed:"
 msgstr "ატვირთვის მაქსიმალური სიჩქარე:"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:102
+#: ktorrent/dialogs/speedlimitsmodel.cpp:103
 #: plugins/shutdown/shutdowntorrentmodel.cpp:137
 #: plugins/syndication/feedwidgetmodel.cpp:84
 #, kde-format
 msgid "Torrent"
 msgstr "Torrent"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:104
+#: ktorrent/dialogs/speedlimitsmodel.cpp:105
 #, kde-format
 msgid "Download Limit"
 msgstr "გადმოწერის ლიმიტი"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:106
+#: ktorrent/dialogs/speedlimitsmodel.cpp:107
 #, kde-format
 msgid "Upload Limit"
 msgstr "ატვირთვის ლიმიტი"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:108
+#: ktorrent/dialogs/speedlimitsmodel.cpp:109
 #, kde-format
 msgid "Assured Download Speed"
 msgstr "გარანტირებული გადმოწერის სიჩქარე"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:110
+#: ktorrent/dialogs/speedlimitsmodel.cpp:111
 #, kde-format
 msgid "Assured Upload Speed"
 msgstr "გარანტირებული ატვირთვის სიჩქარე"
 
-#: ktorrent/dialogs/speedlimitsmodel.cpp:148
-#: ktorrent/dialogs/speedlimitsmodel.cpp:154
+#: ktorrent/dialogs/speedlimitsmodel.cpp:149
+#: ktorrent/dialogs/speedlimitsmodel.cpp:155
 #: ktorrent/dialogs/spinboxdelegate.cpp:32
 #, kde-format
 msgid "No assured speed"

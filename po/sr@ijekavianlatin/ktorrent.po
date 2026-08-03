@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-02 00:45+0000\n"
+"POT-Creation-Date: 2026-08-03 00:42+0000\n"
 "PO-Revision-Date: 2017-12-17 18:00+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -821,8 +821,8 @@ msgstr "Najveća brzina preuzimanja:"
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, ratio_limit)
 #. i18n: ectx: property (specialValueText), widget (QDoubleSpinBox, time_limit)
 #: ktorrent/dialogs/speedlimitsdlg.ui:77 ktorrent/dialogs/speedlimitsdlg.ui:100
-#: ktorrent/dialogs/speedlimitsmodel.cpp:136
-#: ktorrent/dialogs/speedlimitsmodel.cpp:142
+#: ktorrent/dialogs/speedlimitsmodel.cpp:137
+#: ktorrent/dialogs/speedlimitsmodel.cpp:143
 #: ktorrent/dialogs/spinboxdelegate.cpp:30 ktorrent/groups/grouppolicydlg.ui:81
 #: ktorrent/groups/grouppolicydlg.ui:101 ktorrent/groups/grouppolicydlg.ui:121
 #: ktorrent/groups/grouppolicydlg.ui:144 ktorrent/pref/networkpref.ui:81
@@ -880,7 +880,7 @@ msgid "Maximum upload speed:"
 msgstr "Najveća brzina otpremanja:"
 
 # >> @title:column
-#: ktorrent/dialogs/speedlimitsmodel.cpp:102
+#: ktorrent/dialogs/speedlimitsmodel.cpp:103
 #: plugins/shutdown/shutdowntorrentmodel.cpp:137
 #: plugins/syndication/feedwidgetmodel.cpp:84
 #, kde-format
@@ -888,32 +888,32 @@ msgid "Torrent"
 msgstr "torent"
 
 # >> @title:column
-#: ktorrent/dialogs/speedlimitsmodel.cpp:104
+#: ktorrent/dialogs/speedlimitsmodel.cpp:105
 #, kde-format
 msgid "Download Limit"
 msgstr "ograničenje preuzimanja"
 
 # >> @title:column
-#: ktorrent/dialogs/speedlimitsmodel.cpp:106
+#: ktorrent/dialogs/speedlimitsmodel.cpp:107
 #, kde-format
 msgid "Upload Limit"
 msgstr "ograničenje otpremanja"
 
 # >> @title:column
-#: ktorrent/dialogs/speedlimitsmodel.cpp:108
+#: ktorrent/dialogs/speedlimitsmodel.cpp:109
 #, kde-format
 msgid "Assured Download Speed"
 msgstr "obezbjeđena brzina preuzimanja"
 
 # >> @title:column
-#: ktorrent/dialogs/speedlimitsmodel.cpp:110
+#: ktorrent/dialogs/speedlimitsmodel.cpp:111
 #, kde-format
 msgid "Assured Upload Speed"
 msgstr "obezbjeđena brzina otpremanja"
 
 # >> @item:intable
-#: ktorrent/dialogs/speedlimitsmodel.cpp:148
-#: ktorrent/dialogs/speedlimitsmodel.cpp:154
+#: ktorrent/dialogs/speedlimitsmodel.cpp:149
+#: ktorrent/dialogs/speedlimitsmodel.cpp:155
 #: ktorrent/dialogs/spinboxdelegate.cpp:32
 #, kde-format
 msgid "No assured speed"
