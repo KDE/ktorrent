@@ -59,6 +59,7 @@
         "Description[tr]": "İndirilirken ortam dosyalarını çalın/oynatın",
         "Description[uk]": "Відтворення мультимедійних файлів одразу після отримання",
         "Description[zh_CN]": "一边下载一边播放媒体文件",
+        "Description[zh_TW]": "邊下載邊播放媒體檔案",
         "EnabledByDefault": false,
         "Icon": "applications-multimedia",
         "License": "GPL",
