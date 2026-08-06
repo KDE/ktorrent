@@ -62,7 +62,7 @@ QVariant ShutdownTorrentModel::data(const QModelIndex &index, int role) const
 
     const Column column{index.column()};
     if (role == Qt::CheckStateRole) {
-        if (column != Column::EVENT) {
+        if (column != Column::TORRENT) {
             return QVariant();
         }
 
@@ -70,9 +70,9 @@ QVariant ShutdownTorrentModel::data(const QModelIndex &index, int role) const
     } else if (role == Qt::DisplayRole) {
         const TriggerItem &cond = conds.at(index.row());
         switch (column) {
-        case Column::EVENT:
-            return cond.tc->getDisplayName();
         case Column::TORRENT:
+            return cond.tc->getDisplayName();
+        case Column::EVENT:
             if (cond.trigger == DOWNLOADING_COMPLETED) {
                 return i18n("Downloading finishes");
             } else {
@@ -170,11 +170,11 @@ Qt::ItemFlags ShutdownTorrentModel::flags(const QModelIndex &index) const
 
     const Column column{index.column()};
     Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
-    if (column == Column::EVENT) {
+    if (column == Column::TORRENT) {
         flags |= Qt::ItemIsUserCheckable;
     }
 
-    if (column == Column::TORRENT) {
+    if (column == Column::EVENT) {
         flags |= Qt::ItemIsEditable;
     }
 
