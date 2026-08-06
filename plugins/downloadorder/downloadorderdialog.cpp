@@ -105,9 +105,16 @@ void DownloadOrderDialog::commitDownloadOrder()
 void DownloadOrderDialog::moveUp()
 {
     QModelIndexList idx = m_order->selectionModel()->selectedRows();
-    model->moveUp(idx.front().row(), idx.count());
-    if (idx.front().row() > 0) {
-        QItemSelection sel(model->index(idx.first().row() - 1), model->index(idx.last().row() - 1));
+    // Index list is not in order if the user selected from bottom up
+    const auto top_index = *std::min_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
+        return lhs.row() < rhs.row();
+    });
+    const auto bottom_index = *std::max_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
+        return lhs.row() < rhs.row();
+    });
+    model->moveUp(top_index.row(), idx.count());
+    if (top_index.row() > 0) {
+        QItemSelection sel(model->index(top_index.row() - 1), model->index(bottom_index.row() - 1));
         m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
     }
 }
@@ -115,8 +122,12 @@ void DownloadOrderDialog::moveUp()
 void DownloadOrderDialog::moveTop()
 {
     QModelIndexList idx = m_order->selectionModel()->selectedRows();
-    model->moveTop(idx.front().row(), idx.count());
-    if (idx.front().row() > 0) {
+    // Index list is not in order if the user selected from bottom up
+    const auto top_index = *std::min_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
+        return lhs.row() < rhs.row();
+    });
+    model->moveTop(top_index.row(), idx.count());
+    if (top_index.row() > 0) {
         QItemSelection sel(model->index(0), model->index(idx.count() - 1));
         m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
     }
@@ -125,9 +136,16 @@ void DownloadOrderDialog::moveTop()
 void DownloadOrderDialog::moveDown()
 {
     QModelIndexList idx = m_order->selectionModel()->selectedRows();
-    model->moveDown(idx.front().row(), idx.count());
-    if (idx.back().row() < (int)tor->getNumFiles() - 1) {
-        QItemSelection sel(model->index(idx.first().row() + 1), model->index(idx.last().row() + 1));
+    // Index list is not in order if the user selected from bottom up
+    const auto top_index = *std::min_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
+        return lhs.row() < rhs.row();
+    });
+    const auto bottom_index = *std::max_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
+        return lhs.row() < rhs.row();
+    });
+    model->moveDown(top_index.row(), idx.count());
+    if (bottom_index.row() < (int)tor->getNumFiles() - 1) {
+        QItemSelection sel(model->index(top_index.row() + 1), model->index(bottom_index.row() + 1));
         m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
     }
 }
@@ -135,8 +153,12 @@ void DownloadOrderDialog::moveDown()
 void DownloadOrderDialog::moveBottom()
 {
     QModelIndexList idx = m_order->selectionModel()->selectedRows();
-    model->moveBottom(idx.front().row(), idx.count());
-    if (idx.back().row() < (int)tor->getNumFiles() - 1) {
+    // Index list is not in order if the user selected from bottom up
+    const auto top_index = *std::min_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
+        return lhs.row() < rhs.row();
+    });
+    model->moveBottom(top_index.row(), idx.count());
+    if (top_index.row() < (int)tor->getNumFiles() - 1) {
         QItemSelection sel(model->index(tor->getNumFiles() - idx.size()), model->index(tor->getNumFiles() - 1));
         m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
     }
