@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-03 00:42+0000\n"
+"POT-Creation-Date: 2026-08-06 00:43+0000\n"
 "PO-Revision-Date: 2020-02-15 15:47+0100\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -831,7 +831,7 @@ msgstr "Maksimal downloadhastighed:"
 #: ktorrent/dialogs/speedlimitsdlg.ui:77 ktorrent/dialogs/speedlimitsdlg.ui:100
 #: ktorrent/dialogs/speedlimitsmodel.cpp:137
 #: ktorrent/dialogs/speedlimitsmodel.cpp:143
-#: ktorrent/dialogs/spinboxdelegate.cpp:30 ktorrent/groups/grouppolicydlg.ui:81
+#: ktorrent/dialogs/spinboxdelegate.cpp:32 ktorrent/groups/grouppolicydlg.ui:81
 #: ktorrent/groups/grouppolicydlg.ui:101 ktorrent/groups/grouppolicydlg.ui:121
 #: ktorrent/groups/grouppolicydlg.ui:144 ktorrent/pref/networkpref.ui:81
 #: ktorrent/pref/networkpref.ui:101 ktorrent/pref/networkpref.ui:121
@@ -864,7 +864,7 @@ msgstr "Ingen grænse"
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_screensaverUploadLimit)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_screensaverDownloadLimit)
 #: ktorrent/dialogs/speedlimitsdlg.ui:80 ktorrent/dialogs/speedlimitsdlg.ui:103
-#: ktorrent/dialogs/spinboxdelegate.cpp:28 ktorrent/groups/grouppolicydlg.ui:84
+#: ktorrent/dialogs/spinboxdelegate.cpp:30 ktorrent/groups/grouppolicydlg.ui:84
 #: ktorrent/groups/grouppolicydlg.ui:104 ktorrent/pref/networkpref.ui:124
 #: ktorrent/pref/networkpref.ui:147 ktorrent/pref/recommendedsettingsdlg.ui:131
 #: plugins/bwscheduler/bwprefpage.ui:55 plugins/bwscheduler/bwprefpage.ui:84
@@ -888,7 +888,7 @@ msgid "Maximum upload speed:"
 msgstr "Maksimal uploadhastighed:"
 
 #: ktorrent/dialogs/speedlimitsmodel.cpp:103
-#: plugins/shutdown/shutdowntorrentmodel.cpp:137
+#: plugins/shutdown/shutdowntorrentmodel.cpp:138
 #: plugins/syndication/feedwidgetmodel.cpp:84
 #, kde-format
 msgid "Torrent"
@@ -916,7 +916,7 @@ msgstr "Sikret uploadhastighed"
 
 #: ktorrent/dialogs/speedlimitsmodel.cpp:149
 #: ktorrent/dialogs/speedlimitsmodel.cpp:155
-#: ktorrent/dialogs/spinboxdelegate.cpp:32
+#: ktorrent/dialogs/spinboxdelegate.cpp:34
 #, kde-format
 msgid "No assured speed"
 msgstr "Ingen sikret hastighed"
@@ -3551,35 +3551,35 @@ msgstr ""
 msgid "The desktop is offline"
 msgstr "Skrivebordsmiljøet er offline"
 
-#: ktorrent/tools/magnetmodel.cpp:107
+#: ktorrent/tools/magnetmodel.cpp:108
 #, kde-format
 msgid "Magnet Link"
 msgstr "Magnet-link"
 
-#: ktorrent/tools/magnetmodel.cpp:109 ktorrent/tools/queuemanagermodel.cpp:185
-#: ktorrent/trayicon.cpp:140 plugins/infowidget/trackermodel.cpp:131
+#: ktorrent/tools/magnetmodel.cpp:110 ktorrent/tools/queuemanagermodel.cpp:185
+#: ktorrent/trayicon.cpp:140 plugins/infowidget/trackermodel.cpp:132
 #: plugins/infowidget/webseedsmodel.cpp:114
 #, kde-format
 msgid "Status"
 msgstr "Status"
 
-#: ktorrent/tools/magnetmodel.cpp:111
+#: ktorrent/tools/magnetmodel.cpp:112
 #: plugins/infowidget/infowidgetplugin.cpp:208
 #, kde-format
 msgid "Peers"
 msgstr "Peers"
 
-#: ktorrent/tools/magnetmodel.cpp:167
+#: ktorrent/tools/magnetmodel.cpp:168
 #, kde-format
 msgid "Downloading"
 msgstr "Downloader"
 
-#: ktorrent/tools/magnetmodel.cpp:170 ktorrent/tools/queuemanagermodel.cpp:223
+#: ktorrent/tools/magnetmodel.cpp:171 ktorrent/tools/queuemanagermodel.cpp:224
 #, kde-format
 msgid "Queued"
 msgstr "I kø"
 
-#: ktorrent/tools/magnetmodel.cpp:174
+#: ktorrent/tools/magnetmodel.cpp:175
 #, kde-format
 msgid "Stopped"
 msgstr "Stoppet"
@@ -3628,22 +3628,22 @@ msgstr "Har hængt i"
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ktorrent/tools/queuemanagermodel.cpp:221
+#: ktorrent/tools/queuemanagermodel.cpp:222
 #, kde-format
 msgid "Running"
 msgstr "Kører"
 
-#: ktorrent/tools/queuemanagermodel.cpp:225
+#: ktorrent/tools/queuemanagermodel.cpp:226
 #, kde-format
 msgid "Not queued"
 msgstr "Ikke i kø"
 
-#: ktorrent/tools/queuemanagermodel.cpp:235
+#: ktorrent/tools/queuemanagermodel.cpp:236
 #, kde-format
 msgid "%1"
 msgstr "%1"
 
-#: ktorrent/tools/queuemanagermodel.cpp:246
+#: ktorrent/tools/queuemanagermodel.cpp:247
 #, kde-format
 msgid ""
 "Order of a torrent in the queue.\n"
@@ -4331,7 +4331,7 @@ msgctxt "1h 20m ago"
 msgid "%1 ago"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:321
+#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:323
 #: plugins/infowidget/webseedsmodel.cpp:112
 #, kde-format
 msgid "Downloaded"
@@ -4351,7 +4351,7 @@ msgstr "Antal gange downloadet"
 msgid "Size"
 msgstr "Størrelse"
 
-#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:323
+#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:325
 #, kde-format
 msgid "Uploaded"
 msgstr "Uploadet"
@@ -4370,13 +4370,13 @@ msgid "Left"
 msgstr "Mangler"
 
 #: ktorrent/view/viewmodel.cpp:503
-#: plugins/infowidget/chunkdownloadmodel.cpp:203
-#: plugins/infowidget/peerviewmodel.cpp:303
+#: plugins/infowidget/chunkdownloadmodel.cpp:205
+#: plugins/infowidget/peerviewmodel.cpp:305
 #, kde-format
 msgid "Down Speed"
 msgstr "Downloadhast."
 
-#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:305
+#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:307
 #, kde-format
 msgid "Up Speed"
 msgstr "Uploadhast."
@@ -4386,12 +4386,12 @@ msgstr "Uploadhast."
 msgid "Time Left"
 msgstr "Tid tilbage"
 
-#: ktorrent/view/viewmodel.cpp:509 plugins/infowidget/trackermodel.cpp:133
+#: ktorrent/view/viewmodel.cpp:509 plugins/infowidget/trackermodel.cpp:134
 #, kde-format
 msgid "Seeders"
 msgstr "Seeders"
 
-#: ktorrent/view/viewmodel.cpp:511 plugins/infowidget/trackermodel.cpp:135
+#: ktorrent/view/viewmodel.cpp:511 plugins/infowidget/trackermodel.cpp:136
 #, kde-format
 msgid "Leechers"
 msgstr "Leechers"
@@ -4544,7 +4544,7 @@ msgstr "Hvornår denne torrent blev tilføjet"
 msgid "Time since last download or upload activity"
 msgstr ""
 
-#: ktorrent/view/viewmodel.cpp:616
+#: ktorrent/view/viewmodel.cpp:617
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>Kan ikke kontakte en tracker."
@@ -5451,47 +5451,47 @@ msgstr "Tilgængelige stykker:"
 msgid "Unavailable Chunks"
 msgstr "Tilgængelige stykker:"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:197
+#: plugins/infowidget/chunkdownloadmodel.cpp:199
 #, kde-format
 msgid "Chunk"
 msgstr "Stykke"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:199
+#: plugins/infowidget/chunkdownloadmodel.cpp:201
 #, kde-format
 msgid "Progress"
 msgstr "Fremgang"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:201
+#: plugins/infowidget/chunkdownloadmodel.cpp:203
 #, kde-format
 msgid "Peer"
 msgstr "Peer"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:205
+#: plugins/infowidget/chunkdownloadmodel.cpp:207
 #, kde-format
 msgid "Files"
 msgstr "Filer"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:212
+#: plugins/infowidget/chunkdownloadmodel.cpp:214
 #, kde-format
 msgid "Number of the chunk"
 msgstr "Stykkets nummer"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:214
+#: plugins/infowidget/chunkdownloadmodel.cpp:216
 #, kde-format
 msgid "Download progress of the chunk"
 msgstr "Downloadfremgang for stykket"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:216
+#: plugins/infowidget/chunkdownloadmodel.cpp:218
 #, kde-format
 msgid "Which peer we are downloading it from"
 msgstr "Hvilken peer vi downloader det fra"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:218
+#: plugins/infowidget/chunkdownloadmodel.cpp:220
 #, kde-format
 msgid "Download speed of the chunk"
 msgstr "Downloadhastighed for stykket"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:220
+#: plugins/infowidget/chunkdownloadmodel.cpp:222
 #, kde-format
 msgid "Which files the chunk is located in"
 msgstr "Hvilke filer stykket hører til i"
@@ -5729,37 +5729,37 @@ msgctxt "Download Normal (not as first or last)"
 msgid "Normal"
 msgstr "Normalt"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:144
-#: plugins/infowidget/iwfilelistmodel.cpp:165
-#: plugins/infowidget/iwfiletreemodel.cpp:191
+#: plugins/infowidget/iwfilelistmodel.cpp:146
+#: plugins/infowidget/iwfilelistmodel.cpp:167
+#: plugins/infowidget/iwfiletreemodel.cpp:192
 #, kde-format
 msgctxt "Preview available"
 msgid "Available"
 msgstr "Tilgængelige"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:146
-#: plugins/infowidget/iwfilelistmodel.cpp:167
-#: plugins/infowidget/iwfiletreemodel.cpp:170
-#: plugins/infowidget/iwfiletreemodel.cpp:193
+#: plugins/infowidget/iwfilelistmodel.cpp:148
+#: plugins/infowidget/iwfilelistmodel.cpp:169
+#: plugins/infowidget/iwfiletreemodel.cpp:171
+#: plugins/infowidget/iwfiletreemodel.cpp:194
 #, kde-format
 msgctxt "Preview pending"
 msgid "Pending"
 msgstr "Hængende"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:149
-#: plugins/infowidget/iwfilelistmodel.cpp:170
-#: plugins/infowidget/iwfiletreemodel.cpp:173
-#: plugins/infowidget/iwfiletreemodel.cpp:196
+#: plugins/infowidget/iwfilelistmodel.cpp:151
+#: plugins/infowidget/iwfilelistmodel.cpp:172
+#: plugins/infowidget/iwfiletreemodel.cpp:174
+#: plugins/infowidget/iwfiletreemodel.cpp:197
 #, kde-format
 msgctxt "No preview available"
 msgid "No"
 msgstr "Ingen"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:153
-#: plugins/infowidget/iwfilelistmodel.cpp:174
-#: plugins/infowidget/iwfiletreemodel.cpp:179
-#: plugins/infowidget/iwfiletreemodel.cpp:199
-#: plugins/infowidget/iwfiletreemodel.cpp:204
+#: plugins/infowidget/iwfilelistmodel.cpp:155
+#: plugins/infowidget/iwfilelistmodel.cpp:176
+#: plugins/infowidget/iwfiletreemodel.cpp:180
+#: plugins/infowidget/iwfiletreemodel.cpp:200
+#: plugins/infowidget/iwfiletreemodel.cpp:205
 #, kde-format
 msgid "%1 %"
 msgstr "%1 %"
@@ -5770,7 +5770,7 @@ msgctxt "Download normally(not as first or last)"
 msgid "Normal"
 msgstr "Normalt"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:168
+#: plugins/infowidget/iwfiletreemodel.cpp:169
 #, kde-format
 msgctxt "preview available"
 msgid "Available"
@@ -5948,92 +5948,92 @@ msgctxt "Not Interesting"
 msgid "No"
 msgstr "Nej"
 
-#: plugins/infowidget/peerviewmodel.cpp:297
+#: plugins/infowidget/peerviewmodel.cpp:299
 #, kde-format
 msgid "Address"
 msgstr "Adresse"
 
-#: plugins/infowidget/peerviewmodel.cpp:299
+#: plugins/infowidget/peerviewmodel.cpp:301
 #, kde-format
 msgid "Country"
 msgstr "Land"
 
-#: plugins/infowidget/peerviewmodel.cpp:301
+#: plugins/infowidget/peerviewmodel.cpp:303
 #, kde-format
 msgid "Client"
 msgstr "Klient"
 
-#: plugins/infowidget/peerviewmodel.cpp:307
+#: plugins/infowidget/peerviewmodel.cpp:309
 #, kde-format
 msgid "Choked"
 msgstr "Kvalt"
 
-#: plugins/infowidget/peerviewmodel.cpp:309
+#: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
 msgid "Snubbed"
 msgstr "Afvist"
 
-#: plugins/infowidget/peerviewmodel.cpp:311
+#: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
 msgid "Availability"
 msgstr "Tilgængelighed"
 
-#: plugins/infowidget/peerviewmodel.cpp:313
+#: plugins/infowidget/peerviewmodel.cpp:315
 #, kde-format
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/infowidget/peerviewmodel.cpp:315
+#: plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
 msgid "Score"
 msgstr "Scoring"
 
-#: plugins/infowidget/peerviewmodel.cpp:317
+#: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Upload Slot"
 msgstr "Uploadplads"
 
-#: plugins/infowidget/peerviewmodel.cpp:319
+#: plugins/infowidget/peerviewmodel.cpp:321
 #, kde-format
 msgid "Requests"
 msgstr "Forespørgsler"
 
-#: plugins/infowidget/peerviewmodel.cpp:325
+#: plugins/infowidget/peerviewmodel.cpp:327
 #, kde-format
 msgid "Interested"
 msgstr "Interesseret"
 
-#: plugins/infowidget/peerviewmodel.cpp:327
+#: plugins/infowidget/peerviewmodel.cpp:329
 #, kde-format
 msgid "Interesting"
 msgstr "Interessant"
 
-#: plugins/infowidget/peerviewmodel.cpp:334
+#: plugins/infowidget/peerviewmodel.cpp:336
 #, kde-format
 msgid "IP address of the peer"
 msgstr "IP-adresse for peer"
 
-#: plugins/infowidget/peerviewmodel.cpp:336
+#: plugins/infowidget/peerviewmodel.cpp:338
 #, kde-format
 msgid "Country the peer is in"
 msgstr "Landet som peer er i"
 
-#: plugins/infowidget/peerviewmodel.cpp:338
+#: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
 msgid "Which client the peer is using"
 msgstr "Hvilken klient der bruges af peer"
 
-#: plugins/infowidget/peerviewmodel.cpp:340
+#: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
 msgid "Download speed"
 msgstr "Downloadhastighed"
 
-#: plugins/infowidget/peerviewmodel.cpp:342
+#: plugins/infowidget/peerviewmodel.cpp:344
 #, kde-format
 msgid "Upload speed"
 msgstr "Uploadhastighed"
 
-#: plugins/infowidget/peerviewmodel.cpp:344
+#: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
@@ -6042,55 +6042,55 @@ msgstr ""
 "Om peer har kvalt os eller ej - når vi er kvalt, vil peer ikke sende os "
 "nogen data"
 
-#: plugins/infowidget/peerviewmodel.cpp:346
+#: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
 "Afvist betyder at peer ikke har sendt os nogen data i de sidste 2 minutter"
 
-#: plugins/infowidget/peerviewmodel.cpp:348
+#: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr "Hvor meget data peer har af torrenten"
 
-#: plugins/infowidget/peerviewmodel.cpp:350
+#: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr "Om peer har DHT aktiveret eller ej"
 
-#: plugins/infowidget/peerviewmodel.cpp:352
+#: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
 "Score for peer, KTorrent bruger dette til at bestemme hvem der skal uploades "
 "til"
 
-#: plugins/infowidget/peerviewmodel.cpp:354
+#: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr "Kun peers som har en uploadplads vil få data fra os"
 
-#: plugins/infowidget/peerviewmodel.cpp:356
+#: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "The number of download and upload requests"
 msgstr "Antallet af download- og uploadforespørgsler"
 
-#: plugins/infowidget/peerviewmodel.cpp:358
+#: plugins/infowidget/peerviewmodel.cpp:360
 #, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr "Hvor meget data vi har downloadet fra denne peer"
 
-#: plugins/infowidget/peerviewmodel.cpp:360
+#: plugins/infowidget/peerviewmodel.cpp:362
 #, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr "Hvor meget data vi har uploadet til denne peer"
 
-#: plugins/infowidget/peerviewmodel.cpp:362
+#: plugins/infowidget/peerviewmodel.cpp:364
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr "Om peer er interesseret i at downloade data fra os"
 
-#: plugins/infowidget/peerviewmodel.cpp:364
+#: plugins/infowidget/peerviewmodel.cpp:366
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr "Om vi er interesserede i at downloade fra denne peer"
@@ -6172,18 +6172,18 @@ msgstr "Forholdsgrænse:"
 msgid "Time limit:"
 msgstr "Tidsgrænse:"
 
-#: plugins/infowidget/trackermodel.cpp:129
+#: plugins/infowidget/trackermodel.cpp:130
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
 msgid "URL"
 msgstr "URL"
 
-#: plugins/infowidget/trackermodel.cpp:137
+#: plugins/infowidget/trackermodel.cpp:138
 #, kde-format
 msgid "Times Downloaded"
 msgstr "Antal gange downloadet"
 
-#: plugins/infowidget/trackermodel.cpp:139
+#: plugins/infowidget/trackermodel.cpp:140
 #, kde-format
 msgid "Next Update"
 msgstr "Næste opdatering"
@@ -6545,27 +6545,27 @@ msgstr "System"
 msgid "Log Level"
 msgstr "Logniveau"
 
-#: plugins/logviewer/logflags.cpp:200 plugins/logviewer/logflagsdelegate.cpp:31
+#: plugins/logviewer/logflags.cpp:201 plugins/logviewer/logflagsdelegate.cpp:31
 #, kde-format
 msgid "Debug"
 msgstr "Fejlretning"
 
-#: plugins/logviewer/logflags.cpp:202 plugins/logviewer/logflagsdelegate.cpp:30
+#: plugins/logviewer/logflags.cpp:203 plugins/logviewer/logflagsdelegate.cpp:30
 #, kde-format
 msgid "Notice"
 msgstr "Anmærkning"
 
-#: plugins/logviewer/logflags.cpp:204 plugins/logviewer/logflagsdelegate.cpp:29
+#: plugins/logviewer/logflags.cpp:205 plugins/logviewer/logflagsdelegate.cpp:29
 #, kde-format
 msgid "Important"
 msgstr "Vigtigt"
 
-#: plugins/logviewer/logflags.cpp:206 plugins/logviewer/logflagsdelegate.cpp:28
+#: plugins/logviewer/logflags.cpp:207 plugins/logviewer/logflagsdelegate.cpp:28
 #, kde-format
 msgid "All"
 msgstr "Alle"
 
-#: plugins/logviewer/logflags.cpp:208 plugins/logviewer/logflagsdelegate.cpp:32
+#: plugins/logviewer/logflags.cpp:209 plugins/logviewer/logflagsdelegate.cpp:32
 #: plugins/syndication/ktfeed.cpp:539
 #, kde-format
 msgid "None"
@@ -6870,17 +6870,17 @@ msgstr "<b>%2</b> - <b>%1</b>"
 msgid "<b>%1</b>"
 msgstr "<b>%1</b>"
 
-#: plugins/mediaplayer/mediamodel.cpp:72
+#: plugins/mediaplayer/mediamodel.cpp:58
 #, kde-format
 msgid "Available"
 msgstr "Tilgængelig"
 
-#: plugins/mediaplayer/mediamodel.cpp:72
+#: plugins/mediaplayer/mediamodel.cpp:58
 #, kde-format
 msgid "Pending"
 msgstr "Hængende"
 
-#: plugins/mediaplayer/mediamodel.cpp:73
+#: plugins/mediaplayer/mediamodel.cpp:59
 #, kde-format
 msgid "<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %"
 msgstr "<b>%1</b><br/>Forvisning: %2<br/>Downloadet: %3 %"
@@ -7635,19 +7635,19 @@ msgstr "<b>%1</b> er færdig med at downloade"
 msgid "<b>%1</b> finishes seeding"
 msgstr "<b>%1</b> er færdig med at seede"
 
-#: plugins/shutdown/shutdowntorrentmodel.cpp:76
-#: plugins/shutdown/shutdowntorrentmodel.cpp:222
+#: plugins/shutdown/shutdowntorrentmodel.cpp:77
+#: plugins/shutdown/shutdowntorrentmodel.cpp:224
 #, kde-format
 msgid "Downloading finishes"
 msgstr "Download afslutter"
 
-#: plugins/shutdown/shutdowntorrentmodel.cpp:78
-#: plugins/shutdown/shutdowntorrentmodel.cpp:223
+#: plugins/shutdown/shutdowntorrentmodel.cpp:79
+#: plugins/shutdown/shutdowntorrentmodel.cpp:225
 #, kde-format
 msgid "Seeding finishes"
 msgstr "Seedning afslutter"
 
-#: plugins/shutdown/shutdowntorrentmodel.cpp:139
+#: plugins/shutdown/shutdowntorrentmodel.cpp:140
 #, kde-format
 msgid "Event"
 msgstr "Hændelse"
@@ -8958,7 +8958,7 @@ msgstr "Enhed"
 msgid "Ports Forwarded"
 msgstr "Porte videresendt"
 
-#: plugins/upnp/routermodel.cpp:105
+#: plugins/upnp/routermodel.cpp:108
 #, kde-format
 msgid ""
 "Model Name: <b>%1</b><br/>Manufacturer: <b>%2</b><br/>Model Description: <b>"

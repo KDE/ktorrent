@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-03 00:42+0000\n"
+"POT-Creation-Date: 2026-08-06 00:43+0000\n"
 "PO-Revision-Date: 2025-12-06 11:55+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -838,7 +838,7 @@ msgstr "Gehieneko deskargatze-abiadura:"
 #: ktorrent/dialogs/speedlimitsdlg.ui:77 ktorrent/dialogs/speedlimitsdlg.ui:100
 #: ktorrent/dialogs/speedlimitsmodel.cpp:137
 #: ktorrent/dialogs/speedlimitsmodel.cpp:143
-#: ktorrent/dialogs/spinboxdelegate.cpp:30 ktorrent/groups/grouppolicydlg.ui:81
+#: ktorrent/dialogs/spinboxdelegate.cpp:32 ktorrent/groups/grouppolicydlg.ui:81
 #: ktorrent/groups/grouppolicydlg.ui:101 ktorrent/groups/grouppolicydlg.ui:121
 #: ktorrent/groups/grouppolicydlg.ui:144 ktorrent/pref/networkpref.ui:81
 #: ktorrent/pref/networkpref.ui:101 ktorrent/pref/networkpref.ui:121
@@ -871,7 +871,7 @@ msgstr "Mugarik ez"
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_screensaverUploadLimit)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_screensaverDownloadLimit)
 #: ktorrent/dialogs/speedlimitsdlg.ui:80 ktorrent/dialogs/speedlimitsdlg.ui:103
-#: ktorrent/dialogs/spinboxdelegate.cpp:28 ktorrent/groups/grouppolicydlg.ui:84
+#: ktorrent/dialogs/spinboxdelegate.cpp:30 ktorrent/groups/grouppolicydlg.ui:84
 #: ktorrent/groups/grouppolicydlg.ui:104 ktorrent/pref/networkpref.ui:124
 #: ktorrent/pref/networkpref.ui:147 ktorrent/pref/recommendedsettingsdlg.ui:131
 #: plugins/bwscheduler/bwprefpage.ui:55 plugins/bwscheduler/bwprefpage.ui:84
@@ -895,7 +895,7 @@ msgid "Maximum upload speed:"
 msgstr "Gehieneko kargatze-abiadura:"
 
 #: ktorrent/dialogs/speedlimitsmodel.cpp:103
-#: plugins/shutdown/shutdowntorrentmodel.cpp:137
+#: plugins/shutdown/shutdowntorrentmodel.cpp:138
 #: plugins/syndication/feedwidgetmodel.cpp:84
 #, kde-format
 msgid "Torrent"
@@ -923,7 +923,7 @@ msgstr "Kargatze-abiadura ziurtatua:"
 
 #: ktorrent/dialogs/speedlimitsmodel.cpp:149
 #: ktorrent/dialogs/speedlimitsmodel.cpp:155
-#: ktorrent/dialogs/spinboxdelegate.cpp:32
+#: ktorrent/dialogs/spinboxdelegate.cpp:34
 #, kde-format
 msgid "No assured speed"
 msgstr "Ez dago abiadura ziurtaturik"
@@ -3574,35 +3574,35 @@ msgstr "%%p"
 msgid "The desktop is offline"
 msgstr "Mahaigaina lerroz kanpo dago"
 
-#: ktorrent/tools/magnetmodel.cpp:107
+#: ktorrent/tools/magnetmodel.cpp:108
 #, kde-format
 msgid "Magnet Link"
 msgstr "Iman esteka"
 
-#: ktorrent/tools/magnetmodel.cpp:109 ktorrent/tools/queuemanagermodel.cpp:185
-#: ktorrent/trayicon.cpp:140 plugins/infowidget/trackermodel.cpp:131
+#: ktorrent/tools/magnetmodel.cpp:110 ktorrent/tools/queuemanagermodel.cpp:185
+#: ktorrent/trayicon.cpp:140 plugins/infowidget/trackermodel.cpp:132
 #: plugins/infowidget/webseedsmodel.cpp:114
 #, kde-format
 msgid "Status"
 msgstr "Egoera"
 
-#: ktorrent/tools/magnetmodel.cpp:111
+#: ktorrent/tools/magnetmodel.cpp:112
 #: plugins/infowidget/infowidgetplugin.cpp:208
 #, kde-format
 msgid "Peers"
 msgstr "Pareak"
 
-#: ktorrent/tools/magnetmodel.cpp:167
+#: ktorrent/tools/magnetmodel.cpp:168
 #, kde-format
 msgid "Downloading"
 msgstr "Deskargatzen"
 
-#: ktorrent/tools/magnetmodel.cpp:170 ktorrent/tools/queuemanagermodel.cpp:223
+#: ktorrent/tools/magnetmodel.cpp:171 ktorrent/tools/queuemanagermodel.cpp:224
 #, kde-format
 msgid "Queued"
 msgstr "Ilaran"
 
-#: ktorrent/tools/magnetmodel.cpp:174
+#: ktorrent/tools/magnetmodel.cpp:175
 #, kde-format
 msgid "Stopped"
 msgstr "Geldituta"
@@ -3650,22 +3650,22 @@ msgstr "Trabatze-denbora"
 msgid "Priority"
 msgstr "Lehentasuna"
 
-#: ktorrent/tools/queuemanagermodel.cpp:221
+#: ktorrent/tools/queuemanagermodel.cpp:222
 #, kde-format
 msgid "Running"
 msgstr "Exekutatzen"
 
-#: ktorrent/tools/queuemanagermodel.cpp:225
+#: ktorrent/tools/queuemanagermodel.cpp:226
 #, kde-format
 msgid "Not queued"
 msgstr "Ilaratik kanpo"
 
-#: ktorrent/tools/queuemanagermodel.cpp:235
+#: ktorrent/tools/queuemanagermodel.cpp:236
 #, kde-format
 msgid "%1"
 msgstr "%1"
 
-#: ktorrent/tools/queuemanagermodel.cpp:246
+#: ktorrent/tools/queuemanagermodel.cpp:247
 #, kde-format
 msgid ""
 "Order of a torrent in the queue.\n"
@@ -4350,7 +4350,7 @@ msgctxt "1h 20m ago"
 msgid "%1 ago"
 msgstr "duela %1"
 
-#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:321
+#: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:323
 #: plugins/infowidget/webseedsmodel.cpp:112
 #, kde-format
 msgid "Downloaded"
@@ -4369,7 +4369,7 @@ msgstr "Saioa zama-jaitsi da"
 msgid "Size"
 msgstr "Neurria"
 
-#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:323
+#: ktorrent/view/viewmodel.cpp:497 plugins/infowidget/peerviewmodel.cpp:325
 #, kde-format
 msgid "Uploaded"
 msgstr "Kargatuta"
@@ -4387,13 +4387,13 @@ msgid "Left"
 msgstr "Falta dena"
 
 #: ktorrent/view/viewmodel.cpp:503
-#: plugins/infowidget/chunkdownloadmodel.cpp:203
-#: plugins/infowidget/peerviewmodel.cpp:303
+#: plugins/infowidget/chunkdownloadmodel.cpp:205
+#: plugins/infowidget/peerviewmodel.cpp:305
 #, kde-format
 msgid "Down Speed"
 msgstr "Deskargatze-abiadura"
 
-#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:305
+#: ktorrent/view/viewmodel.cpp:505 plugins/infowidget/peerviewmodel.cpp:307
 #, kde-format
 msgid "Up Speed"
 msgstr "Kargatze-abiadura"
@@ -4403,12 +4403,12 @@ msgstr "Kargatze-abiadura"
 msgid "Time Left"
 msgstr "Falta den denbora"
 
-#: ktorrent/view/viewmodel.cpp:509 plugins/infowidget/trackermodel.cpp:133
+#: ktorrent/view/viewmodel.cpp:509 plugins/infowidget/trackermodel.cpp:134
 #, kde-format
 msgid "Seeders"
 msgstr "Hazi-ereileak"
 
-#: ktorrent/view/viewmodel.cpp:511 plugins/infowidget/trackermodel.cpp:135
+#: ktorrent/view/viewmodel.cpp:511 plugins/infowidget/trackermodel.cpp:136
 #, kde-format
 msgid "Leechers"
 msgstr "Izainak"
@@ -4558,7 +4558,7 @@ msgstr "Torrent hori gehitu zen unea"
 msgid "Time since last download or upload activity"
 msgstr "Azken zama-jaiste edo -igotze jardueratik igarotako denbora"
 
-#: ktorrent/view/viewmodel.cpp:616
+#: ktorrent/view/viewmodel.cpp:617
 #, kde-format
 msgid "<br/><br/>Unable to contact a tracker."
 msgstr "<br/><br/>Ezin izan du aztarnari batekin harremanetan jarri."
@@ -5459,47 +5459,47 @@ msgstr "Pusketa erabilgarriak"
 msgid "Unavailable Chunks"
 msgstr "Pusketa eskuraezinak"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:197
+#: plugins/infowidget/chunkdownloadmodel.cpp:199
 #, kde-format
 msgid "Chunk"
 msgstr "Zatia"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:199
+#: plugins/infowidget/chunkdownloadmodel.cpp:201
 #, kde-format
 msgid "Progress"
 msgstr "Aurrerapena"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:201
+#: plugins/infowidget/chunkdownloadmodel.cpp:203
 #, kde-format
 msgid "Peer"
 msgstr "Parea"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:205
+#: plugins/infowidget/chunkdownloadmodel.cpp:207
 #, kde-format
 msgid "Files"
 msgstr "Fitxategiak"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:212
+#: plugins/infowidget/chunkdownloadmodel.cpp:214
 #, kde-format
 msgid "Number of the chunk"
 msgstr "Zatiaren zenbakia"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:214
+#: plugins/infowidget/chunkdownloadmodel.cpp:216
 #, kde-format
 msgid "Download progress of the chunk"
 msgstr "Zatiaren deskargatze-aurrerapena"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:216
+#: plugins/infowidget/chunkdownloadmodel.cpp:218
 #, kde-format
 msgid "Which peer we are downloading it from"
 msgstr "Zer paretatik deskargatzen ari zaren"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:218
+#: plugins/infowidget/chunkdownloadmodel.cpp:220
 #, kde-format
 msgid "Download speed of the chunk"
 msgstr "Zatiaren deskargatze-abiadura"
 
-#: plugins/infowidget/chunkdownloadmodel.cpp:220
+#: plugins/infowidget/chunkdownloadmodel.cpp:222
 #, kde-format
 msgid "Which files the chunk is located in"
 msgstr "Zatia zer fitxategitan kokatuta dagoen"
@@ -5740,37 +5740,37 @@ msgctxt "Download Normal (not as first or last)"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:144
-#: plugins/infowidget/iwfilelistmodel.cpp:165
-#: plugins/infowidget/iwfiletreemodel.cpp:191
+#: plugins/infowidget/iwfilelistmodel.cpp:146
+#: plugins/infowidget/iwfilelistmodel.cpp:167
+#: plugins/infowidget/iwfiletreemodel.cpp:192
 #, kde-format
 msgctxt "Preview available"
 msgid "Available"
 msgstr "Erabilgarri"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:146
-#: plugins/infowidget/iwfilelistmodel.cpp:167
-#: plugins/infowidget/iwfiletreemodel.cpp:170
-#: plugins/infowidget/iwfiletreemodel.cpp:193
+#: plugins/infowidget/iwfilelistmodel.cpp:148
+#: plugins/infowidget/iwfilelistmodel.cpp:169
+#: plugins/infowidget/iwfiletreemodel.cpp:171
+#: plugins/infowidget/iwfiletreemodel.cpp:194
 #, kde-format
 msgctxt "Preview pending"
 msgid "Pending"
 msgstr "Zain"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:149
-#: plugins/infowidget/iwfilelistmodel.cpp:170
-#: plugins/infowidget/iwfiletreemodel.cpp:173
-#: plugins/infowidget/iwfiletreemodel.cpp:196
+#: plugins/infowidget/iwfilelistmodel.cpp:151
+#: plugins/infowidget/iwfilelistmodel.cpp:172
+#: plugins/infowidget/iwfiletreemodel.cpp:174
+#: plugins/infowidget/iwfiletreemodel.cpp:197
 #, kde-format
 msgctxt "No preview available"
 msgid "No"
 msgstr "Ez"
 
-#: plugins/infowidget/iwfilelistmodel.cpp:153
-#: plugins/infowidget/iwfilelistmodel.cpp:174
-#: plugins/infowidget/iwfiletreemodel.cpp:179
-#: plugins/infowidget/iwfiletreemodel.cpp:199
-#: plugins/infowidget/iwfiletreemodel.cpp:204
+#: plugins/infowidget/iwfilelistmodel.cpp:155
+#: plugins/infowidget/iwfilelistmodel.cpp:176
+#: plugins/infowidget/iwfiletreemodel.cpp:180
+#: plugins/infowidget/iwfiletreemodel.cpp:200
+#: plugins/infowidget/iwfiletreemodel.cpp:205
 #, kde-format
 msgid "%1 %"
 msgstr "% %1"
@@ -5781,7 +5781,7 @@ msgctxt "Download normally(not as first or last)"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/infowidget/iwfiletreemodel.cpp:168
+#: plugins/infowidget/iwfiletreemodel.cpp:169
 #, kde-format
 msgctxt "preview available"
 msgid "Available"
@@ -5958,92 +5958,92 @@ msgctxt "Not Interesting"
 msgid "No"
 msgstr "Ez"
 
-#: plugins/infowidget/peerviewmodel.cpp:297
+#: plugins/infowidget/peerviewmodel.cpp:299
 #, kde-format
 msgid "Address"
 msgstr "Helbidea"
 
-#: plugins/infowidget/peerviewmodel.cpp:299
+#: plugins/infowidget/peerviewmodel.cpp:301
 #, kde-format
 msgid "Country"
 msgstr "Herrialdea"
 
-#: plugins/infowidget/peerviewmodel.cpp:301
+#: plugins/infowidget/peerviewmodel.cpp:303
 #, kde-format
 msgid "Client"
 msgstr "Bezeroa"
 
-#: plugins/infowidget/peerviewmodel.cpp:307
+#: plugins/infowidget/peerviewmodel.cpp:309
 #, kde-format
 msgid "Choked"
 msgstr "Itota"
 
-#: plugins/infowidget/peerviewmodel.cpp:309
+#: plugins/infowidget/peerviewmodel.cpp:311
 #, kde-format
 msgid "Snubbed"
 msgstr "Zokoratuta"
 
-#: plugins/infowidget/peerviewmodel.cpp:311
+#: plugins/infowidget/peerviewmodel.cpp:313
 #, kde-format
 msgid "Availability"
 msgstr "Eskuragarritasuna"
 
-#: plugins/infowidget/peerviewmodel.cpp:313
+#: plugins/infowidget/peerviewmodel.cpp:315
 #, kde-format
 msgid "DHT"
 msgstr "DHT"
 
-#: plugins/infowidget/peerviewmodel.cpp:315
+#: plugins/infowidget/peerviewmodel.cpp:317
 #, kde-format
 msgid "Score"
 msgstr "Puntuazioa"
 
-#: plugins/infowidget/peerviewmodel.cpp:317
+#: plugins/infowidget/peerviewmodel.cpp:319
 #, kde-format
 msgid "Upload Slot"
 msgstr "Kargatze-erretena"
 
-#: plugins/infowidget/peerviewmodel.cpp:319
+#: plugins/infowidget/peerviewmodel.cpp:321
 #, kde-format
 msgid "Requests"
 msgstr "Eskaerak"
 
-#: plugins/infowidget/peerviewmodel.cpp:325
+#: plugins/infowidget/peerviewmodel.cpp:327
 #, kde-format
 msgid "Interested"
 msgstr "Interesatuta"
 
-#: plugins/infowidget/peerviewmodel.cpp:327
+#: plugins/infowidget/peerviewmodel.cpp:329
 #, kde-format
 msgid "Interesting"
 msgstr "Interesgarria"
 
-#: plugins/infowidget/peerviewmodel.cpp:334
+#: plugins/infowidget/peerviewmodel.cpp:336
 #, kde-format
 msgid "IP address of the peer"
 msgstr "Parearen IP helbidea"
 
-#: plugins/infowidget/peerviewmodel.cpp:336
+#: plugins/infowidget/peerviewmodel.cpp:338
 #, kde-format
 msgid "Country the peer is in"
 msgstr "Parea zer herrialdetan dagoen"
 
-#: plugins/infowidget/peerviewmodel.cpp:338
+#: plugins/infowidget/peerviewmodel.cpp:340
 #, kde-format
 msgid "Which client the peer is using"
 msgstr "Parea zer bezero erabiltzen ari den"
 
-#: plugins/infowidget/peerviewmodel.cpp:340
+#: plugins/infowidget/peerviewmodel.cpp:342
 #, kde-format
 msgid "Download speed"
 msgstr "Deskargatze-abiadura"
 
-#: plugins/infowidget/peerviewmodel.cpp:342
+#: plugins/infowidget/peerviewmodel.cpp:344
 #, kde-format
 msgid "Upload speed"
 msgstr "Kargatze-abiadura"
 
-#: plugins/infowidget/peerviewmodel.cpp:344
+#: plugins/infowidget/peerviewmodel.cpp:346
 #, kde-format
 msgid ""
 "Whether or not the peer has choked us - when we are choked the peer will not "
@@ -6051,57 +6051,57 @@ msgid ""
 msgstr ""
 "Pareak ito zaituen edo ez. Ito bazaitu, pareak ez dizu daturik bidaliko"
 
-#: plugins/infowidget/peerviewmodel.cpp:346
+#: plugins/infowidget/peerviewmodel.cpp:348
 #, kde-format
 msgid "Snubbed means the peer has not sent us any data in the last 2 minutes"
 msgstr ""
 "Zokoratuta egoteak esan nahi du pareak ez dizula daturik bidali azken 2 "
 "minutuetan"
 
-#: plugins/infowidget/peerviewmodel.cpp:348
+#: plugins/infowidget/peerviewmodel.cpp:350
 #, kde-format
 msgid "How much data the peer has of the torrent"
 msgstr "Pareak torrent-aren zenbat datu dituen"
 
-#: plugins/infowidget/peerviewmodel.cpp:350
+#: plugins/infowidget/peerviewmodel.cpp:352
 #, kde-format
 msgid "Whether or not the peer has DHT enabled"
 msgstr "Pareak DHT gaituta duen edo ez"
 
-#: plugins/infowidget/peerviewmodel.cpp:352
+#: plugins/infowidget/peerviewmodel.cpp:354
 #, kde-format
 msgid "The score of the peer, KTorrent uses this to determine who to upload to"
 msgstr ""
 "Parearen puntuazioa. Nori kargatu erabakitzeko erabiltzen du KTorrent-ek "
 "puntuazioa"
 
-#: plugins/infowidget/peerviewmodel.cpp:354
+#: plugins/infowidget/peerviewmodel.cpp:356
 #, kde-format
 msgid "Only peers which have an upload slot will get data from us"
 msgstr ""
 "Kargatze-erreten bat duten pareek soilik lortuko dituzte datuak zuregandik"
 
-#: plugins/infowidget/peerviewmodel.cpp:356
+#: plugins/infowidget/peerviewmodel.cpp:358
 #, kde-format
 msgid "The number of download and upload requests"
 msgstr "Deskargatze- eta kargatze-eskaera kopurua"
 
-#: plugins/infowidget/peerviewmodel.cpp:358
+#: plugins/infowidget/peerviewmodel.cpp:360
 #, kde-format
 msgid "How much data we have downloaded from this peer"
 msgstr "Zenbat datu deskargatu dituzun pare horretatik"
 
-#: plugins/infowidget/peerviewmodel.cpp:360
+#: plugins/infowidget/peerviewmodel.cpp:362
 #, kde-format
 msgid "How much data we have uploaded to this peer"
 msgstr "Zenbat datu kargatu dizkiozun pare horri"
 
-#: plugins/infowidget/peerviewmodel.cpp:362
+#: plugins/infowidget/peerviewmodel.cpp:364
 #, kde-format
 msgid "Whether the peer is interested in downloading data from us"
 msgstr "Pareak interesa duen edo ez datuak zuregandik deskargatzeko"
 
-#: plugins/infowidget/peerviewmodel.cpp:364
+#: plugins/infowidget/peerviewmodel.cpp:366
 #, kde-format
 msgid "Whether we are interested in downloading from this peer"
 msgstr "Interesa duzun edo ez pare horretatik deskargatzeko"
@@ -6183,18 +6183,18 @@ msgstr "Erlazio-muga:"
 msgid "Time limit:"
 msgstr "Denbora-muga:"
 
-#: plugins/infowidget/trackermodel.cpp:129
+#: plugins/infowidget/trackermodel.cpp:130
 #: plugins/infowidget/webseedsmodel.cpp:108
 #, kde-format
 msgid "URL"
 msgstr "URLa"
 
-#: plugins/infowidget/trackermodel.cpp:137
+#: plugins/infowidget/trackermodel.cpp:138
 #, kde-format
 msgid "Times Downloaded"
 msgstr "Deskargatze kopurua"
 
-#: plugins/infowidget/trackermodel.cpp:139
+#: plugins/infowidget/trackermodel.cpp:140
 #, kde-format
 msgid "Next Update"
 msgstr "Hurrengo eguneratzea"
@@ -6560,27 +6560,27 @@ msgstr "Sistema"
 msgid "Log Level"
 msgstr "Erregistratze-maila"
 
-#: plugins/logviewer/logflags.cpp:200 plugins/logviewer/logflagsdelegate.cpp:31
+#: plugins/logviewer/logflags.cpp:201 plugins/logviewer/logflagsdelegate.cpp:31
 #, kde-format
 msgid "Debug"
 msgstr "Araztea"
 
-#: plugins/logviewer/logflags.cpp:202 plugins/logviewer/logflagsdelegate.cpp:30
+#: plugins/logviewer/logflags.cpp:203 plugins/logviewer/logflagsdelegate.cpp:30
 #, kde-format
 msgid "Notice"
 msgstr "Abisua"
 
-#: plugins/logviewer/logflags.cpp:204 plugins/logviewer/logflagsdelegate.cpp:29
+#: plugins/logviewer/logflags.cpp:205 plugins/logviewer/logflagsdelegate.cpp:29
 #, kde-format
 msgid "Important"
 msgstr "Garrantzitsua"
 
-#: plugins/logviewer/logflags.cpp:206 plugins/logviewer/logflagsdelegate.cpp:28
+#: plugins/logviewer/logflags.cpp:207 plugins/logviewer/logflagsdelegate.cpp:28
 #, kde-format
 msgid "All"
 msgstr "Guztiak"
 
-#: plugins/logviewer/logflags.cpp:208 plugins/logviewer/logflagsdelegate.cpp:32
+#: plugins/logviewer/logflags.cpp:209 plugins/logviewer/logflagsdelegate.cpp:32
 #: plugins/syndication/ktfeed.cpp:539
 #, kde-format
 msgid "None"
@@ -6867,17 +6867,17 @@ msgstr "<b>%2</b> - <b>%1</b>"
 msgid "<b>%1</b>"
 msgstr "<b>%1</b>"
 
-#: plugins/mediaplayer/mediamodel.cpp:72
+#: plugins/mediaplayer/mediamodel.cpp:58
 #, kde-format
 msgid "Available"
 msgstr "Erabilgarri"
 
-#: plugins/mediaplayer/mediamodel.cpp:72
+#: plugins/mediaplayer/mediamodel.cpp:58
 #, kde-format
 msgid "Pending"
 msgstr "Zain"
 
-#: plugins/mediaplayer/mediamodel.cpp:73
+#: plugins/mediaplayer/mediamodel.cpp:59
 #, kde-format
 msgid "<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %"
 msgstr "<b>%1</b><br/>Aurrebista: %2<br/>Deskargatuta: % %3"
@@ -7625,19 +7625,19 @@ msgstr "<b>%1</b> deskargatzen amaitu ondoren"
 msgid "<b>%1</b> finishes seeding"
 msgstr "<b>%1</b> ereiten amaitu ondoren"
 
-#: plugins/shutdown/shutdowntorrentmodel.cpp:76
-#: plugins/shutdown/shutdowntorrentmodel.cpp:222
+#: plugins/shutdown/shutdowntorrentmodel.cpp:77
+#: plugins/shutdown/shutdowntorrentmodel.cpp:224
 #, kde-format
 msgid "Downloading finishes"
 msgstr "Deskargatzea amaitzen da"
 
-#: plugins/shutdown/shutdowntorrentmodel.cpp:78
-#: plugins/shutdown/shutdowntorrentmodel.cpp:223
+#: plugins/shutdown/shutdowntorrentmodel.cpp:79
+#: plugins/shutdown/shutdowntorrentmodel.cpp:225
 #, kde-format
 msgid "Seeding finishes"
 msgstr "Ereitea amaitzen da"
 
-#: plugins/shutdown/shutdowntorrentmodel.cpp:139
+#: plugins/shutdown/shutdowntorrentmodel.cpp:140
 #, kde-format
 msgid "Event"
 msgstr "Gertaera"
@@ -8960,7 +8960,7 @@ msgstr "Gailua"
 msgid "Ports Forwarded"
 msgstr "Birbideratutako atakak"
 
-#: plugins/upnp/routermodel.cpp:105
+#: plugins/upnp/routermodel.cpp:108
 #, kde-format
 msgid ""
 "Model Name: <b>%1</b><br/>Manufacturer: <b>%2</b><br/>Model Description: <b>"
