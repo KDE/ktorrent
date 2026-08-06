@@ -48,7 +48,7 @@ int DownloadOrderModel::rowCount(const QModelIndex &parent) const
 
 QVariant DownloadOrderModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid()) {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
         return QVariant();
     }
 
@@ -76,31 +76,29 @@ QVariant DownloadOrderModel::data(const QModelIndex &index, int role) const
 
 QModelIndex DownloadOrderModel::find(const QString &text)
 {
-    beginResetModel();
     current_search_text = text;
+    Q_EMIT dataChanged(index(0), index(rowCount({}) - 1), {Qt::FontRole});
+
     for (Uint32 i = 0; i < tor->getNumFiles(); i++) {
         if (tor->getTorrentFile(i).getUserModifiedPath().contains(current_search_text, Qt::CaseInsensitive)) {
-            endResetModel();
             return index(i);
         }
     }
 
-    endResetModel();
     return QModelIndex();
 }
 
 void DownloadOrderModel::clearHighLights()
 {
-    beginResetModel();
     current_search_text.clear();
-    endResetModel();
+    Q_EMIT dataChanged(index(0, 0), index(rowCount({}) - 1), {Qt::FontRole});
 }
 
 Qt::ItemFlags DownloadOrderModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractListModel::flags(index);
 
-    if (index.isValid()) {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
     } else {
         return Qt::ItemIsDropEnabled | defaultFlags;
@@ -161,6 +159,7 @@ bool DownloadOrderModel::dropMimeData(const QMimeData *data, Qt::DropAction acti
     QList<Uint32> files;
     in >> files;
 
+    Q_EMIT layoutAboutToBeChanged({}, LayoutChangeHint::VerticalSortHint);
     // remove all files from order which are in the dragged list
     int r = 0;
     for (QList<Uint32>::iterator i = order.begin(); i != order.end();) {
@@ -182,6 +181,7 @@ bool DownloadOrderModel::dropMimeData(const QMimeData *data, Qt::DropAction acti
         order.insert(begin_row, file);
         begin_row++;
     }
+    Q_EMIT layoutChanged();
     return true;
 }
 
@@ -191,11 +191,11 @@ void DownloadOrderModel::moveUp(int row, int count)
         return;
     }
 
+    beginMoveRows({}, row, row + count - 1, {}, row - 1);
     for (int i = 0; i < count; i++) {
         order.swapItemsAt(row + i, row + i - 1);
     }
-
-    Q_EMIT dataChanged(createIndex(row - 1, 0), createIndex(row + count, 0));
+    endMoveRows();
 }
 
 void DownloadOrderModel::moveTop(int row, int count)
@@ -204,14 +204,14 @@ void DownloadOrderModel::moveTop(int row, int count)
         return;
     }
 
+    beginMoveRows({}, row, row + count - 1, {}, 0);
     QList<Uint32> tmp;
     for (int i = 0; i < count; i++) {
         tmp.append(order.takeAt(row));
     }
 
-    beginResetModel();
     order = tmp + order;
-    endResetModel();
+    endMoveRows();
 }
 
 void DownloadOrderModel::moveDown(int row, int count)
@@ -220,11 +220,11 @@ void DownloadOrderModel::moveDown(int row, int count)
         return;
     }
 
+    beginMoveRows({}, row, row + count - 1, {}, row + count + 1);
     for (int i = count - 1; i >= 0; i--) {
         order.swapItemsAt(row + i, row + i + 1);
     }
-
-    Q_EMIT dataChanged(createIndex(row, 0), createIndex(row + count + 1, 0));
+    endMoveRows();
 }
 
 void DownloadOrderModel::moveBottom(int row, int count)
@@ -233,14 +233,14 @@ void DownloadOrderModel::moveBottom(int row, int count)
         return;
     }
 
+    beginMoveRows({}, row, row + count - 1, {}, rowCount({}));
     QList<Uint32> tmp;
     for (int i = 0; i < count; i++) {
         tmp.append(order.takeAt(row));
     }
 
-    beginResetModel();
     order = order + tmp;
-    endResetModel();
+    endMoveRows();
 }
 
 struct NameCompare {
@@ -259,9 +259,9 @@ struct NameCompare {
 
 void DownloadOrderModel::sortByName()
 {
-    beginResetModel();
+    Q_EMIT layoutAboutToBeChanged({}, LayoutChangeHint::VerticalSortHint);
     std::sort(order.begin(), order.end(), NameCompare(tor));
-    endResetModel();
+    Q_EMIT layoutChanged();
 }
 
 struct AlbumTrackCompare {
@@ -309,9 +309,9 @@ struct AlbumTrackCompare {
 
 void DownloadOrderModel::sortByAlbumTrackOrder()
 {
-    beginResetModel();
+    Q_EMIT layoutAboutToBeChanged({}, LayoutChangeHint::VerticalSortHint);
     std::sort(order.begin(), order.end(), AlbumTrackCompare(tor));
-    endResetModel();
+    Q_EMIT layoutChanged();
 }
 
 struct SeasonEpisodeCompare {

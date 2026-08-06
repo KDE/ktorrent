@@ -64,7 +64,7 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin *plugin, bt::Torren
     QSize s = KSharedConfig::openConfig()->group(QStringLiteral("DownloadOrderDialog")).readEntry("size", size());
     resize(s);
 
-    connect(m_order->selectionModel(), &QItemSelectionModel::selectionChanged, this, &DownloadOrderDialog::itemSelectionChanged);
+    connect(m_order->selectionModel(), &QItemSelectionModel::selectionChanged, this, &DownloadOrderDialog::updateMoveActions);
     connect(m_custom_order_enabled, &QCheckBox::toggled, this, &DownloadOrderDialog::customOrderEnableToggled);
     connect(m_search_files, &QLineEdit::textChanged, this, &DownloadOrderDialog::search);
 
@@ -110,14 +110,8 @@ void DownloadOrderDialog::moveUp()
     const auto top_index = *std::min_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
         return lhs.row() < rhs.row();
     });
-    const auto bottom_index = *std::max_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
-        return lhs.row() < rhs.row();
-    });
     model->moveUp(top_index.row(), idx.count());
-    if (top_index.row() > 0) {
-        QItemSelection sel(model->index(top_index.row() - 1), model->index(bottom_index.row() - 1));
-        m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
-    }
+    updateMoveActions();
 }
 
 void DownloadOrderDialog::moveTop()
@@ -128,10 +122,7 @@ void DownloadOrderDialog::moveTop()
         return lhs.row() < rhs.row();
     });
     model->moveTop(top_index.row(), idx.count());
-    if (top_index.row() > 0) {
-        QItemSelection sel(model->index(0), model->index(idx.count() - 1));
-        m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
-    }
+    updateMoveActions();
 }
 
 void DownloadOrderDialog::moveDown()
@@ -141,14 +132,8 @@ void DownloadOrderDialog::moveDown()
     const auto top_index = *std::min_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
         return lhs.row() < rhs.row();
     });
-    const auto bottom_index = *std::max_element(idx.cbegin(), idx.cend(), [](const auto &lhs, const auto &rhs) -> bool {
-        return lhs.row() < rhs.row();
-    });
     model->moveDown(top_index.row(), idx.count());
-    if (bottom_index.row() < (int)tor->getNumFiles() - 1) {
-        QItemSelection sel(model->index(top_index.row() + 1), model->index(bottom_index.row() + 1));
-        m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
-    }
+    updateMoveActions();
 }
 
 void DownloadOrderDialog::moveBottom()
@@ -159,28 +144,17 @@ void DownloadOrderDialog::moveBottom()
         return lhs.row() < rhs.row();
     });
     model->moveBottom(top_index.row(), idx.count());
-    if (top_index.row() < (int)tor->getNumFiles() - 1) {
-        QItemSelection sel(model->index(tor->getNumFiles() - idx.size()), model->index(tor->getNumFiles() - 1));
-        m_order->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect);
-    }
+    updateMoveActions();
 }
 
-void DownloadOrderDialog::itemSelectionChanged(const QItemSelection &new_sel, const QItemSelection &old_sel)
+void DownloadOrderDialog::updateMoveActions()
 {
-    Q_UNUSED(old_sel);
-    if (new_sel.empty()) {
-        m_move_down->setEnabled(false);
-        m_move_up->setEnabled(false);
-        m_move_top->setEnabled(false);
-        m_move_down->setEnabled(false);
-    } else {
-        bool up_ok = new_sel.front().topLeft().row() > 0;
-        bool down_ok = new_sel.back().bottomRight().row() != (int)tor->getNumFiles() - 1;
-        m_move_up->setEnabled(up_ok);
-        m_move_top->setEnabled(up_ok);
-        m_move_down->setEnabled(down_ok);
-        m_move_bottom->setEnabled(down_ok);
-    }
+    const bool up_ok = !m_order->selectionModel()->isRowSelected(0);
+    const bool down_ok = !m_order->selectionModel()->isRowSelected(tor->getNumFiles() - 1);
+    m_move_up->setEnabled(up_ok);
+    m_move_top->setEnabled(up_ok);
+    m_move_down->setEnabled(down_ok);
+    m_move_bottom->setEnabled(down_ok);
 }
 
 void DownloadOrderDialog::customOrderEnableToggled(bool on)
@@ -193,7 +167,7 @@ void DownloadOrderDialog::customOrderEnableToggled(bool on)
         m_move_top->setEnabled(false);
         m_move_down->setEnabled(false);
     } else {
-        itemSelectionChanged(m_order->selectionModel()->selection(), QItemSelection());
+        updateMoveActions();
     }
 }
 

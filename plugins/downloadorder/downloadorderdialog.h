@@ -36,7 +36,7 @@ private Q_SLOTS:
     void moveDown();
     void moveTop();
     void moveBottom();
-    void itemSelectionChanged(const QItemSelection &new_sel, const QItemSelection &old_sel);
+    void updateMoveActions();
     void customOrderEnableToggled(bool on);
     void search(const QString &text);
 
