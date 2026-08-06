@@ -31,13 +31,14 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin *plugin, bt::Torren
     m_top_label->setText(i18n("File download order for <b>%1</b>:", tor->getDisplayName()));
 
     DownloadOrderManager *dom = plugin->manager(tor);
-    m_custom_order_enabled->setChecked(dom != nullptr);
-    m_order->setEnabled(dom != nullptr);
+    const bool custom_order_enabled = dom != nullptr;
+    m_custom_order_enabled->setChecked(custom_order_enabled);
+    m_order->setEnabled(custom_order_enabled);
     m_move_up->setEnabled(false);
     m_move_down->setEnabled(false);
     m_move_top->setEnabled(false);
     m_move_bottom->setEnabled(false);
-    m_search_files->setEnabled(false);
+    m_search_files->setEnabled(custom_order_enabled);
 
     m_move_up->setIcon(QIcon::fromTheme(QStringLiteral("go-up")));
     connect(m_move_up, &QPushButton::clicked, this, &DownloadOrderDialog::moveUp);
@@ -73,7 +74,7 @@ DownloadOrderDialog::DownloadOrderDialog(DownloadOrderPlugin *plugin, bt::Torren
     sort_by_menu->addAction(i18n("Album Track Order"), model, &DownloadOrderModel::sortByAlbumTrackOrder);
     m_sort_by->setMenu(sort_by_menu);
     m_sort_by->setPopupMode(QToolButton::InstantPopup);
-    m_sort_by->setEnabled(false);
+    m_sort_by->setEnabled(custom_order_enabled);
 }
 
 DownloadOrderDialog::~DownloadOrderDialog()
