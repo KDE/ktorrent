@@ -4,21 +4,22 @@
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
 # SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Vit Pelcak <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2026 Libor Filípek <libor.filipek@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-22 02:43+0000\n"
-"PO-Revision-Date: 2026-03-16 15:40+0100\n"
-"Last-Translator:  Vít Pelčák <vit@pelcak.org>\n"
+"PO-Revision-Date: 2026-08-06 23:09+0200\n"
+"Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 26.04.0\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2122,7 +2123,7 @@ msgstr ""
 #: ktorrent/pref/advancedpref.ui:70 ktorrent/pref/advancedpref.ui:98
 #, kde-format
 msgid " ms"
-msgstr "ms"
+msgstr " ms"
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/advancedpref.ui:86
@@ -2280,7 +2281,7 @@ msgstr ""
 "místo IP adresy. \n"
 "\n"
 "Pokud si nepřejete dodatečný síťový provoz, který tato vlastnost vytváří, "
-"tak je možno ji vypnout."
+"tak je možno ji vypnout"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:307
@@ -2562,7 +2563,7 @@ msgstr ""
 #: ktorrent/pref/colorpref.ui:114
 #, kde-format
 msgid "Trackers are timing out:"
-msgstr "Trackerům vypršel stanovený časový limit"
+msgstr "Trackerům vypršel stanovený časový limit:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_timeoutTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:121
@@ -3003,7 +3004,7 @@ msgstr ""
 #: ktorrent/pref/networkpref.ui:314
 #, kde-format
 msgid "Recommended Settings…"
-msgstr "Doporučené nastavení..."
+msgstr "Doporučené nastavení…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3038,7 +3039,7 @@ msgstr "Proxy:"
 #: ktorrent/pref/proxypref.ui:42
 #, kde-format
 msgid "IP address or hostname of the HTTP proxy to use. "
-msgstr "IP adresa nebo název počítače HTTP proxy, která se má použít"
+msgstr "IP adresa nebo název počítače HTTP proxy, která se má použít. "
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_httpProxyPort)
 #: ktorrent/pref/proxypref.ui:56
@@ -5392,7 +5393,7 @@ msgid ""
 "be downloaded first, followed by the second, then the third…"
 msgstr ""
 "Pořadí, v jakém se stahují soubory z torrentu. Nejprve se stáhne soubor "
-"nahoře, poté druhý, třetí..."
+"nahoře, poté druhý, třetí…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
 #: plugins/infowidget/addtrackersdialog.cpp:24
@@ -6184,7 +6185,7 @@ msgstr "Odstranit tracker"
 #: plugins/infowidget/trackerview.ui:36
 #, kde-format
 msgid "Changes the current active tracker for private torrents."
-msgstr "Změní aktuální tracker pro soukromé torrenty"
+msgstr "Změní aktuální tracker pro soukromé torrenty."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_change_tracker)
 #: plugins/infowidget/trackerview.ui:39
@@ -6271,7 +6272,7 @@ msgstr "Zakázat vše"
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:148
 #, kde-format
 msgid "Converting…"
-msgstr "Konverze..."
+msgstr "Konverze…"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6288,7 +6289,7 @@ msgstr "Z&rušit"
 #: plugins/ipfilter/convertthread.cpp:60
 #, kde-format
 msgid "Loading txt file…"
-msgstr "Načítání txt souboru..."
+msgstr "Načítání txt souboru…"
 
 #: plugins/ipfilter/convertthread.cpp:133
 #, kde-format
@@ -6326,7 +6327,7 @@ msgstr "Automatická aktualizace IP filtru selhala: Nelze otevřít zip soubor %
 #: plugins/ipfilter/downloadandconvertjob.cpp:201
 #, kde-format
 msgid "Cannot find blocklist in zip file %1."
-msgstr "Nelze najít seznam blokovaných v zip souboru: %1"
+msgstr "Nelze najít seznam blokovaných v zip souboru: %1."
 
 #: plugins/ipfilter/downloadandconvertjob.cpp:203
 #, kde-format
@@ -6362,7 +6363,7 @@ msgstr "Stav: nenačten."
 #: plugins/ipfilter/ipblockingprefpage.cpp:102
 #, kde-format
 msgid "Status: Downloading and converting new block list…"
-msgstr "Stav: Stahování a převádění nového seznamu bloků..."
+msgstr "Stav: Stahování a převádění nového seznamu bloků…"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:180
 #, kde-format
@@ -6389,7 +6390,7 @@ msgstr "Předvolby blokování IP"
 #: plugins/ipfilter/ipblockingprefpage.ui:23
 #, kde-format
 msgid "PeerGuardian Filter File "
-msgstr "Soubor filtru PeerGuardian"
+msgstr "Soubor filtru PeerGuardian "
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useLevel1)
 #: plugins/ipfilter/ipblockingprefpage.ui:29
@@ -7447,10 +7448,9 @@ msgstr "Nastavit vypnutí"
 
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
-#, fuzzy, kde-format
-#| msgid "BitTorrent"
+#, kde-format
 msgid "Quit KTorrent"
-msgstr "BitTorrent"
+msgstr "Ukončit KTorrent"
 
 #: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
 #: plugins/shutdown/shutdownruleset.cpp:257
@@ -7847,7 +7847,7 @@ msgstr "KDE"
 #: plugins/stats/DisplaySettings.ui:953
 #, kde-format
 msgid "(plugin reload is needed after change)"
-msgstr "(po změně je nutné opakované načtení modulu) "
+msgstr "(po změně je nutné opakované načtení modulu)"
 
 #: plugins/stats/DisplaySettingsPage.cc:15
 #, kde-format
@@ -7892,7 +7892,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save as image…"
-msgstr "Uložit jako obrázek"
+msgstr "Uložit jako obrázek…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:353
 #: plugins/stats/drawer/PlainChartDrawer.cc:293
@@ -7912,7 +7912,7 @@ msgstr "Obnovit"
 #: plugins/stats/drawer/PlainChartDrawer.cc:316
 #, kde-format
 msgid "Select path to save image…"
-msgstr "Vyberte cestu pro uložení obrázku..."
+msgstr "Vyberte cestu pro uložení obrázku…"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:376
 #: plugins/stats/drawer/PlainChartDrawer.cc:316
