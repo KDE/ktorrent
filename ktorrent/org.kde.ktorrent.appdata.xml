@@ -1418,7 +1418,7 @@
           <li xml:lang="bg">Подобрени са разстоянията между различните елементи и голяма част от потребителския интерфейс е преработена, за да използва нов дизайн без рамки</li>
           <li xml:lang="ca">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
           <li xml:lang="ca-valencia">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
-          <li xml:lang="cs">Vylepšeny rozestupy různých widgetů a převedena velká část uživatelského rozhraní tak, aby využívalo nový bezrámový vzhled.</li>
+          <li xml:lang="cs">Vylepšeny rozestupy různých widgetů a převedena velká část uživatelského rozhraní tak, aby využívalo nový bezrámový vzhled</li>
           <li xml:lang="es">Espaciado de varios widgets mejorado.Migración de la UI a un nuevo aspecto sin marcos.</li>
           <li xml:lang="fr">Amélioration des espacements de divers composants graphiques et portage d’une grande partie de l’interface utilisateur pour utiliser une nouvelle apparence sans cadre</li>
           <li xml:lang="he">הריווח של מגוון רחב של וידג׳טים השתפר והרבה מממשק המשתמש הוסב להשתמש במראה נטול מסגרות</li>
@@ -1458,7 +1458,7 @@
           <li xml:lang="bg">Поправена е грешката, при която диалоговият прозорец „Импортиране на торент“ не копираше зададения .torrent файл</li>
           <li xml:lang="ca">S'ha corregit el diàleg d'importació de torrent que falla en copiar el fitxer .torrent indicat</li>
           <li xml:lang="ca-valencia">S'ha esmenat el diàleg d'importació de torrent que falla en copiar el fitxer «.torrent» indicat</li>
-          <li xml:lang="cs">Opravena chyba dialogového okna Importovat torrent, které nedokázalo zkopírovat zadaný soubor .torrent.</li>
+          <li xml:lang="cs">Opravena chyba dialogového okna Importovat torrent, které nedokázalo zkopírovat zadaný soubor .torrent</li>
           <li xml:lang="es">Arreglado el diálogo de importar torrent al fallar la copia de un archivo .torrent</li>
           <li xml:lang="fr">Correction de la boîte de dialogue d'importation échouant lors de la copie du fichier « .torrent » fourni</li>
           <li xml:lang="he">תוקנה בעיה שחלונית ייבוא טורנט נכשלה בהעתקת קובץ ה־‎.torrent הנתון</li>
@@ -1498,7 +1498,7 @@
           <li xml:lang="bg">По подразбиране записването във файл е деактивирано, за да се избегнат ненужни записи във файловата система; за да се активира записването във файл, може да се използва аргументът на командния ред `--enable-logging`</li>
           <li xml:lang="ca">Desactiva el registre a fitxer de manera predeterminada per a evitar escriptures innecessàries al sistema de fitxers, es pot passar l'argument de la línia d'ordres `--enable-logging` per a activar el registre al fitxer</li>
           <li xml:lang="ca-valencia">Desactiva el registre a fitxer de manera predeterminada per a evitar escriptures innecessàries al sistema de fitxers, es pot passar l'argument de la línia d'ordres `--enable-logging` per a activar el registre al fitxer</li>
-          <li xml:lang="cs">Výchozí nastavení zakazuje ukládání protokolů do souboru, aby se zabránilo zbytečnému zápisu do souborového systému. Pomocí argumentu příkazového řádku `--enable-logging` lze aktivovat ukládání protokolů do souboru.</li>
+          <li xml:lang="cs">Výchozí nastavení zakazuje ukládání protokolů do souboru, aby se zabránilo zbytečnému zápisu do souborového systému. Pomocí argumentu příkazového řádku `--enable-logging` lze aktivovat ukládání protokolů do souboru</li>
           <li xml:lang="es">Desactivados los registros a archivo por omisión para evitar escrituras innecesarias en disco. Se puede pasar la orden de comandos «--enable-loggin» para activar los registros.</li>
           <li xml:lang="fr">Désactivez l'enregistrement dans un fichier par défaut pour éviter des écritures inutiles dans le système de fichiers. L'argument de ligne de commandes « --enable-logging » peut être passé pour activer l'enregistrement dans un fichier.</li>
           <li xml:lang="he">השבתת תיעוד לקובץ כברירת מחדל כדי להימנע מכתיבות לא הכרחיות למערכת הקבצים, אפשר להעביר את ארגומנט שורת הפקודות `‎--enable-logging` כדי להפעיל תיעוד לקובץ</li>
