@@ -19,7 +19,7 @@ add_definitions(-D'VERSION="${RELEASE_SERVICE_VERSION}"'
                 -D'VERSION_MICRO=${RELEASE_SERVICE_VERSION_MICRO}')
 
 set (QT_MIN_VERSION "6.7.0")
-set (KF_MIN_VERSION "5.240.0")
+set (KF_MIN_VERSION "6.5.0")
 set (LIBKTORRENT_MIN_VERSION "26.07.70")
 
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
@@ -37,6 +37,7 @@ include(ECMMarkNonGuiExecutable)
 include(ECMSetupVersion)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
+include(ECMDeprecationSettings)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -204,8 +205,7 @@ add_definitions(
   -DQT_NO_KEYWORDS
   -DQT_USE_FAST_OPERATOR_PLUS
 )
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060500)
-add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055900)
+ecm_set_disabled_deprecation_versions(QT 6.11.0  KF 6.28.0)
 
 set (KTORRENT_DBUS_XML_DIR ${CMAKE_SOURCE_DIR}/dbus_xml)
 set (KTORRENT_PLUGIN_INSTALL_DIR ${PLUGIN_INSTALL_DIR}/ktorrent)

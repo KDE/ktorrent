@@ -3,6 +3,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include <KLocalization>
 #include <KLocalizedString>
 
 #include "downloadandconvertjob.h"
@@ -23,8 +24,8 @@ IPBlockingPrefPage::IPBlockingPrefPage(IPFilterPlugin *p)
     connect(kcfg_useLevel1, &QCheckBox::toggled, this, &IPBlockingPrefPage::checkUseLevel1Toggled);
     connect(m_download, &QPushButton::clicked, this, &IPBlockingPrefPage::downloadClicked);
     connect(kcfg_autoUpdate, &QCheckBox::toggled, this, &IPBlockingPrefPage::autoUpdateToggled);
-    connect(kcfg_autoUpdateInterval, &KPluralHandlingSpinBox::valueChanged, this, &IPBlockingPrefPage::autoUpdateIntervalChanged);
-    kcfg_autoUpdateInterval->setSuffix(ki18np(" day", " days"));
+    connect(kcfg_autoUpdateInterval, &QSpinBox::valueChanged, this, &IPBlockingPrefPage::autoUpdateIntervalChanged);
+    KLocalization::setupSpinBoxFormatString(kcfg_autoUpdateInterval, ki18ncp("@item %v is a number of days", "%v day", "%v days"));
     m_job = nullptr;
     m_verbose = true;
 }
