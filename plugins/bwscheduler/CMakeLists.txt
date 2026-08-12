@@ -24,7 +24,6 @@ kconfig_add_kcfg_files(BandwidthSchedulerPlugin bwschedulerpluginsettings.kcfgc)
 target_link_libraries(
     BandwidthSchedulerPlugin
     ktcore
-    Boost::boost
     KTorrent6
     KF6::CoreAddons
     KF6::I18n

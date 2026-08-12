@@ -10,7 +10,6 @@
 
 #include "schedule.h"
 #include "weekscene.h"
-#include <boost/bind/bind.hpp>
 #include <util/log.h>
 
 using namespace bt;
@@ -63,7 +62,9 @@ void WeekView::setSchedule(Schedule *s)
     schedule = s;
 
     if (schedule) {
-        s->apply(boost::bind(&WeekView::addScheduleItem, this, boost::placeholders::_1));
+        s->apply([this](ScheduleItem *schedule_item) {
+            addScheduleItem(schedule_item);
+        });
     }
 
     scene->setSchedule(s);
