@@ -1,10 +1,10 @@
 ktorrent_add_plugin(ScanFolderPlugin)
 
 target_sources(ScanFolderPlugin PRIVATE
-	scanthread.cpp 
-	torrentloadqueue.cpp 
-	scanfolder.cpp 
-	scanfolderplugin.cpp 
+	scanthread.cpp
+	torrentloadqueue.cpp
+	scanfolder.cpp
+	scanfolderplugin.cpp
 	scanfolderprefpage.cpp)
 
 ki18n_wrap_ui(ScanFolderPlugin scanfolderprefpage.ui)

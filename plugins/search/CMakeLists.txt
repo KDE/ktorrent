@@ -1,12 +1,12 @@
 ktorrent_add_plugin(SearchPlugin)
 
 target_sources(SearchPlugin PRIVATE
-	webview.cpp 
-	searchenginelist.cpp 
-	searchprefpage.cpp 
-	searchwidget.cpp 
-	searchplugin.cpp 
-	searchengine.cpp 
+	webview.cpp
+	searchenginelist.cpp
+	searchprefpage.cpp
+	searchwidget.cpp
+	searchplugin.cpp
+	searchengine.cpp
 	opensearchdownloadjob.cpp
         searchactivity.cpp
         proxy_helper.cpp

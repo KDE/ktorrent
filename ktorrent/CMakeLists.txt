@@ -19,17 +19,17 @@ target_sources(ktorrent_app PRIVATE
 	ipfilterlist.cpp
 	ipfilterwidget.cpp
 	statusbarofflineindicator.cpp
-	
+
 	tools/queuemanagerwidget.cpp
 	tools/queuemanagermodel.cpp
 	tools/magnetmodel.cpp
 	tools/magnetview.cpp
-	
+
 	groups/grouppolicydlg.cpp
 	groups/groupfiltermodel.cpp
 	groups/groupview.cpp
 	groups/groupswitcher.cpp
-	
+
 	dialogs/pastedialog.cpp
 	dialogs/speedlimitsdlg.cpp
 	dialogs/speedlimitsmodel.cpp
@@ -38,9 +38,9 @@ target_sources(ktorrent_app PRIVATE
 	dialogs/missingfilesdlg.cpp
 	dialogs/importdialog.cpp
 	dialogs/addpeersdlg.cpp
-	dialogs/fileselectdlg.cpp 
-	
-	pref/prefdialog.cpp 
+	dialogs/fileselectdlg.cpp
+
+	pref/prefdialog.cpp
 	pref/colorpref.cpp
 	pref/advancedpref.cpp
 	pref/networkpref.cpp
@@ -49,39 +49,39 @@ target_sources(ktorrent_app PRIVATE
 	pref/generalpref.cpp
 	pref/recommendedsettingsdlg.cpp
 	pref/btpref.cpp
-	
-	view/view.cpp 
+
+	view/view.cpp
 	view/viewmodel.cpp
 	view/viewdelegate.cpp
 	view/viewselectionmodel.cpp
-	view/viewjobtracker.cpp 
+	view/viewjobtracker.cpp
 	view/scanextender.cpp
 	view/propertiesdlg.cpp
-	view/torrentsearchbar.cpp 
+	view/torrentsearchbar.cpp
 )
 
 ki18n_wrap_ui(ktorrent_app
-	ipfilterwidget.ui 
-	
-	dialogs/speedlimitsdlg.ui 
-	dialogs/pastedlgbase.ui 
-	dialogs/torrentcreatordlg.ui 
+	ipfilterwidget.ui
+
+	dialogs/speedlimitsdlg.ui
+	dialogs/pastedlgbase.ui
+	dialogs/torrentcreatordlg.ui
 	dialogs/missingfilesdlg.ui
 	dialogs/importdialog.ui
 	dialogs/addpeersdlg.ui
-	dialogs/fileselectdlg.ui 
-	
+	dialogs/fileselectdlg.ui
+
 	groups/grouppolicydlg.ui
-	
-	pref/qmpref.ui 
+
+	pref/qmpref.ui
 	pref/btpref.ui
-	pref/generalpref.ui 
+	pref/generalpref.ui
 	pref/colorpref.ui
-	pref/advancedpref.ui 
+	pref/advancedpref.ui
 	pref/networkpref.ui
 	pref/proxypref.ui
 	pref/recommendedsettingsdlg.ui
-	
+
 	view/scanextender.ui
 	view/propertiesdlg.ui
 )

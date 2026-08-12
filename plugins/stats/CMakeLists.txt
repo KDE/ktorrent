@@ -14,9 +14,9 @@ target_sources(StatsPlugin PRIVATE
 	drawer/KPlotWgtDrawer.cc
 	drawer/KPlotWgtDrawer.h
 
-	StatsPlugin.cc 
-	PluginPage.cc 
-	SpdTabPage.cc 
+	StatsPlugin.cc
+	PluginPage.cc
+	SpdTabPage.cc
 	ConnsTabPage.cc
 	SettingsPage.cc
 	DisplaySettingsPage.cc

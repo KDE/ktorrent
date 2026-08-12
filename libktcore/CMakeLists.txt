@@ -13,7 +13,7 @@ target_sources(ktcore PRIVATE
 	util/itemselectionmodel.cpp
 	util/stringcompletionmodel.cpp
 	util/treefiltermodel.cpp
-	
+
 	interfaces/functions.cpp
 	interfaces/plugin.cpp
 	interfaces/guiinterface.cpp
@@ -21,18 +21,18 @@ target_sources(ktcore PRIVATE
 	interfaces/prefpageinterface.cpp
 	interfaces/activity.cpp
 	interfaces/torrentactivityinterface.cpp
-	
+
 	torrent/queuemanager.cpp
 	torrent/magnetmanager.cpp
 	torrent/torrentfilemodel.cpp
 	torrent/torrentfiletreemodel.cpp
 	torrent/torrentfilelistmodel.cpp
-	torrent/chunkbar.cpp 
+	torrent/chunkbar.cpp
 	torrent/chunkbarrenderer.cpp
 	torrent/jobtracker.cpp
-	torrent/jobprogresswidget.cpp 
-	torrent/basicjobprogresswidget.cpp 
-	
+	torrent/jobprogresswidget.cpp
+	torrent/basicjobprogresswidget.cpp
+
 	groups/group.cpp
 	groups/torrentgroup.cpp
 	groups/allgroup.cpp
@@ -40,17 +40,17 @@ target_sources(ktcore PRIVATE
 	groups/groupmanager.cpp
 	groups/functiongroup.cpp
 	groups/grouptreemodel.cpp
-	
+
 	dbus/dbus.cpp
 	dbus/dbustorrent.cpp
 	dbus/dbusgroup.cpp
 	dbus/dbussettings.cpp
 	dbus/dbustorrentfilestream.cpp
-	
+
 	gui/centralwidget.cpp
 	gui/tabbarwidget.cpp
 	gui/extender.cpp
-	
+
 	plugin/pluginmanager.cpp
 	plugin/pluginactivity.cpp
 

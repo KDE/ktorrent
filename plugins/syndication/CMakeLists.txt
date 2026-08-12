@@ -1,13 +1,13 @@
 ktorrent_add_plugin(SyndicationPlugin)
 
 target_sources(SyndicationPlugin PRIVATE
-	syndicationplugin.cpp 
+	syndicationplugin.cpp
 	syndicationactivity.cpp
 	syndicationtab.cpp
-	feedlistview.cpp 
-	feedlist.cpp 
+	feedlistview.cpp
+	feedlist.cpp
 	feedlistdelegate.cpp
-	feedwidget.cpp 
+	feedwidget.cpp
 	feedwidgetmodel.cpp
 	feedretriever.cpp
 	ktfeed.cpp

@@ -13,4 +13,3 @@ target_link_libraries(
     KF6::I18n
 )
 install(TARGETS ktupnptest ${INSTALL_TARGETS_DEFAULT_ARGS})
-

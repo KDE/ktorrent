@@ -6,15 +6,15 @@ qt_add_dbus_interface(ktbwschedulerplugin_dbus_SRC ${screensaver_xml} screensave
 
 target_sources(BandwidthSchedulerPlugin PRIVATE
 	${ktbwschedulerplugin_dbus_SRC}
-	bwschedulerplugin.cpp 
-	weekview.cpp 
-	weekscene.cpp 
-	schedule.cpp 
-	scheduleeditor.cpp 
-	schedulegraphicsitem.cpp 
-	bwprefpage.cpp 
-	guidanceline.cpp 
-	edititemdlg.cpp 
+	bwschedulerplugin.cpp
+	weekview.cpp
+	weekscene.cpp
+	schedule.cpp
+	scheduleeditor.cpp
+	schedulegraphicsitem.cpp
+	bwprefpage.cpp
+	guidanceline.cpp
+	edititemdlg.cpp
 	weekdaymodel.cpp
 )
 
@@ -32,4 +32,3 @@ target_link_libraries(
     KF6::WidgetsAddons
 )
 install(FILES ktorrent_bwschedulerui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/ktorrent )
-

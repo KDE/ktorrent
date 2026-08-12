@@ -15,10 +15,9 @@
 #cmakedefine HAVE_POSIX_FALLOCATE64 1
 #cmakedefine HAVE_POSIX_FALLOCATE 1
 #cmakedefine HAVE_STATVFS 1
-#cmakedefine HAVE_STATVFS64 1 
+#cmakedefine HAVE_STATVFS64 1
 #cmakedefine HAVE_XFS_XFS_H 1
 #cmakedefine HAVE___U64 1
 #cmakedefine HAVE___S64 1
 
 #endif
-
