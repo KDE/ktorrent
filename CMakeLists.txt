@@ -21,7 +21,6 @@ add_definitions(-D'VERSION="${RELEASE_SERVICE_VERSION}"'
 set (QT_MIN_VERSION "6.7.0")
 set (KF_MIN_VERSION "5.240.0")
 set (LIBKTORRENT_MIN_VERSION "26.07.70")
-set (Boost_MIN_VERSION "1.71.0")
 
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH})
@@ -89,7 +88,6 @@ if (NOT Qt6Test_FOUND)
 endif()
 
 find_package(KTorrent6 ${LIBKTORRENT_MIN_VERSION} CONFIG REQUIRED)
-find_package(Boost ${Boost_MIN_VERSION} REQUIRED)
 
 find_package(KF6TextWidgets ${KF_MIN_VERSION})
 set_package_properties(KF6TextWidgets
