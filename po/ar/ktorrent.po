@@ -2246,7 +2246,7 @@ msgid ""
 "It can be disabled if you do not like the additional network traffic it "
 "generates"
 msgstr ""
-"حلّ اسم المضيف لكل نظير. سيؤدي هذا إلى عرض اسم المضيف لكل نظير بدلاً من عنوان "
+"حلّ اسم المضيف لكل نظير. سيؤدي هذا إلى عرض اسم المضيف لكل نظير بدلًا من عنوان "
 "الانترنت. \n"
 "\n"
 "يمكن تعطيله إذا كنت لا تحب حركة السر الإضافية التي يولدها على الشبكة"
@@ -2859,7 +2859,7 @@ msgstr ""
 "<p>الحد الأقصى لعدد الاتصالات الصادرة التي سيحاول سيولك إعدادها في وقت واحد."
 "</p>\n"
 "<p>إذا كنت تواجه مشكلة في حظر سيولك لحركة مرور الإنترنت الأخرى، فحاول تعيين "
-"هذا الرقم أقل قليلاً.</p>"
+"هذا الرقم أقل قليلًا.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2926,7 +2926,7 @@ msgid ""
 "connection with a peer, this protocol is chosen first."
 msgstr ""
 "ميفاق النقل الأساسي المطلوب استخدامه، عند محاولة إعداد اتصال مع نظير، سيُختار "
-"هذا الميفاق أولاً."
+"هذا الميفاق أولًا."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_protocol)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_primaryTransportProtocol)
@@ -3436,7 +3436,7 @@ msgstr "السرعة تنزيل: %1 / الرفع: %2"
 #: ktorrent/statusbar.cpp:35 ktorrent/statusbar.cpp:79
 #, kde-format
 msgid "Transferred down: %1 / up: %2"
-msgstr "المنقولة نزولاً: %1 / الرفع: %2"
+msgstr "المنقولة نزولًا: %1 / الرفع: %2"
 
 #: ktorrent/statusbar.cpp:37 ktorrent/statusbar.cpp:95
 #, kde-format
