@@ -1395,7 +1395,7 @@
           <li xml:lang="zh-CN">使用抽象符号化的托盘图标</li>
           <li xml:lang="zh-TW">使用符號式系統匣圖示</li>
           <li>Improved the search plugin: removed redundant search bar; used removable tabs instead of a custom delete button; used icon-only buttons for Back, Forward and Reload</li>
-          <li xml:lang="ar">تحسين ملحق البحث: إزالة شريط البحث الزائد عن الحاجة؛ استخدام ألسنة قابلة للإزالة بدلاً من زر حذف مخصص؛ استخدام أزرار تحتوي على أيقونات فقط للرجوع إلى الخلف والتقدم إلى الأمام وإعادة التحميل.</li>
+          <li xml:lang="ar">تحسين ملحق البحث: إزالة شريط البحث الزائد عن الحاجة؛ استخدام ألسنة قابلة للإزالة بدلًا من زر حذف مخصص؛ استخدام أزرار تحتوي على أيقونات فقط للرجوع إلى الخلف والتقدم إلى الأمام وإعادة التحميل.</li>
           <li xml:lang="bg">Подобрен е плъгинът за търсене: премахната е излишната лента за търсене; вместо специален бутон за изтриване са използвани раздели, които могат да се премахват; за бутоните „Назад“, „Напред“ и „Опресни“ са използвани бутони само с икони</li>
           <li xml:lang="ca">Millora el connector de cerca: s'ha eliminat la barra de cerca redundant; s'han utilitzat pestanyes eliminables en lloc d'un botó de supressió personalitzat; s'han utilitzat botons de només icona per a Enrere, Endavant i Recarrega</li>
           <li xml:lang="ca-valencia">Millora el connector de busca: s'ha eliminat la barra de busca redundant; s'han utilitzat pestanyes eliminables en lloc d'un botó de supressió personalitzat; s'han utilitzat botons de només icona per a Arrere, Avant i Torna a carregar</li>
