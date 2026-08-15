@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-22 02:43+0000\n"
+"POT-Creation-Date: 2026-08-15 02:53+0000\n"
 "PO-Revision-Date: 2024-09-19 17:43+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3679,7 +3679,7 @@ msgid "Order"
 msgstr "Σειρά"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "Όνομα"
@@ -5458,12 +5458,12 @@ msgstr "Σειρά Λήψης Αρχείου"
 msgid "File download order for <b>%1</b>:"
 msgstr "Σειρά λήψης αρχείου για <b>%1</b>:"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr "Κύκλοι και επεισόδια"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, kde-format
 msgid "Album Track Order"
 msgstr "Κατάταξη κομματιών άλμπουμ"

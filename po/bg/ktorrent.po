@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-22 02:43+0000\n"
+"POT-Creation-Date: 2026-08-15 02:53+0000\n"
 "PO-Revision-Date: 2026-06-22 11:38+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -3629,7 +3629,7 @@ msgid "Order"
 msgstr "Подредба"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "Име"
@@ -5386,12 +5386,12 @@ msgstr "Подредба на изтеглените файлове"
 msgid "File download order for <b>%1</b>:"
 msgstr "Ред за изтегляне на файлове за <b>%1</b>:"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr "Сезони и епизоди"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, kde-format
 msgid "Album Track Order"
 msgstr "Подредба на песните в албума"

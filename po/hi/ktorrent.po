@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-22 02:43+0000\n"
+"POT-Creation-Date: 2026-08-15 02:53+0000\n"
 "PO-Revision-Date: 2008-03-30 16:43+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@yahoo.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
@@ -3490,7 +3490,7 @@ msgid "Order"
 msgstr ""
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "नाम"
@@ -5252,12 +5252,12 @@ msgstr "डाउनलोडेड:"
 msgid "File download order for <b>%1</b>:"
 msgstr ""
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr ""
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, fuzzy, kde-format
 #| msgctxt "Preview available"
 #| msgid "Available"

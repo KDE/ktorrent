@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-22 02:43+0000\n"
+"POT-Creation-Date: 2026-08-15 02:53+0000\n"
 "PO-Revision-Date: 2020-02-06 14:37+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -3600,7 +3600,7 @@ msgid "Order"
 msgstr "Järjekord"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "Nimi"
@@ -5371,12 +5371,12 @@ msgstr "Failide allalaadimise järjekord"
 msgid "File download order for <b>%1</b>:"
 msgstr "Failide allalaadimise järjekord torrenti <b>%1</b> puhul:"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr "Hooajad ja episoodid"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, kde-format
 msgid "Album Track Order"
 msgstr "Albumi palade järjekord"

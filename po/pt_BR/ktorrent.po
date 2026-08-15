@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-22 02:43+0000\n"
+"POT-Creation-Date: 2026-08-15 02:53+0000\n"
 "PO-Revision-Date: 2026-06-22 07:33-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -3634,7 +3634,7 @@ msgid "Order"
 msgstr "Ordem"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "Nome"
@@ -5406,12 +5406,12 @@ msgstr "Ordem de Download dos Arquivos"
 msgid "File download order for <b>%1</b>:"
 msgstr "Ordem de download dos arquivos para <b>%1</b>:"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr "Temporadas e episódios"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, kde-format
 msgid "Album Track Order"
 msgstr "Ordem das faixas no álbum"

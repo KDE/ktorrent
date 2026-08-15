@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-22 02:43+0000\n"
+"POT-Creation-Date: 2026-08-15 02:53+0000\n"
 "PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -3408,7 +3408,7 @@ msgid "Order"
 msgstr "Röð"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, fuzzy, kde-format
 msgid "Name"
 msgstr "Nafn"
@@ -5116,12 +5116,12 @@ msgstr "Skrá Hlaða niður Uppröðun"
 msgid "File download order for <b>%1</b>:"
 msgstr "Skrá fyrir<b></b>:"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, fuzzy, kde-format
 msgid "Seasons and Episodes"
 msgstr "Nota og"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, fuzzy, kde-format
 msgid "Album Track Order"
 msgstr "Bæta við"

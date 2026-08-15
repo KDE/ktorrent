@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-22 02:43+0000\n"
+"POT-Creation-Date: 2026-08-15 02:53+0000\n"
 "PO-Revision-Date: 2012-07-04 08:46+0700\n"
 "Last-Translator: Sophea <sophea@khmeros.info>\n"
 "Language-Team: Khmer <>\n"
@@ -3592,7 +3592,7 @@ msgid "Order"
 msgstr "លំដាប់"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "ឈ្មោះ"
@@ -5348,12 +5348,12 @@ msgstr "លំដាប់​ទាញយក​ឯកសារ"
 msgid "File download order for <b>%1</b>:"
 msgstr "លំដាប់​ទាញ​យ​ក​ឯកសារសម្រាប់ <b>%1</b> ៖"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr "Seasons and Episodes"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, kde-format
 msgid "Album Track Order"
 msgstr "លំដាប់​តាមដាន​អាល់ប៊ុម"
