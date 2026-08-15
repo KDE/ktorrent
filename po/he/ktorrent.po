@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-06 00:43+0000\n"
+"POT-Creation-Date: 2026-08-15 00:45+0000\n"
 "PO-Revision-Date: 2026-06-23 08:42+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -1313,7 +1313,7 @@ msgstr "פתיחת כתובת"
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "פתיחת כתובת שמובילה לטורנט, יש תמיכה גם בקישורי מגנט"
 
-#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:20
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:58
 #, kde-format
@@ -3519,7 +3519,7 @@ msgid "Order"
 msgstr "סידור"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "שם"
@@ -5244,12 +5244,12 @@ msgstr "סדר הורדת קבצים"
 msgid "File download order for <b>%1</b>:"
 msgstr "סדר הורדת קבצים עבור <b>%1</b>:"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr "עונות ופרקים"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, kde-format
 msgid "Album Track Order"
 msgstr "סדר רצועות באלבום"
@@ -6229,46 +6229,49 @@ msgid ""
 msgstr ""
 "עדכון מסנן כתובת ה־IP האוטומטי נכשל: לא ניתן למצוא רשימת חסימה בקובץ ה־zip‏ %1"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:27
-#, kde-format
-msgid " day"
-msgid_plural " days"
+#: plugins/ipfilter/ipblockingprefpage.cpp:28
+#, fuzzy, kde-format
+#| msgid " day"
+#| msgid_plural " days"
+msgctxt "@item %v is a number of days"
+msgid "%v day"
+msgid_plural "%v days"
 msgstr[0] " יום"
 msgstr[1] " יומיים"
 msgstr[2] " ימים"
 msgstr[3] " ימים"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:50
-#: plugins/ipfilter/ipblockingprefpage.cpp:72
-#: plugins/ipfilter/ipblockingprefpage.cpp:137
+#: plugins/ipfilter/ipblockingprefpage.cpp:51
+#: plugins/ipfilter/ipblockingprefpage.cpp:73
+#: plugins/ipfilter/ipblockingprefpage.cpp:138
 #, kde-format
 msgid "Status: Loaded and running."
 msgstr "מצב: נטען ופעיל."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:52
-#: plugins/ipfilter/ipblockingprefpage.cpp:74
-#: plugins/ipfilter/ipblockingprefpage.cpp:84
-#: plugins/ipfilter/ipblockingprefpage.cpp:139
+#: plugins/ipfilter/ipblockingprefpage.cpp:53
+#: plugins/ipfilter/ipblockingprefpage.cpp:75
+#: plugins/ipfilter/ipblockingprefpage.cpp:85
+#: plugins/ipfilter/ipblockingprefpage.cpp:140
 #, kde-format
 msgid "Status: Not loaded."
 msgstr "מצב: לא טעון."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:102
+#: plugins/ipfilter/ipblockingprefpage.cpp:103
 #, kde-format
 msgid "Status: Downloading and converting new block list…"
 msgstr "מצב: מתבצעת הורדה והמרה של רשימת חסימה חדשה…"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:180
+#: plugins/ipfilter/ipblockingprefpage.cpp:181
 #, kde-format
 msgid "No update done yet."
 msgstr "לא בוצע עדכון עדיין."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:184
+#: plugins/ipfilter/ipblockingprefpage.cpp:185
 #, kde-format
 msgid "%1 (Last update attempt failed.)"
 msgstr "%1 (ניסיון העדכון האחרון נכשל.)"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:197
+#: plugins/ipfilter/ipblockingprefpage.cpp:198
 #, kde-format
 msgid "Never"
 msgstr "לעולם לא"
@@ -6349,7 +6352,7 @@ msgstr "יש להפעיל את זה כדי לעדכן את קובץ הסינון
 msgid "Update file every:"
 msgstr "לעדכן את הקובץ כל:"
 
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, kcfg_autoUpdateInterval)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_autoUpdateInterval)
 #: plugins/ipfilter/ipblockingprefpage.ui:147
 #, kde-format
 msgid "Update interval in days."

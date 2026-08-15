@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-06 00:43+0000\n"
+"POT-Creation-Date: 2026-08-15 00:45+0000\n"
 "PO-Revision-Date: 2014-08-17 23:13+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -1341,7 +1341,7 @@ msgstr "URL opropen"
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "En URL opmaken, de na en Torrent wiest. Magnetlinks warrt ünnerstütt."
 
-#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:20
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:58
 #, kde-format
@@ -3618,7 +3618,7 @@ msgid "Order"
 msgstr "Reeg"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "Naam"
@@ -5391,12 +5391,12 @@ msgstr "Datei-Daallaadreeg"
 msgid "File download order for <b>%1</b>:"
 msgstr "Datei-Daallaadreeg för <b>%1</b>:"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr "Regen un Kapiteln"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, kde-format
 msgid "Album Track Order"
 msgstr "Albumstück-Reeg"
@@ -6399,45 +6399,48 @@ msgstr ""
 "IP-Filter lett sik nich automaatsch opfrischen: Blocklist lett sik binnen "
 "Zip-Datei \"%1\" nich finnen."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:27
-#, kde-format
-msgid " day"
-msgid_plural " days"
+#: plugins/ipfilter/ipblockingprefpage.cpp:28
+#, fuzzy, kde-format
+#| msgid " day"
+#| msgid_plural " days"
+msgctxt "@item %v is a number of days"
+msgid "%v day"
+msgid_plural "%v days"
 msgstr[0] " Dag"
 msgstr[1] " Daag"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:50
-#: plugins/ipfilter/ipblockingprefpage.cpp:72
-#: plugins/ipfilter/ipblockingprefpage.cpp:137
+#: plugins/ipfilter/ipblockingprefpage.cpp:51
+#: plugins/ipfilter/ipblockingprefpage.cpp:73
+#: plugins/ipfilter/ipblockingprefpage.cpp:138
 #, kde-format
 msgid "Status: Loaded and running."
 msgstr "Status: Laadt un löppt."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:52
-#: plugins/ipfilter/ipblockingprefpage.cpp:74
-#: plugins/ipfilter/ipblockingprefpage.cpp:84
-#: plugins/ipfilter/ipblockingprefpage.cpp:139
+#: plugins/ipfilter/ipblockingprefpage.cpp:53
+#: plugins/ipfilter/ipblockingprefpage.cpp:75
+#: plugins/ipfilter/ipblockingprefpage.cpp:85
+#: plugins/ipfilter/ipblockingprefpage.cpp:140
 #, kde-format
 msgid "Status: Not loaded."
 msgstr "Status: Nich laadt."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:102
+#: plugins/ipfilter/ipblockingprefpage.cpp:103
 #, fuzzy, kde-format
 #| msgid "Status: Downloading and converting new block list..."
 msgid "Status: Downloading and converting new block list…"
 msgstr "Status: Nieg Blocklist warrt daallaadt un wannelt..."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:180
+#: plugins/ipfilter/ipblockingprefpage.cpp:181
 #, kde-format
 msgid "No update done yet."
 msgstr "Betherto nix opfrischt."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:184
+#: plugins/ipfilter/ipblockingprefpage.cpp:185
 #, kde-format
 msgid "%1 (Last update attempt failed.)"
 msgstr "%1 (verleden Opfrischen fehlslaan.)"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:197
+#: plugins/ipfilter/ipblockingprefpage.cpp:198
 #, kde-format
 msgid "Never"
 msgstr "Nienich"
@@ -6520,7 +6523,7 @@ msgstr "Maak dit an, wenn Du de IP-Filterdatei automaatsch opfrischen wullt."
 msgid "Update file every:"
 msgstr "Datei jümmers opfrischen na:"
 
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, kcfg_autoUpdateInterval)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_autoUpdateInterval)
 #: plugins/ipfilter/ipblockingprefpage.ui:147
 #, kde-format
 msgid "Update interval in days."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-06 00:43+0000\n"
+"POT-Creation-Date: 2026-08-15 00:45+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -1301,7 +1301,7 @@ msgstr "打开网址"
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "打开指向种子的网址，支持磁力链"
 
-#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:20
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:58
 #, kde-format
@@ -3478,7 +3478,7 @@ msgid "Order"
 msgstr "顺序"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "名称"
@@ -5180,12 +5180,12 @@ msgstr "文件下载顺序"
 msgid "File download order for <b>%1</b>:"
 msgstr "<b>%1</b> 的文件下载顺序："
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr "季与剧集"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, kde-format
 msgid "Album Track Order"
 msgstr "专辑曲目顺序"
@@ -6159,43 +6159,46 @@ msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"
 msgstr "自动更新 IP 过滤器失败：未在 zip 文件 %1 中找到屏蔽列表"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:27
-#, kde-format
-msgid " day"
-msgid_plural " days"
+#: plugins/ipfilter/ipblockingprefpage.cpp:28
+#, fuzzy, kde-format
+#| msgid " day"
+#| msgid_plural " days"
+msgctxt "@item %v is a number of days"
+msgid "%v day"
+msgid_plural "%v days"
 msgstr[0] " 天"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:50
-#: plugins/ipfilter/ipblockingprefpage.cpp:72
-#: plugins/ipfilter/ipblockingprefpage.cpp:137
+#: plugins/ipfilter/ipblockingprefpage.cpp:51
+#: plugins/ipfilter/ipblockingprefpage.cpp:73
+#: plugins/ipfilter/ipblockingprefpage.cpp:138
 #, kde-format
 msgid "Status: Loaded and running."
 msgstr "状态：已加载且正运行。"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:52
-#: plugins/ipfilter/ipblockingprefpage.cpp:74
-#: plugins/ipfilter/ipblockingprefpage.cpp:84
-#: plugins/ipfilter/ipblockingprefpage.cpp:139
+#: plugins/ipfilter/ipblockingprefpage.cpp:53
+#: plugins/ipfilter/ipblockingprefpage.cpp:75
+#: plugins/ipfilter/ipblockingprefpage.cpp:85
+#: plugins/ipfilter/ipblockingprefpage.cpp:140
 #, kde-format
 msgid "Status: Not loaded."
 msgstr "状态：未加载。"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:102
+#: plugins/ipfilter/ipblockingprefpage.cpp:103
 #, kde-format
 msgid "Status: Downloading and converting new block list…"
 msgstr "状态：正在下载和转换新的屏蔽列表…"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:180
+#: plugins/ipfilter/ipblockingprefpage.cpp:181
 #, kde-format
 msgid "No update done yet."
 msgstr "还没有更新过。"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:184
+#: plugins/ipfilter/ipblockingprefpage.cpp:185
 #, kde-format
 msgid "%1 (Last update attempt failed.)"
 msgstr "%1 (上次更新操作失败。)"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:197
+#: plugins/ipfilter/ipblockingprefpage.cpp:198
 #, kde-format
 msgid "Never"
 msgstr "从不"
@@ -6276,7 +6279,7 @@ msgstr "启用可使过滤文件自动更新。"
 msgid "Update file every:"
 msgstr "更新文件每隔："
 
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, kcfg_autoUpdateInterval)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_autoUpdateInterval)
 #: plugins/ipfilter/ipblockingprefpage.ui:147
 #, kde-format
 msgid "Update interval in days."

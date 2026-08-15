@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-06 00:43+0000\n"
+"POT-Creation-Date: 2026-08-15 00:45+0000\n"
 "PO-Revision-Date: 2024-04-22 17:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -1286,7 +1286,7 @@ msgstr "Opna slóð"
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Opna a Slóð punktar til a"
 
-#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:20
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:58
 #, fuzzy, kde-format
@@ -3408,7 +3408,7 @@ msgid "Order"
 msgstr "Röð"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, fuzzy, kde-format
 msgid "Name"
 msgstr "Nafn"
@@ -5111,12 +5111,12 @@ msgstr "Skrá Hlaða niður Uppröðun"
 msgid "File download order for <b>%1</b>:"
 msgstr "Skrá fyrir<b></b>:"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, fuzzy, kde-format
 msgid "Seasons and Episodes"
 msgstr "Nota og"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, fuzzy, kde-format
 msgid "Album Track Order"
 msgstr "Bæta við"
@@ -6104,44 +6104,45 @@ msgid ""
 "Automatic update of IP filter failed: cannot find blocklist in zip file %1"
 msgstr "1"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:27
+#: plugins/ipfilter/ipblockingprefpage.cpp:28
 #, fuzzy, kde-format
-msgid " day"
-msgid_plural " days"
+msgctxt "@item %v is a number of days"
+msgid "%v day"
+msgid_plural "%v days"
 msgstr[0] " dagar"
 msgstr[1] " dagar"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:50
-#: plugins/ipfilter/ipblockingprefpage.cpp:72
-#: plugins/ipfilter/ipblockingprefpage.cpp:137
+#: plugins/ipfilter/ipblockingprefpage.cpp:51
+#: plugins/ipfilter/ipblockingprefpage.cpp:73
+#: plugins/ipfilter/ipblockingprefpage.cpp:138
 #, kde-format
 msgid "Status: Loaded and running."
 msgstr "Staða: Hlaðið inn og í keyrslu."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:52
-#: plugins/ipfilter/ipblockingprefpage.cpp:74
-#: plugins/ipfilter/ipblockingprefpage.cpp:84
-#: plugins/ipfilter/ipblockingprefpage.cpp:139
+#: plugins/ipfilter/ipblockingprefpage.cpp:53
+#: plugins/ipfilter/ipblockingprefpage.cpp:75
+#: plugins/ipfilter/ipblockingprefpage.cpp:85
+#: plugins/ipfilter/ipblockingprefpage.cpp:140
 #, kde-format
 msgid "Status: Not loaded."
 msgstr "Staða: Ekki hlaðið."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:102
+#: plugins/ipfilter/ipblockingprefpage.cpp:103
 #, fuzzy, kde-format
 msgid "Status: Downloading and converting new block list…"
 msgstr "Staða Sæki og nýtt."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:180
+#: plugins/ipfilter/ipblockingprefpage.cpp:181
 #, fuzzy, kde-format
 msgid "No update done yet."
 msgstr "Nei lokið."
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:184
+#: plugins/ipfilter/ipblockingprefpage.cpp:185
 #, fuzzy, kde-format
 msgid "%1 (Last update attempt failed.)"
 msgstr "Síðasta mistókst"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:197
+#: plugins/ipfilter/ipblockingprefpage.cpp:198
 #, kde-format
 msgid "Never"
 msgstr "Aldrei"
@@ -6220,7 +6221,7 @@ msgstr "Virkja til sía."
 msgid "Update file every:"
 msgstr "Uppfæra:"
 
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, kcfg_autoUpdateInterval)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_autoUpdateInterval)
 #: plugins/ipfilter/ipblockingprefpage.ui:147
 #, fuzzy, kde-format
 msgid "Update interval in days."

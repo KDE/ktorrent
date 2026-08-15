@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-06 00:43+0000\n"
+"POT-Creation-Date: 2026-08-15 00:45+0000\n"
 "PO-Revision-Date: 2013-08-27 05:45+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -1328,7 +1328,7 @@ msgstr "URL-ді ашу"
 msgid "Open a URL which points to a torrent, magnet links are supported"
 msgstr "Осы торрент сілтеген URL-ді ашу. Magnet-сілтемелерді таниді."
 
-#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:19
+#: ktorrent/gui.cpp:401 plugins/ipfilter/ipblockingprefpage.cpp:20
 #: plugins/ipfilter/ipfilterplugin.cpp:44
 #: plugins/ipfilter/ipfilterplugin.cpp:58
 #, kde-format
@@ -3596,7 +3596,7 @@ msgid "Order"
 msgstr "Реті"
 
 #: ktorrent/tools/queuemanagermodel.cpp:183 ktorrent/view/viewmodel.cpp:489
-#: plugins/downloadorder/downloadorderdialog.cpp:71
+#: plugins/downloadorder/downloadorderdialog.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "Атауы"
@@ -5351,12 +5351,12 @@ msgstr "Файл жүктеп алу реті"
 msgid "File download order for <b>%1</b>:"
 msgstr "<b>%1</b> жүктеп алу реті"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:72
+#: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
 msgid "Seasons and Episodes"
 msgstr "Қезеңдер мен сериялар"
 
-#: plugins/downloadorder/downloadorderdialog.cpp:73
+#: plugins/downloadorder/downloadorderdialog.cpp:74
 #, kde-format
 msgid "Album Track Order"
 msgstr "Альбом жолсызықтар реті"
@@ -6346,44 +6346,47 @@ msgstr ""
 "IP сүзгісін автоматты түрде жаңарту жаңылысы: %1 zip файлында блок-тізімі "
 "табылмады"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:27
-#, kde-format
-msgid " day"
-msgid_plural " days"
+#: plugins/ipfilter/ipblockingprefpage.cpp:28
+#, fuzzy, kde-format
+#| msgid " day"
+#| msgid_plural " days"
+msgctxt "@item %v is a number of days"
+msgid "%v day"
+msgid_plural "%v days"
 msgstr[0] " күн"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:50
-#: plugins/ipfilter/ipblockingprefpage.cpp:72
-#: plugins/ipfilter/ipblockingprefpage.cpp:137
+#: plugins/ipfilter/ipblockingprefpage.cpp:51
+#: plugins/ipfilter/ipblockingprefpage.cpp:73
+#: plugins/ipfilter/ipblockingprefpage.cpp:138
 #, kde-format
 msgid "Status: Loaded and running."
 msgstr "Күй-жайы: Жүктеліп жегілген"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:52
-#: plugins/ipfilter/ipblockingprefpage.cpp:74
-#: plugins/ipfilter/ipblockingprefpage.cpp:84
-#: plugins/ipfilter/ipblockingprefpage.cpp:139
+#: plugins/ipfilter/ipblockingprefpage.cpp:53
+#: plugins/ipfilter/ipblockingprefpage.cpp:75
+#: plugins/ipfilter/ipblockingprefpage.cpp:85
+#: plugins/ipfilter/ipblockingprefpage.cpp:140
 #, kde-format
 msgid "Status: Not loaded."
 msgstr "Күй-жайы: Жүктелмеген"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:102
+#: plugins/ipfilter/ipblockingprefpage.cpp:103
 #, fuzzy, kde-format
 #| msgid "Status: Downloading and converting new block list..."
 msgid "Status: Downloading and converting new block list…"
 msgstr "Күй-жайы: жаңа блок-тізімін жүктеп алу мен аудару"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:180
+#: plugins/ipfilter/ipblockingprefpage.cpp:181
 #, kde-format
 msgid "No update done yet."
 msgstr "Әлі жаңартылмаған"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:184
+#: plugins/ipfilter/ipblockingprefpage.cpp:185
 #, kde-format
 msgid "%1 (Last update attempt failed.)"
 msgstr "%1 (Соңғы жаңарту жаңылған)"
 
-#: plugins/ipfilter/ipblockingprefpage.cpp:197
+#: plugins/ipfilter/ipblockingprefpage.cpp:198
 #, kde-format
 msgid "Never"
 msgstr "Ешқашан"
@@ -6462,7 +6465,7 @@ msgstr "Сүзгі файлды автоматты түрде жаңарту."
 msgid "Update file every:"
 msgstr "Жаңарту аралығы:"
 
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, kcfg_autoUpdateInterval)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_autoUpdateInterval)
 #: plugins/ipfilter/ipblockingprefpage.ui:147
 #, kde-format
 msgid "Update interval in days."
