@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:45+0000\n"
-"PO-Revision-Date: 2026-06-22 20:03+0300\n"
+"PO-Revision-Date: 2026-08-15 20:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -6343,14 +6343,12 @@ msgstr ""
 "bulunamıyor"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:28
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgctxt "@item %v is a number of days"
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " gün"
-msgstr[1] " gün"
+msgstr[0] "%v gün"
+msgstr[1] "%v gün"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:51
 #: plugins/ipfilter/ipblockingprefpage.cpp:73

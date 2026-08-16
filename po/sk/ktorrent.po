@@ -6347,15 +6347,13 @@ msgstr ""
 "súbore %1"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:28
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgctxt "@item %v is a number of days"
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] "deň"
-msgstr[1] "dni"
-msgstr[2] "dní"
+msgstr[0] "%v deň"
+msgstr[1] "%v dni"
+msgstr[2] "%v dní"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:51
 #: plugins/ipfilter/ipblockingprefpage.cpp:73

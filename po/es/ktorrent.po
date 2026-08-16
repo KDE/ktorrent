@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:45+0000\n"
-"PO-Revision-Date: 2026-06-27 12:09+0100\n"
+"PO-Revision-Date: 2026-08-16 00:36+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -6420,14 +6420,12 @@ msgstr ""
 "encontrar la lista de bloqueo en el archivo zip %1"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:28
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgctxt "@item %v is a number of days"
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " día"
-msgstr[1] " días"
+msgstr[0] "%v día"
+msgstr[1] "%v días"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:51
 #: plugins/ipfilter/ipblockingprefpage.cpp:73
@@ -9010,6 +9008,3 @@ msgstr "Explorar de nuevo"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "%1<br>Url: <b>%2</b>"
-#~ msgstr "%1<br>URL: <b>%2</b>"

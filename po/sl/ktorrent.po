@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:45+0000\n"
-"PO-Revision-Date: 2026-06-22 07:13+0200\n"
+"PO-Revision-Date: 2026-08-15 07:44+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -6345,16 +6345,14 @@ msgstr ""
 "blokiranih v datoteki zip %1"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:28
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgctxt "@item %v is a number of days"
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " dni"
-msgstr[1] " dan"
-msgstr[2] " dneva"
-msgstr[3] " dnevi"
+msgstr[0] "%v dni"
+msgstr[1] "%v dan"
+msgstr[2] "%v dneva"
+msgstr[3] "%v dnevi"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:51
 #: plugins/ipfilter/ipblockingprefpage.cpp:73
