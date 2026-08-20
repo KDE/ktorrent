@@ -41,8 +41,7 @@ GeoIPManager::~GeoIPManager()
 
 Country GeoIPManager::findCountry(const QStringView ip) const
 {
-    const auto ip_utf8 = ip.toUtf8().constData();
-    auto db_entry = lookupIP(ip_utf8);
+    const auto db_entry = lookupIP(ip.toUtf8().constData());
     if (!db_entry.has_value()) {
         return {};
     }
@@ -59,11 +58,10 @@ bool GeoIPManager::hasDatabase() const
 
 void GeoIPManager::openDatabase()
 {
-    const auto db_name = LOCAL_DATABASE_PATH.toLocal8Bit().constData();
-    int status = MMDB_open(db_name, MMDB_MODE_MMAP, &db);
+    int status = MMDB_open(LOCAL_DATABASE_PATH.toLocal8Bit().constData(), MMDB_MODE_MMAP, &db);
 
     if (status != MMDB_SUCCESS) {
-        Out(SYS_INW | LOG_IMPORTANT) << "Error from libmaxmindb when opening " << db_name << " - " << MMDB_strerror(status) << endl;
+        Out(SYS_INW | LOG_IMPORTANT) << "Error from libmaxmindb when opening " << LOCAL_DATABASE_PATH << " - " << MMDB_strerror(status) << endl;
         db_open = false;
     } else {
         db_open = true;
