@@ -6164,7 +6164,7 @@ msgstr "自动更新 IP 过滤器失败：未在 zip 文件 %1 中找到屏蔽�
 msgctxt "@item %v is a number of days"
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] ""
+msgstr[0] "%v 天"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:51
 #: plugins/ipfilter/ipblockingprefpage.cpp:73
