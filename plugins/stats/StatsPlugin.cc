@@ -25,17 +25,17 @@ StatsPlugin::~StatsPlugin()
 
 void StatsPlugin::load()
 {
-    pmUiSpd = new SpdTabPage(nullptr);
-    pmUiConns = new ConnsTabPage(nullptr);
-    pmUiSett = new SettingsPage(nullptr);
-    pmDispSett = new DisplaySettingsPage(nullptr);
+    pmUiSpd = std::make_unique<SpdTabPage>(nullptr);
+    pmUiConns = std::make_unique<ConnsTabPage>(nullptr);
+    pmUiSett = std::make_unique<SettingsPage>(nullptr);
+    pmDispSett = std::make_unique<DisplaySettingsPage>(nullptr);
 
     TorrentActivityInterface *ta = getGUI()->getTorrentActivity();
-    ta->addToolWidget(pmUiSpd, i18n("Speed charts"), QStringLiteral("view-statistics"), i18n("Displays charts about download and upload speed"));
-    ta->addToolWidget(pmUiConns, i18n("Connections charts"), QStringLiteral("view-statistics"), i18n("Displays charts about connections"));
+    ta->addToolWidget(pmUiSpd.get(), i18n("Speed charts"), QStringLiteral("view-statistics"), i18n("Displays charts about download and upload speed"));
+    ta->addToolWidget(pmUiConns.get(), i18n("Connections charts"), QStringLiteral("view-statistics"), i18n("Displays charts about connections"));
 
-    getGUI()->addPrefPage(pmUiSett);
-    getGUI()->addPrefPage(pmDispSett);
+    getGUI()->addPrefPage(pmUiSett.get());
+    getGUI()->addPrefPage(pmDispSett.get());
 
     connect(&pmTmr, &QTimer::timeout, this, &StatsPlugin::gatherData);
     connect(getCore(), &CoreInterface::settingsChanged, this, &StatsPlugin::settingsChanged);
@@ -46,16 +46,21 @@ void StatsPlugin::load()
 void StatsPlugin::unload()
 {
     TorrentActivityInterface *ta = getGUI()->getTorrentActivity();
-    ta->removeToolWidget(pmUiSpd);
-    ta->removeToolWidget(pmUiConns);
+    ta->removeToolWidget(pmUiSpd.get());
+    ta->removeToolWidget(pmUiConns.get());
 
-    getGUI()->removePrefPage(pmUiSett);
-    getGUI()->removePrefPage(pmDispSett);
+    getGUI()->removePrefPage(pmUiSett.get());
+    getGUI()->removePrefPage(pmDispSett.get());
 
     pmTmr.stop();
 
     disconnect(&pmTmr, &QTimer::timeout, this, &StatsPlugin::gatherData);
     disconnect(getCore(), &CoreInterface::settingsChanged, this, &StatsPlugin::settingsChanged);
+
+    pmDispSett.reset();
+    pmUiSett.reset();
+    pmUiConns.reset();
+    pmUiSpd.reset();
 }
 
 void StatsPlugin::guiUpdate()

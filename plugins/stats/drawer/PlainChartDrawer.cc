@@ -284,13 +284,17 @@ void PlainChartDrawer::DrawMaximum(QPainter &rPnt, const ChartDrawerData &rCdd, 
 
 void PlainChartDrawer::MakeCtxMenu()
 {
-    connect(pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…")), &QAction::triggered, this, [this](bool) {
+    auto action = pmCtxMenu->addAction(i18nc("@action:inmenu", "Save as image…"));
+    action->setParent(this);
+    connect(action, &QAction::triggered, this, [this](bool) {
         renderToImage();
     });
 
     pmCtxMenu->addSeparator();
 
-    connect(pmCtxMenu->addAction(i18nc("@action:inmenu Recalculate the 0Y axis and then redraw the chart", "Rescale")),
+    action = pmCtxMenu->addAction(i18nc("@action:inmenu Recalculate the 0Y axis and then redraw the chart", "Rescale"));
+    action->setParent(this);
+    connect(action,
             &QAction::triggered,
             this,
             [this](bool) {
@@ -300,6 +304,7 @@ void PlainChartDrawer::MakeCtxMenu()
     pmCtxMenu->addSeparator();
 
     QAction *rst = pmCtxMenu->addAction(i18nc("@action:inmenu", "Reset"));
+    rst->setParent(this);
 
     connect(rst, &QAction::triggered, this, [this](bool) {
         zeroAll();

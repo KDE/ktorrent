@@ -52,13 +52,13 @@ public Q_SLOTS:
 
 private:
     /// Speeds tab
-    SpdTabPage *pmUiSpd;
+    std::unique_ptr<SpdTabPage> pmUiSpd;
     /// Connections tab
-    ConnsTabPage *pmUiConns;
+    std::unique_ptr<ConnsTabPage> pmUiConns;
     /// Settings Page
-    SettingsPage *pmUiSett;
+    std::unique_ptr<SettingsPage> pmUiSett;
     /// Display settings page
-    DisplaySettingsPage *pmDispSett;
+    std::unique_ptr<DisplaySettingsPage> pmDispSett;
     /// Timer
     QTimer pmTmr;
 
