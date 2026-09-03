@@ -354,8 +354,22 @@ void MagnetManager::setTimerDuration(bt::Uint32 duration)
 
 void MagnetManager::update()
 {
+    // Resolve all downloaders to update *before* calling any of them: a downloader's
+    // update() can synchronously find its metadata (foundMetadata -> onDownloadFinished
+    // -> removeMagnets -> freeDownloadSlot), which mutates usedDownloadingSlots and
+    // magnetQueue. Iterating usedDownloadingSlots directly while it can be mutated out
+    // from under the loop invalidates the range-based for's iterators mid-iteration
+    // (crashes in this function have been observed as a result). Capturing the
+    // MagnetDownloader pointers up front means later index shuffling from a mid-loop
+    // removal can't affect downloaders we've already resolved.
+    QList<MagnetDownloader *> downloaders;
+    downloaders.reserve(usedDownloadingSlots.size());
     for (DownloadSlot *slot : std::as_const(usedDownloadingSlots)) {
-        magnetQueue.at(slot->getMagnetIndex())->update();
+        downloaders.append(magnetQueue.at(slot->getMagnetIndex()));
+    }
+
+    for (MagnetDownloader *md : std::as_const(downloaders)) {
+        md->update();
     }
 }
 
