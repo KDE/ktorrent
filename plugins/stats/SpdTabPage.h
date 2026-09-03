@@ -74,7 +74,7 @@ private:
 
 private:
     /// Page's UI
-    Ui::SpdWgt *pmUiSpd;
+    std::unique_ptr<Ui::SpdWgt> pmUiSpd;
 
     /// Dl speeds chart widget
     ChartDrawer *pmDlChtWgt;

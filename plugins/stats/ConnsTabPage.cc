@@ -10,7 +10,7 @@ namespace kt
 
 ConnsTabPage::ConnsTabPage(QWidget *p)
     : PluginPage(p)
-    , pmConnsUi(new Ui::ConnsWgt)
+    , pmConnsUi(std::make_unique<Ui::ConnsWgt>())
     , pmLhrSwnUuid(QUuid::createUuid())
     , pmSesSwnUuid(QUuid::createUuid())
 {

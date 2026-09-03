@@ -11,7 +11,7 @@ namespace kt
 
 SpdTabPage::SpdTabPage(QWidget *p)
     : PluginPage(p)
-    , pmUiSpd(new Ui::SpdWgt)
+    , pmUiSpd(std::make_unique<Ui::SpdWgt>())
     , mDlAvg(std::make_pair(0, 0))
     , mUlAvg(std::make_pair(0, 0))
 {

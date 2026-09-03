@@ -38,7 +38,7 @@ class ConnsTabPage : public PluginPage
 
 private:
     /// Tab's UI
-    Ui::ConnsWgt *pmConnsUi;
+    std::unique_ptr<Ui::ConnsWgt> pmConnsUi;
 
     /// Connections chart widget
     ChartDrawer *pmConnsChtWgt;
