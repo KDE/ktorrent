@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 02:53+0000\n"
+"POT-Creation-Date: 2026-09-04 02:44+0000\n"
 "PO-Revision-Date: 2009-10-31 23:24+0900\n"
 "Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -8022,7 +8022,7 @@ msgid "Unknown"
 msgstr "不明"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:309
-#: plugins/stats/drawer/PlainChartDrawer.cc:475
+#: plugins/stats/drawer/PlainChartDrawer.cc:480
 #, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
@@ -8032,7 +8032,7 @@ msgstr ""
 "</h1><ul type='square'>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:312
-#: plugins/stats/drawer/PlainChartDrawer.cc:478
+#: plugins/stats/drawer/PlainChartDrawer.cc:483
 #, kde-format
 msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
@@ -8050,7 +8050,7 @@ msgid "Save as image…"
 msgstr "画像として保存..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:353
-#: plugins/stats/drawer/PlainChartDrawer.cc:293
+#: plugins/stats/drawer/PlainChartDrawer.cc:295
 #, fuzzy, kde-format
 #| msgid "Rescale"
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
@@ -8058,7 +8058,7 @@ msgid "Rescale"
 msgstr "再計測"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:362
-#: plugins/stats/drawer/PlainChartDrawer.cc:302
+#: plugins/stats/drawer/PlainChartDrawer.cc:306
 #, fuzzy, kde-format
 #| msgid "Reset"
 msgctxt "@action:inmenu"
@@ -8066,13 +8066,13 @@ msgid "Reset"
 msgstr "リセット"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:376
-#: plugins/stats/drawer/PlainChartDrawer.cc:316
+#: plugins/stats/drawer/PlainChartDrawer.cc:321
 #, kde-format
 msgid "Select path to save image…"
 msgstr "画像の保存先を選択..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:376
-#: plugins/stats/drawer/PlainChartDrawer.cc:316
+#: plugins/stats/drawer/PlainChartDrawer.cc:321
 #, fuzzy, kde-format
 #| msgid "Torrent Limits"
 msgid "Image files"
