@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:45+0000\n"
+"POT-Creation-Date: 2026-09-04 00:43+0000\n"
 "PO-Revision-Date: 2026-08-20 10:27+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -7927,7 +7927,7 @@ msgid "Unknown"
 msgstr "Sconosciuto"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:309
-#: plugins/stats/drawer/PlainChartDrawer.cc:475
+#: plugins/stats/drawer/PlainChartDrawer.cc:480
 #, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
@@ -7937,7 +7937,7 @@ msgstr ""
 "underline'>Legenda:</h1><ul type='square'>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:312
-#: plugins/stats/drawer/PlainChartDrawer.cc:478
+#: plugins/stats/drawer/PlainChartDrawer.cc:483
 #, kde-format
 msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
@@ -7954,27 +7954,27 @@ msgid "Save as image…"
 msgstr "Salva come immagine..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:353
-#: plugins/stats/drawer/PlainChartDrawer.cc:293
+#: plugins/stats/drawer/PlainChartDrawer.cc:295
 #, kde-format
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
 msgid "Rescale"
 msgstr "Ridimensiona"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:362
-#: plugins/stats/drawer/PlainChartDrawer.cc:302
+#: plugins/stats/drawer/PlainChartDrawer.cc:306
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Reset"
 msgstr "Azzera"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:376
-#: plugins/stats/drawer/PlainChartDrawer.cc:316
+#: plugins/stats/drawer/PlainChartDrawer.cc:321
 #, kde-format
 msgid "Select path to save image…"
 msgstr "Seleziona il percorso in cui salvare l'immagine..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:376
-#: plugins/stats/drawer/PlainChartDrawer.cc:316
+#: plugins/stats/drawer/PlainChartDrawer.cc:321
 #, kde-format
 msgid "Image files"
 msgstr "Immagini"

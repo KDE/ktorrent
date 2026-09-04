@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent(2)\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:45+0000\n"
+"POT-Creation-Date: 2026-09-04 00:43+0000\n"
 "PO-Revision-Date: 2025-12-13 13:36+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: \n"
@@ -8020,7 +8020,7 @@ msgid "Unknown"
 msgstr "Nescunoscut"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:309
-#: plugins/stats/drawer/PlainChartDrawer.cc:475
+#: plugins/stats/drawer/PlainChartDrawer.cc:480
 #, kde-format
 msgid ""
 "<h1 align='center' style='font-size: large; text-decoration: "
@@ -8030,7 +8030,7 @@ msgstr ""
 "underline'>Legendă:</h1><ul type='square'>"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:312
-#: plugins/stats/drawer/PlainChartDrawer.cc:478
+#: plugins/stats/drawer/PlainChartDrawer.cc:483
 #, kde-format
 msgid ""
 "<li><span style='background-color: %1; font-size: 14px; font-family: "
@@ -8048,7 +8048,7 @@ msgid "Save as image…"
 msgstr "Salvare ca imagine..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:353
-#: plugins/stats/drawer/PlainChartDrawer.cc:293
+#: plugins/stats/drawer/PlainChartDrawer.cc:295
 #, fuzzy, kde-format
 #| msgid "Rescale"
 msgctxt "@action:inmenu Recalculate the 0Y axis and then redraw the chart"
@@ -8056,7 +8056,7 @@ msgid "Rescale"
 msgstr "Rescalează"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:362
-#: plugins/stats/drawer/PlainChartDrawer.cc:302
+#: plugins/stats/drawer/PlainChartDrawer.cc:306
 #, fuzzy, kde-format
 #| msgid "Reset"
 msgctxt "@action:inmenu"
@@ -8064,13 +8064,13 @@ msgid "Reset"
 msgstr "Reinițializează"
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:376
-#: plugins/stats/drawer/PlainChartDrawer.cc:316
+#: plugins/stats/drawer/PlainChartDrawer.cc:321
 #, kde-format
 msgid "Select path to save image…"
 msgstr "Alegeți calea de salvare a imaginii..."
 
 #: plugins/stats/drawer/KPlotWgtDrawer.cc:376
-#: plugins/stats/drawer/PlainChartDrawer.cc:316
+#: plugins/stats/drawer/PlainChartDrawer.cc:321
 #, fuzzy, kde-format
 #| msgid "Torrent Files"
 msgid "Image files"
