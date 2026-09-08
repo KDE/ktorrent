@@ -180,7 +180,7 @@ msgstr ""
 #: ktorrent/dialogs/addpeersdlg.ui:14 ktorrent/groups/grouppolicydlg.ui:14
 #, kde-format
 msgid "Dialog"
-msgstr "Boîte de dialogue"
+msgstr "Boite de dialogue"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/dialogs/addpeersdlg.ui:20
