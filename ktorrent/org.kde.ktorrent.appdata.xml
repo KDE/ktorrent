@@ -1261,7 +1261,7 @@
           <li xml:lang="ca-valencia">S'ha esmenat el diàleg d'importació de torrent que no permet seleccionar fitxers «.torrent»</li>
           <li xml:lang="cs">Opravena chyba, kvůli které nebylo možné v dialogovém okně „Importovat torrent“ vybrat soubory .torrent</li>
           <li xml:lang="es">Arreglado el diálogo de importación torrent que no permitía seleccionar archivos .torrent</li>
-          <li xml:lang="fr">Correction de la boîte de dialogue d'importation de Torrent, ne permettant pas la sélection de de fichier « .torrent »</li>
+          <li xml:lang="fr">Correction de la boite de dialogue d'importation de Torrent, ne permettant pas la sélection de de fichier « .torrent »</li>
           <li xml:lang="he">תוקנה בעיה שחלונית ייבוא הטורנט לא מרשה לבחור קובצי ‎.torrent</li>
           <li xml:lang="it">Correzione del problema per cui la finestra di dialogo “Importa torrent” non permetteva di selezionare i file .torrent</li>
           <li xml:lang="ka">გასწორდა ტორენტის შემოტანის დიალოგის შეცდომა გადაცემული .torrent ფაილის კოპირებაში</li>
@@ -1381,7 +1381,7 @@
           <li xml:lang="ca-valencia">Utilitza una icona simbòlica a la safata del sistema</li>
           <li xml:lang="cs">Ikona v systémové části</li>
           <li xml:lang="es">Uso de icono de papelera simbólico</li>
-          <li xml:lang="fr">Utiliser une boîte à miniatures symbolique</li>
+          <li xml:lang="fr">Utiliser une boite à miniatures symbolique</li>
           <li xml:lang="he">עברנו להשתמש בסמל שורת מערכת סמלי</li>
           <li xml:lang="it">Uso di un'icona del vassoio di sistema simbolica</li>
           <li xml:lang="ka">სისტემის კუთხეში ხატულის ჩვენება</li>
@@ -1462,7 +1462,7 @@
           <li xml:lang="ca-valencia">S'ha esmenat el diàleg d'importació de torrent que falla en copiar el fitxer «.torrent» indicat</li>
           <li xml:lang="cs">Opravena chyba dialogového okna Importovat torrent, které nedokázalo zkopírovat zadaný soubor .torrent</li>
           <li xml:lang="es">Arreglado el diálogo de importar torrent al fallar la copia de un archivo .torrent</li>
-          <li xml:lang="fr">Correction de la boîte de dialogue d'importation échouant lors de la copie du fichier « .torrent » fourni</li>
+          <li xml:lang="fr">Correction de la boite de dialogue d'importation échouant lors de la copie du fichier « .torrent » fourni</li>
           <li xml:lang="he">תוקנה בעיה שחלונית ייבוא טורנט נכשלה בהעתקת קובץ ה־‎.torrent הנתון</li>
           <li xml:lang="it">Correzione del problema per cui la finestra di dialogo Importa torrent non riusciva a copiare il file .torrent specificato</li>
           <li xml:lang="ka">გასწორდა ტორენტის შემოტანის დიალოგის შეცდომა გადაცემული .torrent ფაილის კოპირებაში</li>
