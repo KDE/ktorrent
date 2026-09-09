@@ -2198,7 +2198,7 @@ msgstr "Performance"
 #: ktorrent/pref/advancedpref.ui:53
 #, kde-format
 msgid "GUI update interval:"
-msgstr "Intervalle de rafraîchissement de l'interface :"
+msgstr "Intervalle de rafraichissement de l'interface :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_guiUpdateInterval)
 #: ktorrent/pref/advancedpref.ui:67
@@ -5049,7 +5049,7 @@ msgstr "IP à envoyer au traqueur"
 #: libktcore/ktorrent.kcfg:131
 #, kde-format
 msgid "GUI update interval"
-msgstr "Intervalle de rafraîchissement de l'interface"
+msgstr "Intervalle de rafraichissement de l'interface"
 
 #. i18n: ectx: label, entry (dhtSupport), group (downloads)
 #: libktcore/ktorrent.kcfg:137
@@ -7236,12 +7236,12 @@ msgstr "Afficher les fichiers incomplets"
 #: plugins/mediaplayer/mediaview.cpp:91 plugins/syndication/feedwidget.ui:124
 #, kde-format
 msgid "Refresh"
-msgstr "Rafraîchir"
+msgstr "Rafraichir"
 
 #: plugins/mediaplayer/mediaview.cpp:92
 #, kde-format
 msgid "Refresh media files"
-msgstr "Rafraîchir les fichiers de média"
+msgstr "Rafraichir les fichiers de média"
 
 #: plugins/mediaplayer/mediaview.cpp:96
 #, kde-format
@@ -8517,7 +8517,7 @@ msgstr "Mettre à jour les graphiques tous les"
 #, kde-format
 msgctxt "Continuation of: Update charts every [number field]"
 msgid "GUI updates"
-msgstr "Rafraîchissements de l'interface"
+msgstr "Rafraichissements de l'interface"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/stats/Settings.ui:69
@@ -8764,13 +8764,13 @@ msgstr "Filtres actifs :"
 #: plugins/syndication/feedwidget.ui:131
 #, kde-format
 msgid "Refresh every:"
-msgstr "Rafraîchir tous les :"
+msgstr "Rafraichir tous les :"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, m_refresh_rate)
 #: plugins/syndication/feedwidget.ui:141
 #, kde-format
 msgid "Time between automatic refreshes of the feed."
-msgstr "Temps entre les rafraîchissements automatiques du flux"
+msgstr "Temps entre les rafraichissements automatiques du flux"
 
 # # HERE ENDS cygal WORK AND BEGINS asmanur WORK
 #. i18n: ectx: property (suffix), widget (QSpinBox, m_refresh_rate)
