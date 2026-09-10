@@ -1291,7 +1291,7 @@
           <li xml:lang="ca-valencia">S'ha afegit una acció per a canviar el nom de fitxers en el menú contextual del giny d'informació</li>
           <li xml:lang="cs">Do kontextového menu widgetu Info byla přidána akce pro přejmenování souborů</li>
           <li xml:lang="es">Añadida una acción para renombrar archivos en el menú de contexto del complemento de información</li>
-          <li xml:lang="fr">Ajout d’une action pour le renommage des fichiers dans le menu contextuel du composant graphique d'informations</li>
+          <li xml:lang="fr">Ajout d'une action pour le renommage des fichiers dans le menu contextuel du composant graphique d'informations</li>
           <li xml:lang="he">נוספה פעולה לשנות את שמות הקבצים בתפריט ההקשר של וידג׳ט המידע</li>
           <li xml:lang="it">È stata aggiunta un'azione per rinominare i file nel menu contestuale dell'oggetto Informazioni</li>
           <li xml:lang="ka">დაემატა ქმედება ინფორმაციის ვიჯეტის კონტექსტურ მენიუში ფაილების სახელის გადასარმევად</li>
@@ -1422,7 +1422,7 @@
           <li xml:lang="ca-valencia">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
           <li xml:lang="cs">Vylepšeny rozestupy různých widgetů a převedena velká část uživatelského rozhraní tak, aby využívalo nový bezrámový vzhled</li>
           <li xml:lang="es">Espaciado de varios widgets mejorado.Migración de la UI a un nuevo aspecto sin marcos.</li>
-          <li xml:lang="fr">Amélioration des espacements de divers composants graphiques et portage d’une grande partie de l’interface utilisateur pour utiliser une nouvelle apparence sans cadre</li>
+          <li xml:lang="fr">Amélioration des espacements de divers composants graphiques et portage d'une grande partie de l'interface utilisateur pour utiliser une nouvelle apparence sans cadre</li>
           <li xml:lang="he">הריווח של מגוון רחב של וידג׳טים השתפר והרבה מממשק המשתמש הוסב להשתמש במראה נטול מסגרות</li>
           <li xml:lang="it">Ottimizzazione delle spaziature tra i vari oggetti, inoltre gran parte dell'interfaccia utente è stata modificata per adottarsi a un nuovo stile senza bordi</li>
           <li xml:lang="ka">გაუმჯობესდა სხვადასხვა ვიჯეტებს შორის დაშორება და ინტერფეისის უდიდესი ნაწილი გადატანილია უჩარჩოო ხედის გამოყენებაზე</li>
