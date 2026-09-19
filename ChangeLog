@@ -83,7 +83,7 @@ Changes in 4.4:
 - Use translatable unit names in connections stats graph (305395)
 - Make sure search engine selected entry is not cleared when defaults are added (306913)
 - Reset filter when the filterbar is closed (305379)
-- Show notification when torrents are opened silently (260329) 
+- Show notification when torrents are opened silently (260329)
 - Remove kio-magnet, nobody really uses it and it only causes confusion for people who only want to use magnet links with ktorrent (309091)
 - Revamp syndication plugin interface and add support for torrent elements from namespace (http://xmlns.ezrss.it/0.1/) within the rss item element (311224)
 - Fix crash in torrent loading code under some circumstances (309332)
@@ -93,7 +93,7 @@ Changes in 4.4:
 - Fix bug causing tab counts not to be initialized when QM is disabled (313737)
 - Use file contents to figure out which type of blocklist we are dealing with in IP filter (315239)
 - Fix bug causing torrent percentage to be slightly off in the files tab (315549)
-- Remove estimation algorithm option 
+- Remove estimation algorithm option
 - Fix double click on subdirectory not working in fileview (337457)
 - Drop support for importing KDE3 torrents
 - Support x-scheme-handler/magnet mimetype
@@ -248,7 +248,7 @@ Changes in 4.1beta1:
 - Remove libktupnp it is now part of libktorrent
 - Add support for superseeding (171661)
 - Change from and to fields to always ensure that from is smaller then to in the bandwidth scheduler plugin (225951)
-- Show if a peer is using the µTP protocol or not 
+- Show if a peer is using the µTP protocol or not
 - Cleanup file dialog filters for torrents and make sure that files named torrent, are also seen by the filter (241259)
 - Ensure that webinterface plugin works properly with bindv6only flag on (238688)
 - Add option to not restore the previous session of the search plugin (233288)
@@ -336,10 +336,10 @@ Changes in 4.0rc1:
 - Suspend KTorrent -> Suspend Torrents to avoid confusion (233421)
 - Workaround memory leak in krosspython by not passing QObject pointers as arguments to callMethod (223885, 226924)
 - Make move on completion a per torrent feature
-- Make compiling plasma applet dependant on Qt version 
+- Make compiling plasma applet dependant on Qt version
 - Make sure extenders can be resized
 - Make sure float is not used in scripting api, doesn't seem to work with python scripts
-- Add dbus functions to set and get the maximum and current share ratio and seed time 
+- Add dbus functions to set and get the maximum and current share ratio and seed time
 
 Changes in 4.0beta2:
 - Use proper KDE function to format date in syndication plugin
@@ -389,17 +389,17 @@ Changes in 4.0beta2:
 - Fix crash in webseed downloading code (232971)
 
 Changes in 4.0beta1:
-- Make adding multiple trackers at once possible (213194) 
+- Make adding multiple trackers at once possible (213194)
 - Bandwidth scheduler can now be deactivated temporarely
 - Show information message instead of error when trackerlists are merged (213772)
 - Add patch from Leo Trubach which adds support for IP rangs to the IP filter dialog
 - Add support for metadata extension
-- Remove own flags, now using exclusively those from KDE 
+- Remove own flags, now using exclusively those from KDE
 - Add support for reqq parameter in extended handshake
 - Ignore diskspace check when it cannot be determined on a gvfs mounted filesystem (187141)
 - DHT can no longer be disabled at compile time
 - Add support for magnet URL's (214375)
-- Fix crash due to uncaught warning 
+- Fix crash due to uncaught warning
 - Expand open url dialog, it is now possible to open silently and to select the group
 - Fix crash when loading magnets file (218227)
 
@@ -419,7 +419,7 @@ Changes in 3.3.3:
 - Fix broken FilterListModel::removeFilter fixes a crash (219760)
 - Revamp adding trackers to TrackerListModel, should fix a crash (218738)
 - Don't allow nested event loops when iterating over the incomplete url list in scanfolder plugin, fixes a crash (219885)
-- Fix crash due to uncaught exception in TorrentFileTreeModel::loadExpandedState 
+- Fix crash due to uncaught exception in TorrentFileTreeModel::loadExpandedState
 - Fix bug causing error message that the QM limits are reached to be shown instead of a torrent to be enqueued (220171)
 - Fix crash caused by not checking for 0 pointer (221333)
 - Fix crashes when DHT socket could not be bound (221872)
@@ -511,7 +511,7 @@ Changes in 3.3beta1:
 - GeoIP database will now get downloaded automatically (and updated every 30 days), so it is no longer distributed with ktorrent
 - Added support for gzip and bzip2 compressed ipfilter files, and improve zip file support
 - Added support for auto completion in tracker, webseed and nodes QLineEdit's of torrent creation dialog (194972)
-- Added option to export the torrent file of a torrent 
+- Added option to export the torrent file of a torrent
 - Choice between file tree or list has been moved from settings to individual views (177401)
 - Add filter box in FileSelectDlg (179980)
 - Add filter box in FileView (173887)
@@ -546,7 +546,7 @@ Changes in 3.2.3 :
 - Fix bug in sleep suppression feature causing it to not work when torrents get started at startup (195991)
 - Also announce to DHT node when we get back a GetPeers with nodes (194366)
 - Use deleteLater when removing torrents this should prevent a crash (197421)
-- Do not keep pointer to view menu and groupview menu, this causes crashes when toolbars are reconfigured (198963) 
+- Do not keep pointer to view menu and groupview menu, this causes crashes when toolbars are reconfigured (198963)
 - Make global shortcut to show and hide ktorrent work again (174541)
 
 Changes in 3.2.2 :
@@ -581,10 +581,10 @@ Changes in 3.2.1 :
 - Make sure QM can be edited when queue is paused
 - Fix bug causing network interface not to be set when server was initialized
 - Backport fix for ktorrent hogging XVideo port
-- Backport fix for displaying song information not working properly 
+- Backport fix for displaying song information not working properly
 - Fix bug causing url requester in fileselect dialog not to allow you to select directories on windows (185739)
 - Don't throw away model of FileView, when switching torrents (186031)
-- Fix bug causing infinite emission of the stoppedByError signal when corrupted chunks are found in a not started completed torrent 
+- Fix bug causing infinite emission of the stoppedByError signal when corrupted chunks are found in a not started completed torrent
 - Port switching no longer requires a restart
 - Fix bug in time estimation algorithm causing imported bytes not to be included in average speed calculation
 - Fix bug causing torrents to move around when being sorted on floating point numbers and number is equal (186770)
@@ -592,7 +592,7 @@ Changes in 3.2.1 :
 - In webinterface clear torrent details before updating the table to prevent an old file list being shown
 - Fix webseeding crash (184986)
 - Fix several webseeding bugs
-- Check for invalid characters (for windows that is) in torrent name on windows (187373) 
+- Check for invalid characters (for windows that is) in torrent name on windows (187373)
 - Fix webseeding crash caused by wrong chunk range (187882)
 - Expanded scripting API with scriptDir function
 - Use QFile::rename instead of KIO jobs to do log rotation (188225)
@@ -619,7 +619,7 @@ Changes in 3.2rc1 :
 - Make sure ratio limit and seed time limit spinboxes in statustab only emit the valueChanged signal when the user is done editing the spinbox (175625)
 - Don't show error message when torrent is loaded silently and the files can't be created (ported from stable)
 - Fix crash in plasma applet
-- Added select all action, manual announce now gets SHIFT + A as shortcut to not conflict with select all 
+- Added select all action, manual announce now gets SHIFT + A as shortcut to not conflict with select all
 - Make sure average download speed calculation doesn't wrap around (175747)
 - Update buttons when torrent changes status (174815)
 - Fix pause button getting disabled when current view doesn't have any torrents (176442)
@@ -633,7 +633,7 @@ Changes in 3.2rc1 :
 - Make sure group policy is applied when drag and drop is used to add torrents to a group (176723)
 - Make sure preview priority is not set on excluded or only seed files (176487)
 - Make sure to long filenames are handled properly (175793)
-- Fix bug causing files to be created in diskspace check 
+- Fix bug causing files to be created in diskspace check
 - Fix problem with restoring file encoding (177179)
 - Make sure window size is restored properly
 - Queued -> Queue Manager Controlled in group tree (176726)
@@ -649,18 +649,18 @@ Changes in 3.2rc1 :
 - Add option to not download duplicate season and episode matches
 - Add feature to import old feeds from RSS plugin of KT 2.2
 - Make sure ViewModel::allTorrents only returns torrents which are shown in the view (179180)
-- Improved usability of QM gui by decoupling user controlled property from priority 
+- Improved usability of QM gui by decoupling user controlled property from priority
 - UPnP code now sends User-Agent property in HTTP header
 - Make sure UPnP does not take exclusive control of UDP port 1900 (179570)
 - Ask to create data files if new location selected in missing files dialog does not contain files (178948)
-- Fix several memory leaks 
+- Fix several memory leaks
 - Use idle priority for data checker thread
 - Fix bug with moving files when source and destination are the same, but this is not clear due to symlinks
 - Make sure paste is disabled when editing the name of a torrent
 - Fix bug with wrong byteorder of PEX messages
 - Use KLocale::formatBytes so that KTorrent behaves the same as the rest of KDE when displaying sizes and speeds in bytes
 - Improve performance of downlod thread by using a socket to wake up the poll call, instead of a regular poll every second
-- Fix bug in bandwidth scheduler causing bandwidth schedule to be set continously 
+- Fix bug in bandwidth scheduler causing bandwidth schedule to be set continously
 - Make sure that setPausedState doesn't do anyting if the paused state doesn't change (180230)
 - Disable PEX and DHT actions when multiple torrents are selected
 - Reorder queue when additional files are selected and the torrent is queued as a seed.
@@ -709,7 +709,7 @@ Changes in 3.2beta1 :
 - Revamped chunk memory management completely, reducing memory usage considerably
 - Fix crash in ChunkDownload::updateHash
 - Remove warmup mode
-- Show warning icon in status column when there is something wrong with the tracker, also show tooltip with error message from tracker 
+- Show warning icon in status column when there is something wrong with the tracker, also show tooltip with error message from tracker
 - Added patch which adds collapse all and expand all actions to the fileselection dialog and the fileview
 - Added category P2P as seen in other p2p applications (e.g. transmission)
 - Search plugin is now based upon Opensearch XML descriptions
@@ -718,7 +718,7 @@ Changes in 3.2beta1 :
 - Don't show all columns when a new upload or download view is created (171770)
 - Fix bug causing all columns to be hidden when new views are created which show both uploads and downloads
 - Added syndication plugin to handle RSS and Atom torrent feeds
-- Added e-mail notification script 
+- Added e-mail notification script
 - Added script to resume paused torrents after a configurable amount of time (158386)
 - Some GUI fixups (tooltips being more uniform, more tooltips, window titles for a lot of dialogs ...)
 - By default now use multiple tiers when creating a torrent with multiple torrents (174207)
@@ -730,9 +730,9 @@ Changes in 3.2beta1 :
 - Make sure check data and queue actions are enabled when remove is enabled (174869)
 - Add script to create automatic tracker based groups script (174871)
 
-Changes in 3.1.6 : 
+Changes in 3.1.6 :
 - Don't show error message when torrent is loaded silently and the files can't be created
-- Make sure buttons get updated when paused state is toggled 
+- Make sure buttons get updated when paused state is toggled
 - Fix deadlock in Downloader when webseeds are active
 - Backport pause button fix from trunk
 - Backport webseed fix from trunk
@@ -792,7 +792,7 @@ Changes in 3.1.2 :
 - Improved performance of GUI updates
 - Make sure app icon is set (mostly for windows)
 - Fix crash when clicking on clear search history button twice (167580)
-- Backported some improvements to download thread 
+- Backported some improvements to download thread
 - Make sure cookies are not sent in http announces
 - Fix crash at startup which started happening since KDE 4.1
 - Fix problem causing massive memory usage (148385)
@@ -802,7 +802,7 @@ Changes in 3.1.2 :
 - Fixed some bugs in file deselection code
 
 Changes in 3.1.1 :
-- Fix wrong icon name in PeerView for encrypted peers 
+- Fix wrong icon name in PeerView for encrypted peers
 - If speed is very low, don't show speed in PeerView
 - Fix crash when double clicking on directories in fileview (164434)
 - Added GroupFilterModel to filter out torrents, this avoids a bug in Qt which
@@ -833,7 +833,7 @@ Changes in 3.1rc1 :
 - Added new dialog to add items to the schedule, you can now add the same item to multiple days.
 - Make sure that CompressFileJob cannot get stuck (162099)
 - Make sure interfaces are not added multiple times to interface combobox in network preferences
-- Make sure shortcuts work for back and reload in search plugin 
+- Make sure shortcuts work for back and reload in search plugin
 - Add Open in New Tab entry to right click menu in search plugin
 - Revamped the UPnP plugin : the widget displaying the routers has been moved from the preferences dialog to the bottom tab bar
 - Use QTcpSocket in HttpRequest of UPnP library
@@ -934,7 +934,7 @@ Changes in 3.0.2 :
 - Sort and merge block list before writing to level1.dat file
 - Clear time to next tracker update in tracker tab, when torrent is not
 running (160972)
-- Fix occasional crash at startup (160935) 
+- Fix occasional crash at startup (160935)
 
 
 Changes in 3.0.1 :
@@ -958,7 +958,7 @@ this makes sure that it is sized properly when you open the dialog
 - Make sure that views stay sorted (158975)
 - Make sure speed settings are kept in sync between all the places where you
 can change them (159039)
-- Make sure that scheduler plugin does not set stuff in paused state twice (152445) 
+- Make sure that scheduler plugin does not set stuff in paused state twice (152445)
 - Fix crash in ConvertDialog of ipfilter plugin
 - Fix adding torrent to group in fileselectdlg (159684)
 
@@ -973,7 +973,7 @@ Changes in 3.O :
 - Fix DHT ping storm bug
 - Ported open silently from commandline patch from KDE3 version
 - Reenabled log rotation
-- Added option to use system geoip 
+- Added option to use system geoip
 - Fix pastedialog (proper usage of KUrl)
 - Fix wrong display of percentages in file view
 - Fix broken start torrent checkbox in fileselectdlg
@@ -993,20 +993,20 @@ Changes in 3.0rc1 :
 - Fix crash in ChunkDownloadView by using a model instead of an item based
 approach
 - Added action to pause and resume all torrents
-- Fix some problems with the update timer not getting started when the QM ran 
+- Fix some problems with the update timer not getting started when the QM ran
 - Estimate time left in seeding mode when there is a max share ratio
 - Disable system tray icon tooltips when show popups is disabled (BUG: 151019)
 - Added option to change text encoding of a torrent when opening it
 - Fix sorting in main view using a SortFilterProxyModel
 - Use XMLGUI stuff for SearchToolBar (BUG: 154838)
 - Make it possible to disable plugins at compile time (BUG: 154906)
-- Fix sorting in ChunkDownloadView 
+- Fix sorting in ChunkDownloadView
 - Added action to pause and resume all torrents
 - Added time estimation algorithm selection
 - Fixed bug in KTorrent time estimation algorithm (150866)
 - Estimate time left when seeding when there is a max share ratio set (BUG: 142990)
 - Ported don't preallocate fix for readonly files
-- Make sure toplevel CMakeLists.txt check for KDE4Internal package 
+- Make sure toplevel CMakeLists.txt check for KDE4Internal package
 - Fix bug in PeerView which displayed the content of choked and snubbed in the wrong column
 - Made DHT IPv6 ready
 - Add support for peers6 field in tracker announce responses (so we are IPv6 ready there to)
@@ -1017,7 +1017,7 @@ approach
 - Fix problem with connections staying in close_wait state (BUG: 156163)
 - Save own DHT key in a file and reuse that
 - Fix DHT problem causing a DHT ping storm
-- Fix opening of directories 
+- Fix opening of directories
 
 
 Changes in 3.0beta1 :
