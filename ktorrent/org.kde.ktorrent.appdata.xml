@@ -1009,16 +1009,44 @@
   </provides>
   <releases>
     <release version="26.08.1" date="2026-09-10"/>
+    <description>
+      <ul>
+        <li>Fixed some minor memory leaks</li>
+        <li>Fixed a crash when downloading torrent data for a magnet link</li>
+        <li>Fixed a crash in the Download Order dialog</li>
+      </ul>
+    </description>
     <release version="26.08.0" date="2026-08-20"/>
       <description>
         <ul>
+          <li>Fixed a crash when disabling the Scan Folder plugin</li>
+          <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
+          <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
           <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
+          <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
+          <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
+          <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
         </ul>
       </description>
     <release version="26.04.3" date="2026-07-02"/>
     <release version="26.04.2" date="2026-06-04"/>
-    <release version="26.04.1" date="2026-05-07"/>
+    <release version="26.04.1" date="2026-05-07">
+      <description>
+        <ul>
+          <li>Fixed filters for different log levels in the Log Viewer plugin</li>
+          <li>Fixed the way KTorrent's peer ID is created. Previously 26.04.00 was converted to "-KT2640-", now it is "-KT260400"</li>
+          <li>Fixed a bug where KTorrent would try to connect to peers with TCP even if the only use uTP setting was enabled</li>
+        </ul>
+      </description>
+    </release>
     <release version="26.04.0" date="2026-04-16"/>
+    <description>
+      <ul>
+        <li>Added a download queue manager for syndication feeds to handle sequential downloads, and retry failed downloads</li>
+        <li>Ported the media player plugin from Phonon to Qt Multimedia</li>
+        <li>Added a label in the syndication plugin to show the time a feed was last updated</li>
+      </ul>
+    </description>
     <release version="25.12.3" date="2026-03-05"/>
     <release version="25.12.2" date="2026-02-05"/>
     <release version="25.12.1" date="2026-01-08"/>
