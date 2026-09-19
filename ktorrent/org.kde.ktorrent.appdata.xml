@@ -1010,6 +1010,11 @@
   <releases>
     <release version="26.08.1" date="2026-09-10"/>
     <release version="26.08.0" date="2026-08-20"/>
+      <description>
+        <ul>
+          <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
+        </ul>
+      </description>
     <release version="26.04.3" date="2026-07-02"/>
     <release version="26.04.2" date="2026-06-04"/>
     <release version="26.04.1" date="2026-05-07"/>
@@ -1089,7 +1094,7 @@
     <release version="25.08.0" date="2025-08-14">
       <description>
         <ul>
-          <li>Added a "Last Activity" column showing the time the torrent last had upload or download activity</li>
+          <li>Added a "Last Activity" column showing the time the torrent last had upload or download activity. These values are kept accurate among sessions, i.e. after restarting the app.</li>
           <li xml:lang="ar"> إضافة عمود ”آخر نشاط“ يعرض الوقت الذي شهد فيه السيول آخر نشاط تحميل أو تنزيل</li>
           <li xml:lang="bg">Добавена е колона „Последна активност“, показваща времето на последното качване или изтегляне на торента</li>
           <li xml:lang="ca">S'ha afegit una columna «Darrera activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
