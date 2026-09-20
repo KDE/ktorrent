@@ -1034,8 +1034,11 @@
       <description>
         <ul>
           <li>Fixed filters for different log levels in the Log Viewer plugin</li>
+          <li xml:lang="ka">გასწორდა ფილტრის სხვადასხვა ჟურნალის დონეები ჟურნალის დათვალიერების დამატებაში</li>
           <li>Fixed the way KTorrent's peer ID is created. Previously 26.04.00 was converted to "-KT2640-", now it is "-KT260400"</li>
+          <li xml:lang="ka">გასწორდა გზა, რომლითაც KTorrent-ის პარტიორის ID იქმნებოდა. ადრე 26.04.00 ხდებოდა "-KT2440-". ახლა ხდება "-KT260400"</li>
           <li>Fixed a bug where KTorrent would try to connect to peers with TCP even if the only use uTP setting was enabled</li>
+          <li xml:lang="ka">გასწორდა შეცდომა, სადაც KTorrent პარტნიორებთან დაკავშირებას TCP-ით ცდილობდა მაშინაც კი, როცა ჩართული იყო, მხოლოდ, uTP-ის გამოყენების პარამეტრი</li>
         </ul>
       </description>
     </release>
@@ -1123,6 +1126,7 @@
       <description>
         <ul>
           <li>Added a "Last Activity" column showing the time the torrent last had upload or download activity. These values are kept accurate among sessions, i.e. after restarting the app.</li>
+          <li xml:lang="ka">დაემატა 'ბოლო აქტივობის' სვეტი, რომელიც აჩვენებს, როდის ჰქონდა ტორენტს ბოლო ატვირთვის, ან გადმოწერის აქტივობა. ეს მნიშვნელობები სწორად ინახება სესიებს შორის, მაგ: აპის რესტარტის შემდეგ.</li>
           <li>Fixed the background color of the syndication widget's feed-item status panel</li>
           <li xml:lang="ar">إصلاح لون خلفية لوحة حالة عناصر الخلاصة في أداة التوزيع</li>
           <li xml:lang="bg">Поправен е фоновият цвят на статус панела за елементи в приставката за RSS емисии (syndication)</li>
