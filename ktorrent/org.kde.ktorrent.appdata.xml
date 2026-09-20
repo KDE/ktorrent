@@ -1017,17 +1017,17 @@
       </ul>
     </description>
     <release version="26.08.0" date="2026-08-20"/>
-      <description>
-        <ul>
-          <li>Fixed a crash when disabling the Scan Folder plugin</li>
-          <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
-          <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
-          <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
-          <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
-          <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
-          <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
-        </ul>
-      </description>
+    <description>
+      <ul>
+        <li>Fixed a crash when disabling the Scan Folder plugin</li>
+        <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
+        <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
+        <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
+        <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
+        <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
+        <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
+      </ul>
+    </description>
     <release version="26.04.3" date="2026-07-02"/>
     <release version="26.04.2" date="2026-06-04"/>
     <release version="26.04.1" date="2026-05-07">
@@ -1123,25 +1123,6 @@
       <description>
         <ul>
           <li>Added a "Last Activity" column showing the time the torrent last had upload or download activity. These values are kept accurate among sessions, i.e. after restarting the app.</li>
-          <li xml:lang="ar"> إضافة عمود ”آخر نشاط“ يعرض الوقت الذي شهد فيه السيول آخر نشاط تحميل أو تنزيل</li>
-          <li xml:lang="bg">Добавена е колона „Последна активност“, показваща времето на последното качване или изтегляне на торента</li>
-          <li xml:lang="ca">S'ha afegit una columna «Darrera activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
-          <li xml:lang="ca-valencia">S'ha afegit una columna «Última activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
-          <li xml:lang="cs">Byl přidán sloupec „Poslední aktivita“, který zobrazuje čas, kdy došlo k poslednímu nahrávání nebo stahování v rámci torrentu</li>
-          <li xml:lang="es">Añadida la columna «Última actividad» que muestra la hora a la que el torrent tuvo su última actividad</li>
-          <li xml:lang="fr">Ajout d'une colonne « Dernière activité » affichant l'heure à laquelle le torrent a eu sa dernière activité de téléchargement ou de téléversement</li>
-          <li xml:lang="he">נוספה עמודת „פעילות אחרונה” שמציגה את הזמן שבו הייתה פעילות העלאה או הורדה בטורנט בפעם האחרונה</li>
-          <li xml:lang="it">È stata aggiunta una colonna “Ultima attività”, che mostra l'ora in cui il torrent ha registrato l'ultima attività di caricamento o di scaricamento</li>
-          <li xml:lang="ka">დაემატა 'ბოლო აქტივობის' სვეტი, რომელიც აჩვენებს, როდის ჰქონდა ტორენტს ბოლო ატვირთვის, ან გადმოწერის აქტივობა</li>
-          <li xml:lang="nl">Een kolom 'Laatste activiteit' is toegevoegd die het tijdstip weergeeft waarop de torrent voor het laatst is geüpload of gedownload</li>
-          <li xml:lang="pt-BR">Adicionada uma coluna "Última atividade" mostrando a hora em que o torrent teve a última atividade de upload ou download</li>
-          <li xml:lang="ru">Добавлен столбец «Последняя активность», отображающий время последней загрузки или выгрузки данных в торренте.</li>
-          <li xml:lang="sk">Pridaný stĺpec „Posledná aktivita“ zobrazujúci čas poslednej aktivity nahrávania alebo sťahovania torrentu</li>
-          <li xml:lang="sl">Dodan stolpec »Zadnja aktivnost«, ki prikazuje čas zadnjega nalaganja ali prenosa torrenta</li>
-          <li xml:lang="sv">Tillägg av en kolumn "Senaste aktivitet" som visar när dataflödet senast hade uppladdnings- eller nerladdningsaktivitet</li>
-          <li xml:lang="tr">Torrent’in en son yükleme veya indirme etkinliği olduğu zamanı gösteren bir “Son Etkinlik” sütunu eklendi.</li>
-          <li xml:lang="uk">Додано стовпчик «Останні дії», у якому буде показано часові параметри тривалості вивантаження або отримання торентів</li>
-          <li xml:lang="zh-CN">新增了一个“最近活动”列，显示该种子文件最近一次上传或下载活动的时间。</li>
           <li>Fixed the background color of the syndication widget's feed-item status panel</li>
           <li xml:lang="ar">إصلاح لون خلفية لوحة حالة عناصر الخلاصة في أداة التوزيع</li>
           <li xml:lang="bg">Поправен е фоновият цвят на статус панела за елементи в приставката за RSS емисии (syndication)</li>
