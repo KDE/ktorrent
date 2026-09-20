@@ -1016,18 +1016,19 @@
         <li>Fixed a crash in the Download Order dialog</li>
       </ul>
     </description>
-    <release version="26.08.0" date="2026-08-20"/>
-    <description>
-      <ul>
-        <li>Fixed a crash when disabling the Scan Folder plugin</li>
-        <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
-        <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
-        <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
-        <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
-        <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
-        <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
-      </ul>
-    </description>
+    <release version="26.08.0" date="2026-08-20">
+      <description>
+        <ul>
+          <li>Fixed a crash when disabling the Scan Folder plugin</li>
+          <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
+          <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
+          <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
+          <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
+          <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
+          <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
+        </ul>
+      </description>
+    </release>
     <release version="26.04.3" date="2026-07-02"/>
     <release version="26.04.2" date="2026-06-04"/>
     <release version="26.04.1" date="2026-05-07">
