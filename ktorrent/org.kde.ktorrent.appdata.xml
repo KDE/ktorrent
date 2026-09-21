@@ -1038,25 +1038,31 @@
           <li xml:lang="ca">S'han corregit els filtres dels nivells de registre diferents al connector visualitzador de registre</li>
           <li xml:lang="cs">Opraveny filtry pro různé úrovně záznamu v pluginu Log Viewer</li>
           <li xml:lang="ka">გასწორდა ფილტრის სხვადასხვა ჟურნალის დონეები ჟურნალის დათვალიერების დამატებაში</li>
+          <li xml:lang="nl">Filters voor verschillende logniveaus in de Log Viewer-plugin opgelost</li>
           <li xml:lang="pt-BR">Filtros fixos para diferentes níveis de log no plugin do visualizador de log</li>
           <li xml:lang="sl">Popravljeni filtri za različne ravni dnevniških zapisov v vtičniku Log Viewer</li>
           <li xml:lang="sv">Rättade filter för olika loggningsnivåer i insticksprogrammet Loggvisare.</li>
+          <li xml:lang="tr">Günlük Görüntüleyicisi eklentisindeki farklı günlük düzeyleri için süzgeçler onarıldı.</li>
           <li xml:lang="uk">Виправлено фільтри для різних рівнів журналювання у додатку перегляду журналу</li>
           <li>Fixed the way KTorrent's peer ID is created. Previously 26.04.00 was converted to "-KT2640-", now it is "-KT260400"</li>
           <li xml:lang="ca">S'ha corregit la manera en que es creen els ID de parell del KTorrent. L'anterior 26.04.00 s'havia convertit a «-KT2640-», ara és «-KT260400»</li>
           <li xml:lang="cs">Opravena metoda vytváření ID peeru v programu KTorrent. Dříve se formát 26.04.00 převáděl na "-KT2640-", nyní je to "-KT260400".</li>
           <li xml:lang="ka">გასწორდა გზა, რომლითაც KTorrent-ის პარტიორის ID იქმნებოდა. ადრე 26.04.00 ხდებოდა "-KT2440-". ახლა ხდება "-KT260400"</li>
+          <li xml:lang="nl">De manier waarop de peer-ID van KTorrent wordt aangemaakt, is gecorrigeerd. Voorheen werd 26.04.00 omgezet naar "-KT2640-", nu is dat "-KT260400".</li>
           <li xml:lang="pt-BR">Corrigida a forma como o ID de par do KTorrent é gerado. Anteriormente, 26.04.00 era convertido para "-KT2640-"; agora, é convertido para "-KT260400".</li>
           <li xml:lang="sl">Popravljen je način ustvarjanja identifikatorja odjemalca (peer ID) v programu KTorrent. Prej se je oznaka 26.04.00 pretvorila v "-KT2640-", zdaj pa se v "-KT260400"</li>
           <li xml:lang="sv">Rättade hur  motparts-id skapas av KTorrent. Tidigare omvandlades 26.04.00 till "-KT2640-", nu blir det "-KT260400".</li>
+          <li xml:lang="tr">K Torrent’in eş kimliğinin oluşturulma şekli düzeltildi. Daha önceden “26.04.00”, “-KT2640” olarak dönüştürülürken, artık “-KT260400” olarak işlem görüyor.</li>
           <li xml:lang="uk">Виправлено спосіб формування ідентифікатора вузла у KTorrent. Раніше значення 26.04.00 перетворювалося на «-KT2640-», а тепер — на «-KT260400».</li>
           <li>Fixed a bug where KTorrent would try to connect to peers with TCP even if the only use uTP setting was enabled</li>
           <li xml:lang="ca">S'ha corregit un error en què el KTorrent intentava connectar-se als parells amb TCP, fins i tot si s'ha activat l'única opció d'ús uTP</li>
           <li xml:lang="cs">Opravena chyba, kvůli které se KTorrent pokoušel připojit k peerům přes TCP, i když bylo zapnuto nastavení Používat pouze UTP.</li>
           <li xml:lang="ka">გასწორდა შეცდომა, სადაც KTorrent პარტნიორებთან დაკავშირებას TCP-ით ცდილობდა მაშინაც კი, როცა ჩართული იყო, მხოლოდ, uTP-ის გამოყენების პარამეტრი</li>
+          <li xml:lang="nl">Een bug verholpen waarbij KTorrent probeerde via TCP verbinding te maken met peers, zelfs als de instelling voor uitsluitend UTP was ingeschakeld.</li>
           <li xml:lang="pt-BR">Corrigido um erro em que o KTorrent tentava se conectar a pares via TCP, mesmo quando a configuração de uso exclusivo de uTP estava ativada.</li>
           <li xml:lang="sl">Popravljena je bila napaka, zaradi katere se je KTorrent poskušal povezati s soodjemalci prek protokola TCP, čeprav je bila vklopljena nastavitev za uporabo izključno protokola uTP</li>
           <li xml:lang="sv">Rättade ett fel där KTorrent försökte ansluta till motparter via TCP, även om inställningen för att endast använda uTP var aktiverad.</li>
+          <li xml:lang="tr">Yalnızca uTP kullanımı ayarı etkinken K Torrent’in eşlere TCP kullanarak bağlanmaya çalışması engellendi.</li>
           <li xml:lang="uk">Виправлено помилку, через яку KTorrent намагався встановити з'єднання з вузлами з використанням TCP, навіть якщо було наказано використовувати лише uTP.</li>
         </ul>
       </description>
@@ -1148,9 +1154,11 @@
           <li xml:lang="ca">S'ha afegit una columna «Darrera activitat» que mostra l'hora de última activitat de pujada o baixada del torrent. Aquests valors es mantenen precisos entre sessions, és a dir, després de reiniciar l'aplicació.</li>
           <li xml:lang="cs">Byl přidán sloupec "Poslední aktivita", který zobrazuje čas, kdy došlo k poslednímu nahrávání nebo stahování v rámci torrentu. Tyto hodnoty zůstávají přesné i mezi jednotlivými sezeními, tj. i po restartování aplikace.</li>
           <li xml:lang="ka">დაემატა 'ბოლო აქტივობის' სვეტი, რომელიც აჩვენებს, როდის ჰქონდა ტორენტს ბოლო ატვირთვის, ან გადმოწერის აქტივობა. ეს მნიშვნელობები სწორად ინახება სესიებს შორის, მაგ: აპის რესტარტის შემდეგ.</li>
+          <li xml:lang="nl">Een kolom 'Laatste activiteit' is toegevoegd die het tijdstip weergeeft waarop de torrent voor het laatst is geüpload of gedownload. Deze waarden blijven behouden tussen sessies, d.w.z. na het opnieuw opstarten van de toepassing.</li>
           <li xml:lang="pt-BR">Adicionada uma coluna "Última atividade" que mostra o momento em que o torrent teve atividade de upload ou download pela última vez. Esses valores são mantidos atualizados entre as sessões, ou seja, após reiniciar o aplicativo.</li>
           <li xml:lang="sl">Dodan je stolpec "Zadnja dejavnost", ki prikazuje čas zadnje dejavnosti nalaganja ali prenosa podatkov za torrent. Te vrednosti se ohranijo tudi med sejami, tj. po ponovnem zagonu aplikacije.</li>
           <li xml:lang="sv">Tillägg av en kolumn "Senaste aktivitet" som visar när dataflödet senast hade uppladdnings- eller nerladdningsaktivitet. Värdena bevaras korrekt mellan sessioner, dvs. efter omstart av programmet.</li>
+          <li xml:lang="tr">Torrent’in en son yükleme veya indirme etkinliği olduğu zamanı gösteren bir “Son Etkinlik” sütunu eklendi. Bu değerler, oturumlar arasında da kalıcıdır; örneğin, uygulamayı yeniden başlatsanız bile.</li>
           <li xml:lang="uk">Додано стовпчик «Останні дії», у якому буде показано часові параметри тривалості вивантаження або отримання торентів. Програма підтримуватиме актуальність цих значень між сеансами роботи у ній, тобто після перезапуску програми.</li>
           <li>Fixed the background color of the syndication widget's feed-item status panel</li>
           <li xml:lang="ar">إصلاح لون خلفية لوحة حالة عناصر الخلاصة في أداة التوزيع</li>
