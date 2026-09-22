@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-04 00:43+0000\n"
-"PO-Revision-Date: 2026-05-31 19:53-0400\n"
+"PO-Revision-Date: 2026-09-22 18:03+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
-"Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
+"Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -273,6 +273,8 @@ msgid ""
 "You have deselected the following existing files. You will lose all data in "
 "these files, are you sure you want to do this?"
 msgstr ""
+"You have deselected the following existing files. بۇ ھۆججەتلەرنىڭ بارلىق "
+"سانلىق مەلۇماتلىرى يوقىلىدۇ، راست بۇنى قىلامسىز؟"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:291
 #, kde-format
@@ -572,7 +574,7 @@ msgstr ""
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr "%p%"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -820,7 +822,7 @@ msgstr "چەك يوق"
 #: plugins/bwscheduler/edititemdlg.ui:196
 #, kde-format
 msgid " KiB/s"
-msgstr " KiB/s"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #. i18n: ectx: property (text), widget (QLabel, label_4)
@@ -932,31 +934,31 @@ msgstr ""
 #: ktorrent/dialogs/torrentcreatordlg.ui:82
 #, kde-format
 msgid "32 KiB"
-msgstr "32 كىلوبايت‏"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:87
 #, kde-format
 msgid "64 KiB"
-msgstr "64 كىلوبايت‏"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:92
 #, kde-format
 msgid "128 KiB"
-msgstr "128 كىلوبايت‏"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:97
 #, kde-format
 msgid "256 KiB"
-msgstr "256 كىلوبايت‏"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:102
 #, kde-format
 msgid "512 KiB"
-msgstr "512 كىلوبايت‏"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:107
@@ -1354,6 +1356,10 @@ msgid ""
 "You can also use wildcards like '127.0.0.*' or specify ranges like "
 "'200.10.10.0-200.10.10.40'."
 msgstr ""
+"IP addresses must be in the format 'XXX.XXX.XXX.XXX'.\n"
+"                                        \n"
+"You can also use wildcards like '127.0.0.*' or specify ranges like "
+"'200.10.10.0-200.10.10.40'."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_clear)
 #: ktorrent/ipfilterwidget.ui:72
@@ -1435,7 +1441,7 @@ msgstr ""
 #: ktorrent/kttorrentactivityui.rc:77
 #, kde-format
 msgid "Configure Columns"
-msgstr ""
+msgstr "رەت سەپلە"
 
 #. i18n: ectx: Menu (ColumnsMenu)
 #: ktorrent/kttorrentactivityui.rc:78 ktorrent/view/view.cpp:91
@@ -1777,7 +1783,7 @@ msgstr ""
 #: ktorrent/main.cpp:157
 #, kde-format
 msgid "Lukas Appelhans"
-msgstr "Lukas Appelhans"
+msgstr ""
 
 #: ktorrent/main.cpp:157
 #, kde-format
@@ -1817,7 +1823,7 @@ msgstr ""
 #: ktorrent/main.cpp:161
 #, kde-format
 msgid "Aaron J. Seigo"
-msgstr "Aaron J. Seigo"
+msgstr ""
 
 #: ktorrent/main.cpp:161
 #, kde-format
@@ -2035,7 +2041,7 @@ msgstr ""
 #: ktorrent/pref/advancedpref.ui:70 ktorrent/pref/advancedpref.ui:98
 #, kde-format
 msgid " ms"
-msgstr " ms"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/advancedpref.ui:86
@@ -2129,7 +2135,7 @@ msgstr ""
 #: ktorrent/pref/advancedpref.ui:230 ktorrent/pref/advancedpref.ui:253
 #, kde-format
 msgid " KiB"
-msgstr " KiB"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/advancedpref.ui:243
@@ -2839,7 +2845,7 @@ msgstr "ۋاكالەتچى"
 #: ktorrent/pref/proxypref.ui:17
 #, kde-format
 msgid "HTTP"
-msgstr "HTTP"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useKDEProxySettings)
 #: ktorrent/pref/proxypref.ui:23
@@ -2899,7 +2905,7 @@ msgstr ""
 #: ktorrent/pref/proxypref.ui:97
 #, kde-format
 msgid "SOCKS"
-msgstr "SOCKS"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_socksEnabled)
 #: ktorrent/pref/proxypref.ui:104
@@ -3077,7 +3083,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:114
 #, kde-format
 msgid " MiB"
-msgstr " MiB"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_decreasePriorityOfStalledTorrents)
 #: ktorrent/pref/qmpref.ui:131
@@ -3315,7 +3321,7 @@ msgstr ""
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr "%p%"
+msgstr ""
 
 #: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
@@ -3411,7 +3417,7 @@ msgstr ""
 #: ktorrent/tools/queuemanagermodel.cpp:236
 #, kde-format
 msgid "%1"
-msgstr "%1"
+msgstr ""
 
 #: ktorrent/tools/queuemanagermodel.cpp:247
 #, kde-format
@@ -3793,7 +3799,7 @@ msgstr ""
 #: ktorrent/view/scanextender.ui:136 ktorrent/view/scanextender.ui:175
 #, kde-format
 msgid "0"
-msgstr "0"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #: ktorrent/view/scanextender.ui:66
@@ -4046,7 +4052,7 @@ msgstr "سانلىق مەلۇماتلارنى يۆتكەيدىغان مۇندە�
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1%"
+msgstr ""
 
 #: ktorrent/view/viewmodel.cpp:185
 #, kde-format
@@ -5431,7 +5437,7 @@ msgstr "ياق"
 #: plugins/infowidget/iwfiletreemodel.cpp:205
 #, kde-format
 msgid "%1 %"
-msgstr "%1 %"
+msgstr ""
 
 #: plugins/infowidget/iwfiletreemodel.cpp:99
 #, kde-format
@@ -5590,7 +5596,7 @@ msgstr "ياق"
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1%"
+msgstr ""
 
 #: plugins/infowidget/peerviewmodel.cpp:120
 #, kde-format
@@ -6028,13 +6034,11 @@ msgid ""
 msgstr ""
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:28
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgctxt "@item %v is a number of days"
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " كۈن"
+msgstr[0] "%v كۈن"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:51
 #: plugins/ipfilter/ipblockingprefpage.cpp:73
@@ -6469,7 +6473,7 @@ msgstr ""
 #: plugins/mediaplayer/mediacontroller.cpp:108
 #, kde-format
 msgid "<b>%1</b>"
-msgstr "<b>%1</b>"
+msgstr ""
 
 #: plugins/mediaplayer/mediamodel.cpp:58
 #, kde-format
@@ -7102,10 +7106,9 @@ msgstr "تاقاشنى سەپلەش"
 
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
-#, fuzzy, kde-format
-#| msgid "Torrent"
+#, kde-format
 msgid "Quit KTorrent"
-msgstr "توررېنتلار"
+msgstr ""
 
 #: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
 #: plugins/shutdown/shutdownruleset.cpp:257
@@ -7494,7 +7497,7 @@ msgstr ""
 #: plugins/stats/DisplaySettings.ui:945
 #, kde-format
 msgid "KDE"
-msgstr "KDE"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_33)
 #: plugins/stats/DisplaySettings.ui:953
@@ -7513,7 +7516,7 @@ msgstr "كۆرسەتكۈچ"
 #: plugins/stats/drawer/ChartDrawer.cc:14
 #, kde-format
 msgid "KiB/s"
-msgstr "KiB/s"
+msgstr ""
 
 #: plugins/stats/drawer/ChartDrawerData.cc:14
 #, kde-format
