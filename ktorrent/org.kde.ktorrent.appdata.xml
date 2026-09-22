@@ -1020,12 +1020,75 @@
       <description>
         <ul>
           <li>Fixed a crash when disabling the Scan Folder plugin</li>
+          <li xml:lang="ca">S'ha corregit una fallada en inhabilitar el connector d'exploració de carpetes</li>
+          <li xml:lang="cs">Opravena chyba, která způsobovala pád aplikace při deaktivaci modulu pro skenování složky</li>
+          <li xml:lang="ka">გასწორდა ავარიული დასრულება საქაღალდის სკანირების დამატების გათიშვისას</li>
+          <li xml:lang="nl">Een crash bij het uitschakelen van de scanmap-plug-in is verholpen</li>
+          <li xml:lang="pt-BR">Corrigido um travamento ao desativar o plugin de pesquisa em pasta</li>
+          <li xml:lang="sl">Odpravljeno sesutje ob onemogočanju vtičnika Scan Folder</li>
+          <li xml:lang="sv">Rättade en krasch när insticksprogrammet Sök katalog inaktiverades</li>
+          <li xml:lang="tr">Klasör Tara eklentisi devre dışı bırakılırken oluşan bir çökme düzeltildi.</li>
+          <li xml:lang="uk">Усунено аварійне завершення при вимикання додатка сканування теки</li>
           <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
+          <li xml:lang="ca">S'ha corregit la barra de progrés del comprovador de dades que salta al 100% quan es produeix un error o es cancel·la el comprovador</li>
+          <li xml:lang="cs">Opravena chyba, kvůli které ukazatel průběhu kontroly dat přeskočil na 100 %, když došlo k chybě nebo byla kontrola zrušena</li>
+          <li xml:lang="ka">გასწორდა შემთხვევა, როცა მონაცემთა შემოწმების მიმდინარეობის ზოლი ხტებოდა 100%-ზე, როცა აღმოაჩენდა შეცდომას, ან შემოწმება უქმდებოდა</li>
+          <li xml:lang="nl">Probleem opgelost waarbij de voortgangsbalk van de gegevenscontroleur direct naar 100% sprong wanneer er een fout optrad of de controle werd geannuleerd.</li>
+          <li xml:lang="pt-BR">Corrigido o problema em que a barra de progresso do verificador de dados saltava para 100% quando ocorria um erro ou a verificação era cancelada</li>
+          <li xml:lang="sl">Odpravljena težava, pri kateri je vrstica napredka preverjanja podatkov takoj skočila na 100% ob napaki ali preklicu preverjanja</li>
+          <li xml:lang="sv">Rättade att förloppsindikatorn för datakontrollen hoppade till 100 % när ett fel uppstod eller kontrollen avbröts.</li>
+          <li xml:lang="tr">Bir hata oluştuğunda veya denetçi iptal edildiğinde veri denetleyicisi ilerleme çubuğunun %100’e atlaması onarıldı.</li>
+          <li xml:lang="uk">Виправлено проблему, через яку індикатор виконання перевірки даних миттєво переходив до 100% у разі виникнення помилки або скасування перевірки</li>
           <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
+          <li xml:lang="ca">S'ha afegit una opció al connector d'aturada per a sortir del KTorrent quan es completi un torrent</li>
+          <li xml:lang="cs">Do modulu Shutdown byla přidána možnost ukončit KTorrent po dokončení stahování torrentu</li>
+          <li xml:lang="ka">გამორთვის დამატებას დაემატა არჩევანი, რომ KTorrent გაითიშოს, როცა ტორენტი დასრულდება</li>
+          <li xml:lang="nl">Een optie toegevoegd aan de afsluit-plugin om KTorrent af te sluiten wanneer een torrent is voltooid.</li>
+          <li xml:lang="pt-BR">Adicionada uma opção ao plugin de desligamento para encerrar o KTorrent quando um torrent é concluído</li>
+          <li xml:lang="sl">V vtičnik za izklop (Shutdown) je bila dodana možnost za zaprtje programa KTorrent, ko se prenos torrenta zaključi</li>
+          <li xml:lang="sv">Tillägg av ett alternativ i avstängningsinsticksprogrammet för att avsluta KTorrent när ett dataflöde är klart.</li>
+          <li xml:lang="tr">Bir torrent tamamlandığında, bilgisayarı kapatma eklentisinin K Torrent’ten çıkması için bir seçenek eklendi.</li>
+          <li xml:lang="uk">У додатку вимикання додано пункт для завершення роботи KTorrent після завершення завантаження торентів</li>
           <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
+          <li xml:lang="ca">S'ha corregit el càlcul del temps d'estancat d'un torrent. Això corregeix un error on la cua de torrents es barrejaria aleatòriament si s'ha activat l'opció «Disminueix la prioritat dels torrents que s'han estancat més de x minuts».</li>
+          <li xml:lang="cs">Opraven výpočet doby, po kterou je torrent pozastaven. Tím byla odstraněna chyba, kvůli které docházelo k náhodnému zamíchání fronty torrentů, pokud byla zapnuta možnost "Snížit prioritu torrentů, které jsou pozastaveny déle než x minut".</li>
+          <li xml:lang="ka">გასწორდა ტორენტის უქმეობის დროის გამოთვლა. ეს ასწორებს შეცდომას, სადაც ტორენტის რიგი შეიძლებოდა, შემთხვევითად არეულიყო, თუ ჩართული იყო პარამეტრი "იმ ტორენტების პრიორიტეტის დაწევა, რომლებიც გაჭედილია უფრო მეტი, ვიდრე".</li>
+          <li xml:lang="nl">De berekening van de stilstandtijd van een torrent is gecorrigeerd. Hiermee wordt een bug verholpen waarbij de torrentwachtrij willekeurig door elkaar werd gehusseld als de optie "Prioriteit verlagen van torrents die langer dan x minuten stilstaan" was ingeschakeld.</li>
+          <li xml:lang="pt-BR">Corrigido o cálculo do tempo de inatividade de um torrent. Isso resolve um erro que fazia a fila de torrents ser reorganizada aleatoriamente quando a opção "Diminuir a prioridade de torrents inativos por mais de x minutos" estava ativada.</li>
+          <li xml:lang="sl">Odpravljena je napaka pri izračunu časa mirovanja torrenta. S tem je odpravljena težava, zaradi katere se je vrstni red torrentov naključno premešal, če je bila vklopljena možnost "Zmanjšaj prioriteto torrentov, ki mirujejo dlje kot x minut".</li>
+          <li xml:lang="sv">Rättade beräkningen av avstannad tid för dataflöden. Det löser ett fel där kön för dataflöden slumpmässigt kastades om ifall alternativet ”Minska prioritet för dataflöden som är avstannade längre än x minuter” var aktiverat.</li>
+          <li xml:lang="tr">Bir torrentin duraksama süresinin hesaplanması onarıldı. Bu, “Şundan daha çok duraklayan torrentlerin önceliğini düşür” seçeneği etkinken torrent kuyruğunun rastgele biçimde karılmasına neden olan bir hatayı düzeltir.</li>
+          <li xml:lang="uk">Виправлено розрахунок часу простою торента. Це усуває помилку, через яку черга торентів випадковим чином перемішувалася, якщо було активовано пункт «Знижувати пріоритет торентів, які призупинено на понад x хвилин».</li>
           <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
+          <li xml:lang="ca">S'han corregit les banderes de país dels parells que no es mostraven correctament al connector del giny d'informació</li>
+          <li xml:lang="cs">Opravena chyba, kvůli které se v modulu Information Widget nesprávně zobrazovaly vlajky zemí</li>
+          <li xml:lang="ka">გასწორდა პარტნიორის ქვეყნის ალმის არასწორი ჩვენება ინფორმაციის ვიჯეტის დამატებაში</li>
+          <li xml:lang="nl">Probleem opgelost waarbij de vlaggen van peer-landen niet correct werden weergegeven in de informatie-widget-plug-in.</li>
+          <li xml:lang="pt-BR">Corrigida a exibição incorreta das bandeiras dos países dos pares no plugin do widget de informações</li>
+          <li xml:lang="sl">Odpravljena napaka pri nepravilnem prikazu zastav držav v vtičniku Information Widget.</li>
+          <li xml:lang="sv">Rättade att landsflaggor inte visades korrekt i insticksprogrammet Informationskomponent</li>
+          <li xml:lang="tr">Bilgi araç takımında eşlerin bulundukları ülkelerin bayraklarının görüntülenmemesi sorunu düzeltildi.</li>
+          <li xml:lang="uk">Виправлено показ прапорців країн вузлів належним чином у додатку віджета відомостей</li>
           <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
+          <li xml:lang="ca">Millora de l'eficiència en analitzar fitxers «.torrent» evitant moltes assignacions de memòria</li>
+          <li xml:lang="cs">Zlepšila se efektivita analýzy souborů .torrent tím, že se omezilo velké množství alokací paměti</li>
+          <li xml:lang="ka">გასწორდა .torrent ფაილების დამუშავების ეფექტურობა მეხსიერების გამოყოფების თავიდან აცილებით</li>
+          <li xml:lang="nl">De efficiëntie van het verwerken van .torrent-bestanden verbeterd door veel geheugenallocaties te vermijden.</li>
+          <li xml:lang="pt-BR">Melhoria da eficiência do processamento de arquivos .torrent ao evitar diversas alocações de memória</li>
+          <li xml:lang="sl">Izboljšana učinkovitost razčlenjevanja datotek .torrent z izogibanjem številnim dodelitvam pomnilnika</li>
+          <li xml:lang="sv">Förbättrade effektiviteten vid tolkning av .torrent-filer genom att undvika ett stort antal minnesallokeringar</li>
+          <li xml:lang="tr">Birçok bellek ayrılmasından kaçınılarak .torrent dosyalarının ayrıştırılması daha da efektif hâle getirildi.</li>
+          <li xml:lang="uk">Підвищено ефективність обробки .torrent-файлів завдяки уникненню численних операцій отримання об'ємів пам'яті</li>
           <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
+          <li xml:lang="ca">S'ha corregit un càlcul incorrecte del nombre de parells per a la resposta ANNOUNCE d'un seguidor UDP. Això significava que el KTorrent intentava connectar-se a parells no existents</li>
+          <li xml:lang="cs">Opravena nesprávná kalkulace počtu peerů v odpovědi ANNOUNCE od UDP trackeru. To znamenalo, že se KTorrent pokoušel připojit k neexistujícím peerům.</li>
+          <li xml:lang="ka">გასწორდა პარტნიორების რაოდენობის არასწორად დათვლა UDP პაკეტზე ANNOUNCE პასუხისთვის. ეს ნიშნავს, რომ KTorrent ცდილობდა არარსებულ პარტნიორებთან დაკავშირებას</li>
+          <li xml:lang="nl">Een foutieve berekening van het aantal peers voor de ANNOUNCE-reactie van een UDP-tracker is gecorrigeerd. Hierdoor probeerde KTorrent verbinding te maken met niet-bestaande peers.</li>
+          <li xml:lang="pt-BR">Corrigido um cálculo incorreto do número de pares para a resposta ANNOUNCE de um rastreador UDP. Isso fazia com que o KTorrent tentasse se conectar a pares inexistentes</li>
+          <li xml:lang="sl">Odpravljena je bila napaka pri izračunu števila vrstnikov (peerov) za odziv ANNOUNCE s sledilnika UDP. Zaradi tega se je KTorrent poskušal povezati z neobstoječimi vrstniki</li>
+          <li xml:lang="sv">Rättade en felaktig beräkning av antalet motparter för ANNOUNCE-svaret från en UDP-spårare. Det innebar att KTorrent försökte ansluta till icke-existerande motparter.</li>
+          <li xml:lang="tr">Bir UDP izleyicisinden gelen ANNOUNCE yanıtı için olan eş sayısının yanlış bir biçimde hesaplanması sorunu düzeltildi. Bu, K Torrent’in var olmayan eşlere bağlanmaya çalıştığı anlamına geliyordu.</li>
+          <li xml:lang="uk">Виправлено помилку в розрахунку кількості вузлів для відповіді ANNOUNCE від UDP-трекера. Через це KTorrent намагався встановити з'єднання із вузлами, яких не існує</li>
         </ul>
       </description>
     </release>
