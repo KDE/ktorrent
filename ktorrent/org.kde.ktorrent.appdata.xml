@@ -1022,6 +1022,7 @@
           <li>Fixed a crash when disabling the Scan Folder plugin</li>
           <li xml:lang="ca">S'ha corregit una fallada en inhabilitar el connector d'exploració de carpetes</li>
           <li xml:lang="cs">Opravena chyba, která způsobovala pád aplikace při deaktivaci modulu pro skenování složky</li>
+          <li xml:lang="fr">Correction d'un plantage lors de la désactivation du module externe d'analyse de dossier</li>
           <li xml:lang="ka">გასწორდა ავარიული დასრულება საქაღალდის სკანირების დამატების გათიშვისას</li>
           <li xml:lang="nl">Een crash bij het uitschakelen van de scanmap-plug-in is verholpen</li>
           <li xml:lang="pt-BR">Corrigido um travamento ao desativar o plugin de pesquisa em pasta</li>
@@ -1032,6 +1033,7 @@
           <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
           <li xml:lang="ca">S'ha corregit la barra de progrés del comprovador de dades que salta al 100% quan es produeix un error o es cancel·la el comprovador</li>
           <li xml:lang="cs">Opravena chyba, kvůli které ukazatel průběhu kontroly dat přeskočil na 100 %, když došlo k chybě nebo byla kontrola zrušena</li>
+          <li xml:lang="fr">Correction de la barre de progression du vérificateur de données basculant à 100 % lorsqu'une erreur se produisait ou que le vérificateur était annulé</li>
           <li xml:lang="ka">გასწორდა შემთხვევა, როცა მონაცემთა შემოწმების მიმდინარეობის ზოლი ხტებოდა 100%-ზე, როცა აღმოაჩენდა შეცდომას, ან შემოწმება უქმდებოდა</li>
           <li xml:lang="nl">Probleem opgelost waarbij de voortgangsbalk van de gegevenscontroleur direct naar 100% sprong wanneer er een fout optrad of de controle werd geannuleerd.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a barra de progresso do verificador de dados saltava para 100% quando ocorria um erro ou a verificação era cancelada</li>
@@ -1042,6 +1044,7 @@
           <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
           <li xml:lang="ca">S'ha afegit una opció al connector d'aturada per a sortir del KTorrent quan es completi un torrent</li>
           <li xml:lang="cs">Do modulu Shutdown byla přidána možnost ukončit KTorrent po dokončení stahování torrentu</li>
+          <li xml:lang="fr">Ajout d'une option au module externe d'extinction pour la fermeture de KTorrent lorsqu'un torrent est terminé.</li>
           <li xml:lang="ka">გამორთვის დამატებას დაემატა არჩევანი, რომ KTorrent გაითიშოს, როცა ტორენტი დასრულდება</li>
           <li xml:lang="nl">Een optie toegevoegd aan de afsluit-plugin om KTorrent af te sluiten wanneer een torrent is voltooid.</li>
           <li xml:lang="pt-BR">Adicionada uma opção ao plugin de desligamento para encerrar o KTorrent quando um torrent é concluído</li>
@@ -1052,6 +1055,7 @@
           <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
           <li xml:lang="ca">S'ha corregit el càlcul del temps d'estancat d'un torrent. Això corregeix un error on la cua de torrents es barrejaria aleatòriament si s'ha activat l'opció «Disminueix la prioritat dels torrents que s'han estancat més de x minuts».</li>
           <li xml:lang="cs">Opraven výpočet doby, po kterou je torrent pozastaven. Tím byla odstraněna chyba, kvůli které docházelo k náhodnému zamíchání fronty torrentů, pokud byla zapnuta možnost "Snížit prioritu torrentů, které jsou pozastaveny déle než x minut".</li>
+          <li xml:lang="fr">Correction du calcul du temps d'arrêt d'un torrent. Cela corrige un bogue où la file d'attente des torrents était ordonnée de manière aléatoire si l'option « Diminuer la priorité des torrents bloqués pendant plus de x minutes » était activée.</li>
           <li xml:lang="ka">გასწორდა ტორენტის უქმეობის დროის გამოთვლა. ეს ასწორებს შეცდომას, სადაც ტორენტის რიგი შეიძლებოდა, შემთხვევითად არეულიყო, თუ ჩართული იყო პარამეტრი "იმ ტორენტების პრიორიტეტის დაწევა, რომლებიც გაჭედილია უფრო მეტი, ვიდრე".</li>
           <li xml:lang="nl">De berekening van de stilstandtijd van een torrent is gecorrigeerd. Hiermee wordt een bug verholpen waarbij de torrentwachtrij willekeurig door elkaar werd gehusseld als de optie "Prioriteit verlagen van torrents die langer dan x minuten stilstaan" was ingeschakeld.</li>
           <li xml:lang="pt-BR">Corrigido o cálculo do tempo de inatividade de um torrent. Isso resolve um erro que fazia a fila de torrents ser reorganizada aleatoriamente quando a opção "Diminuir a prioridade de torrents inativos por mais de x minutos" estava ativada.</li>
@@ -1062,6 +1066,7 @@
           <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
           <li xml:lang="ca">S'han corregit les banderes de país dels parells que no es mostraven correctament al connector del giny d'informació</li>
           <li xml:lang="cs">Opravena chyba, kvůli které se v modulu Information Widget nesprávně zobrazovaly vlajky zemí</li>
+          <li xml:lang="fr">Correction des drapeaux des pays s'affichant incorrectement dans le module externe du composant graphique d'informations</li>
           <li xml:lang="ka">გასწორდა პარტნიორის ქვეყნის ალმის არასწორი ჩვენება ინფორმაციის ვიჯეტის დამატებაში</li>
           <li xml:lang="nl">Probleem opgelost waarbij de vlaggen van peer-landen niet correct werden weergegeven in de informatie-widget-plug-in.</li>
           <li xml:lang="pt-BR">Corrigida a exibição incorreta das bandeiras dos países dos pares no plugin do widget de informações</li>
@@ -1072,6 +1077,7 @@
           <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
           <li xml:lang="ca">Millora de l'eficiència en analitzar fitxers «.torrent» evitant moltes assignacions de memòria</li>
           <li xml:lang="cs">Zlepšila se efektivita analýzy souborů .torrent tím, že se omezilo velké množství alokací paměti</li>
+          <li xml:lang="fr">Amélioration de l'efficacité de l'analyse des fichiers « .torrent » en évitant de nombreuses allocations de mémoire</li>
           <li xml:lang="ka">გასწორდა .torrent ფაილების დამუშავების ეფექტურობა მეხსიერების გამოყოფების თავიდან აცილებით</li>
           <li xml:lang="nl">De efficiëntie van het verwerken van .torrent-bestanden verbeterd door veel geheugenallocaties te vermijden.</li>
           <li xml:lang="pt-BR">Melhoria da eficiência do processamento de arquivos .torrent ao evitar diversas alocações de memória</li>
@@ -1082,6 +1088,7 @@
           <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
           <li xml:lang="ca">S'ha corregit un càlcul incorrecte del nombre de parells per a la resposta ANNOUNCE d'un seguidor UDP. Això significava que el KTorrent intentava connectar-se a parells no existents</li>
           <li xml:lang="cs">Opravena nesprávná kalkulace počtu peerů v odpovědi ANNOUNCE od UDP trackeru. To znamenalo, že se KTorrent pokoušel připojit k neexistujícím peerům.</li>
+          <li xml:lang="fr">Correction d'un calcul incorrect du nombre de pairs pour la réponse « ANNOUNCE » provenant d'un tracker UDP. Cela signifiait que KTorrent tentait de se connecter à des pairs inexistants.</li>
           <li xml:lang="ka">გასწორდა პარტნიორების რაოდენობის არასწორად დათვლა UDP პაკეტზე ANNOUNCE პასუხისთვის. ეს ნიშნავს, რომ KTorrent ცდილობდა არარსებულ პარტნიორებთან დაკავშირებას</li>
           <li xml:lang="nl">Een foutieve berekening van het aantal peers voor de ANNOUNCE-reactie van een UDP-tracker is gecorrigeerd. Hierdoor probeerde KTorrent verbinding te maken met niet-bestaande peers.</li>
           <li xml:lang="pt-BR">Corrigido um cálculo incorreto do número de pares para a resposta ANNOUNCE de um rastreador UDP. Isso fazia com que o KTorrent tentasse se conectar a pares inexistentes</li>
@@ -1100,6 +1107,7 @@
           <li>Fixed filters for different log levels in the Log Viewer plugin</li>
           <li xml:lang="ca">S'han corregit els filtres dels nivells de registre diferents al connector visualitzador de registre</li>
           <li xml:lang="cs">Opraveny filtry pro různé úrovně záznamu v pluginu Log Viewer</li>
+          <li xml:lang="fr">Correction de filtres pour différents niveaux de journalisation dans le module externe d'affichage de journalisation.</li>
           <li xml:lang="ka">გასწორდა ფილტრის სხვადასხვა ჟურნალის დონეები ჟურნალის დათვალიერების დამატებაში</li>
           <li xml:lang="nl">Filters voor verschillende logniveaus in de Log Viewer-plugin opgelost</li>
           <li xml:lang="pt-BR">Filtros fixos para diferentes níveis de log no plugin do visualizador de log</li>
@@ -1110,6 +1118,7 @@
           <li>Fixed the way KTorrent's peer ID is created. Previously 26.04.00 was converted to "-KT2640-", now it is "-KT260400"</li>
           <li xml:lang="ca">S'ha corregit la manera en que es creen els ID de parell del KTorrent. L'anterior 26.04.00 s'havia convertit a «-KT2640-», ara és «-KT260400»</li>
           <li xml:lang="cs">Opravena metoda vytváření ID peeru v programu KTorrent. Dříve se formát 26.04.00 převáděl na "-KT2640-", nyní je to "-KT260400".</li>
+          <li xml:lang="fr">Correction de la façon dont l'identifiant de pair de KTorrent était créé. Auparavant, le « 26.04.00 » était converti en « -KT2640- ». Maintenant, il devient « -KT260400 ».</li>
           <li xml:lang="ka">გასწორდა გზა, რომლითაც KTorrent-ის პარტიორის ID იქმნებოდა. ადრე 26.04.00 ხდებოდა "-KT2440-". ახლა ხდება "-KT260400"</li>
           <li xml:lang="nl">De manier waarop de peer-ID van KTorrent wordt aangemaakt, is gecorrigeerd. Voorheen werd 26.04.00 omgezet naar "-KT2640-", nu is dat "-KT260400".</li>
           <li xml:lang="pt-BR">Corrigida a forma como o ID de par do KTorrent é gerado. Anteriormente, 26.04.00 era convertido para "-KT2640-"; agora, é convertido para "-KT260400".</li>
@@ -1120,6 +1129,7 @@
           <li>Fixed a bug where KTorrent would try to connect to peers with TCP even if the only use uTP setting was enabled</li>
           <li xml:lang="ca">S'ha corregit un error en què el KTorrent intentava connectar-se als parells amb TCP, fins i tot si s'ha activat l'única opció d'ús uTP</li>
           <li xml:lang="cs">Opravena chyba, kvůli které se KTorrent pokoušel připojit k peerům přes TCP, i když bylo zapnuto nastavení Používat pouze UTP.</li>
+          <li xml:lang="fr">Correction d'un bogue où KTorrent essayait de se connecter à des pairs avec une connexion TCP même si le seul paramètre d'utilisation uTP était activé.</li>
           <li xml:lang="ka">გასწორდა შეცდომა, სადაც KTorrent პარტნიორებთან დაკავშირებას TCP-ით ცდილობდა მაშინაც კი, როცა ჩართული იყო, მხოლოდ, uTP-ის გამოყენების პარამეტრი</li>
           <li xml:lang="nl">Een bug verholpen waarbij KTorrent probeerde via TCP verbinding te maken met peers, zelfs als de instelling voor uitsluitend UTP was ingeschakeld.</li>
           <li xml:lang="pt-BR">Corrigido um erro em que o KTorrent tentava se conectar a pares via TCP, mesmo quando a configuração de uso exclusivo de uTP estava ativada.</li>
@@ -1216,6 +1226,7 @@
           <li>Added a "Last Activity" column showing the time the torrent last had upload or download activity. These values are kept accurate among sessions, i.e. after restarting the app.</li>
           <li xml:lang="ca">S'ha afegit una columna «Darrera activitat» que mostra l'hora de última activitat de pujada o baixada del torrent. Aquests valors es mantenen precisos entre sessions, és a dir, després de reiniciar l'aplicació.</li>
           <li xml:lang="cs">Byl přidán sloupec "Poslední aktivita", který zobrazuje čas, kdy došlo k poslednímu nahrávání nebo stahování v rámci torrentu. Tyto hodnoty zůstávají přesné i mezi jednotlivými sezeními, tj. i po restartování aplikace.</li>
+          <li xml:lang="fr">Ajout d'une colonne « Dernière activité » affichant l'heure à laquelle le torrent a eu sa dernière activité de téléchargement ou d'envoi. Ces valeurs sont maintenues précises d’une session à l’autre, c’est-à-dire après le redémarrage de l’application.</li>
           <li xml:lang="ka">დაემატა 'ბოლო აქტივობის' სვეტი, რომელიც აჩვენებს, როდის ჰქონდა ტორენტს ბოლო ატვირთვის, ან გადმოწერის აქტივობა. ეს მნიშვნელობები სწორად ინახება სესიებს შორის, მაგ: აპის რესტარტის შემდეგ.</li>
           <li xml:lang="nl">Een kolom 'Laatste activiteit' is toegevoegd die het tijdstip weergeeft waarop de torrent voor het laatst is geüpload of gedownload. Deze waarden blijven behouden tussen sessies, d.w.z. na het opnieuw opstarten van de toepassing.</li>
           <li xml:lang="pt-BR">Adicionada uma coluna "Última atividade" que mostra o momento em que o torrent teve atividade de upload ou download pela última vez. Esses valores são mantidos atualizados entre as sessões, ou seja, após reiniciar o aplicativo.</li>
