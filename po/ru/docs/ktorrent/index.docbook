@@ -1,13 +1,12 @@
 <?xml version="1.0" ?>
-<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
-"dtd/kdedbx45.dtd" [
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
   <!ENTITY ktorrent "<application
 >KTorrent</application
 >">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % Russian "INCLUDE">
 ]>
-<article lang="&language;">
+<article id="ktorrent" lang="&language;">
 <title
 >KTorrent</title>
 <articleinfo>
@@ -65,7 +64,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 </articleinfo>
 
 <para
->&ktorrent; — это приложение для работы с BitTorrent для KDE, которое позволяет обмениваться файлами по протоколу BitTorrent. В программе может быть одновременно запущено несколько торрентов, а дополнительные возможности делают &ktorrent; полнофункциональным клиентом BitTorrent.</para>
+>&ktorrent; — это приложение KDE для работы с BitTorrent, которое позволяет загружать файлы по протоколу BitTorrent. В программе может быть одновременно запущено несколько торрентов, а дополнительные возможности делают &ktorrent; полнофункциональным клиентом BitTorrent.</para>
 
 <itemizedlist>
 <title
@@ -132,15 +131,11 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 ></listitem>
 <listitem
 ><para
->Поддержка сценариев при помощи Kross и внешнего управления через интерфейс D-Bus</para
-></listitem>
-<listitem
-><para
 >Значок в системном лотке</para
 ></listitem>
 <listitem
 ><para
->Поддержка аутентификации на трекере.</para
+>Поддержка аутентификации на трекере</para
 ></listitem>
 <listitem
 ><para
@@ -148,7 +143,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 ></listitem>
 <listitem
 ><para
->Поддержка сценариев при помощи Kross и внешнего управления через интерфейс D-Bus</para
+>Межпроцессное управление через интерфейс D-Bus</para
 ></listitem>
 </itemizedlist>
 
@@ -157,26 +152,8 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 >Справочные ресурсы в Интернете</title>
 <listitem
 ><para
-><ulink url="http://ktorrent.org/"
->Веб-сайт KTorrent</ulink
-></para
-></listitem>
-<listitem
-><para
-><ulink url="http://ktorrent.org/wiki/index.php/Main_Page"
->Руководство пользователя KTorrent</ulink
-></para
-></listitem>
-<listitem
-><para
-><ulink url="http://ktorrent.org/forum/"
->Форум KTorrent</ulink
-></para
-></listitem>
-<listitem
-><para
-><ulink url="http://ktorrent.org/wiki/"
->Вики-раздел сайта KTorrent</ulink
+><ulink url="https://userbase.kde.org/KTorrent"
+>KTorrent на UserBase</ulink
 ></para
 ></listitem>
 <listitem
