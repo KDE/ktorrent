@@ -1020,7 +1020,9 @@
       <description>
         <ul>
           <li>Fixed a crash when disabling the Scan Folder plugin</li>
+          <li xml:lang="bg">Коригиране на срив при деактивиране на плъгина за сканиране на папка</li>
           <li xml:lang="ca">S'ha corregit una fallada en inhabilitar el connector d'exploració de carpetes</li>
+          <li xml:lang="ca-valencia">S'ha esmenat una fallada en inhabilitar el connector d'exploració de carpetes</li>
           <li xml:lang="cs">Opravena chyba, která způsobovala pád aplikace při deaktivaci modulu pro skenování složky</li>
           <li xml:lang="fr">Correction d'un plantage lors de la désactivation du module externe d'analyse de dossier</li>
           <li xml:lang="ka">გასწორდა ავარიული დასრულება საქაღალდის სკანირების დამატების გათიშვისას</li>
@@ -1031,7 +1033,9 @@
           <li xml:lang="tr">Klasör Tara eklentisi devre dışı bırakılırken oluşan bir çökme düzeltildi.</li>
           <li xml:lang="uk">Усунено аварійне завершення при вимикання додатка сканування теки</li>
           <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
+          <li xml:lang="bg">Корекция на пропускането на лентата за прогрес при проверката на данните директно до 100% при възникване на грешка или при отмяна на проверката</li>
           <li xml:lang="ca">S'ha corregit la barra de progrés del comprovador de dades que salta al 100% quan es produeix un error o es cancel·la el comprovador</li>
+          <li xml:lang="ca-valencia">S'ha corregit la barra de progrés del comprovador de dades que salta fins al 100% quan es produïx un error o es cancel·la el comprovador</li>
           <li xml:lang="cs">Opravena chyba, kvůli které ukazatel průběhu kontroly dat přeskočil na 100 %, když došlo k chybě nebo byla kontrola zrušena</li>
           <li xml:lang="fr">Correction de la barre de progression du vérificateur de données basculant à 100 % lorsqu'une erreur se produisait ou que le vérificateur était annulé</li>
           <li xml:lang="ka">გასწორდა შემთხვევა, როცა მონაცემთა შემოწმების მიმდინარეობის ზოლი ხტებოდა 100%-ზე, როცა აღმოაჩენდა შეცდომას, ან შემოწმება უქმდებოდა</li>
@@ -1042,7 +1046,9 @@
           <li xml:lang="tr">Bir hata oluştuğunda veya denetçi iptal edildiğinde veri denetleyicisi ilerleme çubuğunun %100’e atlaması onarıldı.</li>
           <li xml:lang="uk">Виправлено проблему, через яку індикатор виконання перевірки даних миттєво переходив до 100% у разі виникнення помилки або скасування перевірки</li>
           <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
+          <li xml:lang="bg">Добавена е опция в плъгина за изключване за затваряне на KTorrent при завършване на торент</li>
           <li xml:lang="ca">S'ha afegit una opció al connector d'aturada per a sortir del KTorrent quan es completi un torrent</li>
+          <li xml:lang="ca-valencia">S'ha afegit una opció al connector de parada per a eixir de KTorrent quan es complete un torrent</li>
           <li xml:lang="cs">Do modulu Shutdown byla přidána možnost ukončit KTorrent po dokončení stahování torrentu</li>
           <li xml:lang="fr">Ajout d'une option au module externe d'extinction pour la fermeture de KTorrent lorsqu'un torrent est terminé.</li>
           <li xml:lang="ka">გამორთვის დამატებას დაემატა არჩევანი, რომ KTorrent გაითიშოს, როცა ტორენტი დასრულდება</li>
@@ -1053,7 +1059,9 @@
           <li xml:lang="tr">Bir torrent tamamlandığında, bilgisayarı kapatma eklentisinin K Torrent’ten çıkması için bir seçenek eklendi.</li>
           <li xml:lang="uk">У додатку вимикання додано пункт для завершення роботи KTorrent після завершення завантаження торентів</li>
           <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
+          <li xml:lang="bg">Коригирано изчисляването на времето за прекъсване на торент. Това отстранява бъг, при който опашката на торентите се пренареждаше произволно, ако опцията „Намаляване на приоритета на торенти, които са прекъснати за повече от x минути“ беше активирана.</li>
           <li xml:lang="ca">S'ha corregit el càlcul del temps d'estancat d'un torrent. Això corregeix un error on la cua de torrents es barrejaria aleatòriament si s'ha activat l'opció «Disminueix la prioritat dels torrents que s'han estancat més de x minuts».</li>
+          <li xml:lang="ca-valencia">S'ha esmenat el càlcul del temps d'estancat d'un torrent. Açò corregix un error on la cua de torrent es barrejaria aleatòriament si s'ha marcat l'opció «Disminuïx la prioritat dels torrent que s'han estancat més de x minuts».</li>
           <li xml:lang="cs">Opraven výpočet doby, po kterou je torrent pozastaven. Tím byla odstraněna chyba, kvůli které docházelo k náhodnému zamíchání fronty torrentů, pokud byla zapnuta možnost "Snížit prioritu torrentů, které jsou pozastaveny déle než x minut".</li>
           <li xml:lang="fr">Correction du calcul du temps d'arrêt d'un torrent. Cela corrige un bogue où la file d'attente des torrents était ordonnée de manière aléatoire si l'option « Diminuer la priorité des torrents bloqués pendant plus de x minutes » était activée.</li>
           <li xml:lang="ka">გასწორდა ტორენტის უქმეობის დროის გამოთვლა. ეს ასწორებს შეცდომას, სადაც ტორენტის რიგი შეიძლებოდა, შემთხვევითად არეულიყო, თუ ჩართული იყო პარამეტრი "იმ ტორენტების პრიორიტეტის დაწევა, რომლებიც გაჭედილია უფრო მეტი, ვიდრე".</li>
@@ -1064,7 +1072,9 @@
           <li xml:lang="tr">Bir torrentin duraksama süresinin hesaplanması onarıldı. Bu, “Şundan daha çok duraklayan torrentlerin önceliğini düşür” seçeneği etkinken torrent kuyruğunun rastgele biçimde karılmasına neden olan bir hatayı düzeltir.</li>
           <li xml:lang="uk">Виправлено розрахунок часу простою торента. Це усуває помилку, через яку черга торентів випадковим чином перемішувалася, якщо було активовано пункт «Знижувати пріоритет торентів, які призупинено на понад x хвилин».</li>
           <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
+          <li xml:lang="bg">Корекция на неправилното изобразяване на националните знамена на пиърите в плъгина за информационен уиджет</li>
           <li xml:lang="ca">S'han corregit les banderes de país dels parells que no es mostraven correctament al connector del giny d'informació</li>
+          <li xml:lang="ca-valencia">S'han corregit les banderes de país dels parells que no es mostraven correctament al connector del giny d'informació</li>
           <li xml:lang="cs">Opravena chyba, kvůli které se v modulu Information Widget nesprávně zobrazovaly vlajky zemí</li>
           <li xml:lang="fr">Correction des drapeaux des pays s'affichant incorrectement dans le module externe du composant graphique d'informations</li>
           <li xml:lang="ka">გასწორდა პარტნიორის ქვეყნის ალმის არასწორი ჩვენება ინფორმაციის ვიჯეტის დამატებაში</li>
@@ -1075,7 +1085,9 @@
           <li xml:lang="tr">Bilgi araç takımında eşlerin bulundukları ülkelerin bayraklarının görüntülenmemesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено показ прапорців країн вузлів належним чином у додатку віджета відомостей</li>
           <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
+          <li xml:lang="bg">Подобрена ефективност при парсването на .torrent файлове чрез избягване на множество разпределяния на паметта</li>
           <li xml:lang="ca">Millora de l'eficiència en analitzar fitxers «.torrent» evitant moltes assignacions de memòria</li>
+          <li xml:lang="ca-valencia">Millora de l'eficiència en analitzar fitxers «.torrent» evitant moltes assignacions de memòria</li>
           <li xml:lang="cs">Zlepšila se efektivita analýzy souborů .torrent tím, že se omezilo velké množství alokací paměti</li>
           <li xml:lang="fr">Amélioration de l'efficacité de l'analyse des fichiers « .torrent » en évitant de nombreuses allocations de mémoire</li>
           <li xml:lang="ka">გასწორდა .torrent ფაილების დამუშავების ეფექტურობა მეხსიერების გამოყოფების თავიდან აცილებით</li>
@@ -1086,7 +1098,9 @@
           <li xml:lang="tr">Birçok bellek ayrılmasından kaçınılarak .torrent dosyalarının ayrıştırılması daha da efektif hâle getirildi.</li>
           <li xml:lang="uk">Підвищено ефективність обробки .torrent-файлів завдяки уникненню численних операцій отримання об'ємів пам'яті</li>
           <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
+          <li xml:lang="bg">Корекция на неправилното изчисляване на броя на пиъри при ANNOUNCE отговор от UDP тракер. Това води до опити на KTorrent за свързване с несъществуващи пиъри.</li>
           <li xml:lang="ca">S'ha corregit un càlcul incorrecte del nombre de parells per a la resposta ANNOUNCE d'un seguidor UDP. Això significava que el KTorrent intentava connectar-se a parells no existents</li>
+          <li xml:lang="ca-valencia">S'ha corregit un càlcul incorrecte del nombre de parells per a la resposta ANNOUNCE d'un seguidor UDP. Açò significava que KTorrent intentava connectar-se a parells no existents</li>
           <li xml:lang="cs">Opravena nesprávná kalkulace počtu peerů v odpovědi ANNOUNCE od UDP trackeru. To znamenalo, že se KTorrent pokoušel připojit k neexistujícím peerům.</li>
           <li xml:lang="fr">Correction d'un calcul incorrect du nombre de pairs pour la réponse « ANNOUNCE » provenant d'un tracker UDP. Cela signifiait que KTorrent tentait de se connecter à des pairs inexistants.</li>
           <li xml:lang="ka">გასწორდა პარტნიორების რაოდენობის არასწორად დათვლა UDP პაკეტზე ANNOUNCE პასუხისთვის. ეს ნიშნავს, რომ KTorrent ცდილობდა არარსებულ პარტნიორებთან დაკავშირებას</li>
@@ -1105,7 +1119,9 @@
       <description>
         <ul>
           <li>Fixed filters for different log levels in the Log Viewer plugin</li>
+          <li xml:lang="bg">Корекция на филтрите за различните нива на логване в плъгина за преглед на логове</li>
           <li xml:lang="ca">S'han corregit els filtres dels nivells de registre diferents al connector visualitzador de registre</li>
+          <li xml:lang="ca-valencia">S'han esmenat els filtres dels nivells de registre diferents al connector visor de registre</li>
           <li xml:lang="cs">Opraveny filtry pro různé úrovně záznamu v pluginu Log Viewer</li>
           <li xml:lang="fr">Correction de filtres pour différents niveaux de journalisation dans le module externe d'affichage de journalisation.</li>
           <li xml:lang="ka">გასწორდა ფილტრის სხვადასხვა ჟურნალის დონეები ჟურნალის დათვალიერების დამატებაში</li>
@@ -1116,7 +1132,9 @@
           <li xml:lang="tr">Günlük Görüntüleyicisi eklentisindeki farklı günlük düzeyleri için süzgeçler onarıldı.</li>
           <li xml:lang="uk">Виправлено фільтри для різних рівнів журналювання у додатку перегляду журналу</li>
           <li>Fixed the way KTorrent's peer ID is created. Previously 26.04.00 was converted to "-KT2640-", now it is "-KT260400"</li>
+          <li xml:lang="bg">Коригиран начин на създаване на Peer ID на KTorrent. Преди 26.04.00 се превръщаше в "-KT2640-", сега е "-KT260400"</li>
           <li xml:lang="ca">S'ha corregit la manera en que es creen els ID de parell del KTorrent. L'anterior 26.04.00 s'havia convertit a «-KT2640-», ara és «-KT260400»</li>
+          <li xml:lang="ca-valencia">S'ha corregit la manera en que es creen els ID de parell de KTorrent. L'anterior 26.04.00 s'havia convertit a «-KT2640-», ara és «-KT260400»</li>
           <li xml:lang="cs">Opravena metoda vytváření ID peeru v programu KTorrent. Dříve se formát 26.04.00 převáděl na "-KT2640-", nyní je to "-KT260400".</li>
           <li xml:lang="fr">Correction de la façon dont l'identifiant de pair de KTorrent était créé. Auparavant, le « 26.04.00 » était converti en « -KT2640- ». Maintenant, il devient « -KT260400 ».</li>
           <li xml:lang="ka">გასწორდა გზა, რომლითაც KTorrent-ის პარტიორის ID იქმნებოდა. ადრე 26.04.00 ხდებოდა "-KT2440-". ახლა ხდება "-KT260400"</li>
@@ -1127,7 +1145,9 @@
           <li xml:lang="tr">K Torrent’in eş kimliğinin oluşturulma şekli düzeltildi. Daha önceden “26.04.00”, “-KT2640” olarak dönüştürülürken, artık “-KT260400” olarak işlem görüyor.</li>
           <li xml:lang="uk">Виправлено спосіб формування ідентифікатора вузла у KTorrent. Раніше значення 26.04.00 перетворювалося на «-KT2640-», а тепер — на «-KT260400».</li>
           <li>Fixed a bug where KTorrent would try to connect to peers with TCP even if the only use uTP setting was enabled</li>
+          <li xml:lang="bg">Поправено е грешка, при която KTorrent се опитваше да се свърже с пиъри чрез TCP, дори когато настройката за използване само на uTP беше активирана</li>
           <li xml:lang="ca">S'ha corregit un error en què el KTorrent intentava connectar-se als parells amb TCP, fins i tot si s'ha activat l'única opció d'ús uTP</li>
+          <li xml:lang="ca-valencia">S'ha esmenat un error en què KTorrent intentava connectar-se als parells amb TCP, fins i tot si s'ha marcat l'única opció d'ús uTP</li>
           <li xml:lang="cs">Opravena chyba, kvůli které se KTorrent pokoušel připojit k peerům přes TCP, i když bylo zapnuto nastavení Používat pouze UTP.</li>
           <li xml:lang="fr">Correction d'un bogue où KTorrent essayait de se connecter à des pairs avec une connexion TCP même si le seul paramètre d'utilisation uTP était activé.</li>
           <li xml:lang="ka">გასწორდა შეცდომა, სადაც KTorrent პარტნიორებთან დაკავშირებას TCP-ით ცდილობდა მაშინაც კი, როცა ჩართული იყო, მხოლოდ, uTP-ის გამოყენების პარამეტრი</li>
@@ -1224,7 +1244,9 @@
       <description>
         <ul>
           <li>Added a "Last Activity" column showing the time the torrent last had upload or download activity. These values are kept accurate among sessions, i.e. after restarting the app.</li>
+          <li xml:lang="bg">Добавена е колона „Последна активност“, показваща времето на последната активност по качване или теглене на торента. Тези стойности се запазват между сесиите, т.е. след рестартиране на приложението.</li>
           <li xml:lang="ca">S'ha afegit una columna «Darrera activitat» que mostra l'hora de última activitat de pujada o baixada del torrent. Aquests valors es mantenen precisos entre sessions, és a dir, després de reiniciar l'aplicació.</li>
+          <li xml:lang="ca-valencia">S'ha afegit una columna «Última activitat» que mostra l'hora de última activitat de pujada o baixada del torrent. Estos valors es mantenen precisos entre sessions, és a dir, després de reiniciar l'aplicació.</li>
           <li xml:lang="cs">Byl přidán sloupec "Poslední aktivita", který zobrazuje čas, kdy došlo k poslednímu nahrávání nebo stahování v rámci torrentu. Tyto hodnoty zůstávají přesné i mezi jednotlivými sezeními, tj. i po restartování aplikace.</li>
           <li xml:lang="fr">Ajout d'une colonne « Dernière activité » affichant l'heure à laquelle le torrent a eu sa dernière activité de téléchargement ou d'envoi. Ces valeurs sont maintenues précises d’une session à l’autre, c’est-à-dire après le redémarrage de l’application.</li>
           <li xml:lang="ka">დაემატა 'ბოლო აქტივობის' სვეტი, რომელიც აჩვენებს, როდის ჰქონდა ტორენტს ბოლო ატვირთვის, ან გადმოწერის აქტივობა. ეს მნიშვნელობები სწორად ინახება სესიებს შორის, მაგ: აპის რესტარტის შემდეგ.</li>
@@ -1562,7 +1584,7 @@
           <li xml:lang="zh-CN">改进了各种小部件的间距，并将大部分用户界面移植为新的无边框外观。</li>
           <li>Fixed the country flags being in the Peers tab of the Info Widget</li>
           <li xml:lang="ar">إصلاح مشكلة وجود أعلام الدول في علامة التبويب الأقران في أداة المعلومات</li>
-          <li xml:lang="bg">Поправена е грешката, при която знамената на държавите се показваха в раздела „Участници“ на информационния уиджет</li>
+          <li xml:lang="bg">Поправена е грешката, при която знамената на държавите се показваха в раздела „Пиъри“ на информационния уиджет</li>
           <li xml:lang="ca">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
           <li xml:lang="ca-valencia">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
           <li xml:lang="cs">Opraveny vlajky zemí v záložce Peers ve widgetu Info</li>
