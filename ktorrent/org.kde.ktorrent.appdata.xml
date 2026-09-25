@@ -1073,7 +1073,7 @@
           <li xml:lang="ka">გასწორდა მოვლენების დამთვალიერებლის პარამეტრების მინიშნებაში დაუმუშავებელ HTML-ის ჩვენება</li>
           <li xml:lang="nl">De tekstballon in de instellingen van de logviewer die onbewerkte HTML weergaf, is nu correct.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a dica das configurações do visualizador de logs exibia HTML bruto</li>
-          <li xml:lang="ru">Исправлено отображение необработанного HTML во всплывающей подсказке параметров средства просмотра журнала;</li>
+          <li xml:lang="ru">Исправлен показ необработанного HTML во всплывающей подсказке параметров средства просмотра журнала;</li>
           <li xml:lang="sk">Fixed the log viewer settings tooltip showing raw HTML</li>
           <li xml:lang="sl">Popravljen je opis nastavitev pregledovalnika dnevnikov, ki prikazuje surov HTML</li>
           <li xml:lang="sv">Rättade verktygstipset för inställningar för loggvisare som visade obehandlad HTML</li>
@@ -1142,7 +1142,7 @@
           <li xml:lang="ka">დაემატა სვეტები მთავარ ხედში, რომლებიც მიმდინარე სესიაში გადმოწერილი, ან ატვირთული ბაიტების რაოდენობას აჩვენებს</li>
           <li xml:lang="nl">Er zijn kolommen toegevoegd aan de hoofdweergave die het aantal geüploade en gedownloade bytes in de huidige sessie weergeven</li>
           <li xml:lang="pt-BR">Adicionadas colunas à visualização principal, mostrando o número de bytes enviados e recebidos na sessão atual</li>
-          <li xml:lang="ru">Добавлены столбцы в главное окно для отображения количества переданных и полученных байтов в текущем сеансе;</li>
+          <li xml:lang="ru">Добавлены столбцы в главное окно с количеством переданных и полученных байтов в текущем сеансе;</li>
           <li xml:lang="sk">Added columns to the main view showing the number of bytes uploaded and downloaded in the current session</li>
           <li xml:lang="sl">V glavni pogled so dodani stolpci, ki prikazujejo število naloženih in prenesenih bajtov v trenutni seji.</li>
           <li xml:lang="sv">Tillägg av kolumner i huvudvyn som visar antalet byte som laddats upp och ner i den aktuella sessionen</li>
@@ -1241,7 +1241,7 @@
           <li xml:lang="ka">გასწორდა სტატისტიკის დამატებაში გრაფიკებში თეთრი ტექსტის თეთრ ფონზე დახატვა</li>
           <li xml:lang="nl">Het probleem met grafieken met witte tekst op een witte achtergrond in de statistiekenplug-in is opgelost</li>
           <li xml:lang="pt-BR">Corrigido gráficos com texto branco sobre fundo branco no plugin de Estatísticas</li>
-          <li xml:lang="ru">Исправлено отображение белого текста на белом фоне в диаграммах модуля статистики;</li>
+          <li xml:lang="ru">Исправлен белый текст на белом фоне в диаграммах модуля статистики;</li>
           <li xml:lang="sk">Fixed charts having white text on a white background in the Statistics plugin</li>
           <li xml:lang="sl">Popravljeni grafikoni z belim besedilom na belem ozadju v vtičniku Statistics</li>
           <li xml:lang="sv">Rättade fel på diagram med vit text på vit bakgrund i statistikinsticksprogrammet</li>
