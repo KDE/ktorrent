@@ -1029,7 +1029,7 @@
           <li xml:lang="es">Arreglado un error que causaba que los archivos magnet se actualizaran constantemente</li>
           <li xml:lang="fr">Correction d'un bogue provoquant la mise à jour permanente du fichier des aimants</li>
           <li xml:lang="he">תוקנה תקלה שגרמה לעדכון מחזורי של קובצי מגנטים</li>
-          <li xml:lang="it">Risoluzione di un bug che causava l'aggiornamento continuo del collegamenti magnetici</li>
+          <li xml:lang="it">Correzione di un bug che causava l'aggiornamento continuo del collegamenti magnetici</li>
           <li xml:lang="ka">გასწორდა შეცდომა, რომელიც მაგნიტების ფაილის მუდმივ განახლებას იწვევდა</li>
           <li xml:lang="nl">Een fout is verholpen waardoor het magnetenbestand constant werd bijgewerkt</li>
           <li xml:lang="pt-BR">Corrigido um erro que fazia com que o arquivo de ímãs fosse atualizado constantemente.</li>
@@ -1191,7 +1191,7 @@
           <li xml:lang="es">Arreglado un error al cerrar el complemento de vídeo</li>
           <li xml:lang="fr">Correction d'un plantage lors de la fermeture du composant graphique de vidéos</li>
           <li xml:lang="he">תוקנה קריסה בסגירת וידג׳ט הווידאו</li>
-          <li xml:lang="it">Risoluzione di un crash che si verificava alla chiusura dell'oggetto video</li>
+          <li xml:lang="it">Correzione di un crash che si verificava alla chiusura dell'oggetto video</li>
           <li xml:lang="ka">გასწორდა ავარიული დასრულება ვიდეოს ვიჯეტის დახურვისას</li>
           <li xml:lang="nl">Een crash bij het sluiten van het videowidget is verholpen</li>
           <li xml:lang="pt-BR">Corrigido um erro que causava o fechamento inesperado do widget de vídeo</li>
@@ -1237,7 +1237,7 @@
           <li xml:lang="es">Arreglados los gráficos que mostraban texto en blanco sobre fondo blanco en el complemento de estadísticas</li>
           <li xml:lang="fr">Correction des graphiques ayant du texte blanc sur un arrière-plan blanc dans le module externe « Statistiques »</li>
           <li xml:lang="he">תוקנה תקלה שבתרשימים הופיע טקסט לבן על רקע לבן בתוסף הסטטיסטיקה</li>
-          <li xml:lang="it">Sono stati corretti i grafici con testo bianco su sfondo bianco nell'oggetto Statistiche</li>
+          <li xml:lang="it">Correzione dei grafici con testo bianco su sfondo bianco nell'oggetto Statistiche</li>
           <li xml:lang="ka">გასწორდა სტატისტიკის დამატებაში გრაფიკებში თეთრი ტექსტის თეთრ ფონზე დახატვა</li>
           <li xml:lang="nl">Het probleem met grafieken met witte tekst op een witte achtergrond in de statistiekenplug-in is opgelost</li>
           <li xml:lang="pt-BR">Corrigido gráficos com texto branco sobre fundo branco no plugin de Estatísticas</li>
