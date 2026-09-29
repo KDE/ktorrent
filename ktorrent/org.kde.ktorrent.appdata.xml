@@ -1437,7 +1437,7 @@
           <li xml:lang="zh-CN">改进了各种小部件的间距，并将大部分用户界面移植为新的无边框外观。</li>
           <li>Fixed the country flags being in the Peers tab of the Info Widget</li>
           <li xml:lang="ar">إصلاح مشكلة وجود أعلام الدول في علامة التبويب الأقران في أداة المعلومات</li>
-          <li xml:lang="bg">Поправена е грешката, при която знамената на държавите се показваха в раздела „Участници“ на информационния уиджет</li>
+          <li xml:lang="bg">Поправена е грешката, при която знамената на държавите се показваха в раздела „Пиъри“ на информационния уиджет</li>
           <li xml:lang="ca">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
           <li xml:lang="ca-valencia">S'han corregit les banderes dels països a la pestanya Parells del giny d'informació</li>
           <li xml:lang="cs">Opraveny vlajky zemí v záložce Peers ve widgetu Info</li>
