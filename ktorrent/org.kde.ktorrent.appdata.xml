@@ -526,7 +526,7 @@
       <li xml:lang="tr">UDP izleyici desteği</li>
       <li xml:lang="uk">Підтримка координування UDP</li>
       <li xml:lang="zh-CN">支持 UDP tracker</li>
-      <li xml:lang="zh-TW">支援 UDP tracker</li>
+      <li xml:lang="zh-TW">支援 UDP 追蹤器</li>
       <li>Support for private trackers and torrents</li>
       <li xml:lang="ar">المتتبعات الخاصة والسيول</li>
       <li xml:lang="bg">Поддръжка на лични координиращи сървъри и торенти</li>
@@ -568,7 +568,7 @@
       <li xml:lang="tr">Özel izleyici ve torrent desteği</li>
       <li xml:lang="uk">Підтримка приватних координаторів та торентів</li>
       <li xml:lang="zh-CN">支持私有 tracker 和种子</li>
-      <li xml:lang="zh-TW">支援私密 tracker 和種子檔</li>
+      <li xml:lang="zh-TW">支援私密追蹤器和私密 torrent</li>
       <li>Support for µTorrent's peer exchange</li>
       <li xml:lang="ar">تبادل الأقران في µTorrent</li>
       <li xml:lang="bg">Поддръжка на обмена на потребители на µTorrent.</li>
@@ -694,7 +694,7 @@
       <li xml:lang="tr">İzleyicisiz torrentler için destek</li>
       <li xml:lang="uk">Підтримка створення торентів без координації</li>
       <li xml:lang="zh-CN">支持创建无 tracker 种子</li>
-      <li xml:lang="zh-TW">支援建立無 tracker 的 torrent</li>
+      <li xml:lang="zh-TW">支援建立無追蹤器的 torrent</li>
       <li>Support for distributed hash tables (DHT, the Mainline version)</li>
       <li xml:lang="ar">توفير جداول تلبيدة الموزعة (DHT، الإصدار الرئيس)</li>
       <li xml:lang="bg">Поддръжка на разпределени хеш-таблици (DHT, версия Mainline)</li>
@@ -907,7 +907,7 @@
       <li xml:lang="tr">İzleyici kimlik doğrulama desteği</li>
       <li xml:lang="uk">Підтримка розпізнавання для координації</li>
       <li xml:lang="zh-CN">支持 tracker 认证</li>
-      <li xml:lang="zh-TW">tracker 認證支援</li>
+      <li xml:lang="zh-TW">追蹤器認證支援</li>
       <li>Connection through a proxy</li>
       <li xml:lang="ar">الاتصال عبر الوكيل</li>
       <li xml:lang="bg">Свързване посредством сървър-посредник</li>
@@ -1037,6 +1037,7 @@
           <li xml:lang="sv">Rättade en krasch när insticksprogrammet Sök katalog inaktiverades</li>
           <li xml:lang="tr">Klasör Tara eklentisi devre dışı bırakılırken oluşan bir çökme düzeltildi.</li>
           <li xml:lang="uk">Усунено аварійне завершення при вимикання додатка сканування теки</li>
+          <li xml:lang="zh-TW">修正停用「掃描資料夾」外掛程式時會發生崩潰的問題</li>
           <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
           <li xml:lang="ar">أُصلح شريط تقدم مدقق البيانات الذي كان يقفز إلى 100% عند حدوث خطأ أو إلغاء المدقق</li>
           <li xml:lang="bg">Корекция на пропускането на лентата за прогрес при проверката на данните директно до 100% при възникване на грешка или при отмяна на проверката</li>
@@ -1055,6 +1056,7 @@
           <li xml:lang="sv">Rättade att förloppsindikatorn för datakontrollen hoppade till 100 % när ett fel uppstod eller kontrollen avbröts.</li>
           <li xml:lang="tr">Bir hata oluştuğunda veya denetçi iptal edildiğinde veri denetleyicisi ilerleme çubuğunun %100’e atlaması onarıldı.</li>
           <li xml:lang="uk">Виправлено проблему, через яку індикатор виконання перевірки даних миттєво переходив до 100% у разі виникнення помилки або скасування перевірки</li>
+          <li xml:lang="zh-TW">修正資料檢查進度條在發生問題或檢查取消時會跳到 100% 的問題</li>
           <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
           <li xml:lang="ar">أُضيف خيار إلى ملحق الإغلاق لإنهاء كيدي تورنت عند اكتمال التورنت</li>
           <li xml:lang="bg">Добавена е опция в плъгина за изключване за затваряне на KTorrent при завършване на торент</li>
@@ -1073,6 +1075,7 @@
           <li xml:lang="sv">Tillägg av ett alternativ i avstängningsinsticksprogrammet för att avsluta KTorrent när ett dataflöde är klart.</li>
           <li xml:lang="tr">Bir torrent tamamlandığında, bilgisayarı kapatma eklentisinin K Torrent’ten çıkması için bir seçenek eklendi.</li>
           <li xml:lang="uk">У додатку вимикання додано пункт для завершення роботи KTorrent після завершення завантаження торентів</li>
+          <li xml:lang="zh-TW">新增 torrent 下載完成後離開 KTorrent 的選項到「關機」外掛程式</li>
           <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
           <li xml:lang="ar">أُصلح حساب وقت تعطل التورنت. هذا يصلح علة حيث كان صف التورنتات يُعاد ترتيبه عشوائيا إذا كان خيار "تقليل أولوية التورنتات المتعطلة لأكثر من x دقيقة" ممكنا.</li>
           <li xml:lang="bg">Коригирано изчисляването на времето за прекъсване на торент. Това отстранява бъг, при който опашката на торентите се пренареждаше произволно, ако опцията „Намаляване на приоритета на торенти, които са прекъснати за повече от x минути“ беше активирана.</li>
@@ -1091,6 +1094,7 @@
           <li xml:lang="sv">Rättade beräkningen av avstannad tid för dataflöden. Det löser ett fel där kön för dataflöden slumpmässigt kastades om ifall alternativet ”Minska prioritet för dataflöden som är avstannade längre än x minuter” var aktiverat.</li>
           <li xml:lang="tr">Bir torrentin duraksama süresinin hesaplanması onarıldı. Bu, “Şundan daha çok duraklayan torrentlerin önceliğini düşür” seçeneği etkinken torrent kuyruğunun rastgele biçimde karılmasına neden olan bir hatayı düzeltir.</li>
           <li xml:lang="uk">Виправлено розрахунок часу простою торента. Це усуває помилку, через яку черга торентів випадковим чином перемішувалася, якщо було активовано пункт «Знижувати пріоритет торентів, які призупинено на понад x хвилин».</li>
+          <li xml:lang="zh-TW">修正 torrent 停滯時間的計算。這修正了啟用「將停滯超過一段時間的 torrent 降低優先權」選項時 torrent 佇列有的時候會隨機打亂的問題。</li>
           <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
           <li xml:lang="ar">أُصلحت أعلام بلدان الأنداد التي لم تكن تُعرض بشكل صحيح في ملحق أداة المعلومات</li>
           <li xml:lang="bg">Корекция на неправилното изобразяване на националните знамена на пиърите в плъгина за информационен уиджет</li>
@@ -1109,6 +1113,7 @@
           <li xml:lang="sv">Rättade att landsflaggor inte visades korrekt i insticksprogrammet Informationskomponent</li>
           <li xml:lang="tr">Bilgi araç takımında eşlerin bulundukları ülkelerin bayraklarının görüntülenmemesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено показ прапорців країн вузлів належним чином у додатку віджета відомостей</li>
+          <li xml:lang="zh-TW">修正端點國家旗幟在資訊元件外掛程式當中無法正確顯示的問題</li>
           <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
           <li xml:lang="ar">حُسنت كفاءة تحليل ملفات .torrent بتجنب الكثير من تخصيصات الذاكرة</li>
           <li xml:lang="bg">Подобрена ефективност при парсването на .torrent файлове чрез избягване на множество разпределяния на паметта</li>
@@ -1127,6 +1132,7 @@
           <li xml:lang="sv">Förbättrade effektiviteten vid tolkning av .torrent-filer genom att undvika ett stort antal minnesallokeringar</li>
           <li xml:lang="tr">Birçok bellek ayrılmasından kaçınılarak .torrent dosyalarının ayrıştırılması daha da efektif hâle getirildi.</li>
           <li xml:lang="uk">Підвищено ефективність обробки .torrent-файлів завдяки уникненню численних операцій отримання об'ємів пам'яті</li>
+          <li xml:lang="zh-TW">改善剖析 .torrent 檔案的效能，避免進行許多不必要的記憶體配置</li>
           <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
           <li xml:lang="ar">أُصلح حساب غير صحيح لعدد الأنداد في استجابة ANNOUNCE من متتبع UDP. هذا يعني أن كيدي تورنت كان يحاول الاتصال بأنداد غير موجودة</li>
           <li xml:lang="bg">Корекция на неправилното изчисляване на броя на пиъри при ANNOUNCE отговор от UDP тракер. Това води до опити на KTorrent за свързване с несъществуващи пиъри.</li>
@@ -1145,6 +1151,7 @@
           <li xml:lang="sv">Rättade en felaktig beräkning av antalet motparter för ANNOUNCE-svaret från en UDP-spårare. Det innebar att KTorrent försökte ansluta till icke-existerande motparter.</li>
           <li xml:lang="tr">Bir UDP izleyicisinden gelen ANNOUNCE yanıtı için olan eş sayısının yanlış bir biçimde hesaplanması sorunu düzeltildi. Bu, K Torrent’in var olmayan eşlere bağlanmaya çalıştığı anlamına geliyordu.</li>
           <li xml:lang="uk">Виправлено помилку в розрахунку кількості вузлів для відповіді ANNOUNCE від UDP-трекера. Через це KTorrent намагався встановити з'єднання із вузлами, яких не існує</li>
+          <li xml:lang="zh-TW">修正為來自 UDP 追蹤器的 ANNOUNCE 回應計算的端點數量。這代表之前 KTorrent 會嘗試連線到不存在的端點</li>
         </ul>
       </description>
     </release>
@@ -1171,6 +1178,7 @@
           <li xml:lang="sv">Rättade filter för olika loggningsnivåer i insticksprogrammet Loggvisare.</li>
           <li xml:lang="tr">Günlük Görüntüleyicisi eklentisindeki farklı günlük düzeyleri için süzgeçler onarıldı.</li>
           <li xml:lang="uk">Виправлено фільтри для різних рівнів журналювання у додатку перегляду журналу</li>
+          <li xml:lang="zh-TW">修正紀錄檢視器外掛程式當中的紀錄等級過濾器</li>
           <li>Fixed the way KTorrent's peer ID is created. Previously 26.04.00 was converted to "-KT2640-", now it is "-KT260400"</li>
           <li xml:lang="ar">أُصلحت طريقة إنشاء معرف الند لكيدي تورنت. سابقا كان 26.04.00 يحول إلى "-KT2640-"، الآن أصبح "-KT260400"</li>
           <li xml:lang="bg">Коригиран начин на създаване на Peer ID на KTorrent. Преди 26.04.00 се превръщаше в "-KT2640-", сега е "-KT260400"</li>
@@ -1189,6 +1197,7 @@
           <li xml:lang="sv">Rättade hur  motparts-id skapas av KTorrent. Tidigare omvandlades 26.04.00 till "-KT2640-", nu blir det "-KT260400".</li>
           <li xml:lang="tr">K Torrent’in eş kimliğinin oluşturulma şekli düzeltildi. Daha önceden “26.04.00”, “-KT2640” olarak dönüştürülürken, artık “-KT260400” olarak işlem görüyor.</li>
           <li xml:lang="uk">Виправлено спосіб формування ідентифікатора вузла у KTorrent. Раніше значення 26.04.00 перетворювалося на «-KT2640-», а тепер — на «-KT260400».</li>
+          <li xml:lang="zh-TW">修正 KTorrent 的端點 ID 建立的方式。之前 26.04.00 會轉成 "-KT2640-"，現已修正成 "-KT260400"</li>
           <li>Fixed a bug where KTorrent would try to connect to peers with TCP even if the only use uTP setting was enabled</li>
           <li xml:lang="ar">أُصلحت علة حيث كان كيدي تورنت يحاول الاتصال بالأنداد عبر TCP حتى لو كان إعداد استخدام uTP فقط ممكنا</li>
           <li xml:lang="bg">Поправено е грешка, при която KTorrent се опитваше да се свърже с пиъри чрез TCP, дори когато настройката за използване само на uTP беше активирана</li>
@@ -1207,6 +1216,7 @@
           <li xml:lang="sv">Rättade ett fel där KTorrent försökte ansluta till motparter via TCP, även om inställningen för att endast använda uTP var aktiverad.</li>
           <li xml:lang="tr">Yalnızca uTP kullanımı ayarı etkinken K Torrent’in eşlere TCP kullanarak bağlanmaya çalışması engellendi.</li>
           <li xml:lang="uk">Виправлено помилку, через яку KTorrent намагався встановити з'єднання з вузлами з використанням TCP, навіть якщо було наказано використовувати лише uTP.</li>
+          <li xml:lang="zh-TW">修正即使啟用「只使用 µTP」設定 KTorrent 仍然會試著用 TCP 連線到端點的問題</li>
         </ul>
       </description>
     </release>
@@ -1244,6 +1254,7 @@
           <li xml:lang="tr">Mıknatısların sürekli güncellenmesine neden olan bir hata düzeltildi.</li>
           <li xml:lang="uk">Виправлено ваду, яка спричиняла постійне оновлення файла magnets</li>
           <li xml:lang="zh-CN">修复了一个导致 magnets 文件不断更新的错误</li>
+          <li xml:lang="zh-TW">修正造成 magnets 檔案不斷的被更新的一個問題</li>
           <li>Fixed the progress bar highlight color</li>
           <li xml:lang="ar">إصلاح لون تمييز شريط التقدم</li>
           <li xml:lang="bg">Поправен е цветът на запълване на индикатора за напредък</li>
@@ -1264,6 +1275,7 @@
           <li xml:lang="tr">İlerleme çubuğunun vurgu rengi düzeltildi.</li>
           <li xml:lang="uk">Виправлено колір підсвічування смужки поступу</li>
           <li xml:lang="zh-CN">修复进度条高亮颜色</li>
+          <li xml:lang="zh-TW">修正進度條突顯顏色</li>
           <li>Fixed the log viewer settings tooltip showing raw HTML</li>
           <li xml:lang="ar">إصلاح تلميح إعدادات عارض السجلات الذي كان يعرض كود HTML الخام</li>
           <li xml:lang="bg">Поправен е проблемът с подсказката в настройките на лог файла, показваща необработен HTML</li>
@@ -1284,6 +1296,7 @@
           <li xml:lang="tr">Günlük yöneticisi ayarları araç ipucunun ham HTML gösterme sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено помилку, яка призводила до того, що на панелі підказки параметрів переглядача журналу було показано необроблений код HTML</li>
           <li xml:lang="zh-CN">修复了日志查看器设置工具提示显示原始 HTML 的问题</li>
+          <li xml:lang="zh-TW">修正紀錄檢視器工具提示顯示的是 HTML 原始碼的問題</li>
         </ul>
       </description>
     </release>
@@ -1311,6 +1324,7 @@
           <li xml:lang="sv">Tillägg av en kolumn "Senaste aktivitet" som visar när dataflödet senast hade uppladdnings- eller nerladdningsaktivitet. Värdena bevaras korrekt mellan sessioner, dvs. efter omstart av programmet.</li>
           <li xml:lang="tr">Torrent’in en son yükleme veya indirme etkinliği olduğu zamanı gösteren bir “Son Etkinlik” sütunu eklendi. Bu değerler, oturumlar arasında da kalıcıdır; örneğin, uygulamayı yeniden başlatsanız bile.</li>
           <li xml:lang="uk">Додано стовпчик «Останні дії», у якому буде показано часові параметри тривалості вивантаження або отримання торентів. Програма підтримуватиме актуальність цих значень між сеансами роботи у ній, тобто після перезапуску програми.</li>
+          <li xml:lang="zh-TW">新增「最後活動」欄位，顯示 torrent 上次有上傳或下載活動的時間。這些數值在應用程式關閉後再開啟時仍然會是準確的。</li>
           <li>Fixed the background color of the syndication widget's feed-item status panel</li>
           <li xml:lang="ar">إصلاح لون خلفية لوحة حالة عناصر الخلاصة في أداة التوزيع</li>
           <li xml:lang="bg">Поправен е фоновият цвят на статус панела за елементи в приставката за RSS емисии (syndication)</li>
@@ -1331,6 +1345,7 @@
           <li xml:lang="tr">Eşzamanlama araç takımının besleme ögesi durum panelinin arka plan rengi düzeltildi.</li>
           <li xml:lang="uk">Виправлено колір тла панелі стану пункту подачі віджета синдикації</li>
           <li xml:lang="zh-CN">已修复聚合小部件的订阅源项目状态面板的背景颜色</li>
+          <li xml:lang="zh-TW">修正 syndication 元件的 feed 項目狀態面板的背景顏色</li>
           <li>Added columns to the main view showing the number of bytes uploaded and downloaded in the current session</li>
           <li xml:lang="ar">إضافة أعمدة إلى الشاشة الرئيسة تعرض عدد البايتات التي تم تحميلها وتنزيلها خلال الجلسة الحالية</li>
           <li xml:lang="bg">Добавени са колони към основния изглед, показващи количеството качени и изтеглени байтове в текущата сесия</li>
@@ -1351,6 +1366,7 @@
           <li xml:lang="tr">Ana görünüme, geçerli oturumda yüklenen ve indirilen bayt sayısını gösteren sütunlar eklendi.</li>
           <li xml:lang="uk">До основного вікна додано стовпці, що показують кількість байтів, вивантажених або отриманих у поточному сеансі</li>
           <li xml:lang="zh-CN">在主视图中添加了两列，分别显示当前会话中上传和下载的字节数。</li>
+          <li xml:lang="zh-TW">在主檢視新增顯示目前工作階段上傳與下載位元組總數的欄位</li>
         </ul>
       </description>
     </release>
@@ -1384,6 +1400,7 @@
           <li xml:lang="tr">“Eklendi” sütunu artık daha kısa bir tarih biçimi kullanıyor.</li>
           <li xml:lang="uk">У стовпчику «Додано» у новій версії використано дату у скороченому форматі</li>
           <li xml:lang="zh-CN">“添加时间”列现在使用了更短的日期格式</li>
+          <li xml:lang="zh-TW">「已增加」欄位現在使用較短的日期格式</li>
           <li>Fixed a crash when closing the video widget</li>
           <li xml:lang="ar"> إصلاح مشكلة تعطل التطبيق عند إغلاق أداة الفيديو</li>
           <li xml:lang="bg">Поправен е срив при затваряне на видео уиджета</li>
@@ -1404,6 +1421,7 @@
           <li xml:lang="tr">Video araç takımı kapatılırken oluşan bir çökme düzeltildi.</li>
           <li xml:lang="uk">Усунено аварійне завершення при закритті віджета відео</li>
           <li xml:lang="zh-CN">修复了关闭视频小部件时发生的崩溃问题</li>
+          <li xml:lang="zh-TW">修正關閉影片元件時發生的崩潰</li>
         </ul>
       </description>
     </release>
@@ -1430,6 +1448,7 @@
           <li xml:lang="tr">Artık web beslemeleri HTTPS kullanılarak kabul ediliyor.</li>
           <li xml:lang="uk">Реалізовано прийняття вебпоширень з використанням HTTPS</li>
           <li xml:lang="zh-CN">接受使用 HTTPS 的网页种子</li>
+          <li xml:lang="zh-TW">接受使用 HTTPS 的 webseed</li>
           <li>Fixed charts having white text on a white background in the Statistics plugin</li>
           <li xml:lang="ar">إصلاح المخططات التي تظهر فيها النصوص باللون الأبيض على خلفية بيضاء في المكون الإضافي «الإحصائيات»</li>
           <li xml:lang="bg">Поправени са графиките с бял текст на бял фон в приставката „Статистика“</li>
@@ -1450,6 +1469,7 @@
           <li xml:lang="tr">İstatistik eklentisinde beyaz arka plan üzerinde beyaz metin bulunan grafikler düzeltildi.</li>
           <li xml:lang="uk">Виправлено помилку, через яку діаграми містили білий текст на білому тлі у додатку «Статистика»</li>
           <li xml:lang="zh-CN">修复了统计插件中图表的背景和文字均为白色的问题</li>
+          <li xml:lang="zh-TW">修正統計外掛程式當中圖表是白底白字的問題</li>
         </ul>
       </description>
     </release>
@@ -1476,6 +1496,7 @@
           <li xml:lang="tr">Torrent dosyalarının seçilmesine izin vermeyen “Torrent İçe Aktar” iletişim kutusu onarıldı.</li>
           <li xml:lang="uk">Виправлено неможливість вибору файлів .torrent у вікні імпортування торентів</li>
           <li xml:lang="zh-CN">修复了“导入种子”对话框不允许选择 .torrent 文件的问题</li>
+          <li xml:lang="zh-TW">修正「匯入 Torrent」對話框不允許選取 .torrent 檔案的問題</li>
         </ul>
       </description>
     </release>
@@ -1506,6 +1527,7 @@
           <li xml:lang="tr">Bilgi araç takımı bağlam menüsüne dosyaları yeniden adlandırmak için bir işlem eklendi.</li>
           <li xml:lang="uk">Додано пункт дії для перейменування файлів до контекстного меню інформаційного віджета</li>
           <li xml:lang="zh-CN">在“信息”小部件的上下文菜单中添加了一个重命名文件的操作。</li>
+          <li xml:lang="zh-TW">在資訊元件內文選單加入重新命名檔案的動作</li>
           <li>Save the magnets file whenever it is updated, so that magnet data is not lost if the app crashes</li>
           <li xml:lang="ar">حفظ ملف المغناطيسات كلما حدثت أي تحديثات، حتى لا تضيع بيانات المغناطيسات في حالة تعطل التطبيق</li>
           <li xml:lang="bg">Файлът с магнитни връзки вече се запазва при всяка актуализация, за да не се губят данни при срив на приложението</li>
@@ -1526,6 +1548,7 @@
           <li xml:lang="tr">Uygulama çökerse mıknatıs verilerinin kaybolmaması için mıknatıs dosyası artık her güncellendiğinde kaydediliyor.</li>
           <li xml:lang="uk">Реалізовано збереження файлів magnets при кожному оновленні, щоб дані маґнета не було втрачено, якщо програма завершить роботу в аварійному режимі</li>
           <li xml:lang="zh-CN">每次更新磁铁文件时都要保存，这样如果应用程序崩溃，磁铁数据就不会丢失。</li>
+          <li xml:lang="zh-TW">magnets 檔案更新時儲存它，以防止在應用程式崩潰時 magnet 資料會丟失的問題</li>
           <li>Use a different icon for queued seeding and queued downloading</li>
           <li xml:lang="ar">استخدم رمزًا مختلفًا لعمليات التوزيع المعلقة وعمليات التنزيل الملبثة</li>
           <li xml:lang="bg">Използване на различни икони за сийдване на опашка и изтегляне на опашка</li>
@@ -1546,6 +1569,7 @@
           <li xml:lang="tr">Sıraya alınmış dosya paylaşımı ve sıraya alınmış indirme işlemleri için farklı simgeler kullanılıyor.</li>
           <li xml:lang="uk">Реалізовано використання іншої піктограми для поширення і отримання даних за чергою</li>
           <li xml:lang="zh-CN">为排队上传和排队下载使用不同的图标</li>
+          <li xml:lang="zh-TW">為已排入佇列的播種與已排入佇列的下載使用不同的圖示</li>
         </ul>
       </description>
     </release>
@@ -1617,6 +1641,7 @@
           <li xml:lang="tr">Arama eklentisi iyileştirildi: Gereksiz arama çubuğu kaldırıldı; özel silme düğmesi yerine çıkarılabilir sekmeler kullanıldı; Geri, İleri ve Yeniden Yükle için yalnızca simge içeren düğmeler kullanıldı.</li>
           <li xml:lang="uk">Удосконалено додаток пошуку: вилучено зайвий рядок пошуку; використано придатні до вилучення вкладки замість кнопки вилучення; для дій «Назад», «Вперед» та «Перезавантажити» використано кнопки, на яких є лише піктограми.</li>
           <li xml:lang="zh-CN">改进了搜索插件：移除了多余的搜索栏；使用可移除标签页替代自定义删除按钮；将“后退”、“前进”和“重新加载”按钮改为仅图标按钮</li>
+          <li xml:lang="zh-TW">改善搜尋外掛程式：移除多餘的搜尋列；使用可移除的分頁而非自訂刪除按鈕；為返回、向前、重新載入使用僅圖示的按鈕</li>
           <li>Improved the spacings of various widgets, and ported much of the UI to use a new frameless look</li>
           <li xml:lang="ar">تحسين التباعد بين مختلف الأدوات، ونقل جزء كبير من واجهة المستخدم لاستخدام مظهر جديد بدون إطار.</li>
           <li xml:lang="bg">Подобрени са разстоянията между различните елементи и голяма част от потребителския интерфейс е преработена, за да използва нов дизайн без рамки</li>
@@ -1637,6 +1662,7 @@
           <li xml:lang="tr">Çeşitli araç takımların aralıkları iyileştirildi ve kullanıcı arayüzünün büyük bir kısmı yeni, çerçevesiz bir görünüme kavuşturuldu.</li>
           <li xml:lang="uk">Удосконалено інтервали між різними віджетами і портовано більшість інтерфейсу на використання нового компонування без рамок</li>
           <li xml:lang="zh-CN">改进了各种小部件的间距，并将大部分用户界面移植为新的无边框外观。</li>
+          <li xml:lang="zh-TW">改善一些元件的間隔，並將大部分介面移植到新的「無邊框」風格</li>
           <li>Fixed the country flags being in the Peers tab of the Info Widget</li>
           <li xml:lang="ar">إصلاح مشكلة وجود أعلام الدول في علامة التبويب الأقران في أداة المعلومات</li>
           <li xml:lang="bg">Поправена е грешката, при която знамената на държавите се показваха в раздела „Пиъри“ на информационния уиджет</li>
@@ -1657,6 +1683,7 @@
           <li xml:lang="tr">Bilgi araç takımının “Eşler” sekmesinde ülke bayraklarının görünmesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено прапорці країн на вкладці вузлів інформаційного віджета</li>
           <li xml:lang="zh-CN">修复了国家旗帜出现在“信息”小部件的“对等节点”标签页中的问题</li>
+          <li xml:lang="zh-TW">修正國家旗幟位於資訊元件端點分頁中的問題</li>
           <li>Fixed the Import Torrent dialog failing to copy the given .torrent file</li>
           <li xml:lang="ar">إصلاح مشكلة فشل مربع حوار استيراد التورنت في نسخ ملف .torrent المحدد</li>
           <li xml:lang="bg">Поправена е грешката, при която диалоговият прозорец „Импортиране на торент“ не копираше зададения .torrent файл</li>
@@ -1677,6 +1704,7 @@
           <li xml:lang="tr">Torrent içe aktarma iletişim kutusunun verilen .torrent dosyasını kopyalayamaması sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено можливість копіювання вказаного файла .torrent у вікні імпортування торентів</li>
           <li xml:lang="zh-CN">修复了“导入种子”对话框无法复制给定的 .torrent 文件的问题</li>
+          <li xml:lang="zh-TW">修正「匯入 Torrent」對話框沒能複製指定的 .torrent 檔案的問題</li>
           <li>Fixed the chunkbar tooltip not displaying the legend properly</li>
           <li xml:lang="ar">إصلاح مشكلة عدم عرض تلميح شريط القطع بشكل صحيح</li>
           <li xml:lang="bg">Коригиран е проблемът, при който легендата в подсказката на лентата с части не се изобразяваше правилно</li>
@@ -1697,6 +1725,7 @@
           <li xml:lang="tr">Parça çubuğu araç ipucunun göstergeyi doğru şekilde görüntülememesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено показ умовних позначень у підказці панелі фрагментів</li>
           <li xml:lang="zh-CN">修复了进度条工具提示不正确显示图例的问题</li>
+          <li xml:lang="zh-TW">修正區塊列工具提示沒有正確顯示圖例的問題</li>
           <li>Disable logging to file by default to avoid unnecessary writes to the filesystem, the commandline argument `--enable-logging` can be passed to enable logging to file</li>
           <li xml:lang="ar">تعطيل التسجيل في الملف بشكل مبدئي لتجنب عمليات الكتابة غير الضرورية على نظام الملفات، يمكن تمرير وسيطة سطر الأوامر `--enable-logging` لتمكين التسجيل في الملف.</li>
           <li xml:lang="bg">По подразбиране записването във файл е деактивирано, за да се избегнат ненужни записи във файловата система; за да се активира записването във файл, може да се използва аргументът на командния ред `--enable-logging`</li>
@@ -1717,6 +1746,7 @@
           <li xml:lang="tr">Dosya sistemine gereksiz yazma işlemlerini önlemek için öntanımlı olarak dosya günlük kaydı devre dışı bırakıldı; dosya günlük kaydını etkinleştirmek için `--enable-logging` komut satırı argümanı kullanılabilir.</li>
           <li xml:lang="uk">Вимкнено записування журналу до типового файла, щоб уникнути непотрібного записування до файлової системи; щоб увімкнути запис журналу до файла, можна передати параметр командного рядка `--enable-logging`</li>
           <li xml:lang="zh-CN">默认情况下禁用文件日志记录以避免不必要的文件系统写入，可以通过传递命令行参数 `--enable-logging` 来启用文件日志记录。</li>
+          <li xml:lang="zh-TW">預設停用將紀錄寫入檔案，來避免對檔案系統進行太多不必要的寫入。要將紀錄寫入檔案可以使用命令列參數 `--enable-logging`</li>
           <li>Fixed the chunkbar tooltip not displaying the legend properly</li>
           <li xml:lang="ar">إصلاح مشكلة عدم عرض تلميح شريط القطع بشكل صحيح</li>
           <li xml:lang="bg">Коригиран е проблемът, при който легендата в подсказката на лентата с части не се изобразяваше правилно</li>
@@ -1737,6 +1767,7 @@
           <li xml:lang="tr">Parça çubuğu araç ipucunun göstergeyi doğru şekilde görüntülememesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено показ умовних позначень у підказці панелі фрагментів</li>
           <li xml:lang="zh-CN">修复了进度条工具提示不正确显示图例的问题</li>
+          <li xml:lang="zh-TW">修正區塊列工具提示沒有正確顯示圖例的問題</li>
           <li>Fixed global shortcut actions</li>
           <li xml:lang="ar">إصلاح إجراءات الاختصارات العالمية</li>
           <li xml:lang="bg">Поправени действия на глобалните бързи клавиши</li>
@@ -1757,6 +1788,7 @@
           <li xml:lang="tr">Global kısayol eylemleri onarıldı.</li>
           <li xml:lang="uk">Виправлено дії для загальних клавіатурних скорочень</li>
           <li xml:lang="zh-CN">修复全局快捷键操作</li>
+          <li xml:lang="zh-TW">修正全域快捷鍵動作</li>
         </ul>
       </description>
     </release>
