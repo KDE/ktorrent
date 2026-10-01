@@ -1008,6 +1008,7 @@
     <binary>ktorrent</binary>
   </provides>
   <releases>
+    <release version="26.08.2" date="2026-10-08"/>
     <release version="26.08.1" date="2026-09-10"/>
     <description>
       <ul>
