@@ -112,7 +112,7 @@ public:
     void onExit(bt::WaitJob *wjob);
 
     /// Get the number of torrents
-    int count()
+    int count() const
     {
         return downloads.count();
     }
