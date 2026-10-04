@@ -53,9 +53,6 @@ public:
 Q_SIGNALS:
     void enableApply(bool on);
 
-private:
-    bt::TorrentInterface *torrentForIndex(const QModelIndex &index) const;
-
 private Q_SLOTS:
     void onTorrentAdded(bt::TorrentInterface *tc);
     void onTorrentRemoved(bt::TorrentInterface *tc);

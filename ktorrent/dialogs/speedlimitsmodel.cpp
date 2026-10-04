@@ -115,6 +115,10 @@ QVariant SpeedLimitsModel::headerData(int section, Qt::Orientation orientation, 
 
 QVariant SpeedLimitsModel::data(const QModelIndex &index, int role) const
 {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
+        return QVariant();
+    }
+
     if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::UserRole) {
         return QVariant();
     }
@@ -155,6 +159,10 @@ QVariant SpeedLimitsModel::data(const QModelIndex &index, int role) const
 
 bool SpeedLimitsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
+        return false;
+    }
+
     if (role != Qt::EditRole) {
         return false;
     }
@@ -200,20 +208,6 @@ Qt::ItemFlags SpeedLimitsModel::flags(const QModelIndex &index) const
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
     } else {
         return QAbstractItemModel::flags(index);
-    }
-}
-
-bt::TorrentInterface *SpeedLimitsModel::torrentForIndex(const QModelIndex &index) const
-{
-    kt::QueueManager *qman = core->getQueueManager();
-    int r = index.row();
-    QList<bt::TorrentInterface *>::iterator itr = qman->begin();
-    itr += r;
-
-    if (itr == qman->end()) {
-        return nullptr;
-    } else {
-        return *itr;
     }
 }
 
