@@ -1028,6 +1028,7 @@
           <li xml:lang="ca-valencia">S'ha esmenat un error que provocava que el fitxer magnet s'actualitzara constantment</li>
           <li xml:lang="cs">Opravena chyba, kvůli které se soubor magnetů neustále aktualizoval</li>
           <li xml:lang="es">Arreglado un error que causaba que los archivos magnet se actualizaran constantemente</li>
+          <li xml:lang="fi">korjattiin virhe, joka aiheutti Magnet-tiedostojen jatkuvan päivittämisen</li>
           <li xml:lang="fr">Correction d'un bogue provoquant la mise à jour permanente du fichier des aimants</li>
           <li xml:lang="he">תוקנה תקלה שגרמה לעדכון מחזורי של קובצי מגנטים</li>
           <li xml:lang="it">Correzione di un bug che causava l'aggiornamento continuo del collegamenti magnetici</li>
@@ -1049,6 +1050,7 @@
           <li xml:lang="ca-valencia">S'ha esmenat el color de ressaltat de la barra de progrés</li>
           <li xml:lang="cs">Barva zvýraznění v šabloně</li>
           <li xml:lang="es">Arreglado el color destacado de la barra de progreso</li>
+          <li xml:lang="fi">korjattiin etenemispalkin korostusväri</li>
           <li xml:lang="fr">Correction de la couleur de mise en évidence de la barre de progression</li>
           <li xml:lang="he">צבע הדגשת סרגל ההתקדמות תוקן</li>
           <li xml:lang="it">Correzione del colore di evidenziazione della barra di avanzamento</li>
@@ -1070,6 +1072,7 @@
           <li xml:lang="ca-valencia">S'ha esmenat el consell d'eina de la configuració del visor de registres que mostrava HTML en brut</li>
           <li xml:lang="cs">Opravena chyba, kdy se v popisku nastavení prohlížeče protokolů zobrazoval nezpracovaný kód HTML</li>
           <li xml:lang="es">Arreglado el menú emergente de preferencias del visor de registros que mostraba HTML crudo</li>
+          <li xml:lang="fi">korjattiin se, että lokikatselinasetusten työkaluvihje näytti raakaa HTML:ää</li>
           <li xml:lang="fr">Correction de l'infobulle de configuration de l'afficheur de journaux affichant du format « HTML » brut</li>
           <li xml:lang="he">תוקנה חלונית הגדרות מציג יומנים שהציגה HTML גולמי</li>
           <li xml:lang="it">Correzione del problema per cui il suggerimento delle impostazioni del visualizzatore del registro mostrava del codice HTML non formattato</li>
@@ -1100,6 +1103,7 @@
           <li xml:lang="ca-valencia">S'ha afegit una columna «Última activitat» que mostra l'hora de última activitat de pujada o baixada del torrent</li>
           <li xml:lang="cs">Byl přidán sloupec „Poslední aktivita“, který zobrazuje čas, kdy došlo k poslednímu nahrávání nebo stahování v rámci torrentu</li>
           <li xml:lang="es">Añadida la columna «Última actividad» que muestra la hora a la que el torrent tuvo su última actividad</li>
+          <li xml:lang="fi">lisättiin ”viimeisin toiminta” -sarake, joka näyttää ajan, jolloin torrentilla viimeksi oli lähetys- tai lataustoimintaa</li>
           <li xml:lang="fr">Ajout d'une colonne « Dernière activité » affichant l'heure à laquelle le torrent a eu sa dernière activité de téléchargement ou de téléversement</li>
           <li xml:lang="he">נוספה עמודת „פעילות אחרונה” שמציגה את הזמן שבו הייתה פעילות העלאה או הורדה בטורנט בפעם האחרונה</li>
           <li xml:lang="it">È stata aggiunta una colonna “Ultima attività”, che mostra l'ora in cui il torrent ha registrato l'ultima attività di caricamento o di scaricamento</li>
@@ -1120,6 +1124,7 @@
           <li xml:lang="ca-valencia">S'ha esmenat el color de fons del quadro d'estat de l'element de canal del giny de sindicació</li>
           <li xml:lang="cs">Byla opravena barva pozadí panelu stavu položek kanálu v widgetu pro sdílení</li>
           <li xml:lang="es">Arreglado el color de fondo del panel de estado del complemento de sindicación</li>
+          <li xml:lang="fi">korjattiin syndikointisovelman syötekohteen tilapaneelin taustaväri</li>
           <li xml:lang="fr">Correction de la couleur d'arrière-plan du panneau d'état pour l'élément de flux du composant graphique de syndication</li>
           <li xml:lang="he">תוקן צבע הרקע של לוח המצב של פריט ערוץ עדכונים בווידג׳ט הסינדיקציה</li>
           <li xml:lang="it">Correzione del colore di sfondo del pannello di stato delle voci delle fonti nell'oggetto delle sottoscrizioni</li>
@@ -1141,6 +1146,7 @@
           <li xml:lang="ca-valencia">S'han afegit columnes en la vista principal que mostren el nombre de bytes pujats i baixats a la sessió actual</li>
           <li xml:lang="cs">Do hlavního zobrazení byly přidány sloupce, které zobrazují počet bajtů nahraných a stažených v aktuální relaci</li>
           <li xml:lang="es">Añadidas columnas a la vista principal que muestran el número de bytes descargados y subidos en la sesión actual</li>
+          <li xml:lang="fi">lisättiin päänäkymään sarakkeet, jotka näyttävät nykyisen istunnon lähetettyjen ja ladattujen tavujen määrän</li>
           <li xml:lang="fr">Colonnes ajoutées à la vue principale affichant le nombre d'octets téléchargés et envoyés dans la session en cours</li>
           <li xml:lang="he">נוספו עמודות לתצוגת הראשית שמציגים את הבתים שהועלו וירדו בהפעלה הנוכחית</li>
           <li xml:lang="it">Sono state aggiunte delle colonne alla vista principale, che mostrano il numero di byte caricati e scaricati nella sessione corrente</li>
@@ -1175,6 +1181,7 @@
           <li xml:lang="ca-valencia">La columna «Afegit» ara utilitza el format de data curta</li>
           <li xml:lang="cs">Sloupec „Přidáno“ nyní používá zkrácený formát data</li>
           <li xml:lang="es">La columna añadida ahora usa el formato de fecha corta</li>
+          <li xml:lang="fi">”Lisätyt”-sarake käyttää nyt lyhyempää päiväysmuotoa</li>
           <li xml:lang="fr">La colonne « Ajouté » utilise désormais un format de date plus court</li>
           <li xml:lang="he">עמודת „הוספה” משתמשת מעתה בתבנית תאריך קצרה יותר</li>
           <li xml:lang="it">La colonna "Aggiunto" adesso utilizza un formato della data più corto</li>
@@ -1196,6 +1203,7 @@
           <li xml:lang="ca-valencia">S'ha esmenat una fallada en tancar el giny de vídeo</li>
           <li xml:lang="cs">Opravena chyba, která způsobovala pád aplikace při zavírání widgetu videa</li>
           <li xml:lang="es">Arreglado un error al cerrar el complemento de vídeo</li>
+          <li xml:lang="fi">korjattiin kaatuminen videosovelmaa suljettaessa</li>
           <li xml:lang="fr">Correction d'un plantage lors de la fermeture du composant graphique de vidéos</li>
           <li xml:lang="he">תוקנה קריסה בסגירת וידג׳ט הווידאו</li>
           <li xml:lang="it">Correzione di un crash che si verificava alla chiusura dell'oggetto video</li>
@@ -1374,6 +1382,7 @@
           <li xml:lang="cs">Portování na Qt 6</li>
           <li xml:lang="de">Portierung zu Qt 6</li>
           <li xml:lang="es">Migración a Qt 6</li>
+          <li xml:lang="fi">siirros Qt 6:een</li>
           <li xml:lang="fr">Portage vers Qt 6</li>
           <li xml:lang="he">הוסב ל־Qt 6</li>
           <li xml:lang="it">Conversione a Qt 6</li>
@@ -1395,6 +1404,7 @@
           <li xml:lang="ca-valencia">Utilitza una icona simbòlica a la safata del sistema</li>
           <li xml:lang="cs">Ikona v systémové části</li>
           <li xml:lang="es">Uso de icono de papelera simbólico</li>
+          <li xml:lang="fi">käytetään symbolista ilmoitusaluekuvaketta</li>
           <li xml:lang="fr">Utiliser une boite à miniatures symbolique</li>
           <li xml:lang="he">עברנו להשתמש בסמל שורת מערכת סמלי</li>
           <li xml:lang="it">Uso di un'icona del vassoio di sistema simbolica</li>
@@ -1521,6 +1531,7 @@
           <li xml:lang="ca-valencia">Desactiva el registre a fitxer de manera predeterminada per a evitar escriptures innecessàries al sistema de fitxers, es pot passar l'argument de la línia d'ordres `--enable-logging` per a activar el registre al fitxer</li>
           <li xml:lang="cs">Výchozí nastavení zakazuje ukládání protokolů do souboru, aby se zabránilo zbytečnému zápisu do souborového systému. Pomocí argumentu příkazového řádku `--enable-logging` lze aktivovat ukládání protokolů do souboru</li>
           <li xml:lang="es">Desactivados los registros a archivo por omisión para evitar escrituras innecesarias en disco. Se puede pasar la orden de comandos «--enable-loggin» para activar los registros.</li>
+          <li xml:lang="fi">Poistetaan oletuksena lokitiedosto käytöstä tarpeettomien tiedostojärjestelmäkirjoitusten välttämiseksi; komentoriviparametrilla `--enable-logging` sen voi ottaa käyttöön</li>
           <li xml:lang="fr">Désactivez l'enregistrement dans un fichier par défaut pour éviter des écritures inutiles dans le système de fichiers. L'argument de ligne de commandes « --enable-logging » peut être passé pour activer l'enregistrement dans un fichier.</li>
           <li xml:lang="he">השבתת תיעוד לקובץ כברירת מחדל כדי להימנע מכתיבות לא הכרחיות למערכת הקבצים, אפשר להעביר את ארגומנט שורת הפקודות `‎--enable-logging` כדי להפעיל תיעוד לקובץ</li>
           <li xml:lang="it">Disattivazione della registrazione su file per impostazione predefinita, per evitare scritture superflue sul filesystem; per abilitare la registrazione su file è possibile passare l'argomento della riga di comando `--enable-logging`</li>
@@ -1563,6 +1574,7 @@
           <li xml:lang="ca-valencia">Corregix les accions de les dreceres globals</li>
           <li xml:lang="cs">Opraveny globální akce klávesových zkratek</li>
           <li xml:lang="es">Arregladas las acciones de atajos de teclado globales</li>
+          <li xml:lang="fi">korjattiin järjestelmänlaajuiset pikanäppäintoiminnot</li>
           <li xml:lang="fr">Correction des actions de raccourcis globaux</li>
           <li xml:lang="he">תוקנו פעולות מקשי קיצור מקיפים</li>
           <li xml:lang="it">Correzione delle azioni delle scorciatoie globali</li>
