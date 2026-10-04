@@ -22,17 +22,19 @@ SpeedLimitsModel::SpeedLimitsModel(Core *core, QObject *parent)
     , core(core)
 {
     kt::QueueManager *qman = core->getQueueManager();
+    limits.reserve(qman->count());
     QList<bt::TorrentInterface *>::iterator itr = qman->begin();
     while (itr != qman->end()) {
         Limits lim;
         bt::TorrentInterface *tc = *itr;
+        lim.tc = tc;
         tc->getTrafficLimits(lim.up_original, lim.down_original);
         lim.down = lim.down_original;
         lim.up = lim.up_original;
         tc->getAssuredSpeeds(lim.assured_up_original, lim.assured_down_original);
         lim.assured_down = lim.assured_down_original;
         lim.assured_up = lim.assured_up_original;
-        limits.insert(tc, lim);
+        limits.push_back(lim);
         itr++;
     }
 
@@ -46,32 +48,29 @@ SpeedLimitsModel::~SpeedLimitsModel()
 
 void SpeedLimitsModel::onTorrentAdded(bt::TorrentInterface *tc)
 {
+    beginInsertRows({}, rowCount({}), rowCount({}));
     Limits lim;
+    lim.tc = tc;
     tc->getTrafficLimits(lim.up_original, lim.down_original);
     lim.down = lim.down_original;
     lim.up = lim.up_original;
-    limits.insert(tc, lim);
+    limits.push_back(lim);
     tc->getAssuredSpeeds(lim.assured_up_original, lim.assured_down_original);
     lim.assured_down = lim.assured_down_original;
     lim.assured_up = lim.assured_up_original;
-    insertRow(limits.count() - 1);
+    endInsertRows();
 }
 
 void SpeedLimitsModel::onTorrentRemoved(bt::TorrentInterface *tc)
 {
-    kt::QueueManager *qman = core->getQueueManager();
-    int idx = 0;
-    QList<bt::TorrentInterface *>::iterator itr = qman->begin();
-    while (itr != qman->end()) {
-        if (*itr == tc) {
+    for (qsizetype row = 0; row < limits.size(); ++row) {
+        if (limits[row].tc == tc) {
+            beginRemoveRows({}, row, row);
+            limits.remove(row);
+            endRemoveRows();
             break;
         }
-        idx++;
-        itr++;
     }
-
-    limits.remove(tc);
-    removeRow(idx);
 }
 
 int SpeedLimitsModel::rowCount(const QModelIndex &parent) const
@@ -79,7 +78,7 @@ int SpeedLimitsModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return core->getQueueManager()->count();
+        return limits.size();
     }
 }
 
@@ -120,16 +119,11 @@ QVariant SpeedLimitsModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    bt::TorrentInterface *tc = torrentForIndex(index);
-    if (!tc) {
-        return QVariant();
-    }
-
-    const Limits &lim = limits[tc];
+    const Limits &lim = limits[index.row()];
 
     switch (Column{index.column()}) {
     case Column::TORRENT:
-        return tc->getDisplayName();
+        return lim.tc->getDisplayName();
     case Column::DOWNLOAD_LIMIT:
         if (role == Qt::EditRole || role == Qt::UserRole) {
             return lim.down / 1024;
@@ -165,13 +159,8 @@ bool SpeedLimitsModel::setData(const QModelIndex &index, const QVariant &value, 
         return false;
     }
 
-    bt::TorrentInterface *tc = torrentForIndex(index);
-    if (!tc || !limits.contains(tc)) {
-        return false;
-    }
-
     bool ok = false;
-    Limits &lim = limits[tc];
+    Limits &lim = limits[index.row()];
 
     switch (Column{index.column()}) {
     case Column::DOWNLOAD_LIMIT:
@@ -230,22 +219,18 @@ bt::TorrentInterface *SpeedLimitsModel::torrentForIndex(const QModelIndex &index
 
 void SpeedLimitsModel::apply()
 {
-    QMap<bt::TorrentInterface *, Limits>::iterator itr = limits.begin();
-    while (itr != limits.end()) {
-        bt::TorrentInterface *tc = itr.key();
-        Limits &lim = itr.value();
+    for (Limits &lim : limits) {
         if (lim.up != lim.up_original || lim.down != lim.down_original) {
-            tc->setTrafficLimits(lim.up, lim.down);
+            lim.tc->setTrafficLimits(lim.up, lim.down);
             lim.up_original = lim.up;
             lim.down_original = lim.down;
         }
 
         if (lim.assured_up != lim.assured_up_original || lim.assured_down != lim.assured_down_original) {
-            tc->setAssuredSpeeds(lim.assured_up, lim.assured_down);
+            lim.tc->setAssuredSpeeds(lim.assured_up, lim.assured_down);
             lim.assured_up_original = lim.assured_up;
             lim.assured_down_original = lim.assured_down;
         }
-        itr++;
     }
 }
 }

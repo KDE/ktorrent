@@ -8,6 +8,7 @@
 #define KTSPEEDLIMITSMODEL_H
 
 #include <QAbstractTableModel>
+#include <QList>
 
 #include <util/constants.h>
 
@@ -61,6 +62,7 @@ private Q_SLOTS:
 
 private:
     struct Limits {
+        bt::TorrentInterface *tc;
         bt::Uint32 up;
         bt::Uint32 up_original;
         bt::Uint32 down;
@@ -72,7 +74,7 @@ private:
     };
 
     Core *core;
-    QMap<bt::TorrentInterface *, Limits> limits;
+    QList<Limits> limits;
 };
 
 }
