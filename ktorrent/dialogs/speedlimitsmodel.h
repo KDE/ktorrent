@@ -29,7 +29,6 @@ class SpeedLimitsModel : public QAbstractTableModel
     Q_OBJECT
 public:
     SpeedLimitsModel(Core *core, QObject *parent);
-    ~SpeedLimitsModel() override;
 
     int rowCount(const QModelIndex &parent) const override;
     int columnCount(const QModelIndex &parent) const override;

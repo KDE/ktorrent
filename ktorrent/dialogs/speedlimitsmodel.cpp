@@ -21,12 +21,10 @@ SpeedLimitsModel::SpeedLimitsModel(Core *core, QObject *parent)
     : QAbstractTableModel(parent)
     , core(core)
 {
-    kt::QueueManager *qman = core->getQueueManager();
+    const kt::QueueManager *qman = core->getQueueManager();
     limits.reserve(qman->count());
-    QList<bt::TorrentInterface *>::iterator itr = qman->begin();
-    while (itr != qman->end()) {
+    for (bt::TorrentInterface *tc : *qman) {
         Limits lim;
-        bt::TorrentInterface *tc = *itr;
         lim.tc = tc;
         tc->getTrafficLimits(lim.up_original, lim.down_original);
         lim.down = lim.down_original;
@@ -35,15 +33,10 @@ SpeedLimitsModel::SpeedLimitsModel(Core *core, QObject *parent)
         lim.assured_down = lim.assured_down_original;
         lim.assured_up = lim.assured_up_original;
         limits.push_back(lim);
-        itr++;
     }
 
     connect(core, &Core::torrentAdded, this, &SpeedLimitsModel::onTorrentAdded);
     connect(core, &Core::torrentRemoved, this, &SpeedLimitsModel::onTorrentRemoved);
-}
-
-SpeedLimitsModel::~SpeedLimitsModel()
-{
 }
 
 void SpeedLimitsModel::onTorrentAdded(bt::TorrentInterface *tc)
