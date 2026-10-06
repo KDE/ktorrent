@@ -2,13 +2,14 @@
 # Slobodan Simic <slsimic@gmail.com>, 2007, 2008, 2009, 2010.
 # Chusslove Illich <caslav.ilic@gmx.net>, 2009, 2010, 2011, 2012, 2013, 2014, 2016, 2017.
 # Dalibor Djuric <daliborddjuric@gmail.com>, 2010, 2011.
+# Nemanja Hiršl <nemhirsl@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-04 02:44+0000\n"
-"PO-Revision-Date: 2017-12-17 18:00+0100\n"
-"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"PO-Revision-Date: 2026-10-05 12:49+0200\n"
+"Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr@latin\n"
 "MIME-Version: 1.0\n"
@@ -18,19 +19,19 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
-"X-Associated-UI-Catalogs: kconfigwidgets5 kxmlgui5\n"
+"X-Associated-UI-Catalogs: kconfigwidgets6 kxmlgui6\n"
 "X-Environment: kde\n"
 "X-Generator: Lokalize 1.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Slobodan Simić"
+msgstr "Slobodan Simić,Nemanja Hiršl"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "slsimic@gmail.com"
+msgstr "slsimic@gmail.com,nemhirsl@gmail.com"
 
 #: ktorrent/core.cpp:149
 #, kde-format
@@ -179,8 +180,9 @@ msgid ""
 "<p><span style=\" font-weight:600;\">Note:</span> We accept both IPv4 and "
 "IPv6 addresses</p>\n"
 msgstr ""
-"<p>Ovde treba uneti IP adresu ili ime domaćina vršnjaka na koji želite da se "
-"povežete.</p><p><b>Napomena:</b> Prihvataju se i IPv4 i IPv6 adrese.</p>\n"
+"<p>Ovde treba uneti IP adresu ili ime domaćina vršnjaka na koga želite da se "
+"povežete.</p>\n"
+"<p><b>Napomena:</b> Prihvataju se i IPv4 i IPv6 adrese.</p>\n"
 
 #. i18n: ectx: property (text), widget (QLineEdit, m_ip)
 #. i18n: ectx: property (text), widget (QLineEdit, m_ip_to_add)
@@ -271,11 +273,10 @@ msgstr ""
 "uvezete ovaj fajl?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:222
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "Uvez&i"
+msgstr "Uvezi"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:233
 #: ktorrent/dialogs/fileselectdlg.cpp:252
@@ -289,8 +290,7 @@ msgstr "Fascikla %1 ne postoji. Želite li da je napravite?"
 #: ktorrent/dialogs/missingfilesdlg.cpp:102
 #: ktorrent/dialogs/missingfilesdlg.cpp:140
 #: ktorrent/dialogs/torrentcreatordlg.cpp:281
-#, fuzzy, kde-format
-#| msgid "Recreate"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create"
 msgstr "Napravi"
@@ -305,18 +305,16 @@ msgstr ""
 "fajlovima. Da li ste sigurni da želite ovo da uradite?"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:291
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
 msgstr "Obriši fajlove"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
-#, fuzzy, kde-format
-#| msgid "No, keep the files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr "Ne, zadrži fajlove"
+msgstr "Zadrži fajlove"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:318
 #, kde-format
@@ -612,7 +610,7 @@ msgstr "Izaberite torent fajl i podatke koji mu pripadaju."
 #: plugins/ipfilter/convertdialog.ui:64
 #, no-c-format, kde-format
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_import_btn)
 #: ktorrent/dialogs/importdialog.ui:112
@@ -730,7 +728,7 @@ msgstr "Otvori URL"
 #: ktorrent/dialogs/pastedialog.cpp:117
 #, kde-format
 msgid "Error fetching tracker list"
-msgstr ""
+msgstr "Greška pri dobavljanju spiska pratilaca"
 
 #: ktorrent/dialogs/pastedialog.cpp:118
 #, kde-format
@@ -738,6 +736,8 @@ msgid ""
 "Please check if the URL in Settings → Advanced → Tracker list URL is "
 "reachable."
 msgstr ""
+"Proverite da li je dostupan URL zadat u „Postavke → Napredno → URL spiska "
+"pratilaca“."
 
 #: ktorrent/dialogs/pastedialog.cpp:137
 #: ktorrent/dialogs/torrentcreatordlg.cpp:241 ktorrent/gui.cpp:322
@@ -926,10 +926,9 @@ msgid "Create A Torrent"
 msgstr "Stvaranje torenta"
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:246
-#, fuzzy, kde-format
-#| msgid "Only HTTP is supported for webseeding."
+#, kde-format
 msgid "Only HTTP(S) is supported for webseeding."
-msgstr "Samo HTTP je podržan za veb sejanje."
+msgstr "Samo HTTP i HTTPS su podržani za veb sejanje."
 
 #: ktorrent/dialogs/torrentcreatordlg.cpp:273
 #, kde-format
@@ -967,17 +966,15 @@ msgstr "Fajl ili fascikla od koje se pravi torent:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectDirectory)
 #: ktorrent/dialogs/torrentcreatordlg.ui:44
-#, fuzzy, kde-format
-#| msgid "Open Directory"
+#, kde-format
 msgid "Select Directory"
-msgstr "Otvori fasciklu"
+msgstr "Izaberi fasciklu"
 
 #. i18n: ectx: property (text), widget (QRadioButton, m_selectFile)
 #: ktorrent/dialogs/torrentcreatordlg.ui:51
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select File"
-msgstr "Izaberi &sve"
+msgstr "Izaberi fajl"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/dialogs/torrentcreatordlg.ui:71
@@ -1041,10 +1038,9 @@ msgstr "8 MiB"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, m_chunk_size)
 #: ktorrent/dialogs/torrentcreatordlg.ui:127
-#, fuzzy, kde-format
-#| msgid "1 MiB"
+#, kde-format
 msgid "16 MiB"
-msgstr "1 MiB"
+msgstr "16 MiB"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_start_seeding)
 #: ktorrent/dialogs/torrentcreatordlg.ui:137
@@ -1441,18 +1437,15 @@ msgstr "Očisti"
 # >> @title:window
 #. i18n: ectx: property (text), widget (QPushButton, m_open)
 #: ktorrent/ipfilterwidget.ui:92
-#, fuzzy, kde-format
-#| msgctxt "Open file"
-#| msgid "Open"
+#, kde-format
 msgid "Open…"
-msgstr "Otvaranje"
+msgstr "Otvori…"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_save_as)
 #: ktorrent/ipfilterwidget.ui:99
-#, fuzzy, kde-format
-#| msgid "Save As..."
+#, kde-format
 msgid "Save As…"
-msgstr "Sačuvaj kao..."
+msgstr "Sačuvaj kao…"
 
 #. i18n: ectx: Menu (file)
 #: ktorrent/ktorrentui.rc:5
@@ -1536,9 +1529,7 @@ msgid "Bittorrent client by KDE"
 msgstr "Bittorrent klijent iz KDE"
 
 #: ktorrent/main.cpp:104
-#, fuzzy, kde-format
-#| msgctxt "@info:credit"
-#| msgid "(C) 2005 - 2011 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgctxt "@info:credit"
 msgid "© 2005–2011 Joris Guisson and Ivan Vasic"
 msgstr "© 2005–2011, Joris Gison i Ivan Vasić"
@@ -1651,7 +1642,7 @@ msgstr "Felipe Sateler"
 #: ktorrent/main.cpp:128
 #, kde-format
 msgid "DB-IP.com"
-msgstr ""
+msgstr "DB-IP.com"
 
 #: ktorrent/main.cpp:129
 #, kde-format
@@ -1661,6 +1652,11 @@ msgid ""
 "International License https://creativecommons.org/licenses/by/4.0/.\n"
 "Flags are taken from http://flags.blogpotato.de/, so thanks to them too."
 msgstr ""
+"Pružalac baze podataka o državama po IP adresi, koja se koristi u priključku "
+"info vidžeta.\n"
+"Podaci su pod licencom Creative Commons Attribution 4.0\n"
+"International, https://creativecommons.org/licenses/by/4.0/.\n"
+"Zastave su preuzete sa http://flags.blogpotato.de/, pa i njima hvala."
 
 #: ktorrent/main.cpp:135
 #, kde-format
@@ -1670,7 +1666,7 @@ msgstr "Maxmind"
 #: ktorrent/main.cpp:135
 #, kde-format
 msgid "The maxminddb library used for the InfoWidget plugin."
-msgstr ""
+msgstr "Biblioteka maxminddb koja se koristi za priključak info vidžeta."
 
 #: ktorrent/main.cpp:136
 #, kde-format
@@ -2026,32 +2022,29 @@ msgid "Nick Shaforostoff"
 msgstr "Nikolaj Šaforostov"
 
 #: ktorrent/main.cpp:175
-#, fuzzy, kde-format
-#| msgid "Alexander Dymo"
+#, kde-format
 msgid "Alexander Trufanov"
-msgstr "Aleksandar Dimo"
+msgstr "Alexander Trufanov"
 
 #: ktorrent/main.cpp:175
 #, kde-format
 msgid "Bugfixes, cleanups and optimizations"
-msgstr ""
+msgstr "Ispravke grešaka, čišćenje i optimizacije"
 
 #: ktorrent/main.cpp:176
 #, kde-format
 msgid "Jack Hill"
-msgstr ""
+msgstr "Jack Hill"
 
 #: ktorrent/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "KF5 porting"
+#, kde-format
 msgid "KF6 porting"
-msgstr "Prenos na KF5"
+msgstr "Prenos na KF6"
 
 #: ktorrent/main.cpp:180
-#, fuzzy, kde-format
-#| msgid "Enable All"
+#, kde-format
 msgid "Enable logging"
-msgstr "Uključi sve"
+msgstr "Uključi beleženje"
 
 #: ktorrent/main.cpp:182
 #, kde-format
@@ -2059,6 +2052,8 @@ msgid ""
 "Enable logging to standard output. Requires --enable-logging to be specified "
 "as well."
 msgstr ""
+"Uključi beleženje na standardni izlaz. Zahteva da bude zadato i --enable-"
+"logging."
 
 #: ktorrent/main.cpp:183
 #, kde-format
@@ -2198,7 +2193,7 @@ msgid ""
 "Maximum time that a magnet can occupy a downloading slot before it will be "
 "pushed back in the queue."
 msgstr ""
-"Najduže koliko magnet može da zauzima vezu preuzimanja pre nego što ubaci "
+"Najduže koliko magnet može da zauzima vezu preuzimanja pre nego što se ubaci "
 "nazad u red."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_requeueMagnetsTime)
@@ -2255,10 +2250,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/advancedpref.ui:285
-#, fuzzy, kde-format
-#| msgid "Copy Torrent URL"
+#, kde-format
 msgid "Tracker list URL:"
-msgstr "Kopiraj URL torenta"
+msgstr "URL spiska pratilaca:"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_trackerListUrl)
 #: ktorrent/pref/advancedpref.ui:293
@@ -2267,6 +2261,10 @@ msgid ""
 "URL of the tracker list used when adding a torrent by infohash\n"
 "NOTE: Each tracker must be on its own line. Blank lines are ignored."
 msgstr ""
+"URL spiska pratilaca koji se koristi pri dodavanju torenta po "
+"infodisperziji\n"
+"Napomena: Svaki pratilac mora biti u zasebnom redu. Prazni redovi se "
+"zanemaruju."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_lookUpHostnameOfPeers)
 #: ktorrent/pref/advancedpref.ui:304
@@ -2467,43 +2465,39 @@ msgstr "Boje"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_stalledTorrentColor)
 #: ktorrent/pref/colorpref.ui:19
-#, fuzzy, kde-format
-#| msgid "Decrease priority of torrents which are stalled for more than:"
+#, kde-format
 msgid "Color to use for torrents when they are stalled or checking data."
-msgstr "Smanji prioritet torenata koji su u zastoju duže od:"
+msgstr "Boja za torente u zastoju ili dok se proveravaju podaci."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTorrentColor)
 #: ktorrent/pref/colorpref.ui:26
 #, kde-format
 msgid "Color to use for torrents while seeding or downloading."
-msgstr ""
+msgstr "Boja za torente tokom sejanja ili preuzimanja."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ktorrent/pref/colorpref.ui:33
-#, fuzzy, kde-format
-#| msgid "KTorrent is not running."
+#, kde-format
 msgid "Torrent is running:"
-msgstr "KTorrent nije pokrenut."
+msgstr "Torent radi:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/colorpref.ui:40
 #, kde-format
 msgid "Torrent is stalled or checking data:"
-msgstr ""
+msgstr "Torent je u zastoju ili se proveravaju podaci:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_errorTorrentColor)
 #: ktorrent/pref/colorpref.ui:47
-#, fuzzy, kde-format
-#| msgid "Color to use for first priority files."
+#, kde-format
 msgid "Color to use for torrents with error status."
-msgstr "Boja za fajlove prvog prioriteta."
+msgstr "Boja za torente u stanju greške."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: ktorrent/pref/colorpref.ui:54
-#, fuzzy, kde-format
-#| msgid "Torrent:"
+#, kde-format
 msgid "Torrent error:"
-msgstr "Torent:"
+msgstr "Greška torenta:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_highlightTorrentNameByTrackerStatus)
 #: ktorrent/pref/colorpref.ui:63
@@ -2511,7 +2505,7 @@ msgstr "Torent:"
 msgid ""
 "Additionally highlight torrents based on the status of their trackers (if "
 "any)"
-msgstr ""
+msgstr "Dodatno istakni torente prema stanju njihovih pratilaca (ako ih ima)"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_okTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:72
@@ -2520,12 +2514,14 @@ msgid ""
 "Color to use when at least one tracker is connected and replied no errors or "
 "warnings."
 msgstr ""
+"Boja kada je bar jedan pratilac povezan i odgovorio je bez grešaka i "
+"upozorenja."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: ktorrent/pref/colorpref.ui:79
 #, kde-format
 msgid "Some of the trackers are reachable:"
-msgstr ""
+msgstr "Neki pratioci su dostupni:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_warningsTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:86
@@ -2533,31 +2529,31 @@ msgstr ""
 msgid ""
 "Color to use when the best attempt to connect to tracker results in warning."
 msgstr ""
+"Boja kada najbolji pokušaj povezivanja sa pratiocem dovede do upozorenja."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/colorpref.ui:93
 #, kde-format
 msgid "None of the trackers are reachable:"
-msgstr ""
+msgstr "Nijedan pratilac nije dostupan:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: ktorrent/pref/colorpref.ui:100
 #, kde-format
 msgid "Reachable trackers report warnings:"
-msgstr ""
+msgstr "Dostupni pratioci prijavljuju upozorenja:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_noTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:107
-#, fuzzy, kde-format
-#| msgid "Color to use for first priority files."
+#, kde-format
 msgid "Color to use when all trackers reply with errors or are not found."
-msgstr "Boja za fajlove prvog prioriteta."
+msgstr "Boja kada svi pratioci odgovaraju greškama ili nisu nađeni."
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: ktorrent/pref/colorpref.ui:114
 #, kde-format
 msgid "Trackers are timing out:"
-msgstr ""
+msgstr "Pratioci ne odgovaraju na vreme:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_timeoutTrackerConnectionColor)
 #: ktorrent/pref/colorpref.ui:121
@@ -2566,45 +2562,45 @@ msgid ""
 "Color to use when the best attempt to connect to tracker results in timeout. "
 "Connection will be attempted again later."
 msgstr ""
+"Boja kada se najbolji pokušaj povezivanja sa pratiocem završi prekovremenom. "
+"Povezivanje će se ponovo pokušati kasnije."
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: ktorrent/pref/colorpref.ui:133
-#, fuzzy, kde-format
-#| msgid "Share ratio:"
+#, kde-format
 msgid "Low share ratio:"
-msgstr "Odnos deljenja:"
+msgstr "Nizak odnos deljenja:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: ktorrent/pref/colorpref.ui:140
-#, fuzzy, kde-format
-#| msgid "Minimum good share ratio:"
+#, kde-format
 msgid "Good share ratio:"
-msgstr "Najmanji dobar odnos deljenja:"
+msgstr "Dobar odnos deljenja:"
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_lowShareRatioColor)
 #: ktorrent/pref/colorpref.ui:147
 #, kde-format
 msgid "Color to display share ratio below minimal good value."
-msgstr ""
+msgstr "Boja za odnos deljenja ispod najmanje dobre vrednosti."
 
 #. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_goodShareRatioColor)
 #: ktorrent/pref/colorpref.ui:154
 #, kde-format
 msgid "Color to display share ratio above minimal good value."
-msgstr ""
+msgstr "Boja za odnos deljenja iznad najmanje dobre vrednosti."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:165
 #, kde-format
 msgid "Reset colors to their default values (other settings won't change)."
 msgstr ""
+"Resetuj boje na podrazumevane vrednosti (ostale postavke se neće promeniti)."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
-#, fuzzy, kde-format
-#| msgid "Colors"
+#, kde-format
 msgid "Reset Colors"
-msgstr "Boje"
+msgstr "Resetuj boje"
 
 #: ktorrent/pref/generalpref.cpp:13
 #, kde-format
@@ -2674,16 +2670,15 @@ msgstr "Ikonica sistemske kasete"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:100
-#, fuzzy, kde-format
-#| msgid "Whether or not to show system tray popup messages."
+#, kde-format
 msgid "Whether or not to always minimize to system tray on startup."
-msgstr "Da li prikazivati iskačuće poruke iz sistemske kasete."
+msgstr "Da li uvek minimizovati u sistemsku kasetu pri pokretanju."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_alwaysMinimizeToSystemTray)
 #: ktorrent/pref/generalpref.ui:103
 #, kde-format
 msgid "Always minimize to system tray on startup"
-msgstr ""
+msgstr "Uvek minimizuj u sistemsku kasetu pri pokretanju"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showPopups)
 #: ktorrent/pref/generalpref.ui:110
@@ -2726,20 +2721,19 @@ msgstr "Otvaraj sve torente tiho"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:149
-#, fuzzy, kde-format
-#| msgid ""
-#| "Prevent computer from going into a sleep state when torrents are running."
+#, kde-format
 msgid ""
 "Prevent computer from going into a sleep state or locking the screen when "
 "torrents are running."
-msgstr "Sprečite da računar pređe u stanje spavanja dok su torenti u pogonu."
+msgstr ""
+"Sprečite da računar pređe u stanje spavanja ili zaključa ekran dok su "
+"torenti u pogonu."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_suppressSleep)
 #: ktorrent/pref/generalpref.ui:152
-#, fuzzy, kde-format
-#| msgid "Suppress sleep when torrents are running"
+#, kde-format
 msgid "Suppress sleep and automatic screen locking when torrents are running"
-msgstr "Ne uspavljuj računar kada torenti rade"
+msgstr "Spreči spavanje i automatsko zaključavanje ekrana dok torenti rade"
 
 # literal-segment: linux-desktop
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_autoRenameSingleFileTorrents)
@@ -2892,12 +2886,7 @@ msgstr "Najveći broj uspostavljenih veza:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_maxConnectingSockets)
 #: ktorrent/pref/networkpref.ui:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The maximum number of outgoing connections ktorrent will try to setup "
-#| "simultaneously.</p>\n"
-#| "<p>If you are having trouble with ktorrent blocking other internet "
-#| "traffic, try setting this number a bit lower.</p>"
+#, kde-format
 msgid ""
 "<p>The maximum number of outgoing connections ktorrent will try to set up "
 "simultaneously.</p>\n"
@@ -2905,8 +2894,9 @@ msgid ""
 "try setting this number a bit lower.</p>"
 msgstr ""
 "<p>Najveći broj odlaznih veza koje će KTorrent pokušati istovremeno da "
-"uspostavi.</p><p>Ako KTorrent usporava ostali internet saobraćaj, pokušajte "
-"da postavite manji broj.</p>"
+"uspostavi.</p>\n"
+"<p>Ako KTorrent usporava ostali internet saobraćaj, pokušajte da postavite "
+"manji broj.</p>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: ktorrent/pref/networkpref.ui:209
@@ -2966,10 +2956,7 @@ msgstr "Glavni prenosni protokol:"
 
 #. i18n: ectx: property (toolTip), widget (QComboBox, kcfg_primaryTransportProtocol)
 #: ktorrent/pref/networkpref.ui:261
-#, fuzzy, kde-format
-#| msgid ""
-#| "The primary transport protocol to use, when attempting to setup a "
-#| "connection with a peer, this protocol is chosen first."
+#, kde-format
 msgid ""
 "The primary transport protocol to use, when attempting to set up a "
 "connection with a peer, this protocol is chosen first."
@@ -3002,10 +2989,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_recommended_settings)
 #: ktorrent/pref/networkpref.ui:314
-#, fuzzy, kde-format
-#| msgid "Recommended Settings"
+#, kde-format
 msgid "Recommended Settings…"
-msgstr "Preporučene postavke"
+msgstr "Preporučene postavke…"
 
 #: ktorrent/pref/proxypref.cpp:13
 #, kde-format
@@ -3298,9 +3284,7 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ktorrent/pref/qmpref.ui:159
-#, fuzzy, kde-format
-#| msgctxt "@title:group Options regarging Seeding"
-#| msgid "Seeding"
+#, kde-format
 msgctxt "@title:group Options regarding Seeding"
 msgid "Seeding"
 msgstr "Sejanje"
@@ -3380,16 +3364,13 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QLabel, label_2)
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_greenRatio)
 #: ktorrent/pref/qmpref.ui:248 ktorrent/pref/qmpref.ui:258
-#, fuzzy, kde-format
-#| msgid ""
-#| "Value at which the share ratio will be displayed with a green color. "
-#| "Lower ratios will be displayed in red."
+#, kde-format
 msgid ""
 "Value at which the share ratio will be displayed with a green color. Lower "
 "ratios will be displayed in red. Colors can be changed in color settings."
 msgstr ""
 "Vrednost pri kojoj će odnos deljenja biti prikazan zelenom. Niži odnosi biće "
-"prikazani crvenom."
+"prikazani crvenom. Boje se mogu promeniti u postavkama boja."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ktorrent/pref/qmpref.ui:251
@@ -3532,12 +3513,12 @@ msgstr "DHT: %1, %2"
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: ktorrent/statusbarofflineindicator.cpp:38
 #, kde-format
 msgid "The desktop is offline"
-msgstr ""
+msgstr "Površ je van veze"
 
 #: ktorrent/tools/magnetmodel.cpp:107
 #, kde-format
@@ -3584,10 +3565,9 @@ msgid "Stop Magnet"
 msgstr "Zaustavi magnet"
 
 #: ktorrent/tools/magnetview.cpp:54
-#, fuzzy, kde-format
-#| msgid "Copy Magnet URI"
+#, kde-format
 msgid "Copy Magnet URL"
-msgstr "Kopiraj magnetski URI"
+msgstr "Kopiraj magnetski URL"
 
 #: ktorrent/tools/magnetview.cpp:56
 #, kde-format
@@ -3719,7 +3699,7 @@ msgstr "Prikaži sva otpremanja"
 #: ktorrent/tools/queuemanagerwidget.cpp:88
 #, kde-format
 msgid "Show Not Queued"
-msgstr "Prikaže van reda"
+msgstr "Prikaži van reda"
 
 #: ktorrent/tools/queuemanagerwidget.cpp:89
 #, kde-format
@@ -3918,16 +3898,14 @@ msgid "Torrent has been stopped.<br />"
 msgstr "<html>Torent je zaustavljen.<br /></html>"
 
 #: ktorrent/trayicon.cpp:363
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Upload speed limit in KiB/s"
-msgstr "Ograničenje u kiB/s"
+msgstr "Ograničenje brzine otpremanja u KiB/s"
 
 #: ktorrent/trayicon.cpp:365
-#, fuzzy, kde-format
-#| msgid "Speed limit in KiB/s"
+#, kde-format
 msgid "Download speed limit in KiB/s"
-msgstr "Ograničenje u kiB/s"
+msgstr "Ograničenje brzine preuzimanja u KiB/s"
 
 #: ktorrent/trayicon.cpp:368 plugins/bwscheduler/schedulegraphicsitem.cpp:77
 #: plugins/bwscheduler/schedulegraphicsitem.cpp:78
@@ -4098,11 +4076,10 @@ msgid "Errors:"
 msgstr "Greške:"
 
 #: ktorrent/view/torrentsearchbar.cpp:34
-#, fuzzy, kde-format
-#| msgid "Filter"
+#, kde-format
 msgctxt "Noun"
 msgid "Filter…"
-msgstr "Filter"
+msgstr "Filter…"
 
 #: ktorrent/view/view.cpp:133
 #, kde-format
@@ -4307,17 +4284,16 @@ msgid "Select a directory to move the data to."
 msgstr "Izaberite fasciklu gde premeštate podatke."
 
 #: ktorrent/view/viewdelegate.cpp:344
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: ktorrent/view/viewmodel.cpp:185
 #, kde-format
 msgctxt "1h 20m ago"
 msgid "%1 ago"
-msgstr ""
+msgstr "pre %1"
 
 # >> @title:column
 #: ktorrent/view/viewmodel.cpp:491 plugins/infowidget/peerviewmodel.cpp:321
@@ -4328,11 +4304,10 @@ msgstr "preuzeto"
 
 # >> @title:column
 #: ktorrent/view/viewmodel.cpp:493
-#, fuzzy, kde-format
-#| msgid "Times Downloaded"
+#, kde-format
 msgctxt "Bytes downloaded this session"
 msgid "Session Downloaded"
-msgstr "broj preuzimanja"
+msgstr "preuzeto u sesiji"
 
 # >> @title:column
 #: ktorrent/view/viewmodel.cpp:495
@@ -4350,11 +4325,10 @@ msgstr "otpremljeno"
 
 # >> @title:column
 #: ktorrent/view/viewmodel.cpp:499
-#, fuzzy, kde-format
-#| msgid "Uploaded"
+#, kde-format
 msgctxt "Bytes uploaded this session"
 msgid "Session Uploaded"
-msgstr "otpremljeno"
+msgstr "otpremljeno u sesiji"
 
 # >> @title:column
 #: ktorrent/view/viewmodel.cpp:501
@@ -4432,10 +4406,9 @@ msgid "Added"
 msgstr "dodato"
 
 #: ktorrent/view/viewmodel.cpp:526
-#, fuzzy, kde-format
-#| msgid "Separate activity"
+#, kde-format
 msgid "Last Activity"
-msgstr "zasebna aktivnost"
+msgstr "poslednja aktivnost"
 
 #: ktorrent/view/viewmodel.cpp:533
 #, kde-format
@@ -4443,10 +4416,9 @@ msgid "How much data we have downloaded of the torrent"
 msgstr "Koliko je podataka iz torenta preuzeto"
 
 #: ktorrent/view/viewmodel.cpp:535
-#, fuzzy, kde-format
-#| msgid "How much data we have downloaded of the torrent"
+#, kde-format
 msgid "How much data we have downloaded of the torrent this session"
-msgstr "Koliko je podataka iz torenta preuzeto"
+msgstr "Koliko je podataka iz torenta preuzeto u ovoj sesiji"
 
 #: ktorrent/view/viewmodel.cpp:537
 #, kde-format
@@ -4459,10 +4431,9 @@ msgid "How much data we have uploaded"
 msgstr "Koliko je podataka otpremljeno"
 
 #: ktorrent/view/viewmodel.cpp:541
-#, fuzzy, kde-format
-#| msgid "How much data we have uploaded to this peer"
+#, kde-format
 msgid "How much data we have uploaded this session"
-msgstr "Koliko smo otpremili ovom vršnjaku"
+msgstr "Koliko je podataka otpremljeno u ovoj sesiji"
 
 #: ktorrent/view/viewmodel.cpp:543
 #, kde-format
@@ -4539,7 +4510,7 @@ msgstr "Kada je dodat ovaj torent"
 #: ktorrent/view/viewmodel.cpp:568
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Vreme od poslednjeg preuzimanja ili otpremanja"
 
 #: ktorrent/view/viewmodel.cpp:614
 #, kde-format
@@ -4562,8 +4533,7 @@ msgid "KTorrent's UPnP test application"
 msgstr "KTorrentov probni program za UPnP"
 
 #: ktupnptest/main.cpp:29
-#, fuzzy, kde-format
-#| msgid "&copy; 2005 - 2007 Joris Guisson and Ivan Vasic"
+#, kde-format
 msgid "© 2005–2007 Joris Guisson and Ivan Vasic"
 msgstr "© 2005–2007, Joris Gison i Ivan Vasić"
 
@@ -4795,7 +4765,7 @@ msgstr "Protok za otpremanje (u KiB/s):"
 #: libktcore/ktorrent.kcfg:90
 #, kde-format
 msgid "Always minimize to system tray on startup."
-msgstr ""
+msgstr "Uvek minimizuj u sistemsku kasetu pri pokretanju."
 
 #. i18n: ectx: label, entry (showPopups), group (downloads)
 #: libktcore/ktorrent.kcfg:94
@@ -4932,23 +4902,20 @@ msgid "Warning: %1"
 msgstr "Upozorenje: %1"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Downloaded chunks:"
+#, kde-format
 msgid "Downloaded Chunks"
-msgstr "Preuzeto parčića:"
+msgstr "Preuzeti parčići"
 
 #: libktcore/torrent/chunkbar.cpp:62
-#, fuzzy, kde-format
-#| msgid "Show Downloads"
+#, kde-format
 msgid "Chunks to Download"
-msgstr "Prikaži preuzimanja"
+msgstr "Parčići za preuzimanje"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Excluded:"
+#, kde-format
 msgid "Excluded Chunks"
-msgstr "Izuzeto:"
+msgstr "Izuzeti parčići"
 
 #: libktcore/torrent/queuemanager.cpp:106
 #, kde-format
@@ -4986,9 +4953,7 @@ msgstr "Ograničenja dostignuta."
 #: libktcore/torrent/queuemanager.cpp:238
 #: libktcore/torrent/queuemanager.cpp:279
 #: libktcore/torrent/queuemanager.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "@action Start all selected torrents in the current tab"
-#| msgid "Start"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start"
 msgstr "Pokreni"
@@ -5431,16 +5396,13 @@ msgstr "Potraži fajlove"
 
 #. i18n: ectx: property (toolTip), widget (QListView, m_order)
 #: plugins/downloadorder/downloadorderwidget.ui:66
-#, fuzzy, kde-format
-#| msgid ""
-#| "Order in which to download the files of a torrent. The file at the top "
-#| "will be downloaded first, followed by the second, then the third ..."
+#, kde-format
 msgid ""
 "Order in which to download the files of a torrent. The file at the top will "
 "be downloaded first, followed by the second, then the third…"
 msgstr ""
 "Redosled po kojem će se fajlovi torenta preuzimati. Fajl na vrhu će biti "
-"preuzet prvi, zatim drugi, onda treći..."
+"preuzet prvi, zatim drugi, onda treći…"
 
 # >! @title:window (in trackerview.cpp)
 #. i18n: ectx: property (text), widget (QPushButton, m_add_tracker)
@@ -5451,16 +5413,14 @@ msgid "Add Trackers"
 msgstr "Dodaj pratioce"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Available Chunks"
-msgstr "Dostupno parčića:"
+msgstr "Dostupni parčići"
 
 #: plugins/infowidget/availabilitychunkbar.cpp:22
-#, fuzzy, kde-format
-#| msgid "Available chunks:"
+#, kde-format
 msgid "Unavailable Chunks"
-msgstr "Dostupno parčića:"
+msgstr "Nedostupni parčići"
 
 # >> @title:column
 #: plugins/infowidget/chunkdownloadmodel.cpp:197
@@ -5564,8 +5524,7 @@ msgid "Open With"
 msgstr "Otvori pomoću"
 
 #: plugins/infowidget/fileview.cpp:117
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "Rename file"
 msgid "Rename"
 msgstr "Preimenuj"
@@ -5662,7 +5621,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Sequential Download Mode"
-msgstr ""
+msgstr "Uključi režim sekvencijalnog preuzimanja"
 
 #: plugins/infowidget/infowidgetplugin.cpp:46
 #: plugins/infowidget/iwprefpage.cpp:12
@@ -5940,11 +5899,10 @@ msgid "No"
 msgstr "ne"
 
 #: plugins/infowidget/peerviewmodel.cpp:106
-#, fuzzy, kde-format
-#| msgid "%1 %"
+#, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1%"
 
 #: plugins/infowidget/peerviewmodel.cpp:120
 #, kde-format
@@ -6223,15 +6181,14 @@ msgid "Next Update"
 msgstr "sledeće ažuriranje"
 
 #: plugins/infowidget/trackerview.cpp:57
-#, fuzzy, kde-format
-#| msgid "Copy Torrent URL"
+#, kde-format
 msgid "Copy Tracker URL"
-msgstr "Kopiraj URL torenta"
+msgstr "Kopiraj URL pratioca"
 
 #: plugins/infowidget/trackerview.cpp:65
 #, kde-format
 msgid "Copy Tracker status"
-msgstr ""
+msgstr "Kopiraj stanje pratioca"
 
 #: plugins/infowidget/trackerview.cpp:121
 #, kde-format
@@ -6336,10 +6293,9 @@ msgstr "Isključi sve"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ConvertDialog)
 #: plugins/ipfilter/convertdialog.ui:20 plugins/ipfilter/convertthread.cpp:148
-#, fuzzy, kde-format
-#| msgid "Converting..."
+#, kde-format
 msgid "Converting…"
-msgstr "Pretvaram..."
+msgstr "Pretvaram…"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: plugins/ipfilter/convertdialog.ui:29
@@ -6354,10 +6310,9 @@ msgid "C&ancel"
 msgstr "&Otkaži"
 
 #: plugins/ipfilter/convertthread.cpp:60
-#, fuzzy, kde-format
-#| msgid "Loading txt file..."
+#, kde-format
 msgid "Loading txt file…"
-msgstr "Učitavam tekstualni fajl..."
+msgstr "Učitavam tekstualni fajl…"
 
 #: plugins/ipfilter/convertthread.cpp:133
 #, kde-format
@@ -6431,10 +6386,9 @@ msgid "Status: Not loaded."
 msgstr "Stanje: nije učitan."
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:102
-#, fuzzy, kde-format
-#| msgid "Status: Downloading and converting new block list..."
+#, kde-format
 msgid "Status: Downloading and converting new block list…"
-msgstr "Stanje: preuzimam i pretvaram novu listu blokiranja..."
+msgstr "Stanje: preuzimam i pretvaram novu listu blokiranja…"
 
 #: plugins/ipfilter/ipblockingprefpage.cpp:180
 #, kde-format
@@ -6608,29 +6562,7 @@ msgstr "Prikazivač dnevnika"
 
 #. i18n: ectx: property (toolTip), widget (QTreeView, m_logging_flags)
 #: plugins/logviewer/logprefwidget.ui:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "Double click on the log level to alter it. The possible levels are :\n"
-#| "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#| "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#| "\"></p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">All: </span>All messages are shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Important: </span>Only important messages are shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Notice: </span>Only notice and important messages are "
-#| "shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Debug: </span>Debug, notice and important messages are "
-#| "shown</p>\n"
-#| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">None:</span> No messages are shown</p>"
+#, kde-format
 msgid ""
 "<html>Double click on the log level to alter it. The possible levels are:\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
@@ -6654,12 +6586,27 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">None:</span> No messages are shown</p></html>"
 msgstr ""
-"<p>Dvokliknite na nivo beleženja da biste ga izmenili. Mogući nivoi su:</"
-"p><p><b>sve</b>: prikazuje sve poruke</p><p><b>važno</b>: prikazuje samo "
-"važne poruke</p><p><b>napomena</b>: prikazuje samo upozorenja i važne "
-"poruke</p><p><b>ispravljanje</b>: prikazuju se poruke za ispravljanje "
-"grešaka, upozorenja i važne poruke</p><p><b>ništa</b>: ne prikazuje poruke</"
-"p>"
+"<html>Dvokliknite na nivo beleženja da biste ga izmenili. Mogući nivoi su:\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
+"p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">sve: </span>prikazuju se sve poruke</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">važno: </span>prikazuju se samo važne poruke</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">napomena: </span>prikazuju se samo napomene i važne poruke</"
+"p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">ispravljanje: </span>prikazuju se poruke za ispravljanje "
+"grešaka, napomene i važne poruke</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">ništa:</span> ne prikazuje se nijedna poruka</p></html>"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useRichText)
 #: plugins/logviewer/logprefwidget.ui:42
@@ -7183,73 +7130,67 @@ msgstr "Grupa gde će se dodati torenti."
 #, kde-format
 msgctxt "plugin name"
 msgid "Scan for lost files"
-msgstr ""
+msgstr "Traženje izgubljenih fajlova"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfilesprefpage.ui:19
-#, fuzzy, kde-format
-#| msgid "Log widget position:"
+#, kde-format
 msgid "Widget position:"
-msgstr "Položaj dnevničkog vidžeta:"
+msgstr "Položaj vidžeta:"
 
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:29
 #, kde-format
 msgid "Scan for lost files"
-msgstr ""
+msgstr "Traženje izgubljenih fajlova"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnScanFolder)
 #: plugins/scanforlostfiles/scanforlostfileswidget.cpp:154
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:82
 #, kde-format
 msgid "Scan"
-msgstr ""
+msgstr "Skeniraj"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:17
-#, fuzzy, kde-format
-#| msgid "Select &All"
+#, kde-format
 msgid "Select folder:"
-msgstr "Izaberi &sve"
+msgstr "Izaberite fasciklu:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:101
-#, fuzzy, kde-format
-#| msgid "Show a file list"
+#, kde-format
 msgid "Show all files"
-msgstr "Prikaži spisak fajlova"
+msgstr "Prikaži sve fajlove"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:112
-#, fuzzy, kde-format
-#| msgid "Open silently"
+#, kde-format
 msgid "Open file"
-msgstr "Otvori tiho"
+msgstr "Otvori fajl"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:121
-#, fuzzy, kde-format
-#| msgid "Delete File(s)"
+#, kde-format
 msgid "Delete on disk"
-msgstr "Obriši fajlove"
+msgstr "Obriši sa diska"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:124
 #, kde-format
 msgid "Ctrl+Del"
-msgstr ""
+msgstr "Ctrl+Del"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:133
-#, fuzzy, kde-format
-#| msgid "Magnet link copied to clipboard"
+#, kde-format
 msgid "Copy to clipboard"
-msgstr "Magnetska veza kopirana u klipbord"
+msgstr "Kopiraj u klipbord"
 
 #. i18n: ectx: property (shortcut), widget (QCheckBox, cbShowAllFiles)
 #: plugins/scanforlostfiles/scanforlostfileswidget.ui:136
 #, kde-format
 msgid "Ctrl+C"
-msgstr ""
+msgstr "Ctrl+C"
 
 #. i18n: ectx: ToolBar (SearchToolBar)
 #: plugins/search/ktorrent_searchui.rc:4
@@ -7545,10 +7486,9 @@ msgstr "Podešavanje gašenja"
 
 #: plugins/shutdown/shutdowndlg.cpp:26 plugins/shutdown/shutdownplugin.cpp:132
 #: plugins/shutdown/shutdownruleset.cpp:251
-#, fuzzy, kde-format
-#| msgid "BitTorrent"
+#, kde-format
 msgid "Quit KTorrent"
-msgstr "Bittorrent"
+msgstr "Napuštanje KTorrenta"
 
 #: plugins/shutdown/shutdowndlg.cpp:28 plugins/shutdown/shutdownplugin.cpp:140
 #: plugins/shutdown/shutdownruleset.cpp:257
@@ -7910,8 +7850,7 @@ msgstr "prosečno povezanih sejača po aktivnom torentu"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: plugins/stats/DisplaySettings.ui:904
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "This is about how things are displayed (colors, etc), not about a screen/"
 "display"
@@ -7956,8 +7895,7 @@ msgid "(plugin reload is needed after change)"
 msgstr "(traži ponovno učitavanje priključka nakon izmene)"
 
 #: plugins/stats/DisplaySettingsPage.cc:15
-#, fuzzy, kde-format
-#| msgid "Display"
+#, kde-format
 msgctxt ""
 "@title:window This is about how things are displayed (colors, etc), not "
 "about a screen/display"
@@ -8429,12 +8367,7 @@ msgstr "<b>%1</b><br/><br/>%2"
 
 # skip-rule: t-border
 #: plugins/syndication/feedwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid ""
-#| "    <html>    <body style=\"color:%4\">    <div style=\"border-style:"
-#| "solid; border-width:1px; border-color:%4; margin:5px; padding:5px\">    "
-#| "<b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    <p>%3</p>    </"
-#| "body>    </html>    "
+#, kde-format
 msgctxt ""
 "Given string needs to be HTML parseable.%1 is title of RSS feed item.%2 is "
 "publishing date of RSS feed item.%3 is description given in RSS feed item.%4 "
@@ -8446,10 +8379,10 @@ msgid ""
 "padding:5px\">    <b>Title:</b> %1<br/>    <b>Date:</b> %2<br/>    </div>    "
 "<p>%3</p>    </body>    </html>    "
 msgstr ""
-"    <html>    <body style=\"color:%4\">    <div style=\"border-style:solid; "
-"border-width:1px; border-color:%4; margin:5px; padding:5px\">    <b>Naslov:</"
-"b> %1<br/>    <b>Datum:</b> %2<br/>    </div>    <p>%3</p>    </body>    </"
-"html>    "
+"<html>    <body style=\"color:%4; background-color:%5\">    <div style="
+"\"border-style:solid; border-width:1px; border-color:%4; margin:5px; "
+"padding:5px\">    <b>Naslov:</b> %1<br/>    <b>Datum:</b> %2<br/>    </"
+"div>    <p>%3</p>    </body>    </html>    "
 
 #: plugins/syndication/feedwidget.cpp:193
 #, kde-format
@@ -8467,13 +8400,14 @@ msgid "<b>OK</b>"
 msgstr "<b>U redu</b>"
 
 #: plugins/syndication/feedwidget.cpp:229
-#, fuzzy, kde-format
-#| msgid "Last updated:"
+#, kde-format
 msgctxt "@info:label, %1 is the date-time an RSS feed was updated"
 msgid ""
 "Last Updated:\n"
 "%1"
-msgstr "Ažuriran:"
+msgstr ""
+"Poslednje ažuriranje:\n"
+"%1"
 
 #: plugins/syndication/feedwidget.cpp:234
 #, kde-format
@@ -8491,10 +8425,9 @@ msgid "<b>Downloading</b>"
 msgstr "<b>Preuzimam</b>"
 
 #: plugins/syndication/feedwidget.cpp:243
-#, fuzzy, kde-format
-#| msgid "<b>%1</b>"
+#, kde-format
 msgid "<b>Queued</b>"
-msgstr "<b>%1</b>"
+msgstr "<b>Čeka u redu</b>"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/syndication/feedwidget.ui:65
@@ -8530,7 +8463,7 @@ msgstr " minuta"
 #: plugins/syndication/feedwidget.ui:160
 #, kde-format
 msgid "Last successful update of the selected feed"
-msgstr ""
+msgstr "Poslednje uspešno ažuriranje izabranog dovoda"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_cookies)
 #: plugins/syndication/feedwidget.ui:183
@@ -9007,363 +8940,3 @@ msgstr "Ponovo pretraži"
 #, kde-format
 msgid "ZeroConf"
 msgstr "ZeroConf"
-
-#~ msgid "Open..."
-#~ msgstr "Otvori..."
-
-#~ msgid "Recommended Settings..."
-#~ msgstr "Preporučene postavke..."
-
-#, fuzzy
-#~| msgid "Filter"
-#~ msgid "Filter..."
-#~ msgstr "Filter"
-
-#~ msgid "Text encoding:"
-#~ msgstr "Kodiranje teksta:"
-
-#~ msgctxt "@title:window"
-#~ msgid "Display"
-#~ msgstr "Prikaz"
-
-#~ msgid "Search Text"
-#~ msgstr "Tekst za traženje"
-
-#~ msgid "Search Engine"
-#~ msgstr "Pretraživač"
-
-#~ msgid "Search Engine Label"
-#~ msgstr "Etiketa pretraživača"
-
-#~ msgid "Yes, delete the files"
-#~ msgstr "Da, obriši fajlove"
-
-#~ msgid ""
-#~ "Country locator for InfoWidget plugin. Flags are taken from http://flags."
-#~ "blogpotato.de/ so thanks to them too."
-#~ msgstr ""
-#~ "Lokator države za priključak podataka. Zastave su uzete sa http://flags."
-#~ "blogpotato.de/ pa se i njima zahvaljujemo."
-
-#~ msgid "Enable logging to standard output"
-#~ msgstr "Uključi beleženje na standardni izlaz"
-
-#~ msgid ""
-#~ "Disables the use of KDE's KIO library for tracker announces.\n"
-#~ "\n"
-#~ "This is experimental and should only be used if you are getting a lot of "
-#~ "connection to host broken errors."
-#~ msgstr ""
-#~ "<p>Isključuje upotrebu KDE‑ove biblioteke K‑U/I za objavljivanja pratioca."
-#~ "</p><p>Eksperimentalno, koristite samo ako dobijate puno grešaka "
-#~ "prekinute veze sa domaćinom.</p>"
-
-#~ msgid "Do not use KIO for tracker announces"
-#~ msgstr "Ne koristi K‑U/I za objavljivanja pratioca"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Chunks to Download<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\" /> — preuzeti parčići<br/><img src="
-#~ "\"unavailable_color\" /> — parčići za preuzimanje<br/><img src="
-#~ "\"excluded_color\" /> — izuzeti parčići"
-
-#~ msgid "Applet"
-#~ msgstr "Aplet"
-
-# skip-rule: x-markup-k
-#~ msgid ""
-#~ "<table>\t\t\t\t<tr><td>Download Speed:</td><td>%5 </td><td>Seeders: </"
-#~ "td><td>%1 (%2)</td></tr>\t\t\t\t<tr><td>Upload Speed:</td><td>%6 </"
-#~ "td><td>Leechers: </td><td>%3 (%4)</td></tr>"
-#~ msgstr ""
-#~ "<table>\t\t\t\t<tr><td>Preuzimanje:</td><td>%5 </td><td>Sejača: </td><td>"
-#~ "%1 (%2)</td></tr>\t\t\t\t<tr><td>Brzina otpremanja:</td><td>%6 </"
-#~ "td><td>Pijavica: </td><td>%3 (%4)</td></tr>"
-
-# skip-rule: x-markup-k
-#~ msgid ""
-#~ "<tr><td>Downloaded:</td><td>%1 </td><td>Size: </td><td>%2</td></tr>\t\t\t"
-#~ "\t<tr><td>Uploaded:</td><td>%3 </td><td>Complete: </td><td>%4 %</td></tr>"
-#~ "\t\t\t\t</table>"
-#~ msgstr ""
-#~ "<tr><td>Preuzeto:</td><td>%1 </td><td>Veličina:</td><td>%2</td></tr>\t\t\t"
-#~ "\t<tr><td>Otpremljeno:</td><td>%3 </td><td>Dovršeno:</td><td>%4 %</td></"
-#~ "tr>\t\t\t\t</table>"
-
-#~ msgid "<b>%1</b><br/>%2 (Share Ratio: <font color=\"%4\">%3</font>)"
-#~ msgstr "<b>%1</b><br/>%2 (odnos deljenja: <font color=\"%4\">%3</font>)"
-
-#~ msgid "No torrents loaded."
-#~ msgstr "Nema učitanih torenata."
-
-#~ msgid "Selected torrent is unavailable."
-#~ msgstr "Izabrani torent nije dostupan."
-
-#~ msgid "Torrent to display:"
-#~ msgstr "Torenti koji se prikazuju:"
-
-#~ msgid ""
-#~ "<img src=\"available_color\">&nbsp; - Available Chunks<br><img src="
-#~ "\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src="
-#~ "\"excluded_color\">&nbsp; - Excluded Chunks"
-#~ msgstr ""
-#~ "<img src=\"available_color\" /> — dostupni parčići<br/><img src="
-#~ "\"unavailable_color\" /> — nedostupni parčići<br/><img src="
-#~ "\"excluded_color\" /> — izuzeti parčići"
-
-#~ msgid "Scripting"
-#~ msgstr "Skriptovanje"
-
-#~ msgid "KTorrent Script Packages"
-#~ msgstr "Paketi skripti za KTorrent"
-
-#~ msgid "Scripts"
-#~ msgstr "Skripte"
-
-#~ msgid ""
-#~ "Removing these scripts will fully delete them from your disk. Are you "
-#~ "sure you want to do this?"
-#~ msgstr ""
-#~ "Ako se uklone, skripte će biti potpuno obrisane s diska. Želite li zaista "
-#~ "ovo da učinite?"
-
-#~ msgid "Widget to start, stop and manage scripts"
-#~ msgstr "Vidžet za pokretanje, zaustavljanje i upravljanje skriptama"
-
-#~ msgid "Add Script"
-#~ msgstr "Dodaj skriptu"
-
-#~ msgid "Remove Script"
-#~ msgstr "Ukloni skriptu"
-
-#~ msgid "Run Script"
-#~ msgstr "Pokreni skriptu"
-
-#~ msgid "Stop Script"
-#~ msgstr "Zaustavi skriptu"
-
-#~ msgid "Edit Script"
-#~ msgstr "Uredi skriptu"
-
-#~ msgid "Configure"
-#~ msgstr "Podesi"
-
-#~ msgid "Script Properties"
-#~ msgstr "Svojstva skripte"
-
-#~ msgid "Cannot open archive for reading."
-#~ msgstr "Ne mogu da otvorim arhivu radi čitanja."
-
-#~ msgid "Invalid archive."
-#~ msgstr "Neispravna arhiva."
-
-#~ msgid "There is already a script package named %1 installed."
-#~ msgstr "Paket skripti po imenu %1 već je instaliran."
-
-# rewrite-msgid: / desktop/ .desktop/
-#~ msgid ""
-#~ "Failed to load script from archive. There is something wrong with the "
-#~ "desktop file."
-#~ msgstr ""
-#~ "Ne mogu da učitam skriptu iz arhive. Nešto nije u redu sa .desktop fajlom."
-
-#~ msgid "No script found in archive."
-#~ msgstr "Nema skripti u arhivi."
-
-# rewrite-msgid: /krosspython/krosspython package/
-#~ msgid ""
-#~ "No interpreter for this script could be found, so it cannot be executed. "
-#~ "Please make sure the right interpreter is installed.<br/><br/><b>Hint:</"
-#~ "b> All standard ktorrent scripts require krosspython"
-#~ msgstr ""
-#~ "Nije nađen nijedan interpretator za ovu skriptu, pa se ne može izvršiti. "
-#~ "Instalirajte odgovarajući interpretator.<br/><br/><b>Napomena:</b> Sve "
-#~ "standardne KTorrentove skripte zahtevaju paket krosspython."
-
-#~ msgid "Description:"
-#~ msgstr "Opis:"
-
-#~ msgid "License:"
-#~ msgstr "Licenca:"
-
-#~ msgid "Author:"
-#~ msgstr "Autor:"
-
-#~ msgid "E-Mail:"
-#~ msgstr "E‑pošta:"
-
-#~ msgid "Website:"
-#~ msgstr "Veb sajt:"
-
-#~ msgid "Auto Remove Settings"
-#~ msgstr "Postavke automatskog uklanjanja"
-
-#~ msgid "Auto Remove"
-#~ msgstr "Automatsko uklanjanje"
-
-#~ msgid "Auto Resume Settings"
-#~ msgstr "Postavke automatskog nastavljanja"
-
-#~ msgid "Auto remove a torrent when:"
-#~ msgstr "Automatski ukloni torent po:"
-
-#~ msgid "The torrent finishes downloading"
-#~ msgstr "završetku preuzimanja torenta"
-
-#~ msgid "The torrent finishes seeding"
-#~ msgstr "završetku sejanja torenta"
-
-#~ msgid "Auto Resume"
-#~ msgstr "Automatsko nastavljanje"
-
-#~ msgid "Auto resume after:"
-#~ msgstr "Automatski nastavi nakon:"
-
-#~ msgid " hours"
-#~ msgstr " sati"
-
-#~ msgid " seconds"
-#~ msgstr " sekundi"
-
-#~ msgid "E-Mail Script Settings"
-#~ msgstr "Postavke skripte e‑pošte"
-
-#~ msgid "E-Mail Settings"
-#~ msgstr "Postavke e‑pošte"
-
-#~ msgid "EMail Settings"
-#~ msgstr "Postavke e‑pošte"
-
-#~ msgid "SMTP Server"
-#~ msgstr "SMTP server"
-
-#~ msgid "SMTP server:"
-#~ msgstr "SMTP server:"
-
-#~ msgid "Use SSL/TLS encryption"
-#~ msgstr "SSL/TLS šifrovanje"
-
-#~ msgid "Destination"
-#~ msgstr "Odredište"
-
-#~ msgid "Send mails to:"
-#~ msgstr "Šalji poštu:"
-
-#~ msgid "Add CC:"
-#~ msgstr "Dodaj CC:"
-
-#~ msgid "Add BCC:"
-#~ msgstr "Dodaj BCC:"
-
-#~ msgid "An internal server error occurred: %1"
-#~ msgstr "Interna greška servera: %1"
-
-#~ msgid "Cannot find web interface skins."
-#~ msgstr "Ne mogu da nađem maske veb sučelja."
-
-#~ msgid "Unsupported HTTP method"
-#~ msgstr "Nepodržan HTTP metod"
-
-#~ msgid "Port number"
-#~ msgstr "Broj porta"
-
-#~ msgid "forward Port"
-#~ msgstr "Prosledi port"
-
-#~ msgid "Session time to live"
-#~ msgstr "Vreme života sesije"
-
-#~ msgid "interface skin"
-#~ msgstr "Maska sučelja"
-
-#~ msgid "username"
-#~ msgstr "Korisničko ime"
-
-#~ msgid "password"
-#~ msgstr "Lozinka"
-
-#~ msgid "HTTP Get not supported when uploading a torrent"
-#~ msgstr "HTTP‑ovo Get nije podržano kada se otprema torent"
-
-#~ msgid "Invalid data received"
-#~ msgstr "Primljeni su neispravni podaci"
-
-#~ msgid "Failed to open temporary file"
-#~ msgstr "Neuspelo otvaranje privremenog fajla"
-
-#~ msgid "Web Interface"
-#~ msgstr "Veb sučelje"
-
-#~ msgid "Web interface skin:"
-#~ msgstr "Maska veb sučelja:"
-
-#~ msgid "Which interface to use."
-#~ msgstr "Koje sučelje se koristi."
-
-#~ msgid ""
-#~ "If login required is enabled, you need to enter a username and a "
-#~ "password.\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#~ "weight:600;\">Attention: </span>You should not disable this when the "
-#~ "webinterface is accessible from the internet. It will allow anybody "
-#~ "access to it.</p>"
-#~ msgstr ""
-#~ "<p>Ako je uključeno <b>Neophodno prijavljivanje</b>, morate zadati "
-#~ "korisničko ime i lozinku.</p><p><b>Pažnja</b>: Ovo ne treba da "
-#~ "isključujete kada je veb sučelje dostupno preko Interneta, jer biste onda "
-#~ "svima dozvolili pristup.</p>"
-
-#~ msgid "Login required"
-#~ msgstr "Neophodno prijavljivanje"
-
-#~ msgid "Username you need to use in the login page of the webinterface."
-#~ msgstr "Korisničko ime koje vam treba za prijavnu stranicu veb sučelja."
-
-#~ msgid ""
-#~ "The password for the webinterface login page. By default this is set to "
-#~ "ktorrent."
-#~ msgstr ""
-#~ "Lozinka za prijavu u veb sučelje. Podrazumevano je postavljeno ktorrent."
-
-#~ msgid "Web Server"
-#~ msgstr "Veb server"
-
-#~ msgid "The port the webinterface listens on."
-#~ msgstr "Port na kome veb sučelje osluškuje."
-
-#~ msgid ""
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">If you are behind a "
-#~ "router and you want to access the webinterface from somewhere on the "
-#~ "Internet you need to forward the correct port.</p>\n"
-#~ "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-#~ "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-#~ "\"></p>\n"
-#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">This checkbox will "
-#~ "ensure that the UPnP plugin automatically forwards the port. The UPnP "
-#~ "plugin needs to be loaded for this to work.</p>"
-#~ msgstr ""
-#~ "<p>Ako ste iza rutera i želite da pristupite veb sučelju odnekud sa "
-#~ "Interneta, morate da prosledite pravi port.</p><p>Ova kućica će "
-#~ "obezbediti da UPnP priključak automatski prosledi port. UPnP priključak "
-#~ "mora biti učitan da bi ovo radilo.</p>"
-
-#~ msgid "Forward port"
-#~ msgstr "Prosledi port"
-
-#~ msgid "Session TTL:"
-#~ msgstr "Vreme trajanja sesije:"
-
-#~ msgid "How long a session is valid (in seconds)."
-#~ msgstr "Koliko dugo je sesija važeća (u sekundama)."
-
-#~ msgid " secs"
-#~ msgstr " sekundi"
