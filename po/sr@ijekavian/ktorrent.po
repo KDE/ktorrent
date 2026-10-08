@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-04 00:43+0000\n"
-"PO-Revision-Date: 2026-10-05 12:49+0200\n"
+"PO-Revision-Date: 2026-10-07 11:45+0200\n"
 "Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr@ijekavian\n"
@@ -5508,7 +5508,7 @@ msgstr "Величина:"
 #, kde-format
 msgctxt "Open file"
 msgid "Open"
-msgstr "Отварање"
+msgstr "Отвори"
 
 #: plugins/infowidget/fileview.cpp:116
 #, kde-format
