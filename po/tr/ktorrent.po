@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-04 00:43+0000\n"
-"PO-Revision-Date: 2026-09-21 19:04+0300\n"
+"PO-Revision-Date: 2026-10-08 19:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1726,7 +1726,7 @@ msgstr "Alexander Dymo"
 #: ktorrent/main.cpp:143
 #, kde-format
 msgid "IDEAl code from KDevelop"
-msgstr "K Geliştir’den IDEAl kodu"
+msgstr "KDevelop’tan IDEAl kodu"
 
 #: ktorrent/main.cpp:144
 #, kde-format
