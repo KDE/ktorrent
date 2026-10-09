@@ -48,8 +48,6 @@ find_library(MaxmindDB_LIBRARIES
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(MaxmindDB
-    FOUND_VAR
-        MaxmindDB_FOUND
     REQUIRED_VARS
         MaxmindDB_LIBRARIES
         MaxmindDB_INCLUDE_DIRS
