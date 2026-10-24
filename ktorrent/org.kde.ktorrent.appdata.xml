@@ -1034,6 +1034,7 @@
           <li xml:lang="nl">Een crash bij het uitschakelen van de scanmap-plug-in is verholpen</li>
           <li xml:lang="pt-BR">Corrigido um travamento ao desativar o plugin de pesquisa em pasta</li>
           <li xml:lang="ru">Исправлено аварийное завершение при отключении модуля «Проверка папок»;</li>
+          <li xml:lang="sk">Opravený pád pri vypnutí pluginu Skenovanie priečinka</li>
           <li xml:lang="sl">Odpravljeno sesutje ob onemogočanju vtičnika Scan Folder</li>
           <li xml:lang="sr">Поправљено рушење при искључивању прикључка „Претрага фасцикле“</li>
           <li xml:lang="sr-Latn">Popravljeno rušenje pri isključivanju priključka „Pretraga fascikle“</li>
@@ -1057,6 +1058,7 @@
           <li xml:lang="nl">Probleem opgelost waarbij de voortgangsbalk van de gegevenscontroleur direct naar 100% sprong wanneer er een fout optrad of de controle werd geannuleerd.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a barra de progresso do verificador de dados saltava para 100% quando ocorria um erro ou a verificação era cancelada</li>
           <li xml:lang="ru">Исправлено перескакивание индикатора выполнения проверки данных на 100 % при возникновении ошибки или отмене проверки;</li>
+          <li xml:lang="sk">Opravené preskočenie ukazovateľa priebehu kontroly údajov na 100 %, keď nastala chyba alebo bola kontrola zrušená</li>
           <li xml:lang="sl">Odpravljena težava, pri kateri je vrstica napredka preverjanja podatkov takoj skočila na 100% ob napaki ali preklicu preverjanja</li>
           <li xml:lang="sr">Поправљена трака напретка провере података која је скакала на 100% када дође до грешке или када се провера откаже</li>
           <li xml:lang="sr-Latn">Popravljena traka napretka provere podataka koja je skakala na 100% kada dođe do greške ili kada se provera otkaže</li>
@@ -1080,6 +1082,7 @@
           <li xml:lang="nl">Een optie toegevoegd aan de afsluit-plugin om KTorrent af te sluiten wanneer een torrent is voltooid.</li>
           <li xml:lang="pt-BR">Adicionada uma opção ao plugin de desligamento para encerrar o KTorrent quando um torrent é concluído</li>
           <li xml:lang="ru">В модуль «Завершение работы» добавлена возможность закрывать KTorrent по завершении торрента;</li>
+          <li xml:lang="sk">Do pluginu Vypnutie pridaná možnosť ukončiť KTorrent po dokončení torrentu</li>
           <li xml:lang="sl">V vtičnik za izklop (Shutdown) je bila dodana možnost za zaprtje programa KTorrent, ko se prenos torrenta zaključi</li>
           <li xml:lang="sr">Додата опција у прикључак „Гашење“ за напуштање К‑торента када се торент заврши</li>
           <li xml:lang="sr-Latn">Dodata opcija u priključak „Gašenje“ za napuštanje KTorrenta kada se torent završi</li>
@@ -1103,6 +1106,7 @@
           <li xml:lang="nl">De berekening van de stilstandtijd van een torrent is gecorrigeerd. Hiermee wordt een bug verholpen waarbij de torrentwachtrij willekeurig door elkaar werd gehusseld als de optie "Prioriteit verlagen van torrents die langer dan x minuten stilstaan" was ingeschakeld.</li>
           <li xml:lang="pt-BR">Corrigido o cálculo do tempo de inatividade de um torrent. Isso resolve um erro que fazia a fila de torrents ser reorganizada aleatoriamente quando a opção "Diminuir a prioridade de torrents inativos por mais de x minutos" estava ativada.</li>
           <li xml:lang="ru">Исправлено вычисление времени простоя торрента. Устранена ошибка, из-за которой очередь торрентов случайно перемешивалась при включённом параметре «Понижать приоритет торрентов, находящихся в простое более x минут»;</li>
+          <li xml:lang="sk">Opravený výpočet času zaseknutia torrentu. Tým sa opravuje chyba, keď sa front torrentov náhodne preusporiadal, ak bola zapnutá voľba „Znížiť prioritu torrentov, ktoré sú zaseknuté dlhšie ako x minút“.</li>
           <li xml:lang="sl">Odpravljena je napaka pri izračunu časa mirovanja torrenta. S tem je odpravljena težava, zaradi katere se je vrstni red torrentov naključno premešal, če je bila vklopljena možnost "Zmanjšaj prioriteto torrentov, ki mirujejo dlje kot x minut".</li>
           <li xml:lang="sr">Поправљено рачунање времена застоја торента. Тиме је поправљена грешка због које се ред торената насумично мешао ако је била укључена опција „Смањи приоритет торената који су у застоју дуже од x минута“.</li>
           <li xml:lang="sr-Latn">Popravljeno računanje vremena zastoja torenta. Time je popravljena greška zbog koje se red torenata nasumično mešao ako je bila uključena opcija „Smanji prioritet torenata koji su u zastoju duže od x minuta“.</li>
@@ -1126,6 +1130,7 @@
           <li xml:lang="nl">Probleem opgelost waarbij de vlaggen van peer-landen niet correct werden weergegeven in de informatie-widget-plug-in.</li>
           <li xml:lang="pt-BR">Corrigida a exibição incorreta das bandeiras dos países dos pares no plugin do widget de informações</li>
           <li xml:lang="ru">Исправлен неправильный показ флагов стран пиров в модуле «Сведения»;</li>
+          <li xml:lang="sk">Opravené nesprávne zobrazovanie vlajok krajín partnerov v plugine Informačný widget</li>
           <li xml:lang="sl">Odpravljena napaka pri nepravilnem prikazu zastav držav v vtičniku Information Widget.</li>
           <li xml:lang="sr">Поправљено неисправно приказивање застава држава вршњака у прикључку „Виџет података“</li>
           <li xml:lang="sr-Latn">Popravljeno neispravno prikazivanje zastava država vršnjaka u priključku „Vidžet podataka“</li>
@@ -1149,6 +1154,7 @@
           <li xml:lang="nl">De efficiëntie van het verwerken van .torrent-bestanden verbeterd door veel geheugenallocaties te vermijden.</li>
           <li xml:lang="pt-BR">Melhoria da eficiência do processamento de arquivos .torrent ao evitar diversas alocações de memória</li>
           <li xml:lang="ru">Повышена эффективность разбора файлов .torrent за счёт отказа от большого числа операций выделения памяти;</li>
+          <li xml:lang="sk">Zvýšená efektivita spracovania súborov .torrent vďaka vyhnutiu sa množstvu alokácií pamäte</li>
           <li xml:lang="sl">Izboljšana učinkovitost razčlenjevanja datotek .torrent z izogibanjem številnim dodelitvam pomnilnika</li>
           <li xml:lang="sr">Побољшана ефикасност рашчлањивања .torrent фајлова избегавањем бројних алокација меморије</li>
           <li xml:lang="sr-Latn">Poboljšana efikasnost raščlanjivanja .torrent fajlova izbegavanjem brojnih alokacija memorije</li>
@@ -1172,6 +1178,7 @@
           <li xml:lang="nl">Een foutieve berekening van het aantal peers voor de ANNOUNCE-reactie van een UDP-tracker is gecorrigeerd. Hierdoor probeerde KTorrent verbinding te maken met niet-bestaande peers.</li>
           <li xml:lang="pt-BR">Corrigido um cálculo incorreto do número de pares para a resposta ANNOUNCE de um rastreador UDP. Isso fazia com que o KTorrent tentasse se conectar a pares inexistentes</li>
           <li xml:lang="ru">Исправлено неверное вычисление количества пиров для ответа ANNOUNCE от трекера UDP. Из-за этого KTorrent пытался подключиться к несуществующим пирам.</li>
+          <li xml:lang="sk">Opravený nesprávny výpočet počtu partnerov v odpovedi ANNOUNCE od trackera UDP. KTorrent sa preto pokúšal pripojiť k neexistujúcim partnerom</li>
           <li xml:lang="sl">Odpravljena je bila napaka pri izračunu števila vrstnikov (peerov) za odziv ANNOUNCE s sledilnika UDP. Zaradi tega se je KTorrent poskušal povezati z neobstoječimi vrstniki</li>
           <li xml:lang="sr">Поправљено погрешно рачунање броја вршњака у одговору ANNOUNCE од УДП пратиоца. Због тога је К‑торент покушавао да се повеже на непостојеће вршњаке</li>
           <li xml:lang="sr-Latn">Popravljeno pogrešno računanje broja vršnjaka u odgovoru ANNOUNCE od UDP pratioca. Zbog toga je KTorrent pokušavao da se poveže na nepostojeće vršnjake</li>
@@ -1203,6 +1210,7 @@
           <li xml:lang="nl">Filters voor verschillende logniveaus in de Log Viewer-plugin opgelost</li>
           <li xml:lang="pt-BR">Filtros fixos para diferentes níveis de log no plugin do visualizador de log</li>
           <li xml:lang="ru">Исправлены фильтры для разных уровней журнала в модуле «Просмотр журналов»;</li>
+          <li xml:lang="sk">Opravené filtre pre rôzne úrovne záznamu v plugine Prehliadač záznamov</li>
           <li xml:lang="sl">Popravljeni filtri za različne ravni dnevniških zapisov v vtičniku Log Viewer</li>
           <li xml:lang="sr">Поправљени филтери за различите нивое бележења у прикључку „Приказивач дневника“</li>
           <li xml:lang="sr-Latn">Popravljeni filteri za različite nivoe beleženja u priključku „Prikazivač dnevnika“</li>
@@ -1226,6 +1234,7 @@
           <li xml:lang="nl">De manier waarop de peer-ID van KTorrent wordt aangemaakt, is gecorrigeerd. Voorheen werd 26.04.00 omgezet naar "-KT2640-", nu is dat "-KT260400".</li>
           <li xml:lang="pt-BR">Corrigida a forma como o ID de par do KTorrent é gerado. Anteriormente, 26.04.00 era convertido para "-KT2640-"; agora, é convertido para "-KT260400".</li>
           <li xml:lang="ru">Исправлен способ создания идентификатора пира KTorrent. Ранее 26.04.00 преобразовывалось в «-KT2640-», теперь — в «-KT260400»;</li>
+          <li xml:lang="sk">Opravený spôsob vytvárania ID partnera KTorrentu. Predtým sa 26.04.00 prevádzalo na „-KT2640-“, teraz je to „-KT260400“</li>
           <li xml:lang="sl">Popravljen je način ustvarjanja identifikatorja odjemalca (peer ID) v programu KTorrent. Prej se je oznaka 26.04.00 pretvorila v "-KT2640-", zdaj pa se v "-KT260400"</li>
           <li xml:lang="sr">Поправљен начин на који се ствара ИД вршњака у К‑торенту. Раније је 26.04.00 претварано у „-KT2640-“, а сада у „-KT260400“</li>
           <li xml:lang="sr-Latn">Popravljen način na koji se stvara ID vršnjaka u KTorrentu. Ranije je 26.04.00 pretvarano u „-KT2640-“, a sada u „-KT260400“</li>
@@ -1249,6 +1258,7 @@
           <li xml:lang="nl">Een bug verholpen waarbij KTorrent probeerde via TCP verbinding te maken met peers, zelfs als de instelling voor uitsluitend UTP was ingeschakeld.</li>
           <li xml:lang="pt-BR">Corrigido um erro em que o KTorrent tentava se conectar a pares via TCP, mesmo quando a configuração de uso exclusivo de uTP estava ativada.</li>
           <li xml:lang="ru">Исправлена ошибка, из-за которой KTorrent пытался подключиться к пирам по TCP, даже если был включён параметр «использовать только uTP».</li>
+          <li xml:lang="sk">Opravená chyba, keď sa KTorrent pokúšal pripojiť k partnerom cez TCP, aj keď bolo zapnuté nastavenie používať len uTP</li>
           <li xml:lang="sl">Popravljena je bila napaka, zaradi katere se je KTorrent poskušal povezati s soodjemalci prek protokola TCP, čeprav je bila vklopljena nastavitev za uporabo izključno protokola uTP</li>
           <li xml:lang="sr">Поправљена грешка због које је К‑торент покушавао да се повеже на вршњаке преко ТЦП‑а чак и када је била укључена поставка да се користи само µТП</li>
           <li xml:lang="sr-Latn">Popravljena greška zbog koje je KTorrent pokušavao da se poveže na vršnjake preko TCP‑a čak i kada je bila uključena postavka da se koristi samo µTP</li>
@@ -1376,6 +1386,7 @@
           <li xml:lang="nl">Een kolom 'Laatste activiteit' is toegevoegd die het tijdstip weergeeft waarop de torrent voor het laatst is geüpload of gedownload. Deze waarden blijven behouden tussen sessies, d.w.z. na het opnieuw opstarten van de toepassing.</li>
           <li xml:lang="pt-BR">Adicionada uma coluna "Última atividade" que mostra o momento em que o torrent teve atividade de upload ou download pela última vez. Esses valores são mantidos atualizados entre as sessões, ou seja, após reiniciar o aplicativo.</li>
           <li xml:lang="ru">Добавлен столбец «Последняя активность», показывающий время последней передачи или получения данных в торренте. Значения сохраняются между сеансами, то есть после перезапуска приложения;</li>
+          <li xml:lang="sk">Pridaný stĺpec „Posledná aktivita“ zobrazujúci čas poslednej aktivity nahrávania alebo sťahovania torrentu. Tieto hodnoty ostávajú presné aj medzi reláciami, t. j. po reštarte aplikácie.</li>
           <li xml:lang="sl">Dodan je stolpec "Zadnja dejavnost", ki prikazuje čas zadnje dejavnosti nalaganja ali prenosa podatkov za torrent. Te vrednosti se ohranijo tudi med sejami, tj. po ponovnem zagonu aplikacije.</li>
           <li xml:lang="sr">Додата колона „последња активност“ која приказује време последњег отпремања или преузимања торента. Ове вредности остају тачне између сесија, тј. и после поновног покретања програма.</li>
           <li xml:lang="sr-Latn">Dodata kolona „poslednja aktivnost“ koja prikazuje vreme poslednjeg otpremanja ili preuzimanja torenta. Ove vrednosti ostaju tačne između sesija, tj. i posle ponovnog pokretanja programa.</li>
