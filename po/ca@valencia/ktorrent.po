@@ -4345,7 +4345,7 @@ msgstr "Trieu un directori cap a on s'han de moure les dades."
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: ktorrent/view/viewmodel.cpp:185
 #, kde-format
@@ -5948,7 +5948,7 @@ msgstr "No"
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: plugins/infowidget/peerviewmodel.cpp:120
 #, kde-format
