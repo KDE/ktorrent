@@ -1289,6 +1289,7 @@
           <li xml:lang="ca-valencia">S'han esmenat els diagrames que tenen text blanc sobre un fons blanc al connector d'estadístiques</li>
           <li xml:lang="cs">Opraveny grafy s bílým textem na bílém pozadí v pluginu Statistiky</li>
           <li xml:lang="es">Arreglados los gráficos que mostraban texto en blanco sobre fondo blanco en el complemento de estadísticas</li>
+          <li xml:lang="fi">korjattu tilastoliitännäisen kaavioiden valkoinen teksti valkoisella taustalla</li>
           <li xml:lang="fr">Correction des graphiques ayant du texte blanc sur un arrière-plan blanc dans le module externe « Statistiques »</li>
           <li xml:lang="he">תוקנה תקלה שבתרשימים הופיע טקסט לבן על רקע לבן בתוסף הסטטיסטיקה</li>
           <li xml:lang="it">Correzione dei grafici con testo bianco su sfondo bianco nell'oggetto Statistiche</li>
@@ -1320,6 +1321,7 @@
           <li xml:lang="ca-valencia">S'ha esmenat el diàleg d'importació de torrent que no permet seleccionar fitxers «.torrent»</li>
           <li xml:lang="cs">Opravena chyba, kvůli které nebylo možné v dialogovém okně „Importovat torrent“ vybrat soubory .torrent</li>
           <li xml:lang="es">Arreglado el diálogo de importación torrent que no permitía seleccionar archivos .torrent</li>
+          <li xml:lang="fi">korjattu se, ettei Tuo torrentti -ikkuna sallinut valita .torrent-tiedostoja</li>
           <li xml:lang="fr">Correction de la boite de dialogue d'importation de Torrent, ne permettant pas la sélection de de fichier « .torrent »</li>
           <li xml:lang="he">תוקנה בעיה שחלונית ייבוא הטורנט לא מרשה לבחור קובצי ‎.torrent</li>
           <li xml:lang="it">Correzione del problema per cui la finestra di dialogo “Importa torrent” non permetteva di selezionare i file .torrent</li>
@@ -1355,6 +1357,7 @@
           <li xml:lang="ca-valencia">S'ha afegit una acció per a canviar el nom de fitxers en el menú contextual del giny d'informació</li>
           <li xml:lang="cs">Do kontextového menu widgetu Info byla přidána akce pro přejmenování souborů</li>
           <li xml:lang="es">Añadida una acción para renombrar archivos en el menú de contexto del complemento de información</li>
+          <li xml:lang="fi">Lisätty tietosovelman kontekstivalikkoon toiminto tiedostojen nimien muuttamiseksi</li>
           <li xml:lang="fr">Ajout d'une action pour le renommage des fichiers dans le menu contextuel du composant graphique d'informations</li>
           <li xml:lang="he">נוספה פעולה לשנות את שמות הקבצים בתפריט ההקשר של וידג׳ט המידע</li>
           <li xml:lang="it">È stata aggiunta un'azione per rinominare i file nel menu contestuale dell'oggetto Informazioni</li>
@@ -1380,6 +1383,7 @@
           <li xml:lang="ca-valencia">Guarda el fitxer magnet sempre que s'actualitze, de manera que les dades del magnet no es perden si l'aplicació es bloqueja</li>
           <li xml:lang="cs">Soubor magnetů se ukládá při každé aktualizaci, aby nedošlo ke ztrátě dat magnetů v případě selhání aplikace</li>
           <li xml:lang="es">Se guardan los archivos magnet cuando se actualizan, de tal manera que los datos magnet no se pierdan si la aplicación se cierra inesperadamente</li>
+          <li xml:lang="fi">Tallennetaan Magnet-tiedosto sen päivityttyä, jottei Magnet-tietoa kadoteta sovelluksen mahdollisesti kaatuessa</li>
           <li xml:lang="fr">Enregistrez le fichier des aimants chaque fois qu'il est mis à jour. Ainsi, les données des aimants ne sont pas perdues si l'application plante</li>
           <li xml:lang="he">לשמור את קובצי המגנטים עם כל עדכון שלהם, כדי שנתוני המגנט לא הולכים לאיבוד אם היישום קורס</li>
           <li xml:lang="it">Salvataggio dei collegamenti magnetici ogni volta che vengono aggiornati, in modo che i loro dati non vadano persi in caso di arresto anomalo del programma</li>
@@ -1491,6 +1495,7 @@
           <li xml:lang="ca-valencia">Millora el connector de busca: s'ha eliminat la barra de busca redundant; s'han utilitzat pestanyes eliminables en lloc d'un botó de supressió personalitzat; s'han utilitzat botons de només icona per a Arrere, Avant i Torna a carregar</li>
           <li xml:lang="cs">Vylepšený vyhledávací plugin: odstraněna nadbytečná vyhledávací lišta; použity odnímatelné záložky namísto vlastního tlačítka pro smazání; použita tlačítka pouze s ikonami pro Zpět, Vpřed a Obnovit</li>
           <li xml:lang="es">Complemento de búsqueda mejorado: eliminada barra de búsqueda redundante, uso de pestañas eliminables en lugar de un botón de borrado personalizado, uso de botones de icono para Atrás, Adelante y Recarga</li>
+          <li xml:lang="fi">parannettu hakuliitännäistä; poistettu turha hakurivi; käytetään siirrettäviä välilehtiä mukautetun poistamispainikkeen sijaan; käytetään vain kuvake -painikkeita Takaisin-, Eteenpäin- ja Virkistä-toiminnoille</li>
           <li xml:lang="fr">Amélioration du module externe de recherche : suppression de la barre de recherche redondante, utilisation d'onglets amovibles au lieu d'un bouton personnalisé de suppression, utilisation de boutons uniquement avec icônes pour les actions « Précédent », « Suivant » et « Recharger »</li>
           <li xml:lang="he">תוסף החיפוש השתפר: הוסר סרגל חיפוש מיותר, נעשה שימוש בלשוניות שניתן להסיר במקום כפתור מחיקה בהתאמה אישית, נעשה שימוש בכפתורים עם סמלים בלבד לחזרה, קדימה וריענון.</li>
           <li xml:lang="it">Miglioramento dell'estensione di ricerca: rimozione della barra di ricerca ridondante; utilizzo di schede rimovibili al posto di un pulsante di eliminazione personalizzato; utilizzo di pulsanti a sola icona per Indietro, Avanti e Aggiorna</li>
@@ -1516,6 +1521,7 @@
           <li xml:lang="ca-valencia">Millora els espaiats de diversos ginys, i s'ha adaptat gran part de la interfície d'usuari per a utilitzar un aspecte nou sense marc</li>
           <li xml:lang="cs">Vylepšeny rozestupy různých widgetů a převedena velká část uživatelského rozhraní tak, aby využívalo nový bezrámový vzhled</li>
           <li xml:lang="es">Espaciado de varios widgets mejorado.Migración de la UI a un nuevo aspecto sin marcos.</li>
+          <li xml:lang="fi">parannettu eri sovelmien välistystä ja siirretty käyttöliittymää uuteen kehyksettömään ulkoasuun</li>
           <li xml:lang="fr">Amélioration des espacements de divers composants graphiques et portage d'une grande partie de l'interface utilisateur pour utiliser une nouvelle apparence sans cadre</li>
           <li xml:lang="he">הריווח של מגוון רחב של וידג׳טים השתפר והרבה מממשק המשתמש הוסב להשתמש במראה נטול מסגרות</li>
           <li xml:lang="it">Ottimizzazione delle spaziature tra i vari oggetti, inoltre gran parte dell'interfaccia utente è stata modificata per adottarsi a un nuovo stile senza bordi</li>
@@ -1566,6 +1572,7 @@
           <li xml:lang="ca-valencia">S'ha esmenat el diàleg d'importació de torrent que falla en copiar el fitxer «.torrent» indicat</li>
           <li xml:lang="cs">Opravena chyba dialogového okna Importovat torrent, které nedokázalo zkopírovat zadaný soubor .torrent</li>
           <li xml:lang="es">Arreglado el diálogo de importar torrent al fallar la copia de un archivo .torrent</li>
+          <li xml:lang="fi">korjattu se, ettei Tuo torrentti -ikkuna onnistunut kopioimaan annettua .torrent-tiedostoa</li>
           <li xml:lang="fr">Correction de la boite de dialogue d'importation échouant lors de la copie du fichier « .torrent » fourni</li>
           <li xml:lang="he">תוקנה בעיה שחלונית ייבוא טורנט נכשלה בהעתקת קובץ ה־‎.torrent הנתון</li>
           <li xml:lang="it">Correzione del problema per cui la finestra di dialogo Importa torrent non riusciva a copiare il file .torrent specificato</li>
