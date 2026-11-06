@@ -147,53 +147,49 @@ void Feed::load(FilterList *filter_list)
         return;
     }
 
-    try {
-        url = QUrl(dict->getString("url"));
-        cookie = dict->getValue("cookie") ? dict->getString("cookie") : QString();
-        custom_name = dict->getValue("custom_name") ? dict->getString("custom_name") : QString();
-        refresh_rate = dict->getValue("refresh_rate") ? dict->getInt("refresh_rate") : DEFAULT_REFRESH_RATE;
+    url = QUrl(dict->getString("url"));
+    cookie = dict->getValue("cookie") ? dict->getString("cookie") : QString();
+    custom_name = dict->getValue("custom_name") ? dict->getString("custom_name") : QString();
+    refresh_rate = dict->getValue("refresh_rate") ? dict->getInt("refresh_rate") : DEFAULT_REFRESH_RATE;
 
-        BListNode *fl = dict->getList("filters");
-        if (fl) {
-            for (Uint32 i = 0; i < fl->getNumChildren(); i++) {
-                Filter *f = filter_list->filterByID(fl->getString(i));
-                if (f) {
-                    filters.append(f);
-                }
+    BListNode *fl = dict->getList("filters");
+    if (fl) {
+        for (Uint32 i = 0; i < fl->getNumChildren(); i++) {
+            Filter *f = filter_list->filterByID(fl->getString(i));
+            if (f) {
+                filters.append(f);
             }
         }
+    }
 
-        BListNode *ll = dict->getList("loaded");
-        if (ll) {
-            for (Uint32 i = 0; i < ll->getNumChildren(); i++) {
-                loaded.insert(ll->getString(i));
+    BListNode *ll = dict->getList("loaded");
+    if (ll) {
+        for (Uint32 i = 0; i < ll->getNumChildren(); i++) {
+            loaded.insert(ll->getString(i));
+        }
+    }
+
+    BListNode *se_list = dict->getList("downloaded_se_items");
+    if (se_list) {
+        for (Uint32 i = 0; i < se_list->getNumChildren(); i += 2) {
+            BListNode *se = se_list->getList(i + 1);
+            if (!se) {
+                continue;
+            }
+
+            Filter *f = filter_list->filterByID(se_list->getString(i));
+            if (!f) {
+                continue;
+            }
+
+            QList<SeasonEpisodeItem> &sel = downloaded_se_items[f];
+            for (Uint32 j = 0; j < se->getNumChildren(); j += 2) {
+                SeasonEpisodeItem item;
+                item.episode = se->getInt(j);
+                item.season = se->getInt(j + 1);
+                sel.append(item);
             }
         }
-
-        BListNode *se_list = dict->getList("downloaded_se_items");
-        if (se_list) {
-            for (Uint32 i = 0; i < se_list->getNumChildren(); i += 2) {
-                BListNode *se = se_list->getList(i + 1);
-                if (!se) {
-                    continue;
-                }
-
-                Filter *f = filter_list->filterByID(se_list->getString(i));
-                if (!f) {
-                    continue;
-                }
-
-                QList<SeasonEpisodeItem> &sel = downloaded_se_items[f];
-                for (Uint32 j = 0; j < se->getNumChildren(); j += 2) {
-                    SeasonEpisodeItem item;
-                    item.episode = se->getInt(j);
-                    item.season = se->getInt(j + 1);
-                    sel.append(item);
-                }
-            }
-        }
-    } catch (...) {
-        throw;
     }
 
     Out(SYS_SYN | LOG_DEBUG) << "Loaded feed from " << file << " : " << endl;
