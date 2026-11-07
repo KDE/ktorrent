@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-16 00:47+0000\n"
+"POT-Creation-Date: 2026-11-07 00:57+0000\n"
 "PO-Revision-Date: 2026-10-07 11:45+0200\n"
 "Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -6544,7 +6544,7 @@ msgid "All"
 msgstr "све"
 
 #: plugins/logviewer/logflags.cpp:209 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:539
+#: plugins/syndication/ktfeed.cpp:535
 #, kde-format
 msgid "None"
 msgstr "ништа"
@@ -8727,37 +8727,37 @@ msgstr "Проба"
 msgid "filter on feed:"
 msgstr "филтер на доводу:"
 
-#: plugins/syndication/ktfeed.cpp:516
+#: plugins/syndication/ktfeed.cpp:512
 #, kde-format
 msgid "Aborted"
 msgstr "Обустављено"
 
-#: plugins/syndication/ktfeed.cpp:518
+#: plugins/syndication/ktfeed.cpp:514
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "Прековријеме при преузимању довода"
 
-#: plugins/syndication/ktfeed.cpp:520
+#: plugins/syndication/ktfeed.cpp:516
 #, kde-format
 msgid "Unknown hostname"
 msgstr "Непознато име домаћина"
 
-#: plugins/syndication/ktfeed.cpp:522
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "File not found"
 msgstr "Фајл није нађен"
 
-#: plugins/syndication/ktfeed.cpp:524
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "Непозната грешка добављача"
 
-#: plugins/syndication/ktfeed.cpp:528
+#: plugins/syndication/ktfeed.cpp:524
 #, kde-format
 msgid "Invalid feed data"
 msgstr "Лоши подаци довода"
 
-#: plugins/syndication/ktfeed.cpp:530
+#: plugins/syndication/ktfeed.cpp:526
 #, kde-format
 msgid "Success"
 msgstr "Успјех"

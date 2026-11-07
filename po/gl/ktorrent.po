@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-16 00:47+0000\n"
+"POT-Creation-Date: 2026-11-07 00:57+0000\n"
 "PO-Revision-Date: 2025-06-22 11:39+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -6574,7 +6574,7 @@ msgid "All"
 msgstr "Todas"
 
 #: plugins/logviewer/logflags.cpp:209 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:539
+#: plugins/syndication/ktfeed.cpp:535
 #, kde-format
 msgid "None"
 msgstr "Ningunha"
@@ -8788,37 +8788,37 @@ msgstr "Probar"
 msgid "filter on feed:"
 msgstr "o filtro na fonte:"
 
-#: plugins/syndication/ktfeed.cpp:516
+#: plugins/syndication/ktfeed.cpp:512
 #, kde-format
 msgid "Aborted"
 msgstr "Interrompido"
 
-#: plugins/syndication/ktfeed.cpp:518
+#: plugins/syndication/ktfeed.cpp:514
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "Esgotouse o tempo límite para a descarga da fonte de novas."
 
-#: plugins/syndication/ktfeed.cpp:520
+#: plugins/syndication/ktfeed.cpp:516
 #, kde-format
 msgid "Unknown hostname"
 msgstr "Nome do servidor descoñecido."
 
-#: plugins/syndication/ktfeed.cpp:522
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "File not found"
 msgstr "Non se atopou o ficheiro."
 
-#: plugins/syndication/ktfeed.cpp:524
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "Erro de obtención descoñecido."
 
-#: plugins/syndication/ktfeed.cpp:528
+#: plugins/syndication/ktfeed.cpp:524
 #, kde-format
 msgid "Invalid feed data"
 msgstr "Os datos da fonte de novas son incorrectos."
 
-#: plugins/syndication/ktfeed.cpp:530
+#: plugins/syndication/ktfeed.cpp:526
 #, kde-format
 msgid "Success"
 msgstr "Éxito"

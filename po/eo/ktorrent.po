@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-16 00:47+0000\n"
+"POT-Creation-Date: 2026-11-07 00:57+0000\n"
 "PO-Revision-Date: 2025-03-15 10:38+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -6557,7 +6557,7 @@ msgid "All"
 msgstr "Ĉiuj"
 
 #: plugins/logviewer/logflags.cpp:209 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:539
+#: plugins/syndication/ktfeed.cpp:535
 #, kde-format
 msgid "None"
 msgstr "Neniu"
@@ -8770,37 +8770,37 @@ msgstr "Testo"
 msgid "filter on feed:"
 msgstr "filtrilo sur feed:"
 
-#: plugins/syndication/ktfeed.cpp:516
+#: plugins/syndication/ktfeed.cpp:512
 #, kde-format
 msgid "Aborted"
 msgstr "Abortita"
 
-#: plugins/syndication/ktfeed.cpp:518
+#: plugins/syndication/ktfeed.cpp:514
 #, kde-format
 msgid "Timeout when downloading feed"
 msgstr "Temp-elĉerpo dum elŝuto de fluo"
 
-#: plugins/syndication/ktfeed.cpp:520
+#: plugins/syndication/ktfeed.cpp:516
 #, kde-format
 msgid "Unknown hostname"
 msgstr "Nekonata gastiga nomo"
 
-#: plugins/syndication/ktfeed.cpp:522
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "File not found"
 msgstr "Dosiero ne trovita"
 
-#: plugins/syndication/ktfeed.cpp:524
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Unknown retriever error"
 msgstr "Eraro de Nekonata Retriever"
 
-#: plugins/syndication/ktfeed.cpp:528
+#: plugins/syndication/ktfeed.cpp:524
 #, kde-format
 msgid "Invalid feed data"
 msgstr "Nevalidaj nutraĵdatenoj"
 
-#: plugins/syndication/ktfeed.cpp:530
+#: plugins/syndication/ktfeed.cpp:526
 #, kde-format
 msgid "Success"
 msgstr "Sukceso"

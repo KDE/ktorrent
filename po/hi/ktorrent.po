@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-16 00:47+0000\n"
+"POT-Creation-Date: 2026-11-07 00:57+0000\n"
 "PO-Revision-Date: 2008-03-30 16:43+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@yahoo.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
@@ -6470,7 +6470,7 @@ msgid "All"
 msgstr "सभी"
 
 #: plugins/logviewer/logflags.cpp:209 plugins/logviewer/logflagsdelegate.cpp:32
-#: plugins/syndication/ktfeed.cpp:539
+#: plugins/syndication/ktfeed.cpp:535
 #, kde-format
 msgid "None"
 msgstr "कुछ नहीं"
@@ -8627,40 +8627,40 @@ msgstr ""
 msgid "filter on feed:"
 msgstr ""
 
-#: plugins/syndication/ktfeed.cpp:516
+#: plugins/syndication/ktfeed.cpp:512
 #, kde-format
 msgid "Aborted"
 msgstr ""
 
-#: plugins/syndication/ktfeed.cpp:518
+#: plugins/syndication/ktfeed.cpp:514
 #, fuzzy, kde-format
 #| msgid "Downloaded"
 msgid "Timeout when downloading feed"
 msgstr "डाउनलोडेड"
 
-#: plugins/syndication/ktfeed.cpp:520
+#: plugins/syndication/ktfeed.cpp:516
 #, fuzzy, kde-format
 #| msgid "Unknown client"
 msgid "Unknown hostname"
 msgstr "अज्ञात क्लाएंट"
 
-#: plugins/syndication/ktfeed.cpp:522
+#: plugins/syndication/ktfeed.cpp:518
 #, kde-format
 msgid "File not found"
 msgstr ""
 
-#: plugins/syndication/ktfeed.cpp:524
+#: plugins/syndication/ktfeed.cpp:520
 #, kde-format
 msgid "Unknown retriever error"
 msgstr ""
 
-#: plugins/syndication/ktfeed.cpp:528
+#: plugins/syndication/ktfeed.cpp:524
 #, fuzzy, kde-format
 #| msgid "Invalid URL: %1"
 msgid "Invalid feed data"
 msgstr "अवैध यूआरएल: %1"
 
-#: plugins/syndication/ktfeed.cpp:530
+#: plugins/syndication/ktfeed.cpp:526
 #, kde-format
 msgid "Success"
 msgstr ""
