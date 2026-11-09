@@ -2,20 +2,21 @@
 #
 # Alexander Nicolaysen Sørnes <alex@thehandofagony.com>, 2008.
 # Bjørn Steensrud <bjornst@skogkatt.homelinux.org>, 2009, 2010, 2011, 2012, 2013, 2014.
+# Daniel Dybing <daniel.dybing@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:57+0000\n"
-"PO-Revision-Date: 2014-09-30 09:58+0200\n"
-"Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
+"PO-Revision-Date: 2026-11-08 01:50+0100\n"
+"Last-Translator: Daniel Dybing <daniel.dybing@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@nuug.no>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 26.08.1\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -23,12 +24,14 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Alexander Nicolaysen Sørnes,Bjørn Steensrud"
+msgstr "Alexander Nicolaysen Sørnes,Bjørn Steensrud,Daniel Dybing"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "alex@thehandofagony.com,bjornst@skogkatt.homelinux.org"
+msgstr ""
+"alex@thehandofagony.com,bjornst@skogkatt.homelinux.org,daniel.dybing@gmail."
+"com"
 
 #: ktorrent/core.cpp:149
 #, kde-format
@@ -36,7 +39,7 @@ msgid ""
 "KTorrent is unable to accept connections because the TCP port %1 is already "
 "in use by another program."
 msgstr ""
-"KTorrent kan ikke ta i mot tilkoblinger fordi et annet program bruker TCP-"
+"KTorrent kan ikke ta imot tilkoblinger fordi et annet program bruker TCP-"
 "port %1."
 
 #: ktorrent/core.cpp:159
@@ -45,7 +48,7 @@ msgid ""
 "KTorrent is unable to accept connections because the UDP port %1 is already "
 "in use by another program."
 msgstr ""
-"KTorrent kan ikke ta i mot tilkoblinger fordi et annet program bruker UDP-"
+"KTorrent kan ikke ta imot tilkoblinger fordi et annet program bruker UDP-"
 "port %1."
 
 #: ktorrent/core.cpp:267
@@ -80,7 +83,7 @@ msgstr ""
 #: ktorrent/core.cpp:1065
 #, kde-format
 msgid "Retry"
-msgstr "Prøv igjen"
+msgstr "Prøv på nytt"
 
 #: ktorrent/core.cpp:1071
 #, kde-format
@@ -104,7 +107,7 @@ msgstr ""
 #: ktorrent/core.cpp:1094 ktorrent/core.cpp:1102 ktorrent/core.cpp:1112
 #, kde-format
 msgid "Data files are missing"
-msgstr "Datafiler mangler"
+msgstr "Mangler datafiler"
 
 #: ktorrent/core.cpp:1101
 #, kde-format
@@ -128,7 +131,7 @@ msgstr ""
 #: ktorrent/core.cpp:1128 ktorrent/core.cpp:1135
 #, kde-format
 msgid "Data file is missing"
-msgstr "Datafil mangler"
+msgstr "Mangler datafil"
 
 #: ktorrent/core.cpp:1134
 #, kde-format
@@ -310,13 +313,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Delete the Files"
-msgstr ""
+msgstr "Slett filene"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:292
 #, kde-format
 msgctxt "@action:button"
 msgid "Keep the Files"
-msgstr ""
+msgstr "Ikke slett filene"
 
 #: ktorrent/dialogs/fileselectdlg.cpp:318
 #, kde-format
@@ -4239,7 +4242,7 @@ msgstr "Fjern data"
 #: ktorrent/view/view.cpp:474
 #, kde-format
 msgid "Keep Data"
-msgstr "Behold data"
+msgstr "Ikke fjern data"
 
 #: ktorrent/view/view.cpp:500
 #, kde-format
@@ -4361,7 +4364,7 @@ msgstr "Tid lastet opp"
 #: ktorrent/view/viewmodel.cpp:522
 #, kde-format
 msgid "Location"
-msgstr "Adresse"
+msgstr "Plassering"
 
 #: ktorrent/view/viewmodel.cpp:524
 #, kde-format
@@ -4409,12 +4412,12 @@ msgstr "Hvor mye data som gjenstår å laste ned"
 #: ktorrent/view/viewmodel.cpp:545
 #, kde-format
 msgid "Current download speed"
-msgstr "Angi høyeste nedlastingsfart"
+msgstr "Gjeldende nedlastingsfart"
 
 #: ktorrent/view/viewmodel.cpp:547
 #, kde-format
 msgid "Current upload speed"
-msgstr "Nåværende opplastingsfart"
+msgstr "Gjeldende opplastingsfart"
 
 #: ktorrent/view/viewmodel.cpp:549
 #, kde-format
@@ -4482,7 +4485,7 @@ msgstr "Når denne torrenten  ble lagt til"
 #: ktorrent/view/viewmodel.cpp:568
 #, kde-format
 msgid "Time since last download or upload activity"
-msgstr ""
+msgstr "Tid siden forrige aktivitet"
 
 #: ktorrent/view/viewmodel.cpp:617
 #, kde-format
@@ -4878,13 +4881,13 @@ msgstr ""
 #: libktcore/torrent/chunkbar.cpp:62
 #, kde-format
 msgid "Chunks to Download"
-msgstr ""
+msgstr "Blokker å laste ned"
 
 #: libktcore/torrent/chunkbar.cpp:62
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
 msgid "Excluded Chunks"
-msgstr ""
+msgstr "Utelatte blokker"
 
 #: libktcore/torrent/queuemanager.cpp:106
 #, kde-format
@@ -5308,12 +5311,12 @@ msgstr "Gjeldende plan:"
 #: plugins/downloadorder/downloadorderwidget.ui:14
 #, kde-format
 msgid "File Download Order"
-msgstr "Nedlastingsrekkefølge"
+msgstr "Rekkefølge på filnedlasting"
 
 #: plugins/downloadorder/downloadorderdialog.cpp:31
 #, kde-format
 msgid "File download order for <b>%1</b>:"
-msgstr "Rekkefølge for filnedlasting for <b>%1</b>:"
+msgstr "Rekkefølge på filnedlasting for <b>%1</b>:"
 
 #: plugins/downloadorder/downloadorderdialog.cpp:73
 #, kde-format
@@ -5383,7 +5386,7 @@ msgstr ""
 #: plugins/infowidget/availabilitychunkbar.cpp:22
 #, kde-format
 msgid "Unavailable Chunks"
-msgstr ""
+msgstr "Utilgjengelige blokker"
 
 #: plugins/infowidget/chunkdownloadmodel.cpp:199
 #, kde-format
@@ -5510,7 +5513,7 @@ msgstr "Last ned sist"
 #: plugins/infowidget/fileview.cpp:124
 #, kde-format
 msgid "Do not download"
-msgstr ""
+msgstr "Ikke last ned"
 
 #: plugins/infowidget/fileview.cpp:125
 #, kde-format

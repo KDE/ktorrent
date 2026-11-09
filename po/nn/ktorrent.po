@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:57+0000\n"
-"PO-Revision-Date: 2026-07-05 17:14+0200\n"
+"PO-Revision-Date: 2026-11-08 13:36+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 27.03.70\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -4151,20 +4151,21 @@ msgstr ""
 "Torrenten <b>%1</b> er ikkje ferdig nedlasta. Vil du sletta dei "
 "ufullstendige dataa òg?"
 
+# Tittellinja i dialogvindauget
 #: ktorrent/view/view.cpp:472
 #, kde-format
 msgid "Remove Download"
-msgstr "Fjern nedlastinga"
+msgstr "Sletting av nedlasting"
 
 #: ktorrent/view/view.cpp:473
 #, kde-format
 msgid "Delete Data"
-msgstr "Fjern data"
+msgstr "Slett dataa"
 
 #: ktorrent/view/view.cpp:474
 #, kde-format
 msgid "Keep Data"
-msgstr "Ikkje fjern data"
+msgstr "Ikkje slett dataa"
 
 #: ktorrent/view/view.cpp:500
 #, kde-format
@@ -4172,6 +4173,8 @@ msgid ""
 "You will lose all the downloaded data of the following torrents. Are you "
 "sure you want to do this?"
 msgstr ""
+"Alle nedlasta data til følgjande torrentar går tapt. Er du sikker på at du "
+"vil gjera dette?"
 
 #: ktorrent/view/view.cpp:501
 #, kde-format
