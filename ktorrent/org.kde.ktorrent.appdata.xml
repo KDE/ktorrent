@@ -1060,7 +1060,7 @@
           <li xml:lang="ka">გასწორდა შემთხვევა, როცა მონაცემთა შემოწმების მიმდინარეობის ზოლი ხტებოდა 100%-ზე, როცა აღმოაჩენდა შეცდომას, ან შემოწმება უქმდებოდა</li>
           <li xml:lang="nl">Probleem opgelost waarbij de voortgangsbalk van de gegevenscontroleur direct naar 100% sprong wanneer er een fout optrad of de controle werd geannuleerd.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a barra de progresso do verificador de dados saltava para 100% quando ocorria um erro ou a verificação era cancelada</li>
-          <li xml:lang="ru">Исправлено перескакивание индикатора выполнения проверки данных на 100 % при возникновении ошибки или отмене проверки;</li>
+          <li xml:lang="ru">Исправлено перескакивание индикатора выполнения проверки данных на 100 % при возникновении ошибки или отмене проверки;</li>
           <li xml:lang="sk">Opravené preskočenie ukazovateľa priebehu kontroly údajov na 100 %, keď nastala chyba alebo bola kontrola zrušená</li>
           <li xml:lang="sl">Odpravljena težava, pri kateri je vrstica napredka preverjanja podatkov takoj skočila na 100% ob napaki ali preklicu preverjanja</li>
           <li xml:lang="sr">Поправљена трака напретка провере података која је скакала на 100% када дође до грешке или када се провера откаже</li>
