@@ -48,7 +48,7 @@
   <name xml:lang="sr-ijekavian">К‑торент</name>
   <name xml:lang="sr-ijekavianlatin">KTorrent</name>
   <name xml:lang="sv">Ktorrent</name>
-  <name xml:lang="tr">K Torrent</name>
+  <name xml:lang="tr">KTorrent</name>
   <name xml:lang="uk">KTorrent</name>
   <name xml:lang="zh-CN">KTorrent</name>
   <name xml:lang="zh-TW">KTorrent</name>
@@ -140,7 +140,7 @@
     <p xml:lang="sr-ijekavian">К‑торент је програм из КДЕ‑а којим можете да преузимате фајлове преко протокола битторент. Омогућава покретање више торената истовремено и пружа разноврсне проширене могућности, што га чини га свеобухватним битторент клијентом.</p>
     <p xml:lang="sr-ijekavianlatin">KTorrent je program iz KDE‑a kojim možete da preuzimate fajlove preko protokola Bittorrent. Omogućava pokretanje više torenata istovremeno i pruža raznovrsne proširene mogućnosti, što ga čini ga sveobuhvatnim bittorrent klijentom.</p>
     <p xml:lang="sv">Ktorrent är ett dataflödesprogram av KDE som låter dig ladda ner filer med protokollet BitTorrent. Det möjliggör att hantera flera dataflöden samtidigt och levereras med utökade funktioner som gör det till en fullfjädrad klient för BitTorrent.</p>
-    <p xml:lang="tr">K Torrent, KDE tarafından geliştirilen, BitTorrent protokolünü kullanarak dosyaları indirmenize izin veren bir BitTorrent uygulamasıdır. Aynı anda birden fazla torrent çalıştırabilmenizi ve BitTorrent için tam özellikli bir istemci yapabilmeniz için genişletilmiş özellikler ile birlikte geliştirilmiştir.</p>
+    <p xml:lang="tr">KTorrent, KDE tarafından geliştirilen, BitTorrent protokolünü kullanarak dosyaları indirmenize izin veren bir BitTorrent uygulamasıdır. Aynı anda birden fazla torrent çalıştırabilmenizi ve BitTorrent için tam özellikli bir istemci yapabilmeniz için genişletilmiş özellikler ile birlikte geliştirilmiştir.</p>
     <p xml:lang="uk">KTorrent — програма для обміну даними торентів, створена розробниками KDE, за допомогою якої ви можете отримувати і розповсюджувати дані на основі протоколу BitTorrent. Ця програма надає вам змогу одночасно обмінюватися даними декількох торентів. Також передбачено додаткові можливості, які роблять програму повноцінною клієнтською частиною для обміну даними BitTorrent.</p>
     <p xml:lang="zh-CN">KTorrent 是 KDE 提供的 BT 下载应用。支持同时运行多个种子，并具有多种扩展特性，是一个全功能的 BT 客户端。</p>
     <p xml:lang="zh-TW">KTorrent 是來自 KDE 的 BitTorrent 應用程式，讓您透過 BitTorrent 協定下載檔案。它讓您同時執行多個 torrent，並且包含許多功能，讓它成為一個功能完整的 BitTorrent 用戶端。</p>
@@ -990,7 +990,7 @@
     <p xml:lang="sr-ijekavian">Поред уграђених функција, доступни су и разни прикључци за К‑торент.</p>
     <p xml:lang="sr-ijekavianlatin">Pored ugrađenih funkcija, dostupni su i razni priključci za KTorrent.</p>
     <p xml:lang="sv">Förutom inbyggd funktionalitet, finns några insticksprogram tillgängliga för Ktorrent.</p>
-    <p xml:lang="tr">Yerleşik işlevlere ek olarak, K Torrent için kullanılabilen bazı eklentiler de bulunmaktadır.</p>
+    <p xml:lang="tr">Yerleşik işlevlere ek olarak, KTorrent için kullanılabilen bazı eklentiler de bulunmaktadır.</p>
     <p xml:lang="uk">Окрім вбудованих функціональних можливостей, у KTorrent передбачено розширення можливостей за допомогою додатків.</p>
     <p xml:lang="zh-CN">除了一些内置的功能，KTorrent 还有一些插件可用。</p>
     <p xml:lang="zh-TW">除了內建功能以外，KTorrent 也有一些可用的外掛程式。</p>
@@ -1060,7 +1060,7 @@
           <li xml:lang="ka">გასწორდა შემთხვევა, როცა მონაცემთა შემოწმების მიმდინარეობის ზოლი ხტებოდა 100%-ზე, როცა აღმოაჩენდა შეცდომას, ან შემოწმება უქმდებოდა</li>
           <li xml:lang="nl">Probleem opgelost waarbij de voortgangsbalk van de gegevenscontroleur direct naar 100% sprong wanneer er een fout optrad of de controle werd geannuleerd.</li>
           <li xml:lang="pt-BR">Corrigido o problema em que a barra de progresso do verificador de dados saltava para 100% quando ocorria um erro ou a verificação era cancelada</li>
-          <li xml:lang="ru">Исправлено перескакивание индикатора выполнения проверки данных на 100 % при возникновении ошибки или отмене проверки;</li>
+          <li xml:lang="ru">Исправлено перескакивание индикатора выполнения проверки данных на 100 % при возникновении ошибки или отмене проверки;</li>
           <li xml:lang="sk">Opravené preskočenie ukazovateľa priebehu kontroly údajov na 100 %, keď nastala chyba alebo bola kontrola zrušená</li>
           <li xml:lang="sl">Odpravljena težava, pri kateri je vrstica napredka preverjanja podatkov takoj skočila na 100% ob napaki ali preklicu preverjanja</li>
           <li xml:lang="sr">Поправљена трака напретка провере података која је скакала на 100% када дође до грешке или када се провера откаже</li>
@@ -1093,7 +1093,7 @@
           <li xml:lang="sr-ijekavian">Додата опција у прикључак „Гашење“ за напуштање К‑торента када се торент заврши</li>
           <li xml:lang="sr-ijekavianlatin">Dodata opcija u priključak „Gašenje“ za napuštanje KTorrenta kada se torent završi</li>
           <li xml:lang="sv">Tillägg av ett alternativ i avstängningsinsticksprogrammet för att avsluta KTorrent när ett dataflöde är klart.</li>
-          <li xml:lang="tr">Bir torrent tamamlandığında, bilgisayarı kapatma eklentisinin K Torrent’ten çıkması için bir seçenek eklendi.</li>
+          <li xml:lang="tr">Bir torrent tamamlandığında, bilgisayarı kapatma eklentisinin KTorrent’ten çıkması için bir seçenek eklendi.</li>
           <li xml:lang="uk">У додатку вимикання додано пункт для завершення роботи KTorrent після завершення завантаження торентів</li>
           <li xml:lang="zh-TW">新增 torrent 下載完成後離開 KTorrent 的選項到「關機」外掛程式</li>
           <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
@@ -1189,7 +1189,7 @@
           <li xml:lang="sr-ijekavian">Поправљено погрешно рачунање броја вршњака у одговору ANNOUNCE од УДП пратиоца. Због тога је К‑торент покушавао да се повеже на непостојеће вршњаке</li>
           <li xml:lang="sr-ijekavianlatin">Popravljeno pogrešno računanje broja vršnjaka u odgovoru ANNOUNCE od UDP pratioca. Zbog toga je KTorrent pokušavao da se poveže na nepostojeće vršnjake</li>
           <li xml:lang="sv">Rättade en felaktig beräkning av antalet motparter för ANNOUNCE-svaret från en UDP-spårare. Det innebar att KTorrent försökte ansluta till icke-existerande motparter.</li>
-          <li xml:lang="tr">Bir UDP izleyicisinden gelen ANNOUNCE yanıtı için olan eş sayısının yanlış bir biçimde hesaplanması sorunu düzeltildi. Bu, K Torrent’in var olmayan eşlere bağlanmaya çalıştığı anlamına geliyordu.</li>
+          <li xml:lang="tr">Bir UDP izleyicisinden gelen ANNOUNCE yanıtı için olan eş sayısının yanlış bir biçimde hesaplanması sorunu düzeltildi. Bu, KTorrent’in var olmayan eşlere bağlanmaya çalıştığı anlamına geliyordu.</li>
           <li xml:lang="uk">Виправлено помилку в розрахунку кількості вузлів для відповіді ANNOUNCE від UDP-трекера. Через це KTorrent намагався встановити з'єднання із вузлами, яких не існує</li>
           <li xml:lang="zh-TW">修正為來自 UDP 追蹤器的 ANNOUNCE 回應計算的端點數量。這代表之前 KTorrent 會嘗試連線到不存在的端點</li>
         </ul>
@@ -1246,7 +1246,7 @@
           <li xml:lang="sr-ijekavian">Поправљен начин на који се ствара ИД вршњака у К‑торенту. Раније је 26.04.00 претварано у „-KT2640-“, а сада у „-KT260400“</li>
           <li xml:lang="sr-ijekavianlatin">Popravljen način na koji se stvara ID vršnjaka u KTorrentu. Ranije je 26.04.00 pretvarano u „-KT2640-“, a sada u „-KT260400“</li>
           <li xml:lang="sv">Rättade hur  motparts-id skapas av KTorrent. Tidigare omvandlades 26.04.00 till "-KT2640-", nu blir det "-KT260400".</li>
-          <li xml:lang="tr">K Torrent’in eş kimliğinin oluşturulma şekli düzeltildi. Daha önceden “26.04.00”, “-KT2640” olarak dönüştürülürken, artık “-KT260400” olarak işlem görüyor.</li>
+          <li xml:lang="tr">KTorrent’in eş kimliğinin oluşturulma şekli düzeltildi. Daha önceden “26.04.00”, “-KT2640” olarak dönüştürülürken, artık “-KT260400” olarak işlem görüyor.</li>
           <li xml:lang="uk">Виправлено спосіб формування ідентифікатора вузла у KTorrent. Раніше значення 26.04.00 перетворювалося на «-KT2640-», а тепер — на «-KT260400».</li>
           <li xml:lang="zh-TW">修正 KTorrent 的端點 ID 建立的方式。之前 26.04.00 會轉成 "-KT2640-"，現已修正成 "-KT260400"</li>
           <li>Fixed a bug where KTorrent would try to connect to peers with TCP even if the only use uTP setting was enabled</li>
@@ -1270,7 +1270,7 @@
           <li xml:lang="sr-ijekavian">Поправљена грешка због које је К‑торент покушавао да се повеже на вршњаке преко ТЦП‑а чак и када је била укључена поставка да се користи само µТП</li>
           <li xml:lang="sr-ijekavianlatin">Popravljena greška zbog koje je KTorrent pokušavao da se poveže na vršnjake preko TCP‑a čak i kada je bila uključena postavka da se koristi samo µTP</li>
           <li xml:lang="sv">Rättade ett fel där KTorrent försökte ansluta till motparter via TCP, även om inställningen för att endast använda uTP var aktiverad.</li>
-          <li xml:lang="tr">Yalnızca uTP kullanımı ayarı etkinken K Torrent’in eşlere TCP kullanarak bağlanmaya çalışması engellendi.</li>
+          <li xml:lang="tr">Yalnızca uTP kullanımı ayarı etkinken KTorrent’in eşlere TCP kullanarak bağlanmaya çalışması engellendi.</li>
           <li xml:lang="uk">Виправлено помилку, через яку KTorrent намагався встановити з'єднання з вузлами з використанням TCP, навіть якщо було наказано використовувати лише uTP.</li>
           <li xml:lang="zh-TW">修正即使啟用「只使用 µTP」設定 KTorrent 仍然會試著用 TCP 連線到端點的問題</li>
         </ul>
