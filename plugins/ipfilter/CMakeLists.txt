@@ -1,7 +1,5 @@
 ktorrent_add_plugin(IPFilterPlugin)
 
-find_package(KF6Archive ${KF_MIN_VERSION} REQUIRED)
-
 target_sources(IPFilterPlugin PRIVATE
     ipblocklist.cpp
     ipblockingprefpage.cpp
@@ -23,7 +21,6 @@ target_link_libraries(
     KF6::I18n
     KF6::KIOWidgets
     KF6::Notifications
-    KF6::TextWidgets
     KF6::WidgetsAddons
 )
 

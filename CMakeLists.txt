@@ -90,14 +90,14 @@ endif()
 
 find_package(KTorrent6 ${LIBKTORRENT_MIN_VERSION} CONFIG REQUIRED)
 
-find_package(KF6TextWidgets ${KF_MIN_VERSION})
-set_package_properties(KF6TextWidgets
+find_package(KF6Archive ${KF_MIN_VERSION})
+set_package_properties(KF6Archive
   PROPERTIES
   TYPE OPTIONAL
   PURPOSE "Required for KTorrent's IP Filter plugin"
 )
-if(KF6TextWidgets_FOUND)
-  set(HAVE_KF6TextWidgets 1)
+if(KF6Archive_FOUND)
+  set(HAVE_KF6Archive 1)
 endif()
 
 find_package(KF6ItemViews ${KF_MIN_VERSION})
