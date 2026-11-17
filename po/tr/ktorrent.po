@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:57+0000\n"
-"PO-Revision-Date: 2026-11-10 22:03+0300\n"
+"PO-Revision-Date: 2026-11-16 19:23+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2221,7 +2221,7 @@ msgstr "Diğer"
 #: ktorrent/pref/advancedpref.ui:220
 #, kde-format
 msgid "Preview size for audio files:"
-msgstr "Ses dosyaları için önizleme boyutu:"
+msgstr "Ses dosyaları için ön izleme boyutu:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_previewSizeAudio)
 #: ktorrent/pref/advancedpref.ui:227
@@ -2244,7 +2244,7 @@ msgstr " KB"
 #: ktorrent/pref/advancedpref.ui:243
 #, kde-format
 msgid "Preview size for video files:"
-msgstr "Video dosyaları için önizleme boyutu:"
+msgstr "Video dosyaları için ön izleme boyutu:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_previewSizeVideo)
 #: ktorrent/pref/advancedpref.ui:250
@@ -4201,7 +4201,7 @@ msgstr "Kazı"
 #: ktorrent/view/view.cpp:200
 #, kde-format
 msgid "Preview"
-msgstr "Önizleme"
+msgstr "Ön İzleme"
 
 #: ktorrent/view/view.cpp:204
 #, kde-format
@@ -5663,7 +5663,7 @@ msgstr "Bir torrentin tüm web beslemelerini görüntüler"
 #, kde-format
 msgctxt "@title:column"
 msgid "Preview"
-msgstr "Önizleme"
+msgstr "Ön İzleme"
 
 #: plugins/infowidget/iwfilelistmodel.cpp:72
 #: plugins/infowidget/iwfiletreemodel.cpp:79
@@ -6824,7 +6824,7 @@ msgstr "Bekletiliyor"
 #: plugins/mediaplayer/mediamodel.cpp:59
 #, kde-format
 msgid "<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %"
-msgstr "<b>%1</b><br/>Önizleme: %2<br/>İndirilen: %​%3"
+msgstr "<b>%1</b><br/>Ön izleme: %2<br/>İndirilen: %​%3"
 
 #: plugins/mediaplayer/mediaplayeractivity.cpp:39
 #: plugins/mediaplayer/mediaplayeractivity.cpp:56
