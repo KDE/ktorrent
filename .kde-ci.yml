@@ -14,7 +14,6 @@ Dependencies:
     'frameworks/kcmutils': '@latest-kf6'
     'frameworks/kxmlgui': '@latest-kf6'
     'frameworks/kiconthemes': '@latest-kf6'
-    'frameworks/ktextwidgets': '@latest-kf6'
     'frameworks/kparts': '@latest-kf6'
     'frameworks/kitemviews': '@latest-kf6'
     'frameworks/kplotting': '@latest-kf6'
