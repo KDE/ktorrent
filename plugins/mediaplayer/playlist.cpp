@@ -67,7 +67,7 @@ void PlayList::removeFile(const MediaFileRef &file)
 
 MediaFileRef PlayList::fileForIndex(const QModelIndex &index) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= static_cast<qsizetype>(files.size())) {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
         return MediaFileRef(QString());
     } else {
         return files.at(index.row()).first;
@@ -105,7 +105,11 @@ QVariant PlayList::headerData(int section, Qt::Orientation orientation, int role
 
 QVariant PlayList::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::UserRole && role != Qt::DecorationRole)) {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
+        return QVariant{};
+    }
+
+    if (role != Qt::DisplayRole && role != Qt::UserRole && role != Qt::DecorationRole) {
         return QVariant();
     }
 
