@@ -53,7 +53,7 @@ void PlayList::removeFile(const MediaFileRef &file)
     int row = 0;
     bool found = false;
     for (const PlayListItem &item : std::as_const(files)) {
-        if (item.first == file) {
+        if (item.file_ref == file) {
             found = true;
             break;
         }
@@ -70,7 +70,7 @@ MediaFileRef PlayList::fileForIndex(const QModelIndex &index) const
     if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
         return MediaFileRef(QString());
     } else {
-        return files.at(index.row()).first;
+        return files.at(index.row()).file_ref;
     }
 }
 
@@ -114,12 +114,12 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
     }
 
     const PlayListItem &item = files.at(index.row());
-    const MediaFileRef &file = item.first;
-    const TagLib::FileRef *ref = item.second.get();
+    const MediaFileRef &file = item.file_ref;
+    const TagLib::FileRef *ref = item.tag_lib_ref.get();
     if (!ref) {
         QByteArray name = QFile::encodeName(file.path());
-        files[index.row()].second = std::make_unique<TagLib::FileRef>(name.data(), true, TagLib::AudioProperties::Fast);
-        ref = item.second.get();
+        files[index.row()].tag_lib_ref = std::make_unique<TagLib::FileRef>(name.data(), true, TagLib::AudioProperties::Fast);
+        ref = item.tag_lib_ref.get();
     }
 
     const Column column{index.column()};
@@ -233,7 +233,7 @@ QMimeData *PlayList::mimeData(const QModelIndexList &indexes) const
     QList<QUrl> urls;
     for (const QModelIndex &index : indexes) {
         if (index.isValid() && Column{index.column()} == Column::TITLE) {
-            urls << QUrl::fromLocalFile(files.at(index.row()).first.path());
+            urls << QUrl::fromLocalFile(files.at(index.row()).file_ref.path());
             dragged_rows.append(index.row());
         }
     }
@@ -274,7 +274,10 @@ bool PlayList::dropMimeData(const QMimeData *data, Qt::DropAction action, int ro
 
     beginInsertRows({}, row, row + urls.size() - 1);
     for (const QUrl &url : urls) {
-        PlayListItem item = qMakePair(collection->find(url.toLocalFile()), nullptr);
+        PlayListItem item{
+            .file_ref = collection->find(url.toLocalFile()),
+            .tag_lib_ref = nullptr,
+        };
         files.insert(files.cbegin() + row, std::move(item));
         ++row;
     }
@@ -304,7 +307,7 @@ void PlayList::save(const QString &file)
 
     QTextStream out(&fptr);
     for (const PlayListItem &f : std::as_const(files)) {
-        out << f.first.path() << Qt::endl;
+        out << f.file_ref.path() << Qt::endl;
     }
 }
 

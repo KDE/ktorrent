@@ -68,7 +68,11 @@ private:
     };
     static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
 
-    typedef QPair<MediaFileRef, std::unique_ptr<TagLib::FileRef>> PlayListItem;
+    struct PlayListItem {
+        MediaFileRef file_ref;
+        std::unique_ptr<TagLib::FileRef> tag_lib_ref;
+    };
+
     mutable std::vector<PlayListItem> files;
     mutable QList<int> dragged_rows;
     MediaFileCollection *collection;
