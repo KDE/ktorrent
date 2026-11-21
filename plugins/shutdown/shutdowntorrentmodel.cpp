@@ -57,7 +57,7 @@ void ShutdownTorrentModel::torrentRemoved(bt::TorrentInterface *tc)
 
 QVariant ShutdownTorrentModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= conds.count()) {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
         return QVariant();
     }
 
@@ -103,7 +103,7 @@ int ShutdownTorrentModel::rowCount(const QModelIndex &parent) const
 
 bool ShutdownTorrentModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= conds.count()) {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
         return false;
     }
 
@@ -157,7 +157,7 @@ bool ShutdownTorrentModel::removeRows(int row, int count, const QModelIndex &par
 
 Qt::ItemFlags ShutdownTorrentModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= conds.count()) {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
         return {};
     }
 
