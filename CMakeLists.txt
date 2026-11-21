@@ -195,14 +195,7 @@ include(CheckTypeSize) #XFS
 kde_enable_exceptions()
 
 add_definitions(
-  -DQT_USE_QSTRINGBUILDER
-  -DQT_NO_CAST_TO_ASCII
-  -DQT_NO_CAST_FROM_ASCII
-  -DQT_STRICT_ITERATORS
-  -DQT_NO_URL_CAST_FROM_STRING
-  -DQT_NO_CAST_FROM_BYTEARRAY
   -DQT_NO_CAST_TO_BYTEARRAY
-  -DQT_NO_KEYWORDS
   -DQT_USE_FAST_OPERATOR_PLUS
 )
 ecm_set_disabled_deprecation_versions(QT 6.11.0  KF 6.28.0)
