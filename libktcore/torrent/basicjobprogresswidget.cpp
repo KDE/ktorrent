@@ -30,7 +30,7 @@ BasicJobProgressWidget::~BasicJobProgressWidget()
 {
 }
 
-void BasicJobProgressWidget::description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2)
+void BasicJobProgressWidget::description(const QString &title, const std::pair<QString, QString> &field1, const std::pair<QString, QString> &field2)
 {
     job_title->setText(title);
     job_description->setText(i18n("%1: %2<br/>%3: %4", field1.first, field1.second, field2.first, field2.second));

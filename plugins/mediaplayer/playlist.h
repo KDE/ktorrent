@@ -6,6 +6,8 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 
+#include <utility>
+
 #include <QAbstractItemModel>
 #include <QStringList>
 

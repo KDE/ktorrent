@@ -6,6 +6,8 @@
 #ifndef KT_SCANEXTENDER_H
 #define KT_SCANEXTENDER_H
 
+#include <utility>
+
 #include <QTimer>
 #include <QWidget>
 
@@ -24,7 +26,7 @@ public:
     ScanExtender(bt::Job *job, QWidget *parent);
     ~ScanExtender() override;
 
-    void description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2) override;
+    void description(const QString &title, const std::pair<QString, QString> &field1, const std::pair<QString, QString> &field2) override;
     void infoMessage(const QString &message) override;
     void warning(const QString &message) override;
     void percent(long unsigned int percent) override;

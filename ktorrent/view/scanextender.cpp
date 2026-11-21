@@ -49,7 +49,7 @@ ScanExtender::~ScanExtender()
 {
 }
 
-void ScanExtender::description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2)
+void ScanExtender::description(const QString &title, const std::pair<QString, QString> &field1, const std::pair<QString, QString> &field2)
 {
     Q_UNUSED(title);
     chunks_failed->setText(field1.first);

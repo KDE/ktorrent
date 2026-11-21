@@ -6,6 +6,8 @@
 #ifndef KT_JOBPROGRESSWIDGET_H
 #define KT_JOBPROGRESSWIDGET_H
 
+#include <utility>
+
 #include <KJob>
 #include <QWidget>
 
@@ -26,7 +28,7 @@ public:
     ~JobProgressWidget() override;
 
     /// Update the description
-    virtual void description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2) = 0;
+    virtual void description(const QString &title, const std::pair<QString, QString> &field1, const std::pair<QString, QString> &field2) = 0;
 
     /// Show an informational message
     virtual void infoMessage(const QString &message) = 0;

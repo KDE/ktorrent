@@ -6,6 +6,8 @@
 #ifndef KT_BASICJOBPROGRESSWIDGET_H
 #define KT_BASICJOBPROGRESSWIDGET_H
 
+#include <utility>
+
 #include "ui_basicjobprogresswidget.h"
 #include <torrent/jobprogresswidget.h>
 
@@ -21,7 +23,7 @@ public:
     BasicJobProgressWidget(bt::Job *job, QWidget *parent);
     ~BasicJobProgressWidget() override;
 
-    void description(const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2) override;
+    void description(const QString &title, const std::pair<QString, QString> &field1, const std::pair<QString, QString> &field2) override;
     void infoMessage(const QString &message) override;
     void warning(const QString &message) override;
     void totalAmount(KJob::Unit unit, qulonglong amount) override;

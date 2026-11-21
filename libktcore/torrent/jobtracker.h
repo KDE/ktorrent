@@ -6,6 +6,8 @@
 #ifndef KT_JOBTRACKER_H
 #define KT_JOBTRACKER_H
 
+#include <utility>
+
 #include <KJobTrackerInterface>
 
 #include <ktcore_export.h>
@@ -41,7 +43,7 @@ protected:
     void finished(KJob *job) override;
     void suspended(KJob *job) override;
     void resumed(KJob *job) override;
-    void description(KJob *job, const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2) override;
+    void description(KJob *job, const QString &title, const std::pair<QString, QString> &field1, const std::pair<QString, QString> &field2) override;
     void infoMessage(KJob *job, const QString &message) override;
     void warning(KJob *job, const QString &message) override;
     void totalAmount(KJob *job, KJob::Unit unit, qulonglong amount) override;

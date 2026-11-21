@@ -64,7 +64,7 @@ void JobTracker::resumed(KJob *job)
     KJobTrackerInterface::resumed(job);
 }
 
-void JobTracker::description(KJob *job, const QString &title, const QPair<QString, QString> &field1, const QPair<QString, QString> &field2)
+void JobTracker::description(KJob *job, const QString &title, const std::pair<QString, QString> &field1, const std::pair<QString, QString> &field2)
 {
     bt::Job *j = dynamic_cast<bt::Job *>(job);
     if (!j) {
