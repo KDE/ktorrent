@@ -312,14 +312,22 @@ void PlayList::load(const QString &file)
         return;
     }
 
-    beginResetModel();
     QTextStream in(&fptr);
+    std::vector<PlayListItem> new_files;
     while (!in.atEnd()) {
         QString file = in.readLine();
         auto ref = std::make_unique<TagLib::FileRef>(QFile::encodeName(file).data(), true, TagLib::AudioProperties::Fast);
-        files.emplace_back(collection->find(file), std::move(ref));
+        new_files.emplace_back(collection->find(file), std::move(ref));
     }
-    endResetModel();
+
+    if (!new_files.empty()) {
+        files.reserve(files.size() + new_files.size());
+        beginInsertRows({}, rowCount(), rowCount() + new_files.size() - 1);
+        for (auto &file : new_files) {
+            files.push_back(std::move(file));
+        }
+        endInsertRows();
+    }
 }
 
 void PlayList::onPlaying(const kt::MediaFileRef &file)
