@@ -6,6 +6,7 @@
 #ifndef KT_SCANTHREAD_H
 #define KT_SCANTHREAD_H
 
+#include <QMap>
 #include <QMutex>
 #include <QStringList>
 #include <QThread>

@@ -8,6 +8,7 @@
 
 #include <QActionGroup>
 #include <QList>
+#include <QMap>
 #include <QSplitter>
 #include <QStackedWidget>
 #include <QToolBar>

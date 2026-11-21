@@ -6,6 +6,8 @@
 #ifndef MAGNETMANAGER_H
 #define MAGNETMANAGER_H
 
+#include <QSet>
+
 #include <bcodec/bencoder.h>
 #include <interfaces/coreinterface.h>
 #include <magnet/magnetdownloader.h>

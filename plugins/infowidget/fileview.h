@@ -6,8 +6,10 @@
 #ifndef KTFILEVIEW_H
 #define KTFILEVIEW_H
 
-#include <KSharedConfig>
+#include <QMap>
 #include <QTreeView>
+
+#include <KSharedConfig>
 
 #include <interfaces/torrentinterface.h>
 #include <util/constants.h>
