@@ -70,10 +70,10 @@ private:
 
     struct PlayListItem {
         MediaFileRef file_ref;
-        std::unique_ptr<TagLib::FileRef> tag_lib_ref;
+        mutable std::unique_ptr<TagLib::FileRef> tag_lib_ref;
     };
 
-    mutable std::vector<PlayListItem> files;
+    std::vector<PlayListItem> files;
     mutable QList<int> dragged_rows;
     MediaFileCollection *collection;
     MediaPlayer *player;
