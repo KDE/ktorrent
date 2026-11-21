@@ -17,7 +17,6 @@ class TorrentInterface;
 
 namespace kt
 {
-class QueueManager;
 class CoreInterface;
 class ShutdownRuleSet;
 
@@ -78,7 +77,6 @@ private:
         Trigger trigger;
     };
 
-    QueueManager *qman;
     QList<TriggerItem> conds;
 };
 

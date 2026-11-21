@@ -14,8 +14,8 @@ namespace kt
 {
 ShutdownTorrentModel::ShutdownTorrentModel(CoreInterface *core, QObject *parent)
     : QAbstractTableModel(parent)
-    , qman(core->getQueueManager())
 {
+    const auto qman = core->getQueueManager();
     for (kt::QueueManager::iterator i = qman->begin(); i != qman->end(); i++) {
         TriggerItem cond;
         cond.checked = false;
