@@ -246,7 +246,7 @@ int main(int argc, char **argv)
                 QDir::setCurrent(oldCurrent);
             }
         };
-        QObject::connect(&dbusService, &KDBusService::activateRequested, handleCmdLine);
+        QObject::connect(&dbusService, &KDBusService::activateRequested, &widget, handleCmdLine);
         QObject::connect(&dbusService, &KDBusService::activateRequested, &widget, [&widget] {
             if (!widget.isVisible()) {
                 widget.show();

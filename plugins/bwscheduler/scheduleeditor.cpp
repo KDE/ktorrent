@@ -60,7 +60,7 @@ QAction *ScheduleEditor::addAction(const QString &icon, const QString &text, con
 {
     KActionCollection *ac = part()->actionCollection();
     QAction *a = new QAction(QIcon::fromTheme(icon), text, this);
-    connect(a, &QAction::triggered, [this, slot](bool) {
+    connect(a, &QAction::triggered, this, [this, slot](bool) {
         (this->*slot)();
     });
     ac->addAction(name, a);

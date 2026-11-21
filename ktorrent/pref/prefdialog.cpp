@@ -25,7 +25,7 @@ PrefDialog::PrefDialog(QWidget *parent, Core *core)
     : KConfigDialog(parent, QStringLiteral("settings"), Settings::self())
 {
     setFaceType(KPageDialog::List);
-    connect(this, &PrefDialog::settingsChanged, [core](const QString &) {
+    connect(this, &PrefDialog::settingsChanged, core, [core](const QString &) {
         core->applySettings();
     });
     addPrefPage(new GeneralPref(this));

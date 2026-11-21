@@ -37,19 +37,19 @@ ScanForLostFilesWidget::ScanForLostFilesWidget(ScanForLostFilesPlugin *plugin, Q
 
     m_proxy = new FSProxyModel(this);
 
-    connect(cbShowAllFiles, &QCheckBox::checkStateChanged, [this](Qt::CheckState val) {
+    connect(cbShowAllFiles, &QCheckBox::checkStateChanged, this, [this](Qt::CheckState val) {
         m_proxy->setFiltered(!val);
         setupModels();
     });
 
-    connect(actionCopy_to_clipboard, &QAction::triggered, [this]() {
+    connect(actionCopy_to_clipboard, &QAction::triggered, this, [this]() {
         QModelIndex m = treeView->currentIndex();
         m = m_proxy->mapToSource(m);
         const QString fname = m_model->fileName(m);
         QGuiApplication::clipboard()->setText(fname);
     });
 
-    connect(actionOpen_file, &QAction::triggered, [this]() {
+    connect(actionOpen_file, &QAction::triggered, this, [this]() {
         QModelIndex index = treeView->currentIndex();
         auto job = new KIO::OpenUrlJob(QUrl::fromLocalFile(m_model->filePath(m_proxy->mapToSource(index))));
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));

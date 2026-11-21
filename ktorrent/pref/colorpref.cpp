@@ -15,7 +15,7 @@ ColorPref::ColorPref(QWidget *parent)
 {
     setupUi(this);
 
-    connect(btnResetColors, &QPushButton::clicked, [=]() {
+    connect(btnResetColors, &QPushButton::clicked, this, [=]() {
         // set default values for current pref page only
         kcfg_okTorrentColor->setColor(QColor(40, 205, 40));
         kcfg_stalledTorrentColor->setColor(QColor(255, 174, 0));
