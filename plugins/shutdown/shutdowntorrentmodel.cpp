@@ -148,9 +148,7 @@ bool ShutdownTorrentModel::removeRows(int row, int count, const QModelIndex &par
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
-    for (int i = 0; i < count; i++) {
-        conds.takeAt(row);
-    }
+    conds.remove(row, count);
     endRemoveRows();
     return true;
 }
