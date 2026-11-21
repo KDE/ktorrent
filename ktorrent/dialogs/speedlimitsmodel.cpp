@@ -41,7 +41,6 @@ SpeedLimitsModel::SpeedLimitsModel(Core *core, QObject *parent)
 
 void SpeedLimitsModel::onTorrentAdded(bt::TorrentInterface *tc)
 {
-    beginInsertRows({}, rowCount({}), rowCount({}));
     Limits lim;
     lim.tc = tc;
     tc->getTrafficLimits(lim.up_original, lim.down_original);
@@ -50,6 +49,8 @@ void SpeedLimitsModel::onTorrentAdded(bt::TorrentInterface *tc)
     tc->getAssuredSpeeds(lim.assured_up_original, lim.assured_down_original);
     lim.assured_down = lim.assured_down_original;
     lim.assured_up = lim.assured_up_original;
+
+    beginInsertRows({}, rowCount({}), rowCount({}));
     limits.push_back(lim);
     endInsertRows();
 }
