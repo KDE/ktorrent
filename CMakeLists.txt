@@ -194,10 +194,6 @@ include(CheckTypeSize) #XFS
 # according to http://www.cmake.org/pipermail/cmake/2008-June/022381.html
 kde_enable_exceptions()
 
-add_definitions(
-  -DQT_NO_CAST_TO_BYTEARRAY
-  -DQT_USE_FAST_OPERATOR_PLUS
-)
 ecm_set_disabled_deprecation_versions(QT 6.11.0  KF 6.28.0)
 
 set (KTORRENT_DBUS_XML_DIR ${CMAKE_SOURCE_DIR}/dbus_xml)
