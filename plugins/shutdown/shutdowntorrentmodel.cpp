@@ -38,8 +38,9 @@ void ShutdownTorrentModel::torrentAdded(bt::TorrentInterface *tc)
     cond.checked = false;
     cond.tc = tc;
     cond.trigger = DOWNLOADING_COMPLETED;
+    beginInsertRows({}, rowCount(), rowCount());
     conds.append(cond);
-    insertRow(conds.count() - 1);
+    endInsertRows();
 }
 
 void ShutdownTorrentModel::torrentRemoved(bt::TorrentInterface *tc)
@@ -141,14 +142,6 @@ QVariant ShutdownTorrentModel::headerData(int section, Qt::Orientation orientati
     default:
         return QVariant();
     }
-}
-
-bool ShutdownTorrentModel::insertRows(int row, int count, const QModelIndex &parent)
-{
-    Q_UNUSED(parent);
-    beginInsertRows(QModelIndex(), row, row + count - 1);
-    endInsertRows();
-    return true;
 }
 
 bool ShutdownTorrentModel::removeRows(int row, int count, const QModelIndex &parent)
