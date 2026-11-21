@@ -47,10 +47,10 @@ void SpeedLimitsModel::onTorrentAdded(bt::TorrentInterface *tc)
     tc->getTrafficLimits(lim.up_original, lim.down_original);
     lim.down = lim.down_original;
     lim.up = lim.up_original;
-    limits.push_back(lim);
     tc->getAssuredSpeeds(lim.assured_up_original, lim.assured_down_original);
     lim.assured_down = lim.assured_down_original;
     lim.assured_up = lim.assured_up_original;
+    limits.push_back(lim);
     endInsertRows();
 }
 
