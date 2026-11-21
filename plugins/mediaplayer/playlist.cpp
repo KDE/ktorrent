@@ -41,10 +41,10 @@ PlayList::~PlayList()
 void PlayList::addFile(const MediaFileRef &file)
 {
     QByteArray name = QFile::encodeName(file.path());
-    TagLib::FileRef *ref = new TagLib::FileRef(name.data(), true, TagLib::AudioProperties::Fast);
+    auto ref = std::make_unique<TagLib::FileRef>(name.data(), true, TagLib::AudioProperties::Fast);
 
     beginInsertRows({}, rowCount(), rowCount());
-    files.append(qMakePair(file, ref));
+    files.emplace_back(file, std::move(ref));
     endInsertRows();
 }
 
@@ -67,7 +67,7 @@ void PlayList::removeFile(const MediaFileRef &file)
 
 MediaFileRef PlayList::fileForIndex(const QModelIndex &index) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= files.count()) {
+    if (!index.isValid() || index.row() < 0 || index.row() >= static_cast<qsizetype>(files.size())) {
         return MediaFileRef(QString());
     } else {
         return files.at(index.row()).first;
@@ -111,11 +111,11 @@ QVariant PlayList::data(const QModelIndex &index, int role) const
 
     const PlayListItem &item = files.at(index.row());
     const MediaFileRef &file = item.first;
-    const TagLib::FileRef *ref = item.second;
+    const TagLib::FileRef *ref = item.second.get();
     if (!ref) {
         QByteArray name = QFile::encodeName(file.path());
-        files[index.row()].second = new TagLib::FileRef(name.data(), true, TagLib::AudioProperties::Fast);
-        ref = item.second;
+        files[index.row()].second = std::make_unique<TagLib::FileRef>(name.data(), true, TagLib::AudioProperties::Fast);
+        ref = item.second.get();
     }
 
     const Column column{index.column()};
@@ -181,7 +181,7 @@ int PlayList::columnCount(const QModelIndex &parent) const
 
 int PlayList::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? 0 : files.count();
+    return parent.isValid() ? 0 : files.size();
 }
 
 QModelIndex PlayList::parent(const QModelIndex &child) const
@@ -270,8 +270,8 @@ bool PlayList::dropMimeData(const QMimeData *data, Qt::DropAction action, int ro
 
     beginInsertRows({}, row, row + urls.size() - 1);
     for (const QUrl &url : urls) {
-        PlayListItem item = qMakePair(collection->find(url.toLocalFile()), (TagLib::FileRef *)nullptr);
-        files.insert(row, item);
+        PlayListItem item = qMakePair(collection->find(url.toLocalFile()), nullptr);
+        files.insert(files.cbegin() + row, std::move(item));
         ++row;
     }
     endInsertRows();
@@ -285,9 +285,7 @@ bool PlayList::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     beginRemoveRows(QModelIndex(), row, row + count - 1);
-    for (int i = 0; i < count; i++) {
-        files.removeAt(i + row);
-    }
+    files.erase(files.cbegin() + row, files.cbegin() + row + count - 1);
     endRemoveRows();
     return true;
 }
@@ -318,8 +316,8 @@ void PlayList::load(const QString &file)
     QTextStream in(&fptr);
     while (!in.atEnd()) {
         QString file = in.readLine();
-        TagLib::FileRef *ref = new TagLib::FileRef(QFile::encodeName(file).data(), true, TagLib::AudioProperties::Fast);
-        files.append(qMakePair(collection->find(file), ref));
+        auto ref = std::make_unique<TagLib::FileRef>(QFile::encodeName(file).data(), true, TagLib::AudioProperties::Fast);
+        files.emplace_back(collection->find(file), std::move(ref));
     }
     endResetModel();
 }
@@ -327,7 +325,7 @@ void PlayList::load(const QString &file)
 void PlayList::onPlaying(const kt::MediaFileRef &file)
 {
     Q_UNUSED(file);
-    Q_EMIT dataChanged(index(0, 0), index(files.count() - 1, 0));
+    Q_EMIT dataChanged(index(0, 0), index(files.size() - 1, 0));
 }
 
 }

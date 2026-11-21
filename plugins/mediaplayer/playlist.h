@@ -6,7 +6,8 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 
-#include <utility>
+#include <memory>
+#include <vector>
 
 #include <QAbstractItemModel>
 #include <QStringList>
@@ -67,8 +68,8 @@ private:
     };
     static constexpr auto NUM_COLUMNS = static_cast<int>(Column::_NUMBER_OF_COLUMNS);
 
-    typedef QPair<MediaFileRef, TagLib::FileRef *> PlayListItem;
-    mutable QList<PlayListItem> files;
+    typedef QPair<MediaFileRef, std::unique_ptr<TagLib::FileRef>> PlayListItem;
+    mutable std::vector<PlayListItem> files;
     mutable QList<int> dragged_rows;
     MediaFileCollection *collection;
     MediaPlayer *player;
