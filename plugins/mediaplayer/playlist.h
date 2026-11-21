@@ -47,7 +47,6 @@ public:
     QMimeData *mimeData(const QModelIndexList &indexes) const override;
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
     bool removeRows(int row, int count, const QModelIndex &parent) override;
-    bool insertRows(int row, int count, const QModelIndex &parent) override;
 
 private Q_SLOTS:
     void onPlaying(const MediaFileRef &file);
