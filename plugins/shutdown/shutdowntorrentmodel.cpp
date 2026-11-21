@@ -97,7 +97,7 @@ int ShutdownTorrentModel::columnCount(const QModelIndex &parent) const
 
 int ShutdownTorrentModel::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? 0 : qman->count();
+    return parent.isValid() ? 0 : conds.count();
 }
 
 bool ShutdownTorrentModel::setData(const QModelIndex &index, const QVariant &value, int role)
