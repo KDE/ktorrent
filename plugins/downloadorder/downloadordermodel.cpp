@@ -98,7 +98,7 @@ Qt::ItemFlags DownloadOrderModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractListModel::flags(index);
 
-    if (!checkIndex(index, CheckIndexOption::IndexIsValid | CheckIndexOption::ParentIsInvalid)) {
+    if (index.isValid()) {
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
     } else {
         return Qt::ItemIsDropEnabled | defaultFlags;
