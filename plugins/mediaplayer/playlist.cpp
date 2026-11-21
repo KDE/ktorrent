@@ -42,8 +42,10 @@ void PlayList::addFile(const MediaFileRef &file)
 {
     QByteArray name = QFile::encodeName(file.path());
     TagLib::FileRef *ref = new TagLib::FileRef(name.data(), true, TagLib::AudioProperties::Fast);
+
+    beginInsertRows({}, rowCount(), rowCount());
     files.append(qMakePair(file, ref));
-    insertRow(files.count() - 1);
+    endInsertRows();
 }
 
 void PlayList::removeFile(const MediaFileRef &file)
@@ -266,21 +268,16 @@ bool PlayList::dropMimeData(const QMimeData *data, Qt::DropAction action, int ro
 
     row -= nr;
 
+    beginInsertRows({}, row, row + urls.size() - 1);
     for (const QUrl &url : urls) {
         PlayListItem item = qMakePair(collection->find(url.toLocalFile()), (TagLib::FileRef *)nullptr);
         files.insert(row, item);
+        ++row;
     }
-    insertRows(row, urls.count(), QModelIndex());
+    endInsertRows();
+
     dragged_rows.clear();
     Q_EMIT itemsDropped();
-    return true;
-}
-
-bool PlayList::insertRows(int row, int count, const QModelIndex &parent)
-{
-    Q_UNUSED(parent);
-    beginInsertRows(QModelIndex(), row, row + count - 1);
-    endInsertRows();
     return true;
 }
 
