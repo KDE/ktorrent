@@ -1045,6 +1045,7 @@
           <li xml:lang="sv">Rättade en krasch när insticksprogrammet Sök katalog inaktiverades</li>
           <li xml:lang="tr">Klasör Tara eklentisi devre dışı bırakılırken oluşan bir çökme düzeltildi.</li>
           <li xml:lang="uk">Усунено аварійне завершення при вимикання додатка сканування теки</li>
+          <li xml:lang="zh-CN">修复了禁用扫描文件夹插件时导致的崩溃问题</li>
           <li xml:lang="zh-TW">修正停用「掃描資料夾」外掛程式時會發生崩潰的問題</li>
           <li>Fixed the data checker progress bar skipping to 100% when an error occurred or the checker was cancelled</li>
           <li xml:lang="ar">أُصلح شريط تقدم مدقق البيانات الذي كان يقفز إلى 100% عند حدوث خطأ أو إلغاء المدقق</li>
@@ -1070,6 +1071,7 @@
           <li xml:lang="sv">Rättade att förloppsindikatorn för datakontrollen hoppade till 100 % när ett fel uppstod eller kontrollen avbröts.</li>
           <li xml:lang="tr">Bir hata oluştuğunda veya denetçi iptal edildiğinde veri denetleyicisi ilerleme çubuğunun %100’e atlaması onarıldı.</li>
           <li xml:lang="uk">Виправлено проблему, через яку індикатор виконання перевірки даних миттєво переходив до 100% у разі виникнення помилки або скасування перевірки</li>
+          <li xml:lang="zh-CN">修复了数据检查器在发生错误或检查被取消时，进度条直接跳转到 100% 的问题</li>
           <li xml:lang="zh-TW">修正資料檢查進度條在發生問題或檢查取消時會跳到 100% 的問題</li>
           <li>Added an option to the Shutdown plugin to quit KTorrent when a torrent is completed</li>
           <li xml:lang="ar">أُضيف خيار إلى ملحق الإغلاق لإنهاء كيدي تورنت عند اكتمال التورنت</li>
@@ -1095,6 +1097,7 @@
           <li xml:lang="sv">Tillägg av ett alternativ i avstängningsinsticksprogrammet för att avsluta KTorrent när ett dataflöde är klart.</li>
           <li xml:lang="tr">Bir torrent tamamlandığında, bilgisayarı kapatma eklentisinin KTorrent’ten çıkması için bir seçenek eklendi.</li>
           <li xml:lang="uk">У додатку вимикання додано пункт для завершення роботи KTorrent після завершення завантаження торентів</li>
+          <li xml:lang="zh-CN">在关机插件中添加了一个选项，可在 torrent 下载完成后退出 KTorrent</li>
           <li xml:lang="zh-TW">新增 torrent 下載完成後離開 KTorrent 的選項到「關機」外掛程式</li>
           <li>Fixed calculating the stalled time of a torrent. This fixes a bug where the torrent queue would randomly shuffle if the "Decrease priority of torrents which are stalled for more than x minutes" option was enabled.</li>
           <li xml:lang="ar">أُصلح حساب وقت تعطل التورنت. هذا يصلح علة حيث كان صف التورنتات يُعاد ترتيبه عشوائيا إذا كان خيار "تقليل أولوية التورنتات المتعطلة لأكثر من x دقيقة" ممكنا.</li>
@@ -1119,6 +1122,7 @@
           <li xml:lang="sv">Rättade beräkningen av avstannad tid för dataflöden. Det löser ett fel där kön för dataflöden slumpmässigt kastades om ifall alternativet ”Minska prioritet för dataflöden som är avstannade längre än x minuter” var aktiverat.</li>
           <li xml:lang="tr">Bir torrentin duraksama süresinin hesaplanması onarıldı. Bu, “Şundan daha çok duraklayan torrentlerin önceliğini düşür” seçeneği etkinken torrent kuyruğunun rastgele biçimde karılmasına neden olan bir hatayı düzeltir.</li>
           <li xml:lang="uk">Виправлено розрахунок часу простою торента. Це усуває помилку, через яку черга торентів випадковим чином перемішувалася, якщо було активовано пункт «Знижувати пріоритет торентів, які призупинено на понад x хвилин».</li>
+          <li xml:lang="zh-CN">修复了计算种子停滞时间的问题。此修复解决了当启用“降低停滞超过 x 分钟的种子优先级”选项时，种子队列会随机打乱的错误。</li>
           <li xml:lang="zh-TW">修正 torrent 停滯時間的計算。這修正了啟用「將停滯超過一段時間的 torrent 降低優先權」選項時 torrent 佇列有的時候會隨機打亂的問題。</li>
           <li>Fixed the peer country flags not being displayed correctly in the Information Widget plugin</li>
           <li xml:lang="ar">أُصلحت أعلام بلدان الأنداد التي لم تكن تُعرض بشكل صحيح في ملحق أداة المعلومات</li>
@@ -1143,6 +1147,7 @@
           <li xml:lang="sv">Rättade att landsflaggor inte visades korrekt i insticksprogrammet Informationskomponent</li>
           <li xml:lang="tr">Bilgi araç takımında eşlerin bulundukları ülkelerin bayraklarının görüntülenmemesi sorunu düzeltildi.</li>
           <li xml:lang="uk">Виправлено показ прапорців країн вузлів належним чином у додатку віджета відомостей</li>
+          <li xml:lang="zh-CN">修复了信息小部件插件中对等国家旗帜显示不正确的问题</li>
           <li xml:lang="zh-TW">修正端點國家旗幟在資訊元件外掛程式當中無法正確顯示的問題</li>
           <li>Improved the efficiency of parsing .torrent files by avoiding lots of memory allocations</li>
           <li xml:lang="ar">حُسنت كفاءة تحليل ملفات .torrent بتجنب الكثير من تخصيصات الذاكرة</li>
@@ -1167,6 +1172,7 @@
           <li xml:lang="sv">Förbättrade effektiviteten vid tolkning av .torrent-filer genom att undvika ett stort antal minnesallokeringar</li>
           <li xml:lang="tr">Birçok bellek ayrılmasından kaçınılarak .torrent dosyalarının ayrıştırılması daha da efektif hâle getirildi.</li>
           <li xml:lang="uk">Підвищено ефективність обробки .torrent-файлів завдяки уникненню численних операцій отримання об'ємів пам'яті</li>
+          <li xml:lang="zh-CN">通过避免大量内存分配，提高了解析 .torrent 文件的效率</li>
           <li xml:lang="zh-TW">改善剖析 .torrent 檔案的效能，避免進行許多不必要的記憶體配置</li>
           <li>Fixed an incorrect calculation of number of peers for the ANNOUNCE response from a UDP tracker. This meant KTorrent was attempting to connect to non-existant peers</li>
           <li xml:lang="ar">أُصلح حساب غير صحيح لعدد الأنداد في استجابة ANNOUNCE من متتبع UDP. هذا يعني أن كيدي تورنت كان يحاول الاتصال بأنداد غير موجودة</li>
@@ -1191,6 +1197,7 @@
           <li xml:lang="sv">Rättade en felaktig beräkning av antalet motparter för ANNOUNCE-svaret från en UDP-spårare. Det innebar att KTorrent försökte ansluta till icke-existerande motparter.</li>
           <li xml:lang="tr">Bir UDP izleyicisinden gelen ANNOUNCE yanıtı için olan eş sayısının yanlış bir biçimde hesaplanması sorunu düzeltildi. Bu, KTorrent’in var olmayan eşlere bağlanmaya çalıştığı anlamına geliyordu.</li>
           <li xml:lang="uk">Виправлено помилку в розрахунку кількості вузлів для відповіді ANNOUNCE від UDP-трекера. Через це KTorrent намагався встановити з'єднання із вузлами, яких не існує</li>
+          <li xml:lang="zh-CN">修复了 UDP tracker 返回 ANNOUNCE 响应时对对等节点数量的错误计算问题。此前，KTorrent 会尝试连接不存在的对等节点。</li>
           <li xml:lang="zh-TW">修正為來自 UDP 追蹤器的 ANNOUNCE 回應計算的端點數量。這代表之前 KTorrent 會嘗試連線到不存在的端點</li>
         </ul>
       </description>
@@ -1224,6 +1231,7 @@
           <li xml:lang="sv">Rättade filter för olika loggningsnivåer i insticksprogrammet Loggvisare.</li>
           <li xml:lang="tr">Günlük Görüntüleyicisi eklentisindeki farklı günlük düzeyleri için süzgeçler onarıldı.</li>
           <li xml:lang="uk">Виправлено фільтри для різних рівнів журналювання у додатку перегляду журналу</li>
+          <li xml:lang="zh-CN">修复了在日志查看器插件中不同日志级别的过滤</li>
           <li xml:lang="zh-TW">修正紀錄檢視器外掛程式當中的紀錄等級過濾器</li>
           <li>Fixed the way KTorrent's peer ID is created. Previously 26.04.00 was converted to "-KT2640-", now it is "-KT260400"</li>
           <li xml:lang="ar">أُصلحت طريقة إنشاء معرف الند لكيدي تورنت. سابقا كان 26.04.00 يحول إلى "-KT2640-"، الآن أصبح "-KT260400"</li>
@@ -1248,6 +1256,7 @@
           <li xml:lang="sv">Rättade hur  motparts-id skapas av KTorrent. Tidigare omvandlades 26.04.00 till "-KT2640-", nu blir det "-KT260400".</li>
           <li xml:lang="tr">KTorrent’in eş kimliğinin oluşturulma şekli düzeltildi. Daha önceden “26.04.00”, “-KT2640” olarak dönüştürülürken, artık “-KT260400” olarak işlem görüyor.</li>
           <li xml:lang="uk">Виправлено спосіб формування ідентифікатора вузла у KTorrent. Раніше значення 26.04.00 перетворювалося на «-KT2640-», а тепер — на «-KT260400».</li>
+          <li xml:lang="zh-CN">修复了 KTorrent 的对等节点 ID 生成方式。之前将 26.04.00 转换为“-KT2640-”，现在改为“-KT260400”。</li>
           <li xml:lang="zh-TW">修正 KTorrent 的端點 ID 建立的方式。之前 26.04.00 會轉成 "-KT2640-"，現已修正成 "-KT260400"</li>
           <li>Fixed a bug where KTorrent would try to connect to peers with TCP even if the only use uTP setting was enabled</li>
           <li xml:lang="ar">أُصلحت علة حيث كان كيدي تورنت يحاول الاتصال بالأنداد عبر TCP حتى لو كان إعداد استخدام uTP فقط ممكنا</li>
@@ -1272,6 +1281,7 @@
           <li xml:lang="sv">Rättade ett fel där KTorrent försökte ansluta till motparter via TCP, även om inställningen för att endast använda uTP var aktiverad.</li>
           <li xml:lang="tr">Yalnızca uTP kullanımı ayarı etkinken KTorrent’in eşlere TCP kullanarak bağlanmaya çalışması engellendi.</li>
           <li xml:lang="uk">Виправлено помилку, через яку KTorrent намагався встановити з'єднання з вузлами з використанням TCP, навіть якщо було наказано використовувати лише uTP.</li>
+          <li xml:lang="zh-CN">修复了一个漏洞，该漏洞导致即使仅启用了uTP设置，KTorrent 仍会尝试通过 TCP 连接对等节点。</li>
           <li xml:lang="zh-TW">修正即使啟用「只使用 µTP」設定 KTorrent 仍然會試著用 TCP 連線到端點的問題</li>
         </ul>
       </description>
@@ -1401,6 +1411,7 @@
           <li xml:lang="sv">Tillägg av en kolumn "Senaste aktivitet" som visar när dataflödet senast hade uppladdnings- eller nerladdningsaktivitet. Värdena bevaras korrekt mellan sessioner, dvs. efter omstart av programmet.</li>
           <li xml:lang="tr">Torrent’in en son yükleme veya indirme etkinliği olduğu zamanı gösteren bir “Son Etkinlik” sütunu eklendi. Bu değerler, oturumlar arasında da kalıcıdır; örneğin, uygulamayı yeniden başlatsanız bile.</li>
           <li xml:lang="uk">Додано стовпчик «Останні дії», у якому буде показано часові параметри тривалості вивантаження або отримання торентів. Програма підтримуватиме актуальність цих значень між сеансами роботи у ній, тобто після перезапуску програми.</li>
+          <li xml:lang="zh-CN">新增了“最后活动”列，显示种子文件最近一次上传或下载活动的时间。这些数值在会话之间保持准确，即应用程序重启后仍有效。</li>
           <li xml:lang="zh-TW">新增「最後活動」欄位，顯示 torrent 上次有上傳或下載活動的時間。這些數值在應用程式關閉後再開啟時仍然會是準確的。</li>
           <li>Fixed the background color of the syndication widget's feed-item status panel</li>
           <li xml:lang="ar">إصلاح لون خلفية لوحة حالة عناصر الخلاصة في أداة التوزيع</li>
