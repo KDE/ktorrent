@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:57+0000\n"
-"PO-Revision-Date: 2026-11-16 19:23+0300\n"
+"PO-Revision-Date: 2026-11-23 18:16+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1164,7 +1164,7 @@ msgid ""
 "location in the dialog will be set to this. You can still override it, if "
 "you want to."
 msgstr ""
-"Bu gruptan olan torrentler için öntanımlı kaydetme konumu. <br/><br/> Bu, "
+"Bu gruptan olan torrentler için varsayılan kaydetme konumu. <br/><br/> Bu, "
 "yalnızca dosya seçim penceresinde kullanılır. Grup değiştirildiğinde pencere "
 "içerisindeki indirme konumu bu konum olarak ayarlanır. Eğer isterseniz bunu "
 "yine de değiştirebilirsiniz."
@@ -1174,13 +1174,13 @@ msgstr ""
 #: ktorrent/groups/grouppolicydlg.ui:35 ktorrent/pref/generalpref.ui:40
 #, kde-format
 msgid "Default save location:"
-msgstr "Öntanımlı kaydetme konumu:"
+msgstr "Varsayılan kaydetme konumu:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_default_move_on_completion_enabled)
 #: ktorrent/groups/grouppolicydlg.ui:49
 #, kde-format
 msgid "Default move when completed location:"
-msgstr "Tamamlandığında taşınacağı öntanımlı konum:"
+msgstr "Tamamlandığında taşınacağı varsayılan konum:"
 
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, m_default_move_on_completion_location)
 #: ktorrent/groups/grouppolicydlg.ui:56
@@ -1200,7 +1200,7 @@ msgstr ""
 #: ktorrent/groups/grouppolicydlg.ui:63
 #, kde-format
 msgid "Default settings for torrents which are added to the group."
-msgstr "Bu gruba eklenmiş torrentler için öntanımlı ayarlar."
+msgstr "Bu gruba eklenmiş torrentler için varsayılan ayarlar."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ktorrent/groups/grouppolicydlg.ui:66
@@ -2605,7 +2605,7 @@ msgstr "En düşük iyi değerin altında görüntülenen paylaşım oranı reng
 #: ktorrent/pref/colorpref.ui:165
 #, kde-format
 msgid "Reset colors to their default values (other settings won't change)."
-msgstr "Renkleri öntanımlı değerlerine sıfırla (diğer ayarlar değişmeyecek)."
+msgstr "Renkleri varsayılan değerlerine sıfırla (diğer ayarlar değişmeyecek)."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnResetColors)
 #: ktorrent/pref/colorpref.ui:168
@@ -2645,7 +2645,8 @@ msgstr ""
 #: ktorrent/pref/generalpref.ui:37 ktorrent/pref/generalpref.ui:47
 #, kde-format
 msgid "Directory to use as a default save location for all data."
-msgstr "Tüm veri için öntanımlı bir kaydetme konumu olarak kullanılacak dizin."
+msgstr ""
+"Tüm veri için varsayılan bir kaydetme konumu olarak kullanılacak dizin."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_useCompletedDir)
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, kcfg_completedDir)
@@ -3349,7 +3350,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:198
 #, kde-format
 msgid "Default maximum share ratio:"
-msgstr "Öntanımlı en yüksek paylaşım oranı:"
+msgstr "Varsayılan en yüksek paylaşım oranı:"
 
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_maxRatio)
 #: ktorrent/pref/qmpref.ui:206
@@ -3370,7 +3371,7 @@ msgstr ""
 #: ktorrent/pref/qmpref.ui:222
 #, kde-format
 msgid "Default maximum seed time:"
-msgstr "Öntanımlı en yüksek besleme süresi:"
+msgstr "Varsayılan en yüksek besleme süresi:"
 
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_maxSeedTime)
 #: ktorrent/pref/qmpref.ui:229
@@ -6205,7 +6206,7 @@ msgstr "İzleyicileri Güncelle"
 #: plugins/infowidget/trackerview.ui:66
 #, kde-format
 msgid "Restore Defaults"
-msgstr "Öntanımlılara Geri Dön"
+msgstr "Varsayılanlara Geri Dön"
 
 #: plugins/infowidget/webseedsmodel.cpp:110
 #, kde-format
@@ -6682,7 +6683,7 @@ msgstr "Özel izleyici kullanılıyorsa değiştir"
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:18
 #, kde-format
 msgid "The default tracker"
-msgstr "Öntanımlı izleyici"
+msgstr "Varsayılan izleyici"
 
 #. i18n: ectx: label, entry (dn), group (general)
 #: plugins/magnetgenerator/ktmagnetgeneratorplugin.kcfg:22
@@ -7184,7 +7185,7 @@ msgstr "Arama için vekil sunucu ayarlarını kullan"
 #: plugins/search/ktsearchplugin.kcfg:18 plugins/search/searchpref.ui:102
 #, kde-format
 msgid "Use default browser"
-msgstr "Öntanımlı tarayıcıyı kullan"
+msgstr "Varsayılan tarayıcıyı kullan"
 
 #. i18n: ectx: label, entry (useCustomBrowser), group (general)
 #: plugins/search/ktsearchplugin.kcfg:22
@@ -7242,13 +7243,13 @@ msgstr "Arama Listesini Temizle"
 #: plugins/search/searchpref.ui:44
 #, kde-format
 msgid "Reset the default action taken when a torrent is downloaded."
-msgstr "Torrentler indirildiğinde öntanımlı eylemi sıfırla."
+msgstr "Torrentler indirildiğinde varsayılan eylemi sıfırla."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_reset_default_action)
 #: plugins/search/searchpref.ui:47
 #, kde-format
 msgid "Reset Default Torrent Action"
-msgstr "Öntanımlı torrent eylemini sıfırla"
+msgstr "Varsayılan torrent eylemini sıfırla"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_restorePreviousSession)
 #: plugins/search/searchpref.ui:69
@@ -7284,7 +7285,7 @@ msgstr "Aramalar için HTTP vekili kullanılıp kullanılmayacağı."
 #: plugins/search/searchpref.ui:99
 #, kde-format
 msgid "Use the default browser configured in the system settings."
-msgstr "Sistem ayarlarında yapılandırılmış öntanımlı tarayıcıyı kullan."
+msgstr "Sistem ayarlarında yapılandırılmış varsayılan tarayıcıyı kullan."
 
 #. i18n: ectx: property (toolTip), widget (QRadioButton, kcfg_useCustomBrowser)
 #: plugins/search/searchpref.ui:114
@@ -7344,13 +7345,13 @@ msgstr "&Tümünü Kaldır"
 #: plugins/search/searchpref.ui:210
 #, kde-format
 msgid "Add all default search engines."
-msgstr "Tüm öntanımlı arama motorlarını ekle."
+msgstr "Tüm varsayılan arama motorlarını ekle."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_add_default)
 #: plugins/search/searchpref.ui:213
 #, kde-format
 msgid "Add Defau&lt"
-msgstr "Ö&ntanımlı Ekle"
+msgstr "&Varsayılan Ekle"
 
 #: plugins/search/searchprefpage.cpp:88 plugins/search/searchprefpage.cpp:126
 #, kde-format
@@ -8574,7 +8575,7 @@ msgid ""
 "By default strings will use wildcard matching. If you want to use regular "
 "expressions, this needs to be enabled."
 msgstr ""
-"Öntanımlı olarak dizgiler karakter eşleşmesini kullanacaktır. Eğer düzenli "
+"Varsayılan olarak dizgiler karakter eşleşmesini kullanacaktır. Eğer düzenli "
 "ifadeler kullanmak isterseniz, bunun etkinleştirilmesi gerekir."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_reg_exp_syntax)
@@ -8875,7 +8876,7 @@ msgstr "Süzgeci Kaldır"
 #: plugins/upnp/ktupnpplugin.kcfg:10
 #, kde-format
 msgid "Default UPnP device to use"
-msgstr "Kullanılacak öntanımlı UPnP aygıtı"
+msgstr "Kullanılacak varsayılan UPnP aygıtı"
 
 #: plugins/upnp/routermodel.cpp:60
 #, kde-format
