@@ -1917,7 +1917,7 @@
           <li xml:lang="sr-ijekavian">Биљежење у фајл је подразумијевано искључено, да би се избјегла непотребна уписивања у фајл систем; за биљежење у фајл може се задати аргумент командне линије `--enable-logging`</li>
           <li xml:lang="sr-ijekavianlatin">Bilježenje u fajl je podrazumijevano isključeno, da bi se izbjegla nepotrebna upisivanja u fajl sistem; za bilježenje u fajl može se zadati argument komandne linije `--enable-logging`</li>
           <li xml:lang="sv">Inaktivera loggning till fil som standard för att undvika onödiga skrivningar till filsystemet. Kommandoradsargumentet `--enable-logging` kan skickas för att aktivera loggning till fil.</li>
-          <li xml:lang="tr">Dosya sistemine gereksiz yazma işlemlerini önlemek için öntanımlı olarak dosya günlük kaydı devre dışı bırakıldı; dosya günlük kaydını etkinleştirmek için `--enable-logging` komut satırı argümanı kullanılabilir.</li>
+          <li xml:lang="tr">Dosya sistemine gereksiz yazma işlemlerini önlemek için varsayılan olarak dosya günlük kaydı devre dışı bırakıldı; dosya günlük kaydını etkinleştirmek için `--enable-logging` komut satırı argümanı kullanılabilir.</li>
           <li xml:lang="uk">Вимкнено записування журналу до типового файла, щоб уникнути непотрібного записування до файлової системи; щоб увімкнути запис журналу до файла, можна передати параметр командного рядка `--enable-logging`</li>
           <li xml:lang="zh-CN">默认情况下禁用文件日志记录以避免不必要的文件系统写入，可以通过传递命令行参数 `--enable-logging` 来启用文件日志记录。</li>
           <li xml:lang="zh-TW">預設停用將紀錄寫入檔案，來避免對檔案系統進行太多不必要的寫入。要將紀錄寫入檔案可以使用命令列參數 `--enable-logging`</li>
