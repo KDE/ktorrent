@@ -8,7 +8,7 @@
 ]>
 <article id="ktorrent" lang="&language;">
 <title
->K Torrent</title>
+>KTorrent</title>
 <articleinfo>
 <authorgroup>
 <author
@@ -93,7 +93,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 ></listitem>
 <listitem
 ><para
->Belirli dosya türlerinin önizlemesi (video ve ses)</para
+>Belirli dosya türlerinin ön izlemesi (video ve ses)</para
 ></listitem>
 <listitem
 ><para
@@ -167,7 +167,7 @@ either 'xx.yy.zz (&kde; x.y)' or '&kde; x.y'
 <listitem
 ><para
 ><ulink url="https://userbase.kde.org/KTorrent"
->Userbase’de K Torrent</ulink
+>Userbase’de KTorrent</ulink
 ></para
 ></listitem>
 <listitem
