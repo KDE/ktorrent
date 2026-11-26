@@ -1051,7 +1051,7 @@
           <li xml:lang="ar">أُصلح شريط تقدم مدقق البيانات الذي كان يقفز إلى 100% عند حدوث خطأ أو إلغاء المدقق</li>
           <li xml:lang="bg">Корекция на пропускането на лентата за прогрес при проверката на данните директно до 100% при възникване на грешка или при отмяна на проверката</li>
           <li xml:lang="ca">S'ha corregit la barra de progrés del comprovador de dades que salta al 100% quan es produeix un error o es cancel·la el comprovador</li>
-          <li xml:lang="ca-valencia">S'ha corregit la barra de progrés del comprovador de dades que salta fins al 100% quan es produïx un error o es cancel·la el comprovador</li>
+          <li xml:lang="ca-valencia">S'ha corregit la barra de progrés del comprovador de dades que salta fins al 100 % quan es produïx un error o es cancel·la el comprovador</li>
           <li xml:lang="cs">Opravena chyba, kvůli které ukazatel průběhu kontroly dat přeskočil na 100 %, když došlo k chybě nebo byla kontrola zrušena</li>
           <li xml:lang="es">Arreglado el salto de la barra de progreso al 100% de la comprobación de datos cuando ocurre un error o se cancela la comprobación.</li>
           <li xml:lang="fi">korjattu tiedontarkistuksen etenemispalkin hyppääminen 100 prosenttiin kun tapahtuu virhe tai tarkistus perutaan</li>
@@ -1211,7 +1211,7 @@
           <li xml:lang="ar">أُصلحت مرشحات مستويات السجل المختلفة في ملحق عارض السجل</li>
           <li xml:lang="bg">Корекция на филтрите за различните нива на логване в плъгина за преглед на логове</li>
           <li xml:lang="ca">S'han corregit els filtres dels nivells de registre diferents en el connector visualitzador del registre</li>
-          <li xml:lang="ca-valencia">S'han esmenat els filtres dels nivells de registre diferents al connector visor de registre</li>
+          <li xml:lang="ca-valencia">S'han esmenat els filtres dels nivells de registre diferents en el connector visor del registre</li>
           <li xml:lang="cs">Opraveny filtry pro různé úrovně záznamu v pluginu Log Viewer</li>
           <li xml:lang="es">Arreglados los filtros para distintos niveles de registros en el complemento «Visor de registros»</li>
           <li xml:lang="fi">korjattu lokikatselinliitännäisessä eri lokitasojen suodattimet</li>
@@ -1237,7 +1237,7 @@
           <li xml:lang="ar">أُصلحت طريقة إنشاء معرف الند لكيدي تورنت. سابقا كان 26.04.00 يحول إلى "-KT2640-"، الآن أصبح "-KT260400"</li>
           <li xml:lang="bg">Коригиран начин на създаване на Peer ID на KTorrent. Преди 26.04.00 се превръщаше в "-KT2640-", сега е "-KT260400"</li>
           <li xml:lang="ca">S'ha corregit la manera en què es creen els ID de parell del KTorrent. L'anterior 26.04.00 s'havia convertit a «-KT2640-», ara és «-KT260400»</li>
-          <li xml:lang="ca-valencia">S'ha corregit la manera en que es creen els ID de parell de KTorrent. L'anterior 26.04.00 s'havia convertit a «-KT2640-», ara és «-KT260400»</li>
+          <li xml:lang="ca-valencia">S'ha corregit la manera en què es creen els ID de parell de KTorrent. L'anterior 26.04.00 s'havia convertit a «-KT2640-», ara és «-KT260400»</li>
           <li xml:lang="cs">Opravena metoda vytváření ID peeru v programu KTorrent. Dříve se formát 26.04.00 převáděl na "-KT2640-", nyní je to "-KT260400".</li>
           <li xml:lang="es">Arreglado como se calcula el identificador de par de KTorrent. Antes de 26.04.00 era convertido a "-KT2640-", ahora es "-KT260400"</li>
           <li xml:lang="fr">Correction de la façon dont l'identifiant de pair de KTorrent était créé. Auparavant, le « 26.04.00 » était converti en « -KT2640- ». Maintenant, il devient « -KT260400 ».</li>
@@ -1391,7 +1391,7 @@
           <li xml:lang="ar">أُضيف عمود "آخر نشاط" يعرض وقت آخر نشاط رفع أو تنزيل للتورنت. تُحفظ هذه القيم دقيقة بين الجلسات، أي بعد إعادة تشغيل التطبيق.</li>
           <li xml:lang="bg">Добавена е колона „Последна активност“, показваща времето на последната активност по качване или теглене на торента. Тези стойности се запазват между сесиите, т.е. след рестартиране на приложението.</li>
           <li xml:lang="ca">S'ha afegit una columna «Darrera activitat» que mostra l'hora d'última activitat de pujada o baixada del torrent. Aquests valors es mantenen precisos entre sessions, és a dir, després de reiniciar l'aplicació.</li>
-          <li xml:lang="ca-valencia">S'ha afegit una columna «Última activitat» que mostra l'hora de última activitat de pujada o baixada del torrent. Estos valors es mantenen precisos entre sessions, és a dir, després de reiniciar l'aplicació.</li>
+          <li xml:lang="ca-valencia">S'ha afegit una columna «Última activitat» que mostra l'hora d'última activitat de pujada o baixada del torrent. Estos valors es mantenen precisos entre sessions, és a dir, després de reiniciar l'aplicació.</li>
           <li xml:lang="cs">Byl přidán sloupec "Poslední aktivita", který zobrazuje čas, kdy došlo k poslednímu nahrávání nebo stahování v rámci torrentu. Tyto hodnoty zůstávají přesné i mezi jednotlivými sezeními, tj. i po restartování aplikace.</li>
           <li xml:lang="es">Añadida la columna «Última actividad» que muestra la hora a la que el torrent tuvo su última actividad. Estos valores se mantienes precisos entre sesiones (tras reiniciar la aplicación).</li>
           <li xml:lang="fi">Lisätty ”viimeisin toiminta” -sarake, joka näyttää ajan, jolloin torrentilla viimeksi oli lähetys- tai lataustoimintaa. Arvot pysyvät tarkkoina istunnosta toiseen, ts. myös sovelluksen uudelleenkäynnistyksen jälkeen.</li>
