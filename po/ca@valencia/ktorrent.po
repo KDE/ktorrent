@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: ktorrent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 00:13+0000\n"
-"PO-Revision-Date: 2026-08-15 12:27+0200\n"
+"PO-Revision-Date: 2026-11-20 20:07+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -2412,7 +2412,7 @@ msgstr ""
 "<p>L'encriptació del protocol és útil quan el vostre proveïdor d'Internet "
 "alentix les connexions de bittorrent.</p>\n"
 "<p>L'encriptació evita que el vostre trànsit de bittorrent es marque com a "
-"trànsit bittorrent, i per tant, el proveïdor no l'alentirà.</p>"
+"trànsit bittorrent i, per tant, el proveïdor no l'alentirà.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useEncryption)
 #. i18n: ectx: label, entry (useEncryption), group (downloads)
@@ -4345,7 +4345,7 @@ msgstr "Trieu un directori cap a on s'han de moure les dades."
 #, kde-format
 msgctxt "Progress bar percentage label"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: ktorrent/view/viewmodel.cpp:185
 #, kde-format
@@ -5645,7 +5645,7 @@ msgid ""
 "Enable sequential download mode for it to obtain necessary data with a "
 "higher priority?"
 msgstr ""
-"No s'han baixat dades suficients per a obrir el fitxer.\n"
+"No s'han baixat prou dades per a obrir el fitxer.\n"
 "\n"
 "Voleu activar el mode de baixada seqüencial per a obtindre les dades "
 "necessàries amb una prioritat més alta?"
@@ -5943,7 +5943,7 @@ msgstr "No"
 #, kde-format
 msgctxt "File percentage stat"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: plugins/infowidget/peerviewmodel.cpp:120
 #, kde-format
